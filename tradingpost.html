@@ -12,7 +12,7 @@ document.addEventListener('touchmove', function(e) {e.preventDefault();}, false)
 function loadMe()
 {
     setScene(sceneIntro);
-    setTimeout(function(){initialize()},100);
+    setTimeout(function(){initialize()},delay);
 }
 
 function setScene(scene)
@@ -35,31 +35,28 @@ function setScene(scene)
     }
 }
 
-
 //Constants
 var delay = 300;
+//Enums
 var sceneLoading = 0;
 var sceneIntro = 1;
 var sceneTrade = 2;
+var roleClerk = 0;
+var roleHunter = 1;
+var roleCrafter = 2;
 
 //Game Data
 var gameId; 
 var playerId;
 var webPageId;
-var clerk = 0;
-var hunter = 1;
-var crafter = 2;
     
-var clerkItemIds = new Array("aji","musawa","orbital","yongyong","pinkmoonaw");
-var hunterItemIds = new Array("aji","musawa","orbital","yongyong","pinkmoonaw");
-var crafterItemIds = new Array("aji","musawa","orbital","yongyong","pinkmoonaw");
-var allItemIds = new Array("aji","musawa","orbital","yongyong","pinkmoonaw, aji","musawa","orbital","yongyong","pinkmoonaw");
-var roles = new Array(clerkItemIds, hunterItemIds, crafterItemIds);
+var clerkItemIds = new Array(5,6,11,12);
+var hunterItemIds = new Array(1,2,3,4);
+var crafterItemIds = new Array(7,8,9,10);
+var allItemIds = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+var roleItemIds = new Array(clerkItemIds, hunterItemIds, crafterItemIds);
 var pItems = new Array();
 var pItemQtys = new Array();    
-
-//Audio Mapping
-
 
 //Variables
 var pLevel;
@@ -67,9 +64,6 @@ var pName;
 var pRole;
 
 var bumpProgress;
-
-//Constants
-
 
 function initialize()
 {
@@ -82,25 +76,23 @@ function initialize()
     //Get Stuff from Server
     switch(webPageId)
     {
-        case clerk:
+        case roleClerk:
             pName = "Clerk";
-            pRole = clerk;
+            pRole = roleClerk;
             break;
-        case hunter:
+        case roleHunter:
             pName = "Hunter";
-            pRole = hunter;
+            pRole = roleHunter;
             break;
-        case crafter:
+        case roleCrafter:
             pName = "Crafter";
-            pRole = crafter;
+            pRole = roleCrafter;
             break;
     }
 
-    for(var i = 0; i < roles[pRole].length; i++){
-        getItemCount(roles[pRole][i]);
-    }
+    for(itemId in allItemIds)
+        getItemCount(allItemIds[itemId]);
 
-    turnProgress = -1;
     //End Server Get
 
     //Set up the images
@@ -121,32 +113,40 @@ function initialize()
     //playMedia(kMediaIdMusic);
 }
 
-function didUpdateItemQty(itemId,qty)
+function didUpdateItemQty(updatedItemId,qty)
 {
-    switch(itemId)
+  //Check all game-related item ids...
+  for(itemId in allItemIds)
+  {
+    //if the updated itemId is relevant...
+    if(updatedItemId == allitemIds[itemId])
     {
-        case allItemIds[0]:
-            pItems.push(allItemIds[0]);
-            pItemQtys.push(qty);
-            break;
-        case allItemIds[1]:
-            pItems.push(allItemIds[1]);
-            pItemQtys.push(qty);
-            break;
+      var alreadyHaveIt = false;
+      //For each of the items in your inventory
+      for(myItemId in pItems)
+      {
+        //check if they are the same (you already have the item)
+        if(updatedItemId == pItems[myItemId])
+        {
+          //correct its value
+          alreadyHaveIt = true;
+          pItemQtys[myItemsIs]=qty;
+        }
+      }
+      //Otherwise
+      if(!alreadyHaveIt)
+      {
+        //Add it to the array
+        pItems.push(updatedItemId);
+        pItemQtys.push(qty);
+      }
     }
+  }
 }
 
-function pause(millis) 
-{
-    var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); } 
-    while(curDate-date < millis)
-}
-
-    // update health and xp in ARIS
-//    setItemCount(HEALTH_ITEM_ID, pHealth); //setItemCountForPlayer(gameId, playerId, HEALTH_ITEM_ID, pHealth);
-//   setItemCount(XP_ITEM_ID, pXP); //setItemCountForPlayer(gameId, playerId, XP_ITEM_ID, pXP);
+//update health and xp in ARIS
+//setItemCount(HEALTH_ITEM_ID, pHealth); //setItemCountForPlayer(gameId, playerId, HEALTH_ITEM_ID, pHealth);
+//setItemCount(XP_ITEM_ID, pXP); //setItemCountForPlayer(gameId, playerId, XP_ITEM_ID, pXP);
 
 
 </script>
@@ -164,8 +164,8 @@ div
 
 body
 {
--webkit-user-select:none;
-user-select:none;
+  -webkit-user-select:none;
+  user-select:none;
 }
 
 .scene
@@ -190,18 +190,9 @@ user-select:none;
         
 }
     
-.notificaions
+.notifications
 {
   
-}
-
-.alert
-{
-  position:absolute;
-  height:75px;
-  width:150px;
-  top:54px;
-  left:5px;
 }
 </style>
 </head>
@@ -215,24 +206,23 @@ user-select:none;
   </div>
 </div>
 
+<!-- Intro State -->
+<div id="intro" class="scene">
+</div>
+
 <!-- Trade State -->    
 <div id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
  <div id="bumpLogo" class="subtitle">
- 
  </div>
     
  <div id="inventory" class="screenSplit">
-     
  </div>
     
  <div id="needs" class="screenSplit">
-        
  </div>
     
- <div id="helperArea" class="notificaions">
-     
+ <div id="helperArea" class="notifications">
  </div>
-    
 </div>
 
 <!-- Win State -->
@@ -247,20 +237,6 @@ user-select:none;
   <div style="color:#FFFFFF; position:absolute; top:198px; left:130px; height:20px; width:60px;">
       YOU LOSE
   </div>
-</div>
-
-<!-- Fire Bonus -->
-<div id="firebonus" class="bonus">
-  <div style="color:#FFFFFF; position:absolute; top:99px; left:65px; width:200px;">
-      <b>You have captured enough Aji to unlock their devastating fireball!</b><br /><br />It won't work well on other Aji, but other Kkomamon might be more susceptible to its power...
-  </div>
-</div>
-
-<!-- Awesome Bonus -->
-<div id="awesomebonus" class="bonus">
-  <div style="color:#FFFFFF; position:absolute; top:99px; left:65px; width:200px;">
-    <b>You are AWESOME!</b><br /><br />Prepare to fight the elusive Orbital, and the leviathan YongYong! You must be quick, and strong!
-  <div>
 </div>
 
 </div><!-- body -->

@@ -15,7 +15,7 @@ function loadMe()
 
 function setScene(scene)
 {
-    alert(scene);
+    //alert("Setting scene: "+scene);
     document.getElementById("loading").style.display="none";
     document.getElementById("intro").style.display="none";
     document.getElementById("trade").style.display="none";
@@ -93,6 +93,7 @@ function initialize()
     playerId = parseInt(params.playerId);
     webPageId = parseInt(params.webPageId);
     introItemId = webPageId;
+    webPageId=6; //TESTING 
     //Get Stuff from Server
     switch(webPageId)
     {
@@ -121,7 +122,7 @@ function initialize()
         pRole = roleClerk;
         break;
     }
-    document.getElementById("roleTitle").innerHTML = pRole;
+    document.getElementById("roleTitle").innerHTML = pName;
     for(levelIdIndex in levelItemIds)
         getItemCount(levelItemIds[levelIdIndex]);
     getItemCount(bogusFinishReadyId);
@@ -130,14 +131,20 @@ function initialize()
 
 function introduce()
 {
-  alert("introducing...");
+  //alert("introducing...");
+  //alert(pName);
   document.getElementById(pName).display = "block";
-  for(index in roleItemIndexes[curentLevel][pRole])
+  //alert("pRole"+pRole);
+  //alert("currentLevel"+currentLevel);
+  //alert(roleItemIndexes[0][0][0]);
+  for(index in roleItemIndexes[currentLevel][pRole])
   {
+    //alert("index"+index);
     setItemCount(itemIds[roleItemIndexes[currentLevel][pRole][index]],1);
     itemQtys[roleItemIndexes[currentLevel][pRole][index]]++;
   }
   draw();
+  //alert("doneIntroducing");
   setScene(sceneIntro)
 }
 
@@ -182,6 +189,7 @@ function didUpdateItemQty(updatedItemId,qty)
 
 function checkWinState()
 {
+    if(!ready) return;
   for(index in wantedItemIndexes[currentLevel][pRole])
     if(itemQtys[wantedItemIndexes[currentLevel][pRole][index]] <= 0)
       return false; //do nothing
@@ -253,14 +261,14 @@ function constructTableCellHTML(itemIndex, inventorySide)
     if(inventorySide)
     {
         if(itemSelected[itemIndex]) //was selected
-            cellHTML+="<div onClick='wasDeselected("+itemIndex+")' style='background-color:#D1E0FF;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
+            cellHTML+="<div onClick='wasDeselected("+itemIndex+")' style='background-color:#D1E0FF;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
         else
             cellHTML+="<div onClick='wasSelected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
     }
     else
     {
         if(itemQtys[itemIndex]) //was found
-            cellHTML+="<div style='background-color:#D1FFE0;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+"</div>";
+            cellHTML+="<div style='background-color:#D1FFE0;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+"</div>";
         else
             cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+"</div>";
     }
@@ -269,7 +277,7 @@ function constructTableCellHTML(itemIndex, inventorySide)
 
 function constructTradeTableHTML()
 {
-    var tableHtml = "<table width='100%' border='1' cellpadding='2' margin='2'><tr><td width='50%'>Inventory</td><td width='50%'>Want</td></tr>";
+    var tableHtml = "<table width='100%' ><tr><td width='50%'>Inventory</td><td width='50%'>Want</td></tr>";
     var inventoryIndex = 0;
     for(var i = 0; i < itemIds.length; i++)
     {
@@ -355,6 +363,7 @@ body
 
 <!-- Intro State -->
 <div id="intro" class="scene" onClick="setScene(2)">
+    Intro (click)
     <div id="Clerk">
         <div id="1">
         </div>
@@ -362,6 +371,10 @@ body
         </div>
         <div id="3">
         </div>
+    </div>
+    <div id="Hunter">
+    </div>
+    <div id="Crafter">
     </div>
 </div>
 
@@ -378,7 +391,7 @@ body
     <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
  </div>
     
- <div id="helperArea" style="position:absolute; bottom:0;">
+ <div id="helperArea" style="position:static; bottom:0;">
     <img src="helper.jpg" width="50" height="50" onClick="getAdvice()"/>
  </div>
 

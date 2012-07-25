@@ -359,7 +359,7 @@ function constructTableCellHTML(itemIndex, inventorySide)
 
 function constructTradeTableHTML()
 {
-    var tableHtml = "<table width='100%' ><tr><td width='50%'>Inventory</td><td width='50%'>Want</td></tr>";
+    var tableHtml = "<table width='100%' ><tr><td width='50%'>Inventory<br /><br /></td><td width='50%'>Want</td></tr>";
     var inventoryIndex = 0;
     for(var i = 0; i < itemIds.length; i++)
     {
@@ -411,7 +411,7 @@ body
   -webkit-user-select:none;
   user-select:none;
   background-color:#000000;
-  color:#FFFFFF;
+  color:#888888;
 }
 
 .scene
@@ -444,7 +444,7 @@ body
 </div>
 
 <!-- Intro State -->
-<div style="background-image:url('images/Fur_Trade_Screen_Intro.png'); id="intro" class="scene"  onClick="setScene(2)">
+<div style="background-image:url('images/Fur_Trade_Screen_Intro.png')"; id="intro" class="scene"  onClick="setScene(2)">
     <div id="Clerk">
     	<div id="12" class="introItem">
             <p align="center">You have picked up a <strong><em>blanket</em></strong>:</p>
@@ -476,7 +476,7 @@ body
             <p align="center">You have picked up a <strong><em>beaver pelt</em></strong>:</p>
             <p align="center"><img src="./images/beaverpelt96.png" width="109" height="98" /></p>
             <p align="center">Hunters trade their beaver pelts with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
-            <p align="center"><img src="./images/hunter.jpg" width="180" height="229" /></p>
+            <p align="center"><img src="./images/Hunter.jpg" width="180" height="229" /></p>
             <p align="center">You are now a <strong><em>hunter</em></strong>. Trade your pelt and other goods to gain guns, wild rice, coats, and moccasins. </p>
             <p align="center">Go Trade!</p>
             <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
@@ -536,7 +536,7 @@ body
 </div>
 
 <!-- Trade State -->    
-<div style="background-image:url('images/Fur_Trade_Screen_Have_Want_Bkg.png'); id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
+<div style="color:#000000; background-image:url('images/Fur_Trade_Screen_Have_Want_Bkg.png');"; id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
 <!--
  <div id="bumpLogo" class="subtitle">
  </div>
@@ -553,7 +553,7 @@ body
  </div> -->
     
  <div id="helperArea" style="position:absolute; bottom:0;">
-    <img src="helper.jpg" width="50" height="50" onClick="getAdvice()"/>
+    <img src="images/Helper.jpg" width="50" height="50" onClick="getAdvice()"/>
  </div>
 
 </div>

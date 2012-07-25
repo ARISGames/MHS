@@ -65,9 +65,9 @@ var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
 var roleTitles = ["Clerk", "Hunter", "Crafter"];    
-
-var itemNames = ["Furs","Guiding*","Leather","Work*","Guns","iPads*","Food","Work2*","Snowshoes","Moccasins","Beads","Fabric"];
-var itemImages = ["./images/Beaver_pelt_icon.png","./images/guiding_icon.jpg","./images/leather_icon.png","./images/work_icon.png","./images/gun_icon.png","./images/Ipad_icon.png","./images/wild_rice_icon.jpg","./images/work_icon.png","./images/Snowshoes_icon.png","./images/moccasins_icon.jpg","./images/beads_icon.jpg","./images/fabric_icon.jpg"];
+var itemNames = ["Beaver Pelt","Deer Meat","Leather","Raw Hide Lacing","Guns","Coat","Wild Rice","Maple Sugar","Snowshoes","Moccasins","Beads","Blanket"];
+var itemImages = ["./images/beaverpelt.png","./images/deermeat.png","./images/leather.png","./images/lace.png","./images/gun.png","./images/coat.png","./images/wildrice.jpg","./images/maplesugar.png","./images/snoeshow.png","./images/moccasins.png","./images/beads.png","./images/blanket.png"];
+var itemImages96 = ["./images/beaverpelt96.png","./images/deermeat96.png","./images/leather96.png","./images/lace96.png","./images/gun96.png","./images/coat96.png","./images/wildrice96.jpg","./images/maplesugar96.png","./images/snoeshow96.png","./images/moccasins96.png","./images/beads96.png","./images/blanket96.png"];
 var itemWebpageId = [757,758,759,760,761,762,763,764,765,766,767,768];
 
 //*NOTE*- 
@@ -444,7 +444,7 @@ body
 </div>
 
 <!-- Intro State -->
-<div id="intro" class="scene"  onClick="setScene(2)">
+<div style="background-image:url('images/Fur_Trade_Screen_Intro.png'); id="intro" class="scene"  onClick="setScene(2)">
     <div id="Clerk">
     	<div id="12" class="introItem">
             <p align="center">You have picked up <strong><em>fabric</em></strong>:</p>
@@ -536,7 +536,7 @@ body
 </div>
 
 <!-- Trade State -->    
-<div id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
+<div style="background-image:url('images/Fur_Trade_Screen_Have_Want_Bkg.png'); id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
 <!--
  <div id="bumpLogo" class="subtitle">
  </div>

@@ -10,7 +10,6 @@
 
 function loadMe()
 {
-    setScene(sceneTrade);
     setTimeout(function(){initialize()},delay);
 }
 
@@ -19,6 +18,7 @@ function setScene(scene)
     document.getElementById("loading").style.display="none";
     document.getElementById("intro").style.display="none";
     document.getElementById("trade").style.display="none";
+    document.getElementById("win").style.display="none";
 
     switch(scene)
     {
@@ -30,6 +30,9 @@ function setScene(scene)
             break;
         case sceneTrade:
             document.getElementById("trade").style.display="block";
+            break;
+        case sceneWin:
+            document.getElementById("win").style.display="block";
             break;
     }
 }
@@ -112,6 +115,7 @@ function initialize()
 
 function introduce()
 {
+    alert("introducing");
   document.getElementById(pName).display = "block";
   for(index in roleItemIndexes[curentLevel][pRole])
   {
@@ -336,6 +340,14 @@ body
 
 <!-- Intro State -->
 <div id="intro" class="scene">
+    <div id="Clerk">
+        <div id="1">
+        </div>
+        <div id="2">
+        </div>
+        <div id="3">
+        </div>
+    </div>
 </div>
 
 <!-- Trade State -->    
@@ -361,13 +373,6 @@ body
 <div id="win" class="scene">
   <div style="color:#FFFFFF; position:absolute; top:198px; left:130px; height:20px; width:60px;">
       YOU WIN
-  </div>
-</div>
-
-<!-- Lose State -->    
-<div id="lose" class="scene">
-  <div style="color:#FFFFFF; position:absolute; top:198px; left:130px; height:20px; width:60px;">
-      YOU LOSE
   </div>
 </div>
 

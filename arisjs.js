@@ -176,5 +176,5 @@ function updateWebHook(gameId, webHookId, name, url)
 
 function setBumpString(bString)
 {
-  enqueueRequest("aris://player/"+bString);
+  enqueueRequest("aris://bump/"+bString);
 }

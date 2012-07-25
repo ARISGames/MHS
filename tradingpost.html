@@ -58,7 +58,7 @@ var gameId;
 var playerId;
 var webPageId;
 var introItemId;
-    
+
 var levelItemIds = [13,14,15];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
@@ -75,21 +75,22 @@ var itemWebpageId = [757,758,759,760,761,762,763,764,765,766,767,768];
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
 // parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
 var roleItemIndexes = [ //Items to start out with given your role
-                        [[4], [0], [6]], //Level 1
-                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 2
-                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 3
-                    ];
+    [[4], [0], [6]], //Level 1
+    [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 2
+    [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 3
+    ];
 var wantedItemIndexes = [ //Items to strive for, given your goal. 
-                        [[0], [4], [2]], //Level 1
-                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 2
-                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 3
-                        ];
+    [[0], [4], [2]], //Level 1
+    [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 2
+    [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 3
+    ];
 
-//Variables
-var ready = false;
-var pLevel=0;
-var pName;
-var pRole;
+    //Variables
+    var ready = false;
+    var introduced = false;
+    var pLevel=0;
+    var pName;
+    var pRole;
 
 function initialize()
 {
@@ -110,105 +111,119 @@ function synchronizeToWebId(webId)
 {
     switch(webId){
         case itemWebpageId[0]:
-        introItemId = 1;
-        break;
+            introItemId = 1;
+            break;
         case itemWebpageId[1]:
-        introItemId = 2;
-        break;
+            introItemId = 2;
+            break;
         case itemWebpageId[2]:
-        introItemId = 3;
-        break;
+            introItemId = 3;
+            break;
         case itemWebpageId[3]:
-        introItemId = 4;
-        break;
+            introItemId = 4;
+            break;
         case itemWebpageId[4]:
-        introItemId = 5;
-        break;
+            introItemId = 5;
+            break;
         case itemWebpageId[5]:
-        introItemId = 6;
-        break;
+            introItemId = 6;
+            break;
         case itemWebpageId[6]:
-        introItemId = 7;
-        break;
+            introItemId = 7;
+            break;
         case itemWebpageId[7]:
-        introItemId = 8;
-        break;
+            introItemId = 8;
+            break;
         case itemWebpageId[8]:
-        introItemId = 9;
-        break;
+            introItemId = 9;
+            break;
         case itemWebpageId[9]:
-        introItemId = 10;
-        break;
+            introItemId = 10;
+            break;
         case itemWebpageId[10]:
-        introItemId = 11;
-        break;
+            introItemId = 11;
+            break;
         case itemWebpageId[11]:
-        introItemId = 12;
-        break;
+            introItemId = 12;
+            break;
     }
-    document.getElementById(""+introItemId).style.display="block";
-        //alert(pLevel);
     switch(introItemId)
     {
         case 1:
         case 2:
         case 3:
         case 4:
-        pName = "Hunter";
-        pRole = roleHunter;
-        break;
+            pName = "Hunter";
+            pRole = roleHunter;
+            break;
         case 5:
         case 6:
-        pName = "Clerk";
-        pRole = roleClerk;
-        break;
+            pName = "Clerk";
+            pRole = roleClerk;
+            break;
         case 7:
         case 8:
         case 9:
         case 10:
-        if(pLevel > 0)
-        {
-            pName = "Crafter";
-            pRole = roleCrafter;
-        }
-        else
-        {
-            pName = "Hunter";
-            pRole = roleHunter;
-        }
-        break;
+            if(pLevel > 0)
+            {
+                pName = "Crafter";
+                pRole = roleCrafter;
+            }
+            else
+            {
+                introItemId=3;
+                pName = "Hunter";
+                pRole = roleHunter;
+            }
+            break;
         case 11:
         case 12:
-        pName = "Clerk";
-        pRole = roleClerk;
-        break;
+            pName = "Clerk";
+            pRole = roleClerk;
+            break;
     }
+    //document.getElementById(""+introItemId).innerHTML+=introItemId;
+    document.getElementById(""+introItemId).style.display="block";
     document.getElementById("roleTitle").innerHTML = pName;
 }
 
 function introduce()
 {
-  //alert("introducing...");
-  //alert(pName);
-  document.getElementById(pName).display = "block";
-  //alert("pRole"+pRole);
-  //alert("pLevel"+pLevel);
-  //alert(roleItemIndexes[0][0][0]);
-  for(index in roleItemIndexes[pLevel][pRole])
-  {
-    //alert("index"+index);
-    setItemCount(itemIds[roleItemIndexes[pLevel][pRole][index]],1);
-    itemQtys[roleItemIndexes[pLevel][pRole][index]] = 1;
-  }
-  draw();
-  //alert("doneIntroducing");
-  setScene(sceneIntro)
+    //alert("introducing...");
+    //alert(pName);
+    document.getElementById(pName).display = "block";
+    //alert("pRole"+pRole);
+    //alert("pLevel"+pLevel);
+    //alert(roleItemIndexes[0][0][0]);
+    for(roleIndex in roleItemIndexes[pLevel])
+    {
+        //alert("index"+index);
+        for(index in roleItemIndexes[pLevel][roleIndex])
+        {
+            if(roleIndex == pRole)
+            {
+                setItemCount(itemIds[roleItemIndexes[pLevel][roleIndex][index]],1);
+                itemQtys[roleItemIndexes[pLevel][roleIndex][index]] = 1;
+            }
+            else
+            {
+                takeItemCount(itemIds[roleItemIndexes[pLevel][roleIndex][index]],999);
+                itemQtys[roleItemIndexes[pLevel][roleIndex][index]] = 0;
+            }
+        }
+    }
+    //alert(JSON.stringify(itemQtys));
+    draw();
+    //alert("doneIntroducing");
+    setScene(sceneIntro);
+    introduced = true;
 }
 
 function draw()
 {
-  if(ready)
-    document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
+    if(ready)
+        document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
 }
 
 function refreshItemCounts()
@@ -221,10 +236,10 @@ function didUpdateItemQty(updatedItemId,qty)
 {
     if(updatedItemId == bogusFinishReadyId)
     {
-      ready = true;
-      synchronizeToWebId(webPageId);
-      introduce();
-      return;
+        synchronizeToWebId(webPageId);
+        introduce();
+        ready = true;
+        return;
     }
     //alert("Found Item "+updatedItemId+" of qty "+qty);
     var newItem = false;
@@ -240,20 +255,24 @@ function didUpdateItemQty(updatedItemId,qty)
 
     for(levelIdIndex in levelItemIds)
         if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
-            if(pLevel <= levelIdIndex) pLevel = levelIdIndex+1;
+            if(pLevel <= levelIdIndex) pLevel = 1;//levelIdIndex+1;
 
     checkWinState();
 }
 
 function checkWinState()
 {
-    if(!ready) return;
-  for(index in wantedItemIndexes[pLevel][pRole])
-    if(itemQtys[wantedItemIndexes[pLevel][pRole][index]] <= 0)
-      return false; //do nothing
+    if(!ready || !introduced) return false;
+    //alert(JSON.stringify(itemQtys));
+    for(index in wantedItemIndexes[pLevel][pRole])
+    {
+        //alert("Index:"+index+" Level:"+pLevel+" Role:"+pRole);
+        if(itemQtys[wantedItemIndexes[pLevel][pRole][index]] <= 0)
+            return false; //do nothing
+    }
 
-  //If it gets here, we've won
-  setScene(sceneWin);
+    //If it gets here, we've won
+    setScene(sceneWin);
     setItemCount(levelItemIds[pLevel],1);
 }
 
@@ -298,7 +317,8 @@ function bumpReceived(bumpString)
             setItemCount(itemIds[itemIndex],itemQtys[itemIndex]);
         }
     }
-        //document.getElementById("debug").innerHTML+="4";
+    //document.getElementById("debug").innerHTML+="4";
+    constructBumpString();
 }
 
 function constructBumpString()
@@ -344,15 +364,15 @@ function constructTradeTableHTML()
     for(var i = 0; i < itemIds.length; i++)
     {
         tableHtml+="<tr><td>";
-            //Ok, this part is weird, but you're just gonna have to trust me
-            while(inventoryIndex < itemQtys.length && itemQtys[inventoryIndex]<=0)
-                inventoryIndex++;
-            if(inventoryIndex < itemQtys.length)
-                tableHtml+=constructTableCellHTML(inventoryIndex,1);
-                inventoryIndex++;
+        //Ok, this part is weird, but you're just gonna have to trust me
+        while(inventoryIndex < itemQtys.length && itemQtys[inventoryIndex]<=0)
+            inventoryIndex++;
+        if(inventoryIndex < itemQtys.length)
+            tableHtml+=constructTableCellHTML(inventoryIndex,1);
+        inventoryIndex++;
         tableHtml+="</td><td>";
-            if(i < wantedItemIndexes[pLevel][pRole].length)
-                tableHtml+=constructTableCellHTML(wantedItemIndexes[pLevel][pRole][i],0);
+        if(i < wantedItemIndexes[pLevel][pRole].length)
+            tableHtml+=constructTableCellHTML(wantedItemIndexes[pLevel][pRole][i],0);
         tableHtml+="</td></tr>";
     }
     tableHtml += "</table>";
@@ -370,7 +390,7 @@ function getAdvice()
     }
     var itemAdviceIndex = Math.floor(Math.random()*neededItems.length);
     var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + ". A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
-    alert(advice);
+        alert(advice);
 }
 
 </script>

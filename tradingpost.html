@@ -51,7 +51,7 @@ var wpCrafter = 2;
 var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
-var currentLevel = 0;
+var pLevel = 0;
 var bogusFinishReadyId = 99999999; //Call 'getQtyOfItem' with this after all other intro requests are queued. When we get this back, we know that everything else has returned
 var ready = false;
 
@@ -139,13 +139,13 @@ function introduce()
   //alert(pName);
   document.getElementById(pName).display = "block";
   //alert("pRole"+pRole);
-  //alert("currentLevel"+currentLevel);
+  //alert("pLevel"+pLevel);
   //alert(roleItemIndexes[0][0][0]);
-  for(index in roleItemIndexes[currentLevel][pRole])
+  for(index in roleItemIndexes[pLevel][pRole])
   {
     //alert("index"+index);
-    setItemCount(itemIds[roleItemIndexes[currentLevel][pRole][index]],1);
-    itemQtys[roleItemIndexes[currentLevel][pRole][index]]++;
+    setItemCount(itemIds[roleItemIndexes[pLevel][pRole][index]],1);
+    itemQtys[roleItemIndexes[pLevel][pRole][index]]++;
   }
   draw();
   //alert("doneIntroducing");
@@ -186,7 +186,7 @@ function didUpdateItemQty(updatedItemId,qty)
 
     for(levelIdIndex in levelItemIds)
         if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
-            if(currentLevel <= levelIdIndex) currentLevel = levelIdIndex;
+            if(pLevel <= levelIdIndex) pLevel = levelIdIndex;
 
     checkWinState();
 }
@@ -194,8 +194,8 @@ function didUpdateItemQty(updatedItemId,qty)
 function checkWinState()
 {
     if(!ready) return;
-  for(index in wantedItemIndexes[currentLevel][pRole])
-    if(itemQtys[wantedItemIndexes[currentLevel][pRole][index]] <= 0)
+  for(index in wantedItemIndexes[pLevel][pRole])
+    if(itemQtys[wantedItemIndexes[pLevel][pRole][index]] <= 0)
       return false; //do nothing
 
   //If it gets here, we've won
@@ -293,8 +293,8 @@ function constructTradeTableHTML()
                 tableHtml+=constructTableCellHTML(inventoryIndex,1);
                 inventoryIndex++;
         tableHtml+="</td><td>";
-            if(i < wantedItemIndexes[currentLevel][pRole].length)
-                tableHtml+=constructTableCellHTML(wantedItemIndexes[currentLevel][pRole][i],0);
+            if(i < wantedItemIndexes[pLevel][pRole].length)
+                tableHtml+=constructTableCellHTML(wantedItemIndexes[pLevel][pRole][i],0);
         tableHtml+="</td></tr>";
     }
     tableHtml += "</table>";
@@ -304,7 +304,6 @@ function constructTradeTableHTML()
 
 function getAdvice()
 {
-    alert("test");
     var neededItems = new Array();
     for(itemIndexes in wantedItemIndexes[pLevel][pRole]){
         if(itemQtys[wantedItemIndexes[pLevel][pRole][itemIndexes]] < 1){

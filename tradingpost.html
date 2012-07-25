@@ -5,7 +5,7 @@
 <meta name = "viewport" content = "width=device-width, user-scalable=no" />
 <title>Trading Post</title>
 <script type = "text/javascript" src = "arisjs.js"></script>
-
+<script type = "text/javascript" src = "json2.js"></script>
 <script type = "text/javascript">
 
 function loadMe()
@@ -98,7 +98,17 @@ function initialize()
     gameId = parseInt(params.gameId);
     playerId = parseInt(params.playerId);
     webPageId = parseInt(params.webPageId);
-    switch(webPageId){
+
+    for(levelIdIndex in levelItemIds)
+        getItemCount(levelItemIds[levelIdIndex]);
+
+    getItemCount(bogusFinishReadyId);
+    refreshItemCounts();
+}
+
+function synchronizeToWebId(webId)
+{
+    switch(webId){
         case itemWebpageId[0]:
         introItemId = 1;
         break;
@@ -137,6 +147,7 @@ function initialize()
         break;
     }
     document.getElementById(""+introItemId).style.display="block";
+        //alert(pLevel);
     switch(introItemId)
     {
         case 1:
@@ -155,8 +166,16 @@ function initialize()
         case 8:
         case 9:
         case 10:
-        pName = "Crafter";
-        pRole = roleCrafter;
+        if(pLevel > 0)
+        {
+            pName = "Crafter";
+            pRole = roleCrafter;
+        }
+        else
+        {
+            pName = "Hunter";
+            pRole = roleHunter;
+        }
         break;
         case 11:
         case 12:
@@ -165,10 +184,6 @@ function initialize()
         break;
     }
     document.getElementById("roleTitle").innerHTML = pName;
-    for(levelIdIndex in levelItemIds)
-        getItemCount(levelItemIds[levelIdIndex]);
-    getItemCount(bogusFinishReadyId);
-    refreshItemCounts();
 }
 
 function introduce()
@@ -207,6 +222,7 @@ function didUpdateItemQty(updatedItemId,qty)
     if(updatedItemId == bogusFinishReadyId)
     {
       ready = true;
+      synchronizeToWebId(webPageId);
       introduce();
       return;
     }
@@ -259,10 +275,11 @@ function wasDeselected(itemIndex)
 
 function bumpReceived(bumpString)
 {
-    alert("BUMP!");
-    var newItems = bumpString.newItems;
+    var newItems = bumpString.tradedItems;
+    //document.getElementById("debug").innerHTML+="1";
     for(items in newItems)
     {
+        //document.getElementById("debug").innerHTML+="2";
         for(itemIndex in itemIds)
             if(itemIds[itemIndex] == newItems[items])
             {
@@ -273,6 +290,7 @@ function bumpReceived(bumpString)
 
     for(itemIndex in itemIds)
     {
+        //document.getElementById("debug").innerHTML+="3";
         if(itemSelected[itemIndex])
         {
             if(itemQtys[itemIndex] > 0) itemQtys[itemIndex]--;
@@ -280,6 +298,7 @@ function bumpReceived(bumpString)
             setItemCount(itemIds[itemIndex],itemQtys[itemIndex]);
         }
     }
+        //document.getElementById("debug").innerHTML+="4";
 }
 
 function constructBumpString()
@@ -508,6 +527,10 @@ body
  <div id="tradeTable">
     <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
  </div>
+
+ <!-- <div id="debug">
+ debug
+ </div> -->
     
  <div id="helperArea" style="position:absolute; bottom:0;">
     <img src="helper.jpg" width="50" height="50" onClick="getAdvice()"/>

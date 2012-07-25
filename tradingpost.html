@@ -61,6 +61,7 @@ var introItemId;
     
 var levelItemIds = [13,14,15];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
+var itemWpIds =    [];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
@@ -72,12 +73,14 @@ var itemImages = ["./images/guiding_icon.jpg","./images/Beaver_pelt_icon.png",".
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
 // parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
 var roleItemIndexes = [ //Items to start out with given your role
-                        [[4], [0], [6]], //Level 0
-                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 1
+                        [[4], [0], [6]], //Level 1
+                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 2
+                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 3
                     ];
 var wantedItemIndexes = [ //Items to strive for, given your goal. 
-                        [[0], [4], [2]], //Level 0
-                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 1
+                        [[0], [4], [2]], //Level 1
+                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 2
+                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 3
                         ];
 
 //Variables

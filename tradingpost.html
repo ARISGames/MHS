@@ -51,9 +51,7 @@ var wpCrafter = 2;
 var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
-var pLevel = 0;
 var bogusFinishReadyId = 99999999; //Call 'getQtyOfItem' with this after all other intro requests are queued. When we get this back, we know that everything else has returned
-var ready = false;
 
 //Game Data
 var gameId; 
@@ -61,7 +59,7 @@ var playerId;
 var webPageId;
 var introItemId;
     
-var levelItemIds = [13,14];//Level 0,1
+var levelItemIds = [13,14,15];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
@@ -74,16 +72,17 @@ var itemImages = ["./images/guiding_icon.jpg","./images/Beaver_pelt_icon.png",".
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
 // parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
 var roleItemIndexes = [ //Items to start out with given your role
-                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 0
+                        [[4], [0], [6]], //Level 0
                         [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 1
                     ];
 var wantedItemIndexes = [ //Items to strive for, given your goal. 
-                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 0
+                        [[0], [4], [2]], //Level 0
                         [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 1
                         ];
 
 //Variables
-var pLevel;
+var ready = false;
+var pLevel=0;
 var pName;
 var pRole;
 
@@ -95,7 +94,7 @@ function initialize()
     playerId = parseInt(params.playerId);
     webPageId = parseInt(params.webPageId);
     introItemId = webPageId;
-    webPageId=6; //TESTING 
+    webPageId=9; //TESTING 
     //Get Stuff from Server
     //alert(webPageId);
     document.getElementById(""+webPageId).style.display="block";
@@ -186,7 +185,7 @@ function didUpdateItemQty(updatedItemId,qty)
 
     for(levelIdIndex in levelItemIds)
         if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
-            if(pLevel <= levelIdIndex) pLevel = levelIdIndex;
+            if(pLevel <= levelIdIndex) pLevel = levelIdIndex+1;
 
     checkWinState();
 }
@@ -200,6 +199,7 @@ function checkWinState()
 
   //If it gets here, we've won
   setScene(sceneWin);
+    setItemCount(levelItemIds[pLevel],1);
 }
 
 function wasSelected(itemIndex)
@@ -311,7 +311,7 @@ function getAdvice()
         }
     }
     var itemAdviceIndex = Math.floor(Math.random()*neededItems.length);
-    var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + " . A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
+    var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + ". A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
     alert(advice);
 }
 
@@ -332,6 +332,8 @@ body
 {
   -webkit-user-select:none;
   user-select:none;
+  background-color:#000000;
+  color:#FFFFFF;
 }
 
 .scene
@@ -366,7 +368,6 @@ body
 <!-- Intro State -->
 <div id="intro" class="scene"  onClick="setScene(2)">
     <div id="Clerk">
-        I'm a clerk!
     	<div id="12" class="introItem">
             <p align="center">You have picked up <strong><em>fabric</em></strong>:</p>
             <p align="center"><img src="./images/fabric.jpg" width="300" height="100" /></p>

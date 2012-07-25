@@ -1,0 +1,19 @@
+<html>
+<script type="text/javascript" src="arisjs.js"></script>
+<script type="text/javascript">
+function setRandomString()
+{
+  var x = Math.random();
+  document.getElementById("bs").innerHTML = x+"";
+  setBumpString(""+x);
+}
+function receivedBump(withText)
+{
+  alert("Bump received: "+withText);
+}
+</script>
+<body onload="setRandomString()">
+Hi there!
+<div id="bs"> 0 </div>
+</body>
+</html>

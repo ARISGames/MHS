@@ -62,8 +62,8 @@ var levelItemIds = [13,14];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
-var itemNames = ["Guiding*","Furs","Leather","Work","Guns","iPads","Food","Work2*","SnowShoe","Moccs","Beads","Fabric"];
-var itemImages = ["guiding_icon.jpg","furs_icon.jpg","leather_icon.jpg","work_icon.jpg","gun_icon.jpg","Ipad_icon.jpg","food_icon.jpg","work2_icon.jpg","snowshoe_icon.jpg","moccs_icon.jpg","beads_icon.jpg","fabric_icon.jpg"];
+var itemNames = ["Guiding*","Furs","Leather","Work","Guns","iPads","Food","Work2*","Snowshoes","Moccasins","Beads","Fabric"];
+var itemImages = ["./images/guiding_icon.jpg","./images/Beaver_pelt_icon.png","./images/leather_icon.png","./images/work_icon.jpg","./images/gun_icon.jpg","./images/Ipad_icon.png","wild_rice_icon.jpg","work2_icon.jpg","./images/Snowshoes_icon.png","./images/moccasins_icon.jpg","./images/beads_icon.jpg","fabric_icon.jpg"];
 //*NOTE*- 
 // These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
@@ -115,7 +115,7 @@ function initialize()
 
 function introduce()
 {
-    alert("introducing");
+  alert("introducing...");
   document.getElementById(pName).display = "block";
   for(index in roleItemIndexes[curentLevel][pRole])
   {

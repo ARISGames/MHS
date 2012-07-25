@@ -2,24 +2,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name = "viewport" content = "width=device-width, user-scalable=no" />
+<meta name="viewport" content="width=device-width, user-scalable=no" />
 <title>Trading Post</title>
-<script type = "text/javascript" src = "arisjs.js"></script>
-<script type = "text/javascript" src = "json2.js"></script>
-<script type = "text/javascript">
+<link href="tradingstyle.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript" src="arisjs.js"></script>
+<script type="text/javascript" src="tradingmodel.js"></script>
+<script type="text/javascript">
 
-function loadMe()
+var scene = sceneIntro;
+var minLevel = 0; //Used to keep running count of what level the player is possibly at before all items are retrieved, and before player object is initialized
+var oldRole = null; //Used to know whether or not to wipe inventory
+var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
+
+function bodyLoad()
 {
-    setTimeout(function(){initialize()},delay);
+    setTimeout(function(){initialize()},100);
 }
 
-function setScene(scene)
+function setScene(newScene)
 {
-    //alert("Setting scene: "+scene);
+    scene = newScene;
+
     document.getElementById("loading").style.display="none";
     document.getElementById("intro").style.display="none";
     document.getElementById("trade").style.display="none";
-    document.getElementById("win").style.display="none";
+    document.getElementById("success").style.display="none";
 
     switch(scene)
     {
@@ -30,234 +39,91 @@ function setScene(scene)
             document.getElementById("intro").style.display="block";
             break;
         case sceneTrade:
+            draw();
             document.getElementById("trade").style.display="block";
             break;
-        case sceneWin:
-            document.getElementById("win").style.display="block";
+        case sceneSuccess:
+            document.getElementById("success").style.display="block";
             break;
     }
 }
 
-//Constants
-var delay = 300;
-//Enums
-var sceneLoading = 0;
-var sceneIntro = 1;
-var sceneTrade = 2;
-var sceneWin = 3;
-var wpClerk = 0;
-var wpHunter = 1;
-var wpCrafter = 2;
-var roleClerk = 0;
-var roleHunter = 1;
-var roleCrafter = 2;
-var bogusFinishReadyId = 99999999; //Call 'getQtyOfItem' with this after all other intro requests are queued. When we get this back, we know that everything else has returned
-
-//Game Data
-var gameId; 
-var playerId;
-var webPageId;
-var introItemId;
-
-var levelItemIds = [13,14,15];//Level 0,1
-var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
-var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
-var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
-var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
-var roleTitles = ["Clerk", "Hunter", "Crafter"];    
-var itemNames = ["Beaver Pelt","Deer Meat","Leather","Raw Hide Lacing","Guns","Coat","Wild Rice","Maple Sugar","Snowshoes","Moccasins","Beads","Blanket"];
-var itemImages = ["./images/beaverpelt.png","./images/deermeat.png","./images/leather.png","./images/lace.png","./images/gun.png","./images/coat.png","./images/wildrice.png","./images/maplesugar.png","./images/snoeshow.png","./images/moccasins.png","./images/beads.png","./images/blanket.png"];
-var itemImages96 = ["./images/beaverpelt96.png","./images/deermeat96.png","./images/leather96.png","./images/lace96.png","./images/gun96.png","./images/coat96.png","./images/wildrice96.png","./images/maplesugar96.png","./images/snoeshow96.png","./images/moccasins96.png","./images/beads96.png","./images/blanket96.png"];
-var itemWebpageId = [757,758,759,760,761,762,763,764,765,766,767,768];
-
-//*NOTE*- 
-// These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
-// This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
-// parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
-var roleItemIndexes = [ //Items to start out with given your role
-    [[4], [0], [6]], //Level 1
-    [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 2
-    [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 3
-    ];
-var wantedItemIndexes = [ //Items to strive for, given your goal. 
-    [[0], [4], [2]], //Level 1
-    [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 2
-    [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 3
-    ];
-
-    //Variables
-    var ready = false;
-    var introduced = false;
-    var pLevel=0;
-    var pName;
-    var pRole;
-
+//Fetches all data it needs
 function initialize()
 {
-    //Get PlayerID and GameID from URL
+    //Get URL Fields
     var params = parseURLParams(document.URL);
-    gameId = parseInt(params.gameId);
-    playerId = parseInt(params.playerId);
-    webPageId = parseInt(params.webPageId);
+    gameId     = parseInt(params.gameId);
+    playerId   = parseInt(params.playerId);
+    webPageId  = parseInt(params.webPageId);
 
-    for(levelIdIndex in levelItemIds)
-        getItemCount(levelItemIds[levelIdIndex]);
-
-    getItemCount(bogusFinishReadyId);
-    refreshItemCounts();
+    for(i in items)
+        getItemCount(items[i].itemId);
+    for(i in levelIds)
+        getItemCount(i);
+    for(i in players)
+        getItemCount(players[i].roleId);
+    getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
 }
 
-function synchronizeToWebId(webId)
+//Once all data is retreived, actually initialize game state
+function postInit()
 {
-    switch(webId){
-        case itemWebpageId[0]:
-            introItemId = 1;
-            break;
-        case itemWebpageId[1]:
-            introItemId = 2;
-            break;
-        case itemWebpageId[2]:
-            introItemId = 3;
-            break;
-        case itemWebpageId[3]:
-            introItemId = 4;
-            break;
-        case itemWebpageId[4]:
-            introItemId = 5;
-            break;
-        case itemWebpageId[5]:
-            introItemId = 6;
-            break;
-        case itemWebpageId[6]:
-            introItemId = 7;
-            break;
-        case itemWebpageId[7]:
-            introItemId = 8;
-            break;
-        case itemWebpageId[8]:
-            introItemId = 9;
-            break;
-        case itemWebpageId[9]:
-            introItemId = 10;
-            break;
-        case itemWebpageId[10]:
-            introItemId = 11;
-            break;
-        case itemWebpageId[11]:
-            introItemId = 12;
-            break;
-    }
-    switch(introItemId)
+    player = new player(itemDescriptionForWebPageId(webPageId).owner,minLevel);
+    if(!oldRole || player.description.role != oldRole.role)
     {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            pName = "Hunter";
-            pRole = roleHunter;
-            break;
-        case 5:
-        case 6:
-            pName = "Clerk";
-            pRole = roleClerk;
-            break;
-        case 7:
-        case 8:
-        case 9:
-        case 10:
-            if(pLevel > 0)
-            {
-                pName = "Crafter";
-                pRole = roleCrafter;
-            }
-            else
-            {
-                introItemId=3;
-                pName = "Hunter";
-                pRole = roleHunter;
-            }
-            break;
-        case 11:
-        case 12:
-            pName = "Clerk";
-            pRole = roleClerk;
-            break;
-    }
-    //document.getElementById(""+introItemId).innerHTML+=introItemId;
-    document.getElementById(""+introItemId).style.display="block";
-    document.getElementById("roleTitle").innerHTML = pName;
-}
-
-function introduce()
-{
-    //alert("introducing...");
-    //alert(pName);
-    document.getElementById(pName).display = "block";
-    //alert("pRole"+pRole);
-    //alert("pLevel"+pLevel);
-    //alert(roleItemIndexes[0][0][0]);
-    for(roleIndex in roleItemIndexes[pLevel])
-    {
-        //alert("index"+index);
-        for(index in roleItemIndexes[pLevel][roleIndex])
+        //Wipe away relevant inventory and start fresh
+        for(i in items)
         {
-            if(roleIndex == pRole)
-            {
-                setItemCount(itemIds[roleItemIndexes[pLevel][roleIndex][index]],1);
-                itemQtys[roleItemIndexes[pLevel][roleIndex][index]] = 1;
-            }
-            else
-            {
-                takeItemCount(itemIds[roleItemIndexes[pLevel][roleIndex][index]],999);
-                itemQtys[roleItemIndexes[pLevel][roleIndex][index]] = 0;
-            }
+            setItemCount(items[i].description.itemId,0); //Back to ARIS
+            completelyRemoveItemFromInventory(items[i].description.type); //Local
+        }
+
+        for(i in player.description.givenItems)
+        {
+            setItemCount(player.description.givenItems[i].itemId,1); //Back to ARIS
+            setItemQtyInInventory(player.description.givenItems[i].type,1); //Local
         }
     }
-    //alert(JSON.stringify(itemQtys));
-    draw();
-    //alert("doneIntroducing");
-    setScene(sceneIntro);
-    introduced = true;
+    playIntro(0);
 }
 
-function draw()
-{
-    if(ready)
-        document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
-}
-
-function refreshItemCounts()
-{
-    for(itemId in itemIds)
-        getItemCount(itemIds[itemId]);
-}
-
+//This is called by ARIS, informing this webpage of qty values
 function didUpdateItemQty(updatedItemId,qty)
 {
     if(updatedItemId == bogusFinishReadyId)
     {
-        synchronizeToWebId(webPageId);
-        introduce();
-        ready = true;
+        postInit();
         return;
     }
-    //alert("Found Item "+updatedItemId+" of qty "+qty);
-    var newItem = false;
-    for(itemIndex in itemIds)
-    {
-        if(updatedItemId == itemIds[itemIndex])
-        {
-            itemQtys[itemIndex]=qty;
-            newItem = true;
-        }
-    }
-    if(newItem) draw();
 
-    for(levelIdIndex in levelItemIds)
-        if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
-            if(pLevel <= levelIdIndex) pLevel = 1;//levelIdIndex+1;
+    if(var i = itemDescriptionForItemId(updatedItemId)) setItemQtyInInventory(i.type, qty);
+    else if(var l = levelForLevelId(updatedItemId) && qty > 0) if(l > minLevel) minLevel = l;
+    else if(var r = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = r;
 
+    draw();
     checkWinState();
+}
+
+function playIntro(state)
+{
+    document.getElementById(sceneIntro).onClick="playIntro("+(state+1)+")";
+    switch(state)
+    {
+        case 0:
+            document.getElementById(player.description.title).display = "block";
+            setScene(sceneIntro);
+            break;
+        case 1:
+            setScene(sceneTrade);
+            break;
+    }
+}
+
+function draw()
+{
+    if(scene = sceneTrade)
+        document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
 }
 
 function checkWinState()
@@ -272,7 +138,7 @@ function checkWinState()
     }
 
     //If it gets here, we've won
-    setScene(sceneWin);
+    setScene(sceneSuccess);
     setItemCount(levelItemIds[pLevel],1);
 }
 
@@ -394,176 +260,66 @@ function getAdvice()
 }
 
 </script>
-<style>
-div
-{
-    /*
-        border-style:solid;
-        border-width:1px;
-        border-color:#FF0000;
-    */
-    padding:0px;
-    font-weight:Bold;
-}
-
-body
-{
-  -webkit-user-select:none;
-  user-select:none;
-  background-color:#000000;
-  color:#888888;
-}
-
-.scene
-{
-  /* For some reason, adding border fixes the white bar at the top. */
-  border-style:solid;
-  border-width:2px;
-  border-color:#000000;
-  width:100%;
-  height:100%;
-  display:none;
-  /*background-color:#000000;*/
-}
-
-.introItem
-{
-  display:none;
-}
-
-</style>
 </head>
 <body onLoad="loadMe()" style="margin:0px; padding:0px;">
-<div id="tradeScreen" style="position:relative; margin:0px; width:320px; height:416px;">
+<div id="screen">
 
 <!-- Loading State -->
-<div id="loading" class="scene" style="display:block;">
-  <div style="color:#FFFFFF; position:absolute; top:198px; left:130px; height:20px; width:60px;">
-  loading...
-  </div>
+<div id="loading" class="scene">
+    loading...
 </div>
 
 <!-- Intro State -->
-<div style="background-image:url('images/Fur_Trade_Screen_Intro.png')"; id="intro" class="scene"  onClick="setScene(2)">
-    <div id="Clerk">
-    	<div id="12" class="introItem">
-            <p align="center">You have picked up a <strong><em>blanket</em></strong>:</p>
-            <p align="center"><img src="./images/blanket96.png" width="300" height="100" /></p>
-            <p align="center">Clerks trade blankets with hunters and crafters or other goods and services to keep their business growing. </p>
-            <p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
-            <p align="center">You are now a <strong><em>clerk</em></strong>. Trade your blankets and other goods to gain beaver pelts, deer meat, snowshoes, and moccasins. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="11" class="introItem">
-            <p align="center">You have picked up <strong><em>beads</em></strong>:</p>
-            <p align="center"><img src="./images/beads96.png" width="198" height="102" /></p>
-            <p align="center">Clerks trade beads with hunters and crafters for other goods and services to keep their business growing. </p>
-            <p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
-            <p align="center">You are now a <strong><em>clerk</em></strong>. Trade your beads and other goods to gain beaver pelts, deer meat, snowshoes and moccasins. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="5" class="introItem">
-            This item doesn't exist! (but is still consistent with the programming model!)
-        </div>
-        <div id="6" class="introItem">
-            This item doesn't exist! (but is still consistent with the programming model!)
-        </div>
+<div id="intro" class="scene">
+    <div id="clerk">
     </div>
-    <div id="Hunter">
-        <div id="1" class="introItem">
-            <p align="center">You have picked up a <strong><em>beaver pelt</em></strong>:</p>
-            <p align="center"><img src="./images/beaverpelt96.png" width="109" height="98" /></p>
-            <p align="center">Hunters trade their beaver pelts with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
-            <p align="center"><img src="./images/Hunter.jpg" width="180" height="229" /></p>
-            <p align="center">You are now a <strong><em>hunter</em></strong>. Trade your pelt and other goods to gain guns, wild rice, coats, and moccasins. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="3" class="introItem">
-            <p align="center">You have picked up <strong><em>leather</em></strong>:</p>
-            <p align="center"><img src="./images/leather96.png" width="129" height="109" /></p>
-            <p align="center">Hunters trade leather with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
-            <p align="center"><img src="./images/Hunter.jpg" width="180" height="229" /></p>
-            <p align="center">You are now a <strong><em>hunter</em></strong>. Trade your leather and other goods to gain guns, wild rice, coats, and moccasins. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="2" class="introItem">
-            This item doesn't exist! (but is still consistent with the programming model!)
-        </div>
-        <div id="4" class="introItem">
-            This item doesn't exist! (but is still consistent with the programming model!)
-        </div>
+    <div id="hunter">
     </div>
-    <div id="Crafter">
-        <div id="9" class="introItem">
-            <p align="center">You have picked up <strong><em>snowshoes</em></strong>:</p>
-            <p align="center"><img src="./images/snoeshow96.png" width="150" height="194" /></p>
-            <p align="center">Crafters trade snowshoes with  clerks and hunters for other goods and services to support their families. </p>
-            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your snowshoes and other goods to gain beads, blankets, leather, and raw hide lacing. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="10" class="introItem">
-            <p align="center">You have picked up <strong><em>moccasins</em></strong>:</p>
-            <p align="center"><img src="./images/moccasins96.png" width="187" height="123" /></p>
-            <p align="center">Crafters trade moccasins with  clerks and hunters for other goods and services to support their families. </p>
-            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your moccasins and other goods to gain beads, blankets, leather, and raw hide lacing. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="7" class="introItem">
-            <p align="center">You have picked up <strong><em>wild rice</em></strong>:</p>
-            <p align="center"><img src="./images/wildrice96.png" width="193" height="135" /></p>
-            <p align="center">Crafters trade wild rice  with  clerks and hunters for other goods and services to support their families. </p>
-            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your wild rice and other goods to gain beads, blankets, leather, and raw hide lacing. </p>
-            <p align="center">Go Trade!</p>
-            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-        </div>
-        <div id="8" class="introItem">
-            This item doesn't exist! (but is still consistent with the programming model!)
-        </div>
-    </div>
-    <div id="Hunter">
-    </div>
-    <div id="Crafter">
+    <div id="crafter">
     </div>
 </div>
 
 <!-- Trade State -->    
-<div style="color:#000000; background-image:url('images/Fur_Trade_Screen_Have_Want_Bkg.png');"; id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
-<!--
- <div id="bumpLogo" class="subtitle">
- </div>
--->
- <div id="roleTitle" style="margin:0 auto;">
- </div>
-    
- <div id="tradeTable">
-    <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
- </div>
+<div id="trade" class="scene"> 
 
- <!-- <div id="debug">
- debug
- </div> -->
+    <div id="topBar">
+    </div>
     
- <div id="helperArea" style="position:absolute; bottom:0;">
-    <img src="images/voyageur.png" width="50" height="50" onClick="getAdvice()"/>
- </div>
+    <div id="tradeContent">
+        <table>
+            <tr>
+                <td width="50%">
+                    You Have
+                </td>
+                <td width="50%">
+                    You Want
+                </td>
+            </tr>
+            <tr>
+                <td id="inventory">
+                </td>
+                <td id="wants">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    
+    <div id="bottomBar">
+        <img src="images/voyageur.png" width="50" height="50" onClick="getAdvice()"/>
+    </div>
 
 </div>
 
-<!-- Win State -->
-<div id="win" class="scene">
-  <div style="color:#FFFFFF; position:absolute; top:198px; left:130px; height:20px; width:60px;">
-      YOU WIN
-  </div>
+<!-- Success State -->
+<div id="success" class="scene">
+    YOU WIN
 </div>
+
+<!-- Debug -->
+<div id="debug">
+    debug
+</div> 
 
 </div><!-- body -->
 </body>

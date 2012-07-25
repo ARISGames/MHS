@@ -137,13 +137,16 @@ function wasDeselected(itemIndex)
 
 function bumpReceived(bumpString)
 {
-    alert("BUMP! "+bumpString);
-    var newItems = bumpString;
+    //alert("BUMP! "+bumpString.toSource());
+    var newItems = bumpString.newItems;
     for(items in newItems)
     {
         for(itemIndex in itemIds)
             if(itemIds[itemIndex] == newItems[items])
+            {
                 itemQtys[itemIndex]++;
+                setItemCount(itemIds[itemIndex],itemQtys[itemIndex]);
+            }
     }
 
     for(itemIndex in itemIds)
@@ -152,6 +155,7 @@ function bumpReceived(bumpString)
         {
             if(itemQtys[itemIndex] > 0) itemQtys[itemIndex]--;
             itemSelected[itemIndex] = 0;
+            setItemCount(itemIds[itemIndex],itemQtys[itemIndex]);
         }
     }
 }
@@ -165,7 +169,7 @@ function constructBumpString()
             bumpString += itemIds[itemIndex]+",";
     }
     if(bumpString.charAt(bumpString.length-1) == ",")
-        bumpString.slice(0,-1);
+        bumpString = bumpString.slice(0,-1);
 
     bumpString += "]}";
     setBumpString(bumpString);
@@ -178,16 +182,16 @@ function constructTableCellHTML(itemIndex, inventorySide)
     if(inventorySide)
     {
         if(itemSelected[itemIndex]) //was selected
-            cellHTML+="<div onClick='wasDeselected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='50' height='50'/>* "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
+            cellHTML+="<div onClick='wasDeselected("+itemIndex+")' bgcolor='#D1E0FF'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
         else
-            cellHTML+="<div onClick='wasSelected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='50' height='50'/> "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
+            cellHTML+="<div onClick='wasSelected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
     }
     else
     {
         if(itemQtys[itemIndex]) //was found
-            cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='50' height='50'/>* "+itemNames[itemIndex]+"</div>";
+            cellHTML+="<div bgcolor='#D1FFE0'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+"</div>";
         else
-            cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='50' height='50'/> "+itemNames[itemIndex]+"</div>";
+            cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+"</div>";
     }
     return cellHTML;
 }
@@ -229,7 +233,6 @@ div
         border-color:#FF0000;
     */
     padding:0px;
-    font-family:Noteworthy;
     font-weight:Bold;
 }
 

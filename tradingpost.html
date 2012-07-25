@@ -46,12 +46,14 @@ var wpCrafter = 2;
 var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
+var currentLevel = 0;
 
 //Game Data
 var gameId; 
 var playerId;
 var webPageId;
     
+var levelItemIds = [13,14];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
@@ -61,8 +63,14 @@ var itemImages = ["guiding_icon.jpg","furs_icon.jpg","leather_icon.jpg","work_ic
 // These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
 // parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
-var roleItemIndexes = [[4,5,10,11], [0,1,2,3], [6,7,8,9]];//Items to start out with given your role
-var wantedItemIndexes = [[1,2,3], [2,3,4], [3,4,5]]; //Items to strive for, given your goal. THESE ARE CURRENTLY WRONG! I PUT RANDOM STUFF IN THERE!!! GREAT GOOGLY MOOGLIES!
+var roleItemIndexes = [ //Items to start out with given your role
+                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]], //Level 0
+                        [[4,5,10,11], [0,1,2,3], [6,7,8,9]] //Level 1
+                    ];
+var wantedItemIndexes = [ //Items to strive for, given your goal. 
+                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]], //Level 0
+                        [[0,1,8,9], [4,5,6,7], [2,3,10,11]] //Level 1
+                        ];
 
 //Variables
 var pLevel;
@@ -93,7 +101,9 @@ function initialize()
             pRole = roleCrafter;
             break;
     }
-
+    document.getElementById("roleTitle").innerHTML = pRole;
+    for(levelIdIndex in levelItemIds)
+        getItemCount(levelItemIds[levelIdIndex]);
     refreshItemCounts();
 }
 
@@ -111,12 +121,20 @@ function refreshItemCounts()
 function didUpdateItemQty(updatedItemId,qty)
 {
     //alert("Found Item "+updatedItemId+" of qty "+qty);
+    var newItem = false;
     for(itemIndex in itemIds)
     {
         if(updatedItemId == itemIds[itemIndex])
+        {
             itemQtys[itemIndex]=qty;
+            newItem = true;
+        }
     }
-    draw();
+    if(newItem) draw();
+
+    for(levelIdIndex in levelItemIds)
+        if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
+            if(currentLevel <= levelIdIndex) currentLevel = levelIdIndex;
 }
 
 function wasSelected(itemIndex)
@@ -210,8 +228,8 @@ function constructTradeTableHTML()
                 tableHtml+=constructTableCellHTML(inventoryIndex,1);
                 inventoryIndex++;
         tableHtml+="</td><td>";
-            if(i < wantedItemIndexes[pRole].length)
-                tableHtml+=constructTableCellHTML(wantedItemIndexes[pRole][i],0);
+            if(i < wantedItemIndexes[currentLevel][pRole].length)
+                tableHtml+=constructTableCellHTML(wantedItemIndexes[currentLevel][pRole][i],0);
         tableHtml+="</td></tr>";
     }
     tableHtml += "</table>";
@@ -219,9 +237,10 @@ function constructTradeTableHTML()
     return tableHtml;
 }
 
-//update health and xp in ARIS
-//setItemCount(HEALTH_ITEM_ID, pHealth); //setItemCountForPlayer(gameId, playerId, HEALTH_ITEM_ID, pHealth);
-//setItemCount(XP_ITEM_ID, pXP); //setItemCountForPlayer(gameId, playerId, XP_ITEM_ID, pXP);
+function getAdvice()
+{
+    alert("Advice!");
+}
 
 </script>
 <style>
@@ -291,12 +310,15 @@ body
  <div id="bumpLogo" class="subtitle">
  </div>
 -->
+ <div id="roleTitle">
+ </div>
     
  <div id="tradeTable">
     <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
  </div>
     
- <div id="helperArea" class="notifications">
+ <div id="helperArea" style="position:absolute; bottom:0;">
+    <img src="helper.jpg" width="50" height="50" onClick="getAdvice()"/>
  </div>
 
 </div>

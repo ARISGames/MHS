@@ -61,7 +61,6 @@ var introItemId;
     
 var levelItemIds = [13,14,15];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
-var itemWpIds =    [];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
@@ -135,7 +134,7 @@ function initialize()
         introItemId = 12;
         break;
     }
-    document.getElementById(""+webPageId).style.display="block";
+    document.getElementById(""+introItemId).style.display="block";
     switch(introItemId)
     {
         case 1:
@@ -258,7 +257,7 @@ function wasDeselected(itemIndex)
 
 function bumpReceived(bumpString)
 {
-    //alert("BUMP! "+bumpString.toSource());
+    alert("BUMP!");
     var newItems = bumpString.newItems;
     for(items in newItems)
     {

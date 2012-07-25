@@ -66,8 +66,9 @@ var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
 var roleTitles = ["Clerk", "Hunter", "Crafter"];    
-var itemNames = ["Guiding*","Furs","Leather","Work","Guns","iPads","Food","Work2*","Snowshoes","Moccasins","Beads","Fabric"];
-var itemImages = ["./images/guiding_icon.jpg","./images/Beaver_pelt_icon.png","./images/leather_icon.png","./images/work_icon.jpg","./images/gun_icon.jpg","./images/Ipad_icon.png","wild_rice_icon.jpg","work2_icon.jpg","./images/Snowshoes_icon.png","./images/moccasins_icon.jpg","./images/beads_icon.jpg","fabric_icon.jpg"];
+var itemNames = ["Furs","Guiding*","Leather","Work*","Guns","iPads","Food","Work2*","Snowshoes","Moccasins","Beads","Fabric"];
+var itemImages = ["./images/Beaver_pelt_icon.png","./images/guiding_icon.jpg","./images/leather_icon.png","./images/work_icon.jpg","./images/gun_icon.jpg","./images/Ipad_icon.png","wild_rice_icon.jpg","work2_icon.jpg","./images/Snowshoes_icon.png","./images/moccasins_icon.jpg","./images/beads_icon.jpg","fabric_icon.jpg"];
+var itemWebpageId = [757,758,759,760,761,762,763,764,765,766,767,768];
 //*NOTE*- 
 // These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
@@ -96,12 +97,46 @@ function initialize()
     gameId = parseInt(params.gameId);
     playerId = parseInt(params.playerId);
     webPageId = parseInt(params.webPageId);
-    introItemId = webPageId;
-    webPageId=9; //TESTING 
-    //Get Stuff from Server
-    //alert(webPageId);
+    switch(webPageId){
+        case itemWebpageId[0]:
+        introItemId = 1;
+        break;
+        case itemWebpageId[1]:
+        introItemId = 2;
+        break;
+        case itemWebpageId[2]:
+        introItemId = 3;
+        break;
+        case itemWebpageId[3]:
+        introItemId = 4;
+        break;
+        case itemWebpageId[4]:
+        introItemId = 5;
+        break;
+        case itemWebpageId[5]:
+        introItemId = 6;
+        break;
+        case itemWebpageId[6]:
+        introItemId = 7;
+        break;
+        case itemWebpageId[7]:
+        introItemId = 8;
+        break;
+        case itemWebpageId[8]:
+        introItemId = 9;
+        break;
+        case itemWebpageId[9]:
+        introItemId = 10;
+        break;
+        case itemWebpageId[10]:
+        introItemId = 11;
+        break;
+        case itemWebpageId[11]:
+        introItemId = 12;
+        break;
+    }
     document.getElementById(""+webPageId).style.display="block";
-    switch(webPageId)
+    switch(introItemId)
     {
         case 1:
         case 2:

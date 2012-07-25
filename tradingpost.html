@@ -7,7 +7,6 @@
 <script type = "text/javascript" src = "arisjs.js"></script>
 
 <script type = "text/javascript">
-document.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
 
 function loadMe()
 {
@@ -41,6 +40,9 @@ var delay = 300;
 var sceneLoading = 0;
 var sceneIntro = 1;
 var sceneTrade = 2;
+var wpClerk = 0;
+var wpHunter = 1;
+var wpCrafter = 2;
 var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
@@ -50,20 +52,21 @@ var gameId;
 var playerId;
 var webPageId;
     
-var clerkItemIds = new Array(5,6,11,12);
-var hunterItemIds = new Array(1,2,3,4);
-var crafterItemIds = new Array(7,8,9,10);
-var allItemIds = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
-var roleItemIds = new Array(clerkItemIds, hunterItemIds, crafterItemIds);
-var pItems = new Array();
-var pItemQtys = new Array();    
+var itemIds =      new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+var itemQtys =     new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+var itemSelected = new Array(0,0,0,0,0,0,0,0,0,0, 0, 0);
+var itemImages = new Array("img.png","img.png","img.png","img.png","img.png","img.png","img.png","img.png","img.png","img.png","img.png","img.png");
+//*NOTE*- 
+// These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
+// This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
+// parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
+var roleItemIndexes = new Array(new Array(4,5,10,11), new Array(0,1,2,3), new Array(6,7,8,9));
+var wantedItemIndexes = new Array(new Array(), new Array(), new Array());
 
 //Variables
 var pLevel;
 var pName;
 var pRole;
-
-var bumpProgress;
 
 function initialize()
 {
@@ -76,86 +79,147 @@ function initialize()
     //Get Stuff from Server
     switch(webPageId)
     {
-        case roleClerk:
+        case wpClerk:
             pName = "Clerk";
             pRole = roleClerk;
             break;
-        case roleHunter:
+        case wpHunter:
             pName = "Hunter";
             pRole = roleHunter;
             break;
-        case roleCrafter:
+        case wpCrafter:
             pName = "Crafter";
             pRole = roleCrafter;
             break;
     }
 
-    for(itemId in allItemIds)
-        getItemCount(allItemIds[itemId]);
+    refreshItemCounts();
+}
 
-    //End Server Get
+function draw()
+{
+    document.getElementById("tradeTable").innerHtml = constructTradeTableHTML();
+}
 
-    //Set up the images
-//    document.getElementById("kkomamon").style.backgroundImage = "url('images/" + kNames[kType] + ".gif')";
-
-
-    //Begin Precaching Media
-    //prepareMedia(kMediaIdMusic);
-    //setMediaVolume(kMediaIdMusic,0.20);
-    //prepareMedia(kMediaIdMiss); 
-    //prepareMedia(kMediaIdPunch); 
-    //prepareMedia(kMediaIdFire); 
-    //prepareMedia(kMediaIdKiss); 
-    //prepareMedia(kMediaIdWin); 
-    //prepareMedia(kMediaIdLose); 
-
-    //Start Music
-    //playMedia(kMediaIdMusic);
+function refreshItemCounts()
+{
+    for(itemId in itemIds)
+        getItemCount(itemIds[itemId]);
 }
 
 function didUpdateItemQty(updatedItemId,qty)
 {
-  //Check all game-related item ids...
-  for(itemId in allItemIds)
-  {
-    //if the updated itemId is relevant...
-    if(updatedItemId == allitemIds[itemId])
+    for(itemIndex in itemIds)
     {
-      var alreadyHaveIt = false;
-      //For each of the items in your inventory
-      for(myItemId in pItems)
-      {
-        //check if they are the same (you already have the item)
-        if(updatedItemId == pItems[myItemId])
-        {
-          //correct its value
-          alreadyHaveIt = true;
-          pItemQtys[myItemsIs]=qty;
-        }
-      }
-      //Otherwise
-      if(!alreadyHaveIt)
-      {
-        //Add it to the array
-        pItems.push(updatedItemId);
-        pItemQtys.push(qty);
-      }
+        if(updatedItemId == itemIds[itemIndex])
+            itemQtys[itemIndex]=qty;
     }
-  }
+    draw();
+}
+
+function wasSelected(itemIndex)
+{
+    itemSelected[itemIndex] = 1;
+    constructBumpString();
+    draw();
+}
+
+function wasDeselected(itemIndex)
+{
+    itemSelected[itemIndex] = 0;
+    constructBumpString();
+    draw();
+}
+
+function bumpReceived(bumpString)
+{
+    var newItems = eval("("+bumpString+")").newItems;
+    for(items in newItems)
+    {
+        for(itemIndex in itemIds)
+            if(itemIds[itemIndex] == newItems[items])
+                itemQtys[itemIndex]++;
+    }
+
+    for(itemIndex in itemIds)
+    {
+        if(itemSelected[itemIndex])
+        {
+            if(itemQtys[itemIndex] > 0) itemQtys[itemIndex]--;
+            itemSelected[itemIndex] = 0;
+        }
+    }
+}
+
+function constructBumpString()
+{
+    var bumpString = "{\"tradedItems\":[";
+    for(itemIndex in itemIds)
+    {
+        if(itemSelected[itemIndex])
+            bumpString += itemIds[itemIndex]+",";
+    }
+    if(bumpString.charAt(bumpString.length-1) == ",")
+        bumpString.slice(0,-1);
+
+    bumpString += "]}";
+    setBumpString(bumpString);
+    return bumpString;
+}
+
+function constructTableCellHTML(itemIndex, inventorySide)
+{
+    var cellHTML = "";
+    if(inventorySide)
+    {
+        if(itemSelected[itemIndex]) //was selected
+            cellHTML+="<div onClick='wasSelected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='50' height='50'/>* Qty:"+itemQtys[itemIndex]+"</div>";
+        else
+            cellHTML+="<div onClick='wasDeselected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='50' height='50'/> Qty:"+itemQtys[itemIndex]+"</div>";
+    }
+    else
+    {
+        if(itemQtys[itemIndex]) //was found
+            cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='50' height='50'/>*</div>";
+        else
+            cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='50' height='50'/></div>";
+    }
+}
+
+function constructTradeTableHTML()
+{
+    var tableHtml = "<table width='100%' padding='0' margin='0'><tr><td width='50%'>Inventory</td><td width='50%'>Want</td></tr>";
+    var inventoryIndex = 0;
+    for(var i = 0; i < itemIds.length; i++)
+    {
+        tableHtml+="<tr><td>";
+            //Ok, this part is weird, but you're just gonna have to trust me
+            while(inventoryIndex < itemQtys.length && itemQtys[inventoryIndex]<=0)
+                inventoryIndex++;
+            if(inventoryIndex < itemQtys.length)
+                tableHtml+=constructTableCellHTML(itemIds[inventoryIndex],1);
+        tableHtml+="</td><td>";
+            if(i < wantedItemIndexes[pRole].length)
+                tableHtml+=constructTableCellHTML(wantedItemIndexes[pRole][i],0);
+        tableHtml+="</td></tr>";
+    }
+    tableHtml += "</table>";
+    return tableHtml;
 }
 
 //update health and xp in ARIS
 //setItemCount(HEALTH_ITEM_ID, pHealth); //setItemCountForPlayer(gameId, playerId, HEALTH_ITEM_ID, pHealth);
 //setItemCount(XP_ITEM_ID, pXP); //setItemCountForPlayer(gameId, playerId, XP_ITEM_ID, pXP);
 
-
 </script>
 <style>
 div
 {
-    border-style:solid;
-    border-width:1px;
-    border-color:#FF0000;
+    /*
+        border-style:solid;
+        border-width:1px;
+        border-color:#FF0000;
+    */
     padding:0px;
     color:white;
     font-family:Noteworthy;
@@ -177,7 +241,7 @@ body
   width:100%;
   height:100%;
   display:none;
-  background-color:#000000;
+  /*background-color:#000000;*/
 }
 
 .subtitle
@@ -194,6 +258,7 @@ body
 {
   
 }
+
 </style>
 </head>
 <body onLoad="loadMe()" style="margin:0px; padding:0px;">
@@ -212,17 +277,18 @@ body
 
 <!-- Trade State -->    
 <div id="trade" class="scene"> <!-- style="background-image:url('images/background7.jpg');" -->
+<!--
  <div id="bumpLogo" class="subtitle">
  </div>
+-->
     
- <div id="inventory" class="screenSplit">
- </div>
-    
- <div id="needs" class="screenSplit">
+ <div id="tradeTable">
+    <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
  </div>
     
  <div id="helperArea" class="notifications">
  </div>
+
 </div>
 
 <!-- Win State -->

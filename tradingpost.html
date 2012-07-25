@@ -308,7 +308,7 @@ function getAdvice()
             neededItems.push(wantedItemIndexes[pLevel][pRole][itemIndexes]);
         }
     }
-    var itemAdviceIndex = Math.floor((Math.random()*neededItems.length);
+    var itemAdviceIndex = Math.floor(Math.random()*neededItems.length);
     var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + " . A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
     alert(advice);
 }

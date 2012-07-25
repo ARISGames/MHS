@@ -61,8 +61,8 @@ var itemImages = ["guiding_icon.jpg","furs_icon.jpg","leather_icon.jpg","work_ic
 // These next two arrays are *NOT* holding values of item ids, rather, indexes into the itemId array that DOES hold the item IDs.
 // This is to allow for one-spot switching of item IDs, and these can be used consistently in functions that rely on the 
 // parallelocity of the 'itemIds', 'itemQtys', 'itemImages', etc... arrays
-var roleItemIndexes = [[4,5,10,11], [0,1,2,3], [6,7,8,9]];
-var wantedItemIndexes = [[1,2,3], [2,3,4], [3,4,5]];
+var roleItemIndexes = [[4,5,10,11], [0,1,2,3], [6,7,8,9]];//Items to start out with given your role
+var wantedItemIndexes = [[1,2,3], [2,3,4], [3,4,5]]; //Items to strive for, given your goal. THESE ARE CURRENTLY WRONG! I PUT RANDOM STUFF IN THERE!!! GREAT GOOGLY MOOGLIES!
 
 //Variables
 var pLevel;
@@ -182,14 +182,14 @@ function constructTableCellHTML(itemIndex, inventorySide)
     if(inventorySide)
     {
         if(itemSelected[itemIndex]) //was selected
-            cellHTML+="<div onClick='wasDeselected("+itemIndex+")' bgcolor='#D1E0FF'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
+            cellHTML+="<div onClick='wasDeselected("+itemIndex+")' style='background-color:#D1E0FF;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
         else
             cellHTML+="<div onClick='wasSelected("+itemIndex+")'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+" Qty:"+itemQtys[itemIndex]+"</div>";
     }
     else
     {
         if(itemQtys[itemIndex]) //was found
-            cellHTML+="<div bgcolor='#D1FFE0'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+"</div>";
+            cellHTML+="<div style='background-color:#D1FFE0;'><img src='"+itemImages[itemIndex]+"' width='36' height='36'/>* "+itemNames[itemIndex]+"</div>";
         else
             cellHTML+="<div><img src='"+itemImages[itemIndex]+"' width='36' height='36'/> "+itemNames[itemIndex]+"</div>";
     }

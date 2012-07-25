@@ -43,6 +43,7 @@ var delay = 300;
 var sceneLoading = 0;
 var sceneIntro = 1;
 var sceneTrade = 2;
+var sceneWin = 3;
 var wpClerk = 0;
 var wpHunter = 1;
 var wpCrafter = 2;
@@ -339,7 +340,7 @@ body
 </div>
 
 <!-- Intro State -->
-<div id="intro" class="scene">
+<div id="intro" class="scene" onClick="setScene(2)">
     <div id="Clerk">
         <div id="1">
         </div>

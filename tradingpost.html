@@ -168,7 +168,7 @@ function didUpdateItemQty(updatedItemId,qty)
 function checkWinState()
 {
   for(index in wantedItemIndexes[currentLevel][pRole])
-    if(itemQtys[wantedItemIndexes[currentLevel][pRole][index] <= 0)
+    if(itemQtys[wantedItemIndexes[currentLevel][pRole][index]] <= 0)
       return false; //do nothing
 
   //If it gets here, we've won

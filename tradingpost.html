@@ -97,6 +97,8 @@ function initialize()
     introItemId = webPageId;
     webPageId=6; //TESTING 
     //Get Stuff from Server
+    //alert(webPageId);
+    document.getElementById(""+webPageId).style.display="block";
     switch(webPageId)
     {
         case 1:
@@ -302,6 +304,7 @@ function constructTradeTableHTML()
 
 function getAdvice()
 {
+    alert("test");
     var neededItems = new Array();
     for(itemIndexes in wantedItemIndexes[pLevel][pRole]){
         if(itemQtys[wantedItemIndexes[pLevel][pRole][itemIndexes]] < 1){
@@ -344,19 +347,9 @@ body
   /*background-color:#000000;*/
 }
 
-.subtitle
+.introItem
 {
-        
-}
-    
-.screenSplit
-{
-        
-}
-    
-.notifications
-{
-  
+  display:none;
 }
 
 </style>
@@ -373,94 +366,89 @@ body
 
 <!-- Intro State -->
 <div id="intro" class="scene"  onClick="setScene(2)">
-	<div id="Clerk">
-    	<div id="12">
-        <p align="center">You have picked up <strong><em>fabric</em></strong>:</p>
-<p align="center"><img src="./images/fabric.jpg" width="300" height="100" /></p>
-<p align="center">Clerks  trade fabric with hunters and crafters <br />
-  for other goods and services to keep their business growing. </p>
-<p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
-<p align="center">You are now a <strong><em>clerk</em></strong>. Trade your fabric and other goods <br />
-  to gain furs, guiding*, snowshoes and moccasins. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+    <div id="Clerk">
+        I'm a clerk!
+    	<div id="12" class="introItem">
+            <p align="center">You have picked up <strong><em>fabric</em></strong>:</p>
+            <p align="center"><img src="./images/fabric.jpg" width="300" height="100" /></p>
+            <p align="center">Clerks  trade fabric with hunters and crafters <br />for other goods and services to keep their business growing. </p>
+            <p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
+            <p align="center">You are now a <strong><em>clerk</em></strong>. Trade your fabric and other goods <br />to gain furs, guiding*, snowshoes and moccasins. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="11">
-        <p align="center">You have picked up <strong><em>beads</em></strong>:</p>
-<p align="center"><img src="./images/beads.jpg" width="198" height="102" /></p>
-<p align="center">Clerks  trade beads with hunters and crafters <br />
-  for other goods and services to keep their business growing. </p>
-<p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
-<p align="center">You are now a <strong><em>clerk</em></strong>. Trade your beads and other goods <br />
-  to gain furs, guiding*, snowshoes and moccasins. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
-
+        <div id="11" class="introItem">
+            <p align="center">You have picked up <strong><em>beads</em></strong>:</p>
+            <p align="center"><img src="./images/beads.jpg" width="198" height="102" /></p>
+            <p align="center">Clerks  trade beads with hunters and crafters <br />for other goods and services to keep their business growing. </p>
+            <p align="center"><img src="./images/clerk.jpg" width="197" height="217" /></p>
+            <p align="center">You are now a <strong><em>clerk</em></strong>. Trade your beads and other goods <br />to gain furs, guiding*, snowshoes and moccasins. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="5">
+        <div id="5" class="introItem">
+            This item doesn't exist! (but is still consistent with the programming model!)
         </div>
-        <div id="6">
+        <div id="6" class="introItem">
+            This item doesn't exist! (but is still consistent with the programming model!)
         </div>
     </div>
     <div id="Hunter">
-    	<div id="2">
-        <p align="center">You have picked up a <strong><em>beaver pelt</em></strong>:</p>
-<p align="center"><img src="./images/beaver_pelt.png" width="109" height="98" /></p>
-<p align="center">Hunters  trade their beaver pelts with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
-<p align="center"><img src="./images/hunter.jpg" width="180" height="229" /></p>
-<p align="center">You are now a <strong><em>hunter</em></strong>. Trade your pelt and other goods to gain guns, food, work* &amp; iPads*. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+        <div id="2" class="introItem">
+            <p align="center">You have picked up a <strong><em>beaver pelt</em></strong>:</p>
+            <p align="center"><img src="./images/beaver_pelt.png" width="109" height="98" /></p>
+            <p align="center">Hunters  trade their beaver pelts with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
+            <p align="center"><img src="./images/hunter.jpg" width="180" height="229" /></p>
+            <p align="center">You are now a <strong><em>hunter</em></strong>. Trade your pelt and other goods to gain guns, food, work* &amp; iPads*. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="3">
-        <p align="center">You have picked up <strong><em>leather</em></strong>:</p>
-<p align="center"><img src="./images/leather.jpg" width="129" height="109" /></p>
-<p align="center">Hunters  trade leather with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
-<p align="center"><img src="./images/Hunter.jpg" width="180" height="229" /></p>
-<p align="center">You are now a <strong><em>hunter</em></strong>. Trade your leather and other goods to gain guns, food, work* &amp; iPads*. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+        <div id="3" class="introItem">
+            <p align="center">You have picked up <strong><em>leather</em></strong>:</p>
+            <p align="center"><img src="./images/leather.jpg" width="129" height="109" /></p>
+            <p align="center">Hunters  trade leather with clerks and crafters for other goods and services that help them to survive and hunt better. </p>
+            <p align="center"><img src="./images/Hunter.jpg" width="180" height="229" /></p>
+            <p align="center">You are now a <strong><em>hunter</em></strong>. Trade your leather and other goods to gain guns, food, work* &amp; iPads*. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="1">
+        <div id="1" class="introItem">
+            This item doesn't exist! (but is still consistent with the programming model!)
         </div>
-        <div id="4">
+        <div id="4" class="introItem">
+            This item doesn't exist! (but is still consistent with the programming model!)
         </div>
     </div>
     <div id="Crafter">
-    	<div id="9">
-        <p align="center">You have picked up <strong><em>snowshoes</em></strong>:</p>
-<p align="center"><img src="./images/snowshoes.jpg" width="150" height="194" /></p>
-<p align="center">Crafters  trade snowshoes with  clerks and hunters<br />
-  for other goods and services to support their families. </p>
-<p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-<p align="center">You are now a <strong><em>crafter</em></strong>. Trade your snowshoes and other goods <br />
-  to gain beads, fabric, leather and work*. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+        <div id="9" class="introItem">
+            <p align="center">You have picked up <strong><em>snowshoes</em></strong>:</p>
+            <p align="center"><img src="./images/snowshoes.jpg" width="150" height="194" /></p>
+            <p align="center">Crafters  trade snowshoes with  clerks and hunters<br />for other goods and services to support their families. </p>
+            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
+            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your snowshoes and other goods <br />to gain beads, fabric, leather and work*. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="10">
-        <p align="center">You have picked up <strong><em>moccasins</em></strong>:</p>
-<p align="center"><img src="./images/moccasins.jpg" width="187" height="123" /></p>
-<p align="center">Crafters  trade moccasins with  clerks and hunters<br />
-  for other goods and services to support their families. </p>
-<p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-<p align="center">You are now a <strong><em>crafter</em></strong>. Trade your moccasins and other goods <br />
-  to gain beads, fabric, leather and work*. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+        <div id="10" class="introItem">
+            <p align="center">You have picked up <strong><em>moccasins</em></strong>:</p>
+            <p align="center"><img src="./images/moccasins.jpg" width="187" height="123" /></p>
+            <p align="center">Crafters  trade moccasins with  clerks and hunters<br />for other goods and services to support their families. </p>
+            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
+            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your moccasins and other goods <br />to gain beads, fabric, leather and work*. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="7">
-        <p align="center">You have picked up <strong><em>wild rice</em></strong>:</p>
-<p align="center"><img src="./images/wild_rice.jpg" width="193" height="135" /></p>
-<p align="center">Crafters  trade food  with  clerks and hunters<br />
-  for other goods and services to support their families. </p>
-<p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
-<p align="center">You are now a <strong><em>crafter</em></strong>. Trade your wild rice and other goods <br />
-  to gain beads, fabric, leather and work*. </p>
-<p align="center">Go Trade!</p>
-<p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
+        <div id="7" class="introItem">
+            <p align="center">You have picked up <strong><em>wild rice</em></strong>:</p>
+            <p align="center"><img src="./images/wild_rice.jpg" width="193" height="135" /></p>
+            <p align="center">Crafters  trade food  with  clerks and hunters<br />for other goods and services to support their families. </p>
+            <p align="center"><img src="./images/crafter.jpg" width="187" height="263" /></p>
+            <p align="center">You are now a <strong><em>crafter</em></strong>. Trade your wild rice and other goods <br />to gain beads, fabric, leather and work*. </p>
+            <p align="center">Go Trade!</p>
+            <p align="center"><img src="./images/start trading.jpg" width="140" height="40" /></p>
         </div>
-        <div id="8">
+        <div id="8" class="introItem">
+            This item doesn't exist! (but is still consistent with the programming model!)
         </div>
     </div>
     <div id="Hunter">
@@ -475,14 +463,14 @@ body
  <div id="bumpLogo" class="subtitle">
  </div>
 -->
- <div id="roleTitle">
+ <div id="roleTitle" style="margin:0 auto;">
  </div>
     
  <div id="tradeTable">
     <!-- html gets directly injected into this; hardcode stuff here at own discretion -->
  </div>
     
- <div id="helperArea" style="position:static; bottom:0;">
+ <div id="helperArea" style="position:absolute; bottom:0;">
     <img src="helper.jpg" width="50" height="50" onClick="getAdvice()"/>
  </div>
 

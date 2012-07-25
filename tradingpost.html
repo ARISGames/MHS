@@ -47,6 +47,8 @@ var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
 var currentLevel = 0;
+var bogusFinishReadyId = 99999999; //Call 'getQtyOfItem' with this after all other intro requests are queued. When we get this back, we know that everything else has returned
+var ready = false;
 
 //Game Data
 var gameId; 
@@ -104,11 +106,25 @@ function initialize()
     document.getElementById("roleTitle").innerHTML = pRole;
     for(levelIdIndex in levelItemIds)
         getItemCount(levelItemIds[levelIdIndex]);
+    getItemCount(bogusFinishReadyId);
     refreshItemCounts();
+}
+
+function introduce()
+{
+  document.getElementById(pName).display = "block";
+  for(index in roleItemIndexes[curentLevel][pRole])
+  {
+    setItemCount(itemIds[roleItemIndexes[currentLevel][pRole][index]],1);
+    itemQtys[roleItemIndexes[currentLevel][pRole][index]]++;
+  }
+  draw();
+  setScene(sceneIntro)
 }
 
 function draw()
 {
+  if(ready)
     document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
 }
 
@@ -120,6 +136,12 @@ function refreshItemCounts()
 
 function didUpdateItemQty(updatedItemId,qty)
 {
+    if(updatedItemId == bogusFinishReadyId)
+    {
+      ready = true;
+      introduce();
+      return;
+    }
     //alert("Found Item "+updatedItemId+" of qty "+qty);
     var newItem = false;
     for(itemIndex in itemIds)
@@ -135,6 +157,18 @@ function didUpdateItemQty(updatedItemId,qty)
     for(levelIdIndex in levelItemIds)
         if(updatedItemId == levelItemIds[levelIdIndex] && qty > 0)
             if(currentLevel <= levelIdIndex) currentLevel = levelIdIndex;
+
+    checkWinState();
+}
+
+function checkWinState()
+{
+  for(index in wantedItemIndexes[currentLevel][pRole])
+    if(itemQtys[wantedItemIndexes[currentLevel][pRole][index] <= 0)
+      return false; //do nothing
+
+  //If it gets here, we've won
+  setScene(sceneWin);
 }
 
 function wasSelected(itemIndex)

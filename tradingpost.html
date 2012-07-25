@@ -64,6 +64,8 @@ var levelItemIds = [13,14];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
 var itemQtys =     [0,0,0,0,0,0,0,0,0,0, 0, 0];
 var itemSelected = [0,0,0,0,0,0,0,0,0,0, 0, 0];
+var itemOwners = [roleHunter, roleHunter, roleHunter, roleHunter, roleClerk, roleClerk, roleCrafter, roleCrafter, roleCrafter, roleCrafter, roleClerk, roleClerk];
+var roleTitles = ["Clerk", "Hunter", "Crafter"];    
 var itemNames = ["Guiding*","Furs","Leather","Work","Guns","iPads","Food","Work2*","Snowshoes","Moccasins","Beads","Fabric"];
 var itemImages = ["./images/guiding_icon.jpg","./images/Beaver_pelt_icon.png","./images/leather_icon.png","./images/work_icon.jpg","./images/gun_icon.jpg","./images/Ipad_icon.png","wild_rice_icon.jpg","work2_icon.jpg","./images/Snowshoes_icon.png","./images/moccasins_icon.jpg","./images/beads_icon.jpg","fabric_icon.jpg"];
 //*NOTE*- 
@@ -291,7 +293,15 @@ function constructTradeTableHTML()
 
 function getAdvice()
 {
-    alert("Advice!");
+    var neededItems = new Array();
+    for(itemIndexes in wantedItemIndexes[pLevel][pRole]){
+        if(itemQtys[wantedItemIndexes[pLevel][pRole][itemIndexes]] < 1){
+            neededItems.push(wantedItemIndexes[pLevel][pRole][itemIndexes]);
+        }
+    }
+    var itemAdviceIndex = Math.floor((Math.random()*neededItems.length);
+    var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + " . A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
+    alert(advice);
 }
 
 </script>

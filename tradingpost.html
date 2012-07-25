@@ -58,6 +58,7 @@ var ready = false;
 var gameId; 
 var playerId;
 var webPageId;
+var introItemId;
     
 var levelItemIds = [13,14];//Level 0,1
 var itemIds =      [1,2,3,4,5,6,7,8,9,10,11,12];
@@ -90,22 +91,34 @@ function initialize()
     gameId = parseInt(params.gameId);
     playerId = parseInt(params.playerId);
     webPageId = parseInt(params.webPageId);
-    webPageId = wpClerk;
+    introItemId = webPageId;
     //Get Stuff from Server
     switch(webPageId)
     {
-        case wpClerk:
-            pName = "Clerk";
-            pRole = roleClerk;
-            break;
-        case wpHunter:
-            pName = "Hunter";
-            pRole = roleHunter;
-            break;
-        case wpCrafter:
-            pName = "Crafter";
-            pRole = roleCrafter;
-            break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        pName = "Hunter";
+        pRole = roleHunter;
+        break;
+        case 5:
+        case 6:
+        pName = "Clerk";
+        pRole = roleClerk;
+        break;
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        pName = "Crafter";
+        pRole = roleCrafter;
+        break;
+        case 11:
+        case 12:
+        pName = "Clerk";
+        pRole = roleClerk;
+        break;
     }
     document.getElementById("roleTitle").innerHTML = pRole;
     for(levelIdIndex in levelItemIds)

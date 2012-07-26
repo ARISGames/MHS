@@ -124,8 +124,8 @@ function draw()
 {
     if(scene = sceneTrade)
     {
-        document.getElementById("roleTitle").innerHTML = player.description.title;
-        document.getElementById("tradeTable").innerHTML = constructTradeTableHTML();
+        document.getElementById("topBar").innerHTML = player.description.title;
+        drawTradeTableHTML();
     }
 }
 
@@ -138,16 +138,9 @@ function checkWinState()
     }
 }
 
-function wasSelected(itemType)
+function cellSelected(itemType)
 {
-    if(var item = player.hasItem(itemType)) item.selected = true;
-    constructBumpString();
-    draw();
-}
-
-function wasDeselected(itemType)
-{
-    if(var item = player.hasItem(itemType)) item.selected = false;
+    if(var item = player.hasItem(itemType)) item.selected = !item.selected;
     constructBumpString();
     draw();
 }
@@ -191,25 +184,40 @@ function constructBumpString()
     return bumpString;
 }
 
-function constructNeedsTableCell(item)
+function constructInventoryTableCell(item)
 {
     var cell = ""
-    cell+= "";
-    cell+= "";
-    cell+= "";
-    cell+= "";
-    cell+= "";
-    cell+= "";
+    if(item.selected)
+      cell+= "<div id='hasCell"+item.description.type+"' class='hasCell selectedCell' onclick='cellSelected("+item.description.type+")'>";
+    else
+    cell+= "<div id='hasCell"+item.description.type+"' class='hasCell' onclick='cellSelected("+item.description.type+")'>";
+    cell+= "<img id='hasCellIcon"+item.description.type+"' class='hasCellIcon' src='"+item.description.imageFileIcon+"' />";
+    cell+= "<div id='hasCellTitle"+item.description.type+"' class='hasCellTitle'>"+item.description.specificName+"</div>";
+    cell+= "<div id='hasCellQty"+item.description.type+"' class='hasCellQty'>x"+item.qty+"</div>";
+    cell+= "</div>";
     return cell;
 }
 
-function constructInventoryTableCell(itemDescription)
+function constructNeedsTableCell(itemDescription)
 {
     var cell = ""
+    if(player.hasItem(itemDescription.type))
+    {
+      cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell verified'>";
+      cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+      cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.specificName+"</div>";
+    }
+    else
+    {
+      cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell'>";
+      cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+      cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.generalName+"</div>";
+    }
+    cell+= "</div>";
     return cell;
 }
 
-function constructTradeTableHTML()
+function drawTradeTableHTML()
 {
     var inventoryHTMLText = "";
     var wantsHTMLText = "";
@@ -222,20 +230,22 @@ function constructTradeTableHTML()
     {
         wantsHTMLText += constructNeedsTableCell(player.neededItems[i]);
     }
-    return tableHtml;
+    document.getElementById("inventory").innerHTML = inventoryHTMLText;
+    document.getElementById("wants").innerHTML = wantsHTMLText;
 }
 
 function getAdvice()
 {
-    var neededItems = new Array();
-    for(itemIndexes in wantedItemIndexes[pLevel][pRole]){
-        if(itemQtys[wantedItemIndexes[pLevel][pRole][itemIndexes]] < 1){
-            neededItems.push(wantedItemIndexes[pLevel][pRole][itemIndexes]);
+    var itemsRemaining = new Array();
+    var item;
+    for(i in player.neededItems){
+        if(item = player.hasItem(player.neededItems[i].type){
+            itemsRemaining.push(item);
         }
     }
-    var itemAdviceIndex = Math.floor(Math.random()*neededItems.length);
-    var advice = "It looks like you still need to find " + itemNames[neededItems[itemAdviceIndex]] + ". A " + roleTitles[itemOwners[neededItems[itemAdviceIndex]]] + " may have what you need."
-        alert(advice);
+    var item = Math.floor(Math.random()*itemsRemaining.length);
+    var advice = "It looks like you still need to find " + item.description.generalName + ". A " + item.description.owner.title + " may have what you need."
+    alert(advice);
 }
 
 </script>
@@ -251,10 +261,13 @@ function getAdvice()
 <!-- Intro State -->
 <div id="intro" class="scene">
     <div id="clerk">
+      You's a CLERK!
     </div>
     <div id="hunter">
+      You's a CLERK!
     </div>
     <div id="crafter">
+      You's a CRAFTER!
     </div>
 </div>
 
@@ -282,10 +295,9 @@ function getAdvice()
             </tr>
         </table>
     </div>
-
     
     <div id="bottomBar">
-        <img src="images/voyageur.png" width="50" height="50" onClick="getAdvice()"/>
+        <img src="images/voyageur.png" id="helper" onClick="getAdvice()"/>
     </div>
 
 </div>

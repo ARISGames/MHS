@@ -38,12 +38,13 @@ function PlayerDescription(role)
     this.title = "";
     switch(role)
     {
-        case roleClerk:   this.title = "Clerk";   this.role = 20; break;
-        case roleHunter:  this.title = "Hunter";  this.role = 21; break;
-        case roleCrafter: this.title = "Crafter"; this.role = 22; break;
+        case roleClerk:   this.title = "Clerk";   this.roleId = 20; break;
+        case roleHunter:  this.title = "Hunter";  this.roleId = 21; break;
+        case roleCrafter: this.title = "Crafter"; this.roleId = 22; break;
         default: return null; break; //<- lol
     }
 }
+
 function ItemDescription(type)
 {
     this.type = type;
@@ -200,7 +201,7 @@ function Item(type)
 function Player()
 {
     this.description = null;
-    this.role = -1;
+    this.role = -1; //used only temporarily until description is correctly constructed
     this.level = -1;
     this.inventory = [];
     this.givenItems = [];

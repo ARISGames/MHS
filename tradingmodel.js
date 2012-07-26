@@ -31,7 +31,7 @@ var levelIdC = 15;
 var levelIds[levelIdA,levelIdB,levelIdC];
 
 //TYPE DEFS
-function playerDescription(role)
+function PlayerDescription(role)
 {
     this.role = role;
     this.roleId = -1;
@@ -44,7 +44,7 @@ function playerDescription(role)
         default: return null; break; //<- lol
     }
 }
-function itemDescription(type)
+function ItemDescription(type)
 {
     this.type = type;
     this.itemId = -1;
@@ -172,91 +172,161 @@ function itemDescription(type)
 }
 
 //REFERENCES
-var itemPelt = new itemDescription(typePelt);
-var itemMeat = new itemDescription(typeMeat);
-var itemLeather = new itemDescription(typeLeather);
-var itemHideLacing = new itemDescription(typeHideLacing);
-var itemGun = new itemDescription(typeGun);
-var itemCoat = new itemDescription(typeCoat);
-var itemRice = new itemDescription(typeRice);
-var itemSugar = new itemDescription(typeSugar);
-var itemSnowshoes = new itemDescription(typeSnowshoes);
-var itemMoccasins = new itemDescription(typeMoccasins);
-var itemBeads = new itemDescription(typeBeads);
-var itemBlanket = new itemDescription(typeBlanket);
+var itemPelt = new ItemDescription(typePelt);
+var itemMeat = new ItemDescription(typeMeat);
+var itemLeather = new ItemDescription(typeLeather);
+var itemHideLacing = new ItemDescription(typeHideLacing);
+var itemGun = new ItemDescription(typeGun);
+var itemCoat = new ItemDescription(typeCoat);
+var itemRice = new ItemDescription(typeRice);
+var itemSugar = new ItemDescription(typeSugar);
+var itemSnowshoes = new ItemDescription(typeSnowshoes);
+var itemMoccasins = new ItemDescription(typeMoccasins);
+var itemBeads = new ItemDescription(typeBeads);
+var itemBlanket = new ItemDescription(typeBlanket);
 var items[itemPelt,itemMeat,itemLeather,itemHideLacing,itemGun,itemCoat,itemRice,itemSugar,itemSnowshoes,itemMoccasins,itemBeads,itemBlanket];
 
-var playerClerk = new playerDescription(roleClerk);
-var playerHunter = new playerDescription(roleHunter);
-var playerCrafter = new playerDescription(roleCrafter);
+var playerClerk = new PlayerDescription(roleClerk);
+var playerHunter = new PlayerDescription(roleHunter);
+var playerCrafter = new PlayerDescription(roleCrafter);
 var players[playerClerk,playerHunter,playerCrafter];
 
-function item(type)
+function Item(type)
 {
     if(!this.description = items[type]) return null; //not a valid item type
     this.qty = 1;
     this.selected = 0;
 }
-function player(role, level)
+function Player()
 {
-    if(!this.description = players[role]) return null; //not a valid player type
-    this.level = level;
+    this.description = null;
+    this.role = -1;
+    this.level = -1;
+    this.inventory = [];
     this.givenItems = [];
     this.neededItems = [];
 
-    switch(role)
+    this.construct = function()
     {
-        case roleClerk:
-            switch(level)
+        if(!this.description = players[this.role]) return null; //not a valid player type
+        switch(this.role)
+        {
+            case roleClerk:
+                switch(level)
+                {
+                    case 0:
+                        this.givenItems = [itemGun];
+                        this.neededItems = [itemPelt];
+                        break;
+                    case 1:
+                        this.givenItems = [itemGun, itemCoat, itemBeads, itemBlanket];
+                        this.neededItems = [itemPelt, itemMeat, itemSnowshoes, itemMoccasins];
+                        break;
+                    case 2:
+                        this.givenItems = [];
+                        this.neededItems = [];
+                        break;
+                }
+                break;
+            case roleHunter:
+                switch(level)
+                {
+                    case 0:
+                        this.givenItems = [itemPelt];
+                        this.neededItems = [itemGun];
+                        break;
+                    case 1:
+                        this.givenItems = [itemPelt, itemMeat, itemLeather, itemHideLacing];
+                        this.neededItems = [itemGun, itemCoat, itemRice, itemSugar];
+                        break;
+                    case 2:
+                        this.givenItems = [];
+                        this.neededItems = [];
+                        break;
+                }
+                break;
+            case roleCrafter:
+                switch(level)
+                {
+                    case 0://Crafter should not exist in level 0
+                        this.givenItems = [];
+                        this.neededItems = [];
+                        break;
+                    case 1:
+                        this.givenItems = [itemRice, itemSugar, itemSnowshoes, itemMoccasins];
+                        this.neededItems = [itemLeather, itemHideLacing, itemBeads, itemBlanket];
+                        break;
+                    case 2:
+                        this.givenItems = [];
+                        this.neededItems = [];
+                        break;
+                }
+                break;
+        }
+    }
+    
+    this.hasItem = function(type)
+    {
+        for(i in this.inventory)
+            if(this.inventory[i].description.type == type) return this.inventory[i];
+        return null;
+    }
+    this.addItemToInventory = function(type,qty)
+    {
+        var item;
+        if(item = this.hasItem(type))
+            item.qty+=qty; 
+        else
+        {
+            if(item = new Item(type)) this.inventory.push(item);
+            else return null;
+        }
+        return item;
+    }
+    this.completelyRemoveItemFromInventory = function(type)
+    {
+        var item = null;
+        for(i in this.inventory)
+            if(this.inventory[i].description.type == type && item = this.inventory[i]) this.inventory.splice(i,1);
+        return item;
+    }
+    this.removeItemFromInventory = function(type,qty)
+    {
+        var item;
+        if(item = this.hasItem(type))
+        {
+            item.qty-=qty; 
+            if(item.qty <= 0)
+                item = this.completelyRemoveItemFromInventory(type);
+            return item;
+        }
+        return null;
+    }
+    this.setItemQtyInInventory = function(type,qty)
+    {
+        if(qty <= 0)
+            this.completelyRemoveItemFromInventory(type);
+        else
+        {
+            var item;
+            if(!(item = this.hasItem(type)))
             {
-                case 0:
-                    this.givenItems = [itemGun];
-                    this.neededItems = [itemPelt];
-                    break;
-                case 1:
-                    this.givenItems = [itemGun, itemCoat, itemBeads, itemBlanket];
-                    this.neededItems = [itemPelt, itemMeat, itemSnowshoes, itemMoccasins];
-                    break;
-                case 2:
-                    this.givenItems = [];
-                    this.neededItems = [];
-                    break;
+                if(item = new Item(type)) this.inventory.push(item);
+                else return null;
             }
-            break;
-        case roleHunter:
-            switch(level)
-            {
-                case 0:
-                    this.givenItems = [itemPelt];
-                    this.neededItems = [itemGun];
-                    break;
-                case 1:
-                    this.givenItems = [itemPelt, itemMeat, itemLeather, itemHideLacing];
-                    this.neededItems = [itemGun, itemCoat, itemRice, itemSugar];
-                    break;
-                case 2:
-                    this.givenItems = [];
-                    this.neededItems = [];
-                    break;
-            }
-            break;
-        case roleCrafter:
-            switch(level)
-            {
-                case 0://Crafter should not exist in level 0
-                    this.givenItems = [];
-                    this.neededItems = [];
-                    break;
-                case 1:
-                    this.givenItems = [itemRice, itemSugar, itemSnowshoes, itemMoccasins];
-                    this.neededItems = [itemLeather, itemHideLacing, itemBeads, itemBlanket];
-                    break;
-                case 2:
-                    this.givenItems = [];
-                    this.neededItems = [];
-                    break;
-            }
-            break;
+            item.qty = qty;
+            return item;
+        }
+        return null;
+    }
+    this.hasAllNeededItems = function()
+    {
+        for(i in this.neededItems)
+        {
+            if(!this.hasItem(this.neededItems[i].type))
+                return false;
+        }
+        return true;
     }
 }
 
@@ -267,8 +337,6 @@ var webPageId;
 
 //VARIABLES
 var player;
-var inventory = new Array();
-
 
 //MODEL ACCESSORS
 function itemDescriptionForItemId(id)
@@ -281,59 +349,6 @@ function itemDescriptionForWebPageId(id)
 {
     for(i in items)
         if(items[i].webPageId == id) return items[i];
-    return null;
-}
-function itemInInventory(type)
-{
-    for(i in inventory)
-        if(inventory[i].description.type == type) return inventory[i];
-    return null;
-}
-function addItemToInventory(type,qty)
-{
-    var item;
-    if(item = itemInInventory(type))
-       item.qty+=qty; 
-    else
-    {
-        if(item = new item(type)) inventory.push(item);
-        else return null;
-    }
-    return item;
-}
-function completelyRemoveItemFromInventory(type)
-{
-    for(i in inventory)
-        if(inventory[i].description.type == type) inventory.splice(i,1);
-    return null;
-}
-function removeItemFromInventory(type,qty)
-{
-    var item;
-    if(item = itemInInventory(type))
-    {
-        item.qty-=qty; 
-        if(item.qty <= 0)
-            item = completelyRemoveItemFromInventory(type);
-        return item;
-    }
-    return null;
-}
-function setItemQtyInInventory(type,qty)
-{
-    if(qty <= 0)
-        completelyRemoveItemFromInventory(type);
-    else
-    {
-        var item;
-        if(!(item = itemInInventory(type)))
-        {
-            if(item = new item(type)) inventory.push(item);
-            else return null;
-        }
-        item.qty = qty;
-        return item;
-    }
     return null;
 }
 function playerDescriptionForRoleId(id)

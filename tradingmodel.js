@@ -28,7 +28,8 @@ var types=[typePelt,typeMeat,typeLeather,typeHideLacing,typeGun,typeCoat,typeRic
 var levelIdA = 13;
 var levelIdB = 14;
 var levelIdC = 15;
-var levelIds=[levelIdA,levelIdB,levelIdC];
+var levelIdMaster = 19;
+var levelIds=[levelIdA,levelIdB,levelIdC,levelIdMaster];
 
 //TYPE DEFS
 function PlayerDescription(role)
@@ -38,19 +39,24 @@ function PlayerDescription(role)
     this.title = "";
     switch(role)
     {
-        case roleClerk:   this.title = "Clerk";   this.roleId = 20; break;
-        case roleHunter:  this.title = "Hunter";  this.roleId = 21; break;
-        case roleCrafter: this.title = "Crafter"; this.roleId = 22; break;
+        case roleClerk:   this.title = "Clerk";   this.roleId = 18; break;
+        case roleHunter:  this.title = "Hunter";  this.roleId = 16; break;
+        case roleCrafter: this.title = "Crafter"; this.roleId = 17; break;
         default: return null; break; //<- lol
     }
 }
+
+var playerClerk = new PlayerDescription(roleClerk);
+var playerHunter = new PlayerDescription(roleHunter);
+var playerCrafter = new PlayerDescription(roleCrafter);
+var players=[playerClerk,playerHunter,playerCrafter];
 
 function ItemDescription(type)
 {
     this.type = type;
     this.itemId = -1;
     this.webPageId = -1;
-    this.owner = -1;
+    this.owner = null;
     this.generalName = "";
     this.specificName = "";
     this.imageFile = "";
@@ -187,33 +193,27 @@ var itemBeads = new ItemDescription(typeBeads);
 var itemBlanket = new ItemDescription(typeBlanket);
 var items=[itemPelt,itemMeat,itemLeather,itemHideLacing,itemGun,itemCoat,itemRice,itemSugar,itemSnowshoes,itemMoccasins,itemBeads,itemBlanket];
 
-var playerClerk = new PlayerDescription(roleClerk);
-var playerHunter = new PlayerDescription(roleHunter);
-var playerCrafter = new PlayerDescription(roleCrafter);
-var players=[playerClerk,playerHunter,playerCrafter];
-
 function Item(type)
 {
-    if(!this.description = items[type]) return null; //not a valid item type
+    if(!(this.description = items[type])) return null; //not a valid item type
     this.qty = 1;
     this.selected = 0;
 }
 function Player()
 {
     this.description = null;
-    this.role = -1; //used only temporarily until description is correctly constructed
     this.level = -1;
     this.inventory = [];
     this.givenItems = [];
     this.neededItems = [];
 
-    this.construct = function()
+    this.construct = function(playerDescription)
     {
-        if(!this.description = players[this.role]) return null; //not a valid player type
-        switch(this.role)
+        if(!(this.description = playerDescription)) return null; //not a valid player type
+        switch(playerDescription.role)
         {
             case roleClerk:
-                switch(level)
+                switch(this.level)
                 {
                     case 0:
                         this.givenItems = [itemGun];
@@ -230,7 +230,7 @@ function Player()
                 }
                 break;
             case roleHunter:
-                switch(level)
+                switch(this.level)
                 {
                     case 0:
                         this.givenItems = [itemPelt];
@@ -247,7 +247,7 @@ function Player()
                 }
                 break;
             case roleCrafter:
-                switch(level)
+                switch(this.level)
                 {
                     case 0://Crafter should not exist in level 0
                         this.givenItems = [];
@@ -288,7 +288,7 @@ function Player()
     {
         var item = null;
         for(i in this.inventory)
-            if(this.inventory[i].description.type == type && item = this.inventory[i]) this.inventory.splice(i,1);
+            if(this.inventory[i].description.type == type && (item = this.inventory[i])) this.inventory.splice(i,1);
         return item;
     }
     this.removeItemFromInventory = function(type,qty)
@@ -322,9 +322,10 @@ function Player()
     }
     this.hasAllNeededItems = function()
     {
+        var item;
         for(i in this.neededItems)
         {
-            if(!this.hasItem(this.neededItems[i].type))
+            if(this.hasItem(this.neededItems[i].type))
                 return false;
         }
         return true;

@@ -12,6 +12,7 @@
 <script type="text/javascript">
 
 var scene = sceneIntro;
+var oldRole;
 var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
 
 function bodyLoad()
@@ -59,7 +60,7 @@ function initialize()
     for(i in items)
         getItemCount(items[i].itemId);
     for(i in levelIds)
-        getItemCount(i);
+        getItemCount(levelIds[i]);
     for(i in players)
         getItemCount(players[i].roleId);
     getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
@@ -68,21 +69,38 @@ function initialize()
 //Once all data is retreived, actually initialize game state
 function postInit()
 {
-    player.construct();
+    //Give them the 'Level 1' Badge for starting to play
+    if(player.level == -1)
+    {
+        setItemCount(levelIds[0],1); //Back to ARIS
+        player.level = 0;
+    }
+
+    //Finalize player state, as all data should be synced with client
+    player.construct(itemDescriptionForWebPageId(webPageId).owner);
+
     //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
     if(!oldRole || player.description.role != oldRole.role || player.inventory.length == 0)
     {
         //Wipe away relevant inventory and start fresh
         for(i in items)
         {
-            setItemCount(items[i].description.itemId,0); //Back to ARIS
-            player.completelyRemoveItemFromInventory(items[i].description.type); //Local
+            setItemCount(items[i].itemId,0); //Back to ARIS
+            player.completelyRemoveItemFromInventory(items[i].type); //Local
+        }
+        for(i in player.givenItems)
+        {
+            setItemCount(player.givenItems[i].itemId,1); //Back to ARIS
+            player.setItemQtyInInventory(player.givenItems[i].type,1); //Local
         }
 
-        for(i in player.description.givenItems)
+        //Save New Role
+        for(i in players)
         {
-            setItemCount(player.description.givenItems[i].itemId,1); //Back to ARIS
-            player.setItemQtyInInventory(player.description.givenItems[i].type,1); //Local
+            if(players[i].roleId == player.description.roleId)
+                setItemCount(players[i].roleId,1); //Back to ARIS
+            else
+                setItemCount(players[i].roleId,0); //Back to ARIS
         }
     }
     playIntro(0);
@@ -91,7 +109,7 @@ function postInit()
 //This is called by ARIS, informing this webpage of qty values
 function didUpdateItemQty(updatedItemId,qty)
 {
-    if(updatedItemId == bogusFinishReadyId)
+    if(updatedItemId == bogusEndOfQueueId)
     {
         postInit();
         return;
@@ -102,17 +120,20 @@ function didUpdateItemQty(updatedItemId,qty)
     else if(i = levelForLevelId(updatedItemId) && qty > 0 && i > player.level) player.level = i;
     else if(i = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = i;
 
-    draw();
-    checkWinState();
+    if(player.description) //Check if player has been initialized yet
+    {
+        draw();
+        checkWinState();
+    }
 }
 
 function playIntro(state)
 {
-    document.getElementById(sceneIntro).onClick="playIntro("+(state+1)+")";
+    document.getElementById("intro").onclick=function(){playIntro(state+1);};
     switch(state)
     {
         case 0:
-            document.getElementById(player.description.title).display = "block";
+            document.getElementById(player.description.title).style.display = "block";
             setScene(sceneIntro);
             break;
         case 1:
@@ -123,7 +144,7 @@ function playIntro(state)
 
 function draw()
 {
-    if(scene = sceneTrade)
+    if(scene == sceneTrade)
     {
         document.getElementById("topBar").innerHTML = player.description.title;
         drawTradeTableHTML();
@@ -132,10 +153,11 @@ function draw()
 
 function checkWinState()
 {
-    if(player.hasAllNeededItems)
+    if(scene == sceneTrade && player.hasAllNeededItems())
     {
         setScene(sceneSuccess);
-        setItemCount(levelItemIds[player.level+1],1);
+        setItemCount(levelIds[player.level],0); //Remove old level badge
+        setItemCount(levelIds[player.level+1],1); //Give new level badge
     }
 }
 
@@ -240,12 +262,23 @@ function getAdvice()
 {
     var itemsRemaining = new Array();
     var item;
-    for(i in player.neededItems){
+    for(i in player.neededItems)
+    {
         if(item = player.hasItem(player.neededItems[i].type))
             itemsRemaining.push(item);
     }
-    var item = Math.floor(Math.random()*itemsRemaining.length);
-    var advice = "It looks like you still need to find " + item.description.generalName + ". A " + item.description.owner.title + " may have what you need."
+    var item;
+    var advice;
+    if(itemsRemaining.length > 0)
+    {
+        item = itemsRemaining[Math.floor(Math.random()*itemsRemaining.length)];
+        advice = "It looks like you still need to find " + item.generalName + ". A " + item.owner.title + " may have what you need."
+    }
+    else
+    {
+        advice = "It looks like you've got everything you need! Good work!";
+        checkWinState();
+    }
     alert(advice);
 }
 
@@ -261,24 +294,27 @@ function getAdvice()
 
 <!-- Intro State -->
 <div id="intro" class="scene">
-    <div id="clerk">
+Intro
+    <div id="Clerk" class="character">
       You's a CLERK!
     </div>
-    <div id="hunter">
-      You's a CLERK!
+    <div id="Hunter" class="character">
+      You's a Hunter!
     </div>
-    <div id="crafter">
+    <div id="Crafter" class="character">
       You's a CRAFTER!
     </div>
 </div>
 
 <!-- Trade State -->    
 <div id="trade" class="scene"> 
-
+Trade
     <div id="topBar">
+    TopBar
     </div>
     
     <div id="tradeContent">
+    TradeContent
         <table>
             <tr>
                 <td width="50%">
@@ -298,7 +334,8 @@ function getAdvice()
     </div>
     
     <div id="bottomBar">
-        <img src="images/voyageur.png" id="helper" onClick="getAdvice()"/>
+    BottomBar
+        <img src="images/voyageur.png" id="helper" onclick="getAdvice()"/>
     </div>
 
 </div>

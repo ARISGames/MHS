@@ -3,12 +3,12 @@ var sceneLoading = 0;
 var sceneIntro = 1;
 var sceneTrade = 2;
 var sceneSuccess = 3;
-var scenes[sceneLoading,sceneIntro,sceneTrade,sceneSuccess];
+var scenes=[sceneLoading,sceneIntro,sceneTrade,sceneSuccess];
 
 var roleClerk = 0;
 var roleHunter = 1;
 var roleCrafter = 2;
-var roles[roleClerk,roleHunter,roleCrafter];
+var roles=[roleClerk,roleHunter,roleCrafter];
 
 var typePelt = 0;
 var typeMeat = 1;
@@ -22,13 +22,13 @@ var typeSnowshoes = 8;
 var typeMoccasins = 9;
 var typeBeads = 10;
 var typeBlanket = 11;
-var types[typePelt,typeMeat,typeLeather,typeHideLacing,typeGun,typeCoat,typeRice,typeSugar,typeSnowshoes,typeMoccasins,typeBeads,typeBlanket];
+var types=[typePelt,typeMeat,typeLeather,typeHideLacing,typeGun,typeCoat,typeRice,typeSugar,typeSnowshoes,typeMoccasins,typeBeads,typeBlanket];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelIdA = 13;
 var levelIdB = 14;
 var levelIdC = 15;
-var levelIds[levelIdA,levelIdB,levelIdC];
+var levelIds=[levelIdA,levelIdB,levelIdC];
 
 //TYPE DEFS
 function PlayerDescription(role)
@@ -185,12 +185,12 @@ var itemSnowshoes = new ItemDescription(typeSnowshoes);
 var itemMoccasins = new ItemDescription(typeMoccasins);
 var itemBeads = new ItemDescription(typeBeads);
 var itemBlanket = new ItemDescription(typeBlanket);
-var items[itemPelt,itemMeat,itemLeather,itemHideLacing,itemGun,itemCoat,itemRice,itemSugar,itemSnowshoes,itemMoccasins,itemBeads,itemBlanket];
+var items=[itemPelt,itemMeat,itemLeather,itemHideLacing,itemGun,itemCoat,itemRice,itemSugar,itemSnowshoes,itemMoccasins,itemBeads,itemBlanket];
 
 var playerClerk = new PlayerDescription(roleClerk);
 var playerHunter = new PlayerDescription(roleHunter);
 var playerCrafter = new PlayerDescription(roleCrafter);
-var players[playerClerk,playerHunter,playerCrafter];
+var players=[playerClerk,playerHunter,playerCrafter];
 
 function Item(type)
 {

@@ -97,9 +97,10 @@ function didUpdateItemQty(updatedItemId,qty)
         return;
     }
 
-    if(var i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.type, qty);
-    else if(var l = levelForLevelId(updatedItemId) && qty > 0 && l > player.level) player.level = l;
-    else if(var r = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = r;
+    var i;
+    if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.type, qty);
+    else if(i = levelForLevelId(updatedItemId) && qty > 0 && i > player.level) player.level = i;
+    else if(i = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = i;
 
     draw();
     checkWinState();
@@ -140,7 +141,8 @@ function checkWinState()
 
 function cellSelected(itemType)
 {
-    if(var item = player.hasItem(itemType)) item.selected = !item.selected;
+    var item;
+    if(item = player.hasItem(itemType)) item.selected = !item.selected;
     constructBumpString();
     draw();
 }
@@ -239,9 +241,8 @@ function getAdvice()
     var itemsRemaining = new Array();
     var item;
     for(i in player.neededItems){
-        if(item = player.hasItem(player.neededItems[i].type){
+        if(item = player.hasItem(player.neededItems[i].type))
             itemsRemaining.push(item);
-        }
     }
     var item = Math.floor(Math.random()*itemsRemaining.length);
     var advice = "It looks like you still need to find " + item.description.generalName + ". A " + item.description.owner.title + " may have what you need."
@@ -250,7 +251,7 @@ function getAdvice()
 
 </script>
 </head>
-<body onLoad="loadMe()" style="margin:0px; padding:0px;">
+<body onLoad="bodyLoad()" style="margin:0px; padding:0px;">
 <div id="screen">
 
 <!-- Loading State -->

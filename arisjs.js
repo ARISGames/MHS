@@ -71,7 +71,7 @@ function getItemCount(itemId)
 }
 
 function setItemCount(itemId,qty)
-{
+{ 
   enqueueRequest("aris://inventory/set/" + itemId + "/" + qty);
 }
 

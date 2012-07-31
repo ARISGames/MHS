@@ -155,8 +155,8 @@ function ItemDescription(type)
             this.introText = "Wild Rice was blah...";
             break;
         case typeSugar:
-            this.itemId = 8;
-            this.webPageId = 764;
+            this.itemId = 10;
+            this.webPageId = 766;
             this.owner = playerCrafter;
             this.generalName = "Sugar";
             this.specificName = "Maple Sugar";
@@ -175,8 +175,8 @@ function ItemDescription(type)
             this.introText = "Snowshoes were blah...";
             break;
         case typeMoccasins:
-            this.itemId = 10;
-            this.webPageId = 766;
+            this.itemId = 8;
+            this.webPageId = 764;
             this.owner = playerCrafter;
             this.generalName = "Moccasins";
             this.specificName = "Moccasins";
@@ -321,7 +321,8 @@ function Player()
     {
         var item = null;
         for(i in this.inventory)
-            if(this.inventory[i].description.type == type && (item = this.inventory[i])) this.inventory.splice(i,1);
+            if(this.inventory[i].description.type == type && (item = this.inventory[i]))
+                this.inventory.splice(i,1);
         return item;
     }
     this.removeItemFromInventory = function(type,qty)
@@ -339,7 +340,7 @@ function Player()
     this.setItemQtyInInventory = function(type,qty)
     {
         if(qty <= 0)
-            this.completelyRemoveItemFromInventory(type);
+            return this.completelyRemoveItemFromInventory(type);
         else
         {
             var item;

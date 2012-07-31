@@ -38,6 +38,7 @@ function setScene(newScene)
             document.getElementById("intro").style.display="block";
             break;
         case sceneTrade:
+            constructBumpString();
             draw();
             document.getElementById("trade").style.display="block";
             break;
@@ -118,7 +119,7 @@ function didUpdateItemQty(updatedItemId,qty)
     var i;
     if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.type, qty);
     else if(qty > 0 && (i = levelForLevelId(updatedItemId)) != -1 && i > player.level) player.level = parseInt(i); //No idea why parseInt is necessary... oh javascript...
-    else if(i = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = i;
+    else if(qty > 0 && (i = playerDescriptionForRoleId(updatedItemId))) oldRole = i;
 
     if(player.description) //Check if player has been initialized yet
     {
@@ -179,16 +180,21 @@ function bumpReceived(bumpString)
     {
         var item;
         if(item = player.addItemToInventory(itemDescriptionForItemId(receivedItems[i]).type,1))
-            setItemCount(receivedItems[i],item.qty);
+            setItemCount(item.description.itemId,item.qty);
     }
 
-    for(i in player.inventory)
+    var i;
+    for(i = 0; i < player.inventory.length; i++) //Needs to be an old fashioned for loop, as normal enumerator can't account for dynamic changes in inventory
     {
         if(player.inventory[i].selected)
         {
-            var item = player.removeItemFromInventory(inventory[i].description.type,1);
-            item.selected = false; //If removing item still retains qty of > 0
-            setItemCount(item.description.itemId,item.qty);
+            var item;
+            if(item = player.removeItemFromInventory(player.inventory[i].description.type,1));
+            {
+                item.selected = false; //If removing item still retains qty of > 0
+                setItemCount(item.description.itemId,item.qty);
+            }
+            if(!(player.inventory[i] && player.inventory[i].description.type == item.description.type)) i--; //resets 'i' if the entire item was removed from the inventory
         }
     }
     constructBumpString();

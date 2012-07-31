@@ -1,4 +1,4 @@
-.debug
+#debug
 {
     display:none;
 }
@@ -19,10 +19,9 @@ body
     -webkit-user-select:none;
     user-select:none;
     background-color:#FFFFFF;
-    color:#888888;
 }
 
-screen
+#screen
 {
     position:absolute; 
     margin:0px; 
@@ -37,9 +36,115 @@ screen
     display:none;
 }
 
-.character
+#introCharacter
 {
     width:100%;
-    height:100%;
-    display:none;
+}
+#introCharacterText
+{
+}
+#introCharacterImage
+{
+    width:200px;
+}
+
+#introItem
+{
+    width:100%;
+}
+#introItemText
+{
+}
+#introItemImage
+{
+    width:200px;
+}
+
+#topBar
+{
+    width:100%;
+}
+#topBarText
+{
+    width:50px;
+    margin:0 auto;
+}
+
+#tradeContent
+{
+    width:100%;
+}
+
+#tradeTable
+{
+    width:100%;
+}
+#inventory
+{
+
+}
+.hasCell
+{
+    width:100%;
+    height:48px;
+    border-style:solid;
+    border-width:1px;
+    border-color:#000000;
+}
+.hasCellIcon
+{
+    width:48px;
+    height:48px;
+    float:left;
+}
+.hasCellTitle
+{
+    font-size:12px;
+    float:left;
+}
+.hasCellQty
+{
+    font-size:10px;
+    float:left;
+}
+.selectedCell
+{
+    background-color:#EEEEEE;
+}
+#wants
+{
+}
+.needsCell
+{
+    width:100%;
+    height:48px;
+    border-style:solid;
+    border-width:1px;
+    border-color:#000000;
+}
+.needsCellIcon
+{
+    width:48px;
+    height:48px;
+    float:left;
+}
+.needsCellTitle
+{
+    font-size:12px;
+    float:left;
+}
+.verifiedCell
+{
+    background-color:#EEFFEE;
+}
+
+#bottomBar
+{
+    width:100%;
+    position:absolute;
+    bottom:0px;
+}
+#helper
+{
+    float:right;
 }

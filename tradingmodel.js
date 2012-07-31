@@ -37,12 +37,31 @@ function PlayerDescription(role)
     this.role = role;
     this.roleId = -1;
     this.title = "";
+    this.imageFile = "";
+    this.introText = "";
     switch(role)
     {
-        case roleClerk:   this.title = "Clerk";   this.roleId = 18; break;
-        case roleHunter:  this.title = "Hunter";  this.roleId = 16; break;
-        case roleCrafter: this.title = "Crafter"; this.roleId = 17; break;
-        default: return null; break; //<- lol
+        case roleClerk:   
+            this.title = "Clerk";   
+            this.roleId = 18; 
+            this.imageFile = "images/clerk.jpg";
+            this.introText = "You's a Clerk!";
+            break;
+        case roleHunter:  
+            this.title = "Hunter";  
+            this.roleId = 16; 
+            this.imageFile = "images/hunter.jpg";
+            this.introText = "You's a Hunter!";
+            break;
+        case roleCrafter: 
+            this.title = "Crafter"; 
+            this.roleId = 17; 
+            this.imageFile = "images/crafter.jpg";
+            this.introText = "You's a Crafter!";
+            break;
+        default: 
+            return null; 
+            break; //<- lol
     }
 }
 
@@ -61,6 +80,7 @@ function ItemDescription(type)
     this.specificName = "";
     this.imageFile = "";
     this.imageFileIcon = "";
+    this.introText = "";
 
     switch(type)
     {
@@ -72,6 +92,7 @@ function ItemDescription(type)
             this.specificName = "Beaver Pelt";
             this.imageFile = "images/beaverpelt96.png";
             this.imageFileIcon = "images/beaverpelt.png";
+            this.introText = "Beaver Pelts were blah...";
             break;
         case typeMeat:
             this.itemId = 2;
@@ -81,6 +102,7 @@ function ItemDescription(type)
             this.specificName = "Deer Meat";
             this.imageFile = "images/deermeat96.png";
             this.imageFileIcon = "images/deermeat.png";
+            this.introText = "Deer Meat was blah...";
             break;
         case typeLeather:
             this.itemId = 3;
@@ -90,6 +112,7 @@ function ItemDescription(type)
             this.specificName = "Leather";
             this.imageFile = "images/leather.png";
             this.imageFileIcon = "images/leather96.png";
+            this.introText = "Leather was blah...";
             break;
         case typeHideLacing:
             this.itemId = 4;
@@ -99,6 +122,7 @@ function ItemDescription(type)
             this.specificName = "Raw Hide Lacing";
             this.imageFile = "images/lace96.png";
             this.imageFileIcon = "images/lace.png";
+            this.introText = "Raw Hide Lacing was blah...";
             break;
         case typeGun:
             this.itemId = 5;
@@ -108,6 +132,7 @@ function ItemDescription(type)
             this.specificName = "Gun";
             this.imageFile = "images/gun96.png";
             this.imageFileIcon = "images/gun.png";
+            this.introText = "Guns were blah...";
             break;
         case typeCoat:
             this.itemId = 6;
@@ -117,6 +142,7 @@ function ItemDescription(type)
             this.specificName = "Coat";
             this.imageFile = "images/coat96.png";
             this.imageFileIcon = "images/coat.png";
+            this.introText = "Coats were blah...";
             break;
         case typeRice:
             this.itemId = 7;
@@ -126,6 +152,7 @@ function ItemDescription(type)
             this.specificName = "Wild Rice";
             this.imageFile = "images/wildrice96.png";
             this.imageFileIcon = "images/wildrice.png";
+            this.introText = "Wild Rice was blah...";
             break;
         case typeSugar:
             this.itemId = 8;
@@ -135,6 +162,7 @@ function ItemDescription(type)
             this.specificName = "Maple Sugar";
             this.imageFile = "images/maplesugar96.png";
             this.imageFileIcon = "images/maplesugar.png";
+            this.introText = "Maple Sugar was blah...";
             break;
         case typeSnowshoes:
             this.itemId = 9;
@@ -144,6 +172,7 @@ function ItemDescription(type)
             this.specificName = "Snowshoes";
             this.imageFile = "images/snowshoe96.png";
             this.imageFileIcon = "images/snowshoe.png";
+            this.introText = "Snowshoes were blah...";
             break;
         case typeMoccasins:
             this.itemId = 10;
@@ -153,6 +182,7 @@ function ItemDescription(type)
             this.specificName = "Moccasins";
             this.imageFile = "images/moccasins96.png";
             this.imageFileIcon = "images/moccasins.png";
+            this.introText = "Moccasins were blah...";
             break;
         case typeBeads:
             this.itemId = 11;
@@ -162,6 +192,7 @@ function ItemDescription(type)
             this.specificName = "Beads";
             this.imageFile = "images/beads96.png";
             this.imageFileIcon = "images/beads.png";
+            this.introText = "Beads were blah...";
             break;
         case typeBlanket:
             this.itemId = 12;
@@ -171,6 +202,7 @@ function ItemDescription(type)
             this.specificName = "Blanket";
             this.imageFile = "images/blanket96.png";
             this.imageFileIcon = "images/blanket.png";
+            this.introText = "Blankets were blah...";
             break;
         default:
             return null;
@@ -264,6 +296,7 @@ function Player()
                 }
                 break;
         }
+        return this;
     }
     
     this.hasItem = function(type)
@@ -325,7 +358,7 @@ function Player()
         var item;
         for(i in this.neededItems)
         {
-            if(this.hasItem(this.neededItems[i].type))
+            if(!this.hasItem(this.neededItems[i].type))
                 return false;
         }
         return true;
@@ -363,5 +396,5 @@ function levelForLevelId(id)
 {
     for(i in levelIds)
         if(levelIds[i] == id) return i;
-    return null;
+    return -1;
 }

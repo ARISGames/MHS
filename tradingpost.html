@@ -77,7 +77,7 @@ function postInit()
     }
 
     //Finalize player state, as all data should be synced with client
-    player.construct(itemDescriptionForWebPageId(webPageId).owner);
+    if(!player.construct(itemDescriptionForWebPageId(webPageId).owner)) alert("Error");
 
     //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
     if(!oldRole || player.description.role != oldRole.role || player.inventory.length == 0)
@@ -117,7 +117,7 @@ function didUpdateItemQty(updatedItemId,qty)
 
     var i;
     if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.type, qty);
-    else if(i = levelForLevelId(updatedItemId) && qty > 0 && i > player.level) player.level = i;
+    else if(qty > 0 && (i = levelForLevelId(updatedItemId)) != -1 && i > player.level) player.level = parseInt(i); //No idea why parseInt is necessary... oh javascript...
     else if(i = playerDescriptionForRoleId(updatedItemId) && qty > 0) oldRole = i;
 
     if(player.description) //Check if player has been initialized yet
@@ -133,7 +133,10 @@ function playIntro(state)
     switch(state)
     {
         case 0:
-            document.getElementById(player.description.title).style.display = "block";
+            document.getElementById("introCharacterText").innerHTML = player.description.introText;
+            document.getElementById("introCharacterImage").src = player.description.imageFile;
+            document.getElementById("introItemText").innerHTML = itemDescriptionForWebPageId(webPageId).introText;
+            document.getElementById("introItemImage").src = itemDescriptionForWebPageId(webPageId).imageFile;
             setScene(sceneIntro);
             break;
         case 1:
@@ -146,7 +149,7 @@ function draw()
 {
     if(scene == sceneTrade)
     {
-        document.getElementById("topBar").innerHTML = player.description.title;
+        document.getElementById("topBarText").innerHTML = player.description.title;
         drawTradeTableHTML();
     }
 }
@@ -211,10 +214,10 @@ function constructBumpString()
 function constructInventoryTableCell(item)
 {
     var cell = ""
-    if(item.selected)
-      cell+= "<div id='hasCell"+item.description.type+"' class='hasCell selectedCell' onclick='cellSelected("+item.description.type+")'>";
-    else
-    cell+= "<div id='hasCell"+item.description.type+"' class='hasCell' onclick='cellSelected("+item.description.type+")'>";
+        if(item.selected)
+            cell+= "<div id='hasCell"+item.description.type+"' class='hasCell selectedCell' onclick='cellSelected("+item.description.type+")'>";
+        else
+            cell+= "<div id='hasCell"+item.description.type+"' class='hasCell' onclick='cellSelected("+item.description.type+")'>";
     cell+= "<img id='hasCellIcon"+item.description.type+"' class='hasCellIcon' src='"+item.description.imageFileIcon+"' />";
     cell+= "<div id='hasCellTitle"+item.description.type+"' class='hasCellTitle'>"+item.description.specificName+"</div>";
     cell+= "<div id='hasCellQty"+item.description.type+"' class='hasCellQty'>x"+item.qty+"</div>";
@@ -225,18 +228,18 @@ function constructInventoryTableCell(item)
 function constructNeedsTableCell(itemDescription)
 {
     var cell = ""
-    if(player.hasItem(itemDescription.type))
-    {
-      cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell verified'>";
-      cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
-      cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.specificName+"</div>";
-    }
-    else
-    {
-      cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell'>";
-      cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
-      cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.generalName+"</div>";
-    }
+        if(player.hasItem(itemDescription.type))
+        {
+            cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell verifiedCell'>";
+            cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+            cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.specificName+"</div>";
+        }
+        else
+        {
+            cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell'>";
+            cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+            cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.generalName+"</div>";
+        }
     cell+= "</div>";
     return cell;
 }
@@ -261,11 +264,10 @@ function drawTradeTableHTML()
 function getAdvice()
 {
     var itemsRemaining = new Array();
-    var item;
     for(i in player.neededItems)
     {
-        if(item = player.hasItem(player.neededItems[i].type))
-            itemsRemaining.push(item);
+        if(!player.hasItem(player.neededItems[i].type))
+            itemsRemaining.push(player.neededItems[i]);
     }
     var item;
     var advice;
@@ -294,28 +296,27 @@ function getAdvice()
 
 <!-- Intro State -->
 <div id="intro" class="scene">
-Intro
-    <div id="Clerk" class="character">
-      You's a CLERK!
+    <div id="introCharacter">
+      <div id="introCharacterText">
+      </div>
+      <img id="introCharacterImage" src="" />
     </div>
-    <div id="Hunter" class="character">
-      You's a Hunter!
-    </div>
-    <div id="Crafter" class="character">
-      You's a CRAFTER!
+    <div id="introItem">
+      <div id="introItemText">
+      </div>
+      <img id="introItemImage" src="" />
     </div>
 </div>
 
 <!-- Trade State -->    
 <div id="trade" class="scene"> 
-Trade
     <div id="topBar">
-    TopBar
+        <div id="topBarText">
+        </div>
     </div>
     
     <div id="tradeContent">
-    TradeContent
-        <table>
+        <table id="tradeTable">
             <tr>
                 <td width="50%">
                     You Have
@@ -334,7 +335,6 @@ Trade
     </div>
     
     <div id="bottomBar">
-    BottomBar
         <img src="images/voyageur.png" id="helper" onclick="getAdvice()"/>
     </div>
 

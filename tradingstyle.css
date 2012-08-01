@@ -19,6 +19,8 @@ body
     -webkit-user-select:none;
     user-select:none;
     background-color:#FFFFFF;
+    margin:0px;
+    padding:0px;
 }
 
 #screen
@@ -35,6 +37,22 @@ body
     width:100%;
     height:100%;
     display:none;
+}
+
+#verifyText
+{
+    margin:20px;
+}
+#confirm
+{
+    margin-top:10px;
+    margin-left:20px;
+    margin-bottom:10px;
+}
+#reject
+{
+    margin-top:10px;
+    margin-left:20px;
 }
 
 #introCharacter
@@ -145,7 +163,17 @@ body
     position:absolute;
     bottom:0px;
 }
+#helperMessage
+{
+    width:272px;
+    position:absolute;
+    left:0px;
+    bottom:0px;
+}
 #helper
 {
-    float:right;
+    width:48px;
+    position:absolute; 
+    right:0px;
+    bottom:0px;
 }

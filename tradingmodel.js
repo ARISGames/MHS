@@ -1,9 +1,10 @@
 //ENUMS
 var sceneLoading = 0;
-var sceneIntro = 1;
-var sceneTrade = 2;
-var sceneSuccess = 3;
-var scenes=[sceneLoading,sceneIntro,sceneTrade,sceneSuccess];
+var sceneVerify = 1;
+var sceneIntro = 2;
+var sceneTrade = 3;
+var sceneSuccess = 4;
+var scenes=[sceneLoading,sceneVerify,sceneIntro,sceneTrade,sceneSuccess];
 
 var roleClerk = 0;
 var roleHunter = 1;

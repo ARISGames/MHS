@@ -17,6 +17,7 @@ var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '
 
 function bodyLoad()
 {
+    setScene(sceneLoading);
     setTimeout(function(){initialize()},100);
 }
 
@@ -25,6 +26,7 @@ function setScene(newScene)
     scene = newScene;
 
     document.getElementById("loading").style.display="none";
+    document.getElementById("verify").style.display="none";
     document.getElementById("intro").style.display="none";
     document.getElementById("trade").style.display="none";
     document.getElementById("success").style.display="none";
@@ -33,6 +35,9 @@ function setScene(newScene)
     {
         case sceneLoading:
             document.getElementById("loading").style.display="block";
+            break;
+        case sceneVerify:
+            document.getElementById("verify").style.display="block";
             break;
         case sceneIntro:
             document.getElementById("intro").style.display="block";
@@ -67,8 +72,28 @@ function initialize()
     getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
 }
 
+//Give a chance to back out of switching roles and losing items
+function verify()
+{
+    var newRole = itemDescriptionForWebPageId(webPageId).owner;
+    if(!oldRole) //No role
+    {
+        document.getElementById("verifyText").innerHTML = "Choosing this item will put you into the role of '"+newRole.title+"'. Do you want to proceed?";
+        setScene(sceneVerify);
+    }
+    else if(oldRole && oldRole.role != newRole.role) //New role
+    {
+        document.getElementById("verifyText").innerHTML = "Choosing this item will put you into the role of '"+newRole.title+"'. You were previously in the role of '"+oldRole.title+"'. Accepting this new role will give you a new set of items. Proceed?";
+        setScene(sceneVerify);
+    }
+    else //Same role as before
+    {
+        confirmInit();
+    }
+}
+
 //Once all data is retreived, actually initialize game state
-function postInit()
+function confirmInit()
 {
     //Give them the 'Level 1' Badge for starting to play
     if(player.level == -1)
@@ -77,7 +102,7 @@ function postInit()
         player.level = 0;
     }
 
-    //Finalize player state, as all data should be synced with client
+    //Finalize player state, as all data should now be synced with client
     if(!player.construct(itemDescriptionForWebPageId(webPageId).owner)) alert("Error");
 
     //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
@@ -112,7 +137,7 @@ function didUpdateItemQty(updatedItemId,qty)
 {
     if(updatedItemId == bogusEndOfQueueId)
     {
-        postInit();
+        verify();
         return;
     }
 
@@ -287,17 +312,30 @@ function getAdvice()
         advice = "It looks like you've got everything you need! Good work!";
         checkWinState();
     }
-    alert(advice);
+    document.getElementById("helperMessage").innerHTML = advice;
 }
+function blah(){};
 
 </script>
 </head>
-<body onLoad="bodyLoad()" style="margin:0px; padding:0px;">
+<body onLoad="bodyLoad()">
 <div id="screen">
 
 <!-- Loading State -->
-<div id="loading" class="scene">
+<div id="loading" class="scene" style="display:block;">
     loading...
+</div>
+
+<!-- Verify State -->
+<div id="verify" class="scene">
+    <div id="verifyText">
+    </div>
+    <div id="confirm" onclick="confirmInit()">
+        Yes, give me a new role.
+    </div>
+    <div id="reject" onclick="closeMe()">
+        No, I will find another object to scan.
+    </div>
 </div>
 
 <!-- Intro State -->
@@ -341,6 +379,7 @@ function getAdvice()
     </div>
     
     <div id="bottomBar">
+        <div id="helperMessage"></div>
         <img src="images/voyageur.png" id="helper" onclick="getAdvice()"/>
     </div>
 

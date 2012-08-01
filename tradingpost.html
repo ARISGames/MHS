@@ -58,11 +58,11 @@ function initialize()
     webPageId  = parseInt(params.webPageId);
     player = new Player();
 
-    for(i in items)
+    for(var i in items)
         getItemCount(items[i].itemId);
-    for(i in levelIds)
+    for(var i in levelIds)
         getItemCount(levelIds[i]);
-    for(i in players)
+    for(var i in players)
         getItemCount(players[i].roleId);
     getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
 }
@@ -84,19 +84,19 @@ function postInit()
     if(!oldRole || player.description.role != oldRole.role || player.inventory.length == 0)
     {
         //Wipe away relevant inventory and start fresh
-        for(i in items)
+        for(var i in items)
         {
             setItemCount(items[i].itemId,0); //Back to ARIS
             player.completelyRemoveItemFromInventory(items[i].type); //Local
         }
-        for(i in player.givenItems)
+        for(var i in player.givenItems)
         {
             setItemCount(player.givenItems[i].itemId,1); //Back to ARIS
             player.setItemQtyInInventory(player.givenItems[i].type,1); //Local
         }
 
         //Save New Role
-        for(i in players)
+        for(var i in players)
         {
             if(players[i].roleId == player.description.roleId)
                 setItemCount(players[i].roleId,1); //Back to ARIS
@@ -176,15 +176,14 @@ function cellSelected(itemType)
 function bumpReceived(bumpString)
 {
     var receivedItems = bumpString.tradedItems;
-    for(i in receivedItems)
+    for(var i in receivedItems)
     {
         var item;
         if(item = player.addItemToInventory(itemDescriptionForItemId(receivedItems[i]).type,1))
             setItemCount(item.description.itemId,item.qty);
     }
 
-    var i;
-    for(i = 0; i < player.inventory.length; i++) //Needs to be an old fashioned for loop, as normal enumerator can't account for dynamic changes in inventory
+    for(var i = 0; i < player.inventory.length; i++) //Needs to be an old fashioned for loop, as normal enumerator can't account for dynamic changes in inventory
     {
         if(player.inventory[i].selected)
         {
@@ -203,7 +202,7 @@ function bumpReceived(bumpString)
 function constructBumpString()
 {
     var bumpString = "{\"tradedItems\":[";
-    for(i in player.inventory)
+    for(var i in player.inventory)
     {
         if(player.inventory[i].selected)
             bumpString += player.inventory[i].description.itemId+",";
@@ -255,11 +254,11 @@ function drawTradeTableHTML()
     var inventoryHTMLText = "";
     var wantsHTMLText = "";
 
-    for(i in player.inventory)
+    for(var i in player.inventory)
     {
         inventoryHTMLText += constructInventoryTableCell(player.inventory[i]);
     }
-    for(i in player.neededItems)
+    for(var i in player.neededItems)
     {
         wantsHTMLText += constructNeedsTableCell(player.neededItems[i]);
     }
@@ -270,17 +269,18 @@ function drawTradeTableHTML()
 function getAdvice()
 {
     var itemsRemaining = new Array();
-    for(i in player.neededItems)
+    for(var i in player.neededItems)
     {
         if(!player.hasItem(player.neededItems[i].type))
             itemsRemaining.push(player.neededItems[i]);
     }
+
     var item;
     var advice;
     if(itemsRemaining.length > 0)
     {
         item = itemsRemaining[Math.floor(Math.random()*itemsRemaining.length)];
-        advice = "It looks like you still need to find " + item.generalName + ". A " + item.owner.title + " may have what you need."
+        advice = item.helperText;
     }
     else
     {

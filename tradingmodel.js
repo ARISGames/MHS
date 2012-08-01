@@ -81,6 +81,7 @@ function ItemDescription(type)
     this.imageFile = "";
     this.imageFileIcon = "";
     this.introText = "";
+    this.helperText = "";
 
     switch(type)
     {
@@ -93,6 +94,7 @@ function ItemDescription(type)
             this.imageFile = "images/beaverpelt96.png";
             this.imageFileIcon = "images/beaverpelt.png";
             this.introText = "Beaver Pelts were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeMeat:
             this.itemId = 2;
@@ -103,6 +105,7 @@ function ItemDescription(type)
             this.imageFile = "images/deermeat96.png";
             this.imageFileIcon = "images/deermeat.png";
             this.introText = "Deer Meat was blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeLeather:
             this.itemId = 3;
@@ -113,6 +116,7 @@ function ItemDescription(type)
             this.imageFile = "images/leather.png";
             this.imageFileIcon = "images/leather96.png";
             this.introText = "Leather was blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeHideLacing:
             this.itemId = 4;
@@ -123,6 +127,7 @@ function ItemDescription(type)
             this.imageFile = "images/lace96.png";
             this.imageFileIcon = "images/lace.png";
             this.introText = "Raw Hide Lacing was blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeGun:
             this.itemId = 5;
@@ -133,6 +138,7 @@ function ItemDescription(type)
             this.imageFile = "images/gun96.png";
             this.imageFileIcon = "images/gun.png";
             this.introText = "Guns were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeCoat:
             this.itemId = 6;
@@ -143,6 +149,7 @@ function ItemDescription(type)
             this.imageFile = "images/coat96.png";
             this.imageFileIcon = "images/coat.png";
             this.introText = "Coats were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeRice:
             this.itemId = 7;
@@ -153,6 +160,7 @@ function ItemDescription(type)
             this.imageFile = "images/wildrice96.png";
             this.imageFileIcon = "images/wildrice.png";
             this.introText = "Wild Rice was blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeSugar:
             this.itemId = 10;
@@ -163,6 +171,7 @@ function ItemDescription(type)
             this.imageFile = "images/maplesugar96.png";
             this.imageFileIcon = "images/maplesugar.png";
             this.introText = "Maple Sugar was blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeSnowshoes:
             this.itemId = 9;
@@ -173,6 +182,7 @@ function ItemDescription(type)
             this.imageFile = "images/snowshoe96.png";
             this.imageFileIcon = "images/snowshoe.png";
             this.introText = "Snowshoes were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeMoccasins:
             this.itemId = 8;
@@ -183,6 +193,7 @@ function ItemDescription(type)
             this.imageFile = "images/moccasins96.png";
             this.imageFileIcon = "images/moccasins.png";
             this.introText = "Moccasins were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeBeads:
             this.itemId = 11;
@@ -193,6 +204,7 @@ function ItemDescription(type)
             this.imageFile = "images/beads96.png";
             this.imageFileIcon = "images/beads.png";
             this.introText = "Beads were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         case typeBlanket:
             this.itemId = 12;
@@ -203,6 +215,7 @@ function ItemDescription(type)
             this.imageFile = "images/blanket96.png";
             this.imageFileIcon = "images/blanket.png";
             this.introText = "Blankets were blah...";
+            this.helperText = "It looks like you need "+this.generalName+". You should go find a "+this.owner.title+".";
             break;
         default:
             return null;
@@ -301,7 +314,7 @@ function Player()
     
     this.hasItem = function(type)
     {
-        for(i in this.inventory)
+        for(var i in this.inventory)
             if(this.inventory[i].description.type == type) return this.inventory[i];
         return null;
     }
@@ -320,7 +333,7 @@ function Player()
     this.completelyRemoveItemFromInventory = function(type)
     {
         var item = null;
-        for(i in this.inventory)
+        for(var i in this.inventory)
             if(this.inventory[i].description.type == type && (item = this.inventory[i]))
                 this.inventory.splice(i,1);
         return item;
@@ -357,7 +370,7 @@ function Player()
     this.hasAllNeededItems = function()
     {
         var item;
-        for(i in this.neededItems)
+        for(var i in this.neededItems)
         {
             if(!this.hasItem(this.neededItems[i].type))
                 return false;
@@ -377,25 +390,25 @@ var player;
 //MODEL ACCESSORS
 function itemDescriptionForItemId(id)
 {
-    for(i in items)
+    for(var i in items)
         if(items[i].itemId == id) return items[i];
     return null;
 }
 function itemDescriptionForWebPageId(id)
 {
-    for(i in items)
+    for(var i in items)
         if(items[i].webPageId == id) return items[i];
     return null;
 }
 function playerDescriptionForRoleId(id)
 {
-    for(i in players)
+    for(var i in players)
         if(players[i].roleId == id) return players[i];
     return null;
 }
 function levelForLevelId(id)
 {
-    for(i in levelIds)
+    for(var i in levelIds)
         if(levelIds[i] == id) return i;
     return -1;
 }

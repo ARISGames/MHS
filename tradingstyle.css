@@ -27,6 +27,7 @@ body
     margin:0px; 
     width:320px; 
     height:416px;
+    background-image:url("images/Fur_Trade_Screen_Intro.png");
 }
 
 .scene
@@ -45,7 +46,7 @@ body
 }
 #introCharacterImage
 {
-    width:200px;
+    width:100px;
 }
 
 #introItem
@@ -57,7 +58,7 @@ body
 }
 #introItemImage
 {
-    width:200px;
+    width:100px;
 }
 
 #topBar

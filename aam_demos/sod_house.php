@@ -12,7 +12,7 @@
 		var seasons = ['Spring', 'Summer', 'Fall', 'Winter'];
 		var seasonsSurvived = [false, false, false, false];
 		var seasonHits = [
-			[0,0,0], //Sprint
+			[0,0,0], //Spring
 			[-50,0,0],//Summer
 			[0,0,0], //Fall
 			[0,0,-50]];//Winter

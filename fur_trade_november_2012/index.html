@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<title>Trading Post</title>
+<link href="style.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="utils/jquery.js"></script>
+<script type="text/javascript" src="utils/json2.js"></script>
+<script type="text/javascript" src="utils/arisjs.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript">
+var scene = sceneIdIntro;
+var oldRole;
+var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
+
+function bodyLoad()
+{
+    if(debug) console.log('bodyLoad()');
+    setScene(sceneIdLoading);
+    setTimeout(function(){initialize()},100);
+}
+
+function setScene(newScene)
+{
+    if(debug) console.log('setScene('+newScene+')');
+    scene = newScene;
+
+    document.getElementById("loading").style.display="none";
+    document.getElementById("splash").style.display="none";
+    document.getElementById("verify").style.display="none";
+    document.getElementById("role").style.display="none";
+    document.getElementById("intro").style.display="none";
+    document.getElementById("trade").style.display="none";
+    document.getElementById("success").style.display="none";
+
+    switch(scene)
+    {
+        case sceneIdLoading:
+            document.getElementById("loading").style.display="block";
+            break;
+        case sceneIdSplash:
+            document.getElementById("splash").style.display="block";
+            break;
+        case sceneIdVerify:
+            document.getElementById("verify").style.display="block";
+            break;
+        case sceneIdRole:
+            document.getElementById("role").style.display="block";
+            break;
+        case sceneIdIntro:
+            document.getElementById("intro").style.display="block";
+            break;
+        case sceneIdTrade:
+            constructBumpString();
+            draw();
+            document.getElementById("trade").style.display="block";
+            break;
+        case sceneSuccess:
+            document.getElementById("success").style.display="block";
+            break;
+    }
+}
+
+//Fetches all data it needs
+function initialize()
+{
+    if(debug) console.log('initialize()');
+    //Get URL Fields
+    var params = ARIS.parseURLParams(document.URL);
+    gameId     = parseInt(params.gameId);
+    playerId   = parseInt(params.playerId);
+    webPageId  = 757;//parseInt(params.webPageId);
+    player = new Player();
+
+    //This is called by ARIS, informing this webpage of qty values
+    ARIS.didUpdateItemQty = function (updatedItemId,qty)
+    {
+        if(debug) console.log('ARIS.didUpdateItemQty('+updatedItemId+','+qty+')');
+        if(updatedItemId == bogusEndOfQueueId)
+        {
+            splash();
+            return;
+        }
+
+        var i;
+        if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.type, qty);
+        else if(qty > 0 && (i = levelForLevelId(updatedItemId)) != -1 && i > player.level) player.level = parseInt(i); //No idea why parseInt is necessary... oh javascript...
+        else if(qty > 0 && (i = playerDescriptionForRoleId(updatedItemId))) oldRole = i;
+    
+        if(player.description) //Check if player has been initialized yet
+        {
+            draw();
+            checkWinState();
+        }
+    }
+
+    for(var i in types)
+        ARIS.getItemCount(types[i].itemId);
+    for(var i in levelObjectIds)
+        ARIS.getItemCount(levelObjectIds[i]);
+    for(var i in players)
+        ARIS.getItemCount(players[i].roleObjectId);
+    ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
+}
+
+//Tell a bit about the item scanned
+function splash()
+{
+    document.getElementById('splashContent').src = "images/objects/splash/"+itemDescriptionForWebPageId(webPageId).imageName;
+    setScene(sceneIdSplash);
+}
+
+//Give a chance to back out of switching roles and losing items
+function verify()
+{
+    if(debug) console.log('verify()');
+
+    //If player was already init'd, and must have gotten here by pressing 'back'
+    if(player.description)
+    {
+        setScene(sceneIdRole);
+        return;
+    }
+
+    var newRole = itemDescriptionForWebPageId(webPageId).owner;
+    if(!oldRole) confirmInit();
+    else if(oldRole && oldRole.role != newRole.role) //New role
+    {
+        document.getElementById("verifyText").innerHTML = "Choosing this item will put you into the role of '"+newRole.title+"'. You were previously in the role of '"+oldRole.title+"'. Accepting this new role will give you a new set of items. Proceed?";
+        setScene(sceneIdVerify);
+    }
+    else //Same role as before
+    {
+        confirmInit();
+    }
+}
+
+//Once all data is retreived, actually initialize game state
+function confirmInit()
+{
+    if(debug) console.log('confirmInit()');
+    //Give them the 'Level 1' Badge for starting to play
+    if(player.level == -1)
+    {
+        ARIS.setItemCount(levelObjectIds[0],1); //Back to ARIS
+        player.level = 0;
+    }
+
+    //Finalize player state, as all data should now be synced with client
+    if(!player.construct(itemDescriptionForWebPageId(webPageId).owner)) alert("Error");
+
+    //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
+    if(!oldRole || player.description.role != oldRole.role || player.inventory.length == 0)
+    {
+        //Wipe away relevant inventory and start fresh
+        for(var i in types)
+            player.completelyRemoveItemFromInventory(types[i].type); //Local
+        for(var i in player.givenItems)
+            player.addItemToInventory(player.givenItems[i].typeId,1); //Local
+        for(var i in types)
+            ARIS.setItemCount(types[i].itemId,player.getItemQtyInInventory(types[i].itemId)); //Back to ARIS
+
+        //Save New Role
+        for(var i in players)
+        {
+            if(players[i].roleId == player.description.roleId)
+                ARIS.setItemCount(players[i].roleId,1); //Back to ARIS
+            else
+                ARIS.setItemCount(players[i].roleId,0); //Back to ARIS
+        }
+    }
+    document.getElementById('roleContent').src = "images/roles/splash/"+player.description.imageName;
+    setScene(sceneIdRole);
+}
+
+function playIntro(state)
+{
+    if(debug) console.log('playIntro('+state+')');
+    document.getElementById("introArrow").onclick=function(){playIntro(state+1);};
+    switch(state)
+    {
+        case 0:
+            setScene(sceneIdIntro);
+            break;
+        case 1:
+            setScene(sceneIdTrade);
+            break;
+    }
+}
+
+function draw()
+{
+    if(debug) console.log('draw()');
+    if(scene == sceneIdTrade)
+    {
+        for(var i = 0; i < player.neededItems.length; i++)
+        {
+            if(player.neededItems[i].selected)
+                document.getElementById('needCell'+i).innerHTML = "<img src='images/objects/checklists/checked/"+player.neededItems[i].description.imageName+"'/>";
+            else
+                document.getElementById('needCell'+i).innerHTML = "<img src='images/objects/checklists/unchecked/"+player.neededItems[i].description.imageName+"'/>";
+        }
+        //document.getElementById("topBarText").innerHTML = player.description.title;
+        //drawTradeTableHTML();
+    }
+}
+
+function checkWinState()
+{
+    if(debug) console.log('checkWinState()');
+    if(scene == sceneIdTrade && player.hasAllNeededItems())
+    {
+        setScene(sceneSuccess);
+        ARIS.setItemCount(levelIds[player.level],0); //Remove old level badge
+        ARIS.setItemCount(levelIds[player.level+1],1); //Give new level badge
+    }
+}
+
+function cellSelected(itemType)
+{
+    if(debug) console.log('cellSelected('+itemType+')');
+    var item;
+    if(item = player.hasItem(itemType)) item.selected = !item.selected;
+    constructBumpString();
+    draw();
+}
+
+function bumpReceived(bumpString)
+{
+    if(debug) console.log('bumpReceived('+bumpString+')');
+    var receivedItems = bumpString.tradedItems;
+    for(var i in receivedItems)
+    {
+        var item;
+        if(item = player.addItemToInventory(itemDescriptionForItemId(receivedItems[i]).type,1))
+            ARIS.setItemCount(item.description.itemId,item.qty);
+    }
+
+    for(var i = 0; i < player.inventory.length; i++) //Needs to be an old fashioned for loop, as normal enumerator can't account for dynamic changes in inventory
+    {
+        if(player.inventory[i].selected)
+        {
+            var item;
+            if(item = player.removeItemFromInventory(player.inventory[i].description.type,1));
+            {
+                item.selected = false; //If removing item still retains qty of > 0
+                ARIS.setItemCount(item.description.itemId,item.qty);
+            }
+            if(!(player.inventory[i] && player.inventory[i].description.type == item.description.type)) i--; //resets 'i' if the entire item was removed from the inventory
+        }
+    }
+    constructBumpString();
+}
+
+function constructBumpString()
+{
+    if(debug) console.log('constructBumpString()');
+    var bumpString = "{\"tradedItems\":[";
+    for(var i in player.inventory)
+    {
+        if(player.inventory[i].selected)
+            bumpString += player.inventory[i].description.itemId+",";
+    }
+    //Remove potential trailing ','
+    if(bumpString.charAt(bumpString.length-1) == ",")
+        bumpString = bumpString.slice(0,-1);
+
+    bumpString += "]}";
+    ARIS.setBumpString(bumpString);
+    return bumpString;
+}
+
+function constructInventoryTableCell(item)
+{
+    if(debug) console.log('constructInventoryTableCell('+item+')');
+    var cell = ""
+        if(item.selected)
+            cell+= "<div id='hasCell"+item.description.type+"' class='hasCell selectedCell' onclick='cellSelected("+item.description.type+")'>";
+        else
+            cell+= "<div id='hasCell"+item.description.type+"' class='hasCell' onclick='cellSelected("+item.description.type+")'>";
+    cell+= "<img id='hasCellIcon"+item.description.type+"' class='hasCellIcon' src='"+item.description.imageFileIcon+"' />";
+    cell+= "<div id='hasCellTitle"+item.description.type+"' class='hasCellTitle'>"+item.description.specificName+"</div>";
+    cell+= "<div id='hasCellQty"+item.description.type+"' class='hasCellQty'>x"+item.qty+"</div>";
+    cell+= "</div>";
+    return cell;
+}
+
+function constructNeedsTableCell(itemDescription)
+{
+    if(debug) console.log('constructNeedsTableCell('+itemDescription+')');
+    var cell = ""
+        if(player.hasItem(itemDescription.type))
+        {
+            cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell verifiedCell'>";
+            cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+            cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.specificName+"</div>";
+        }
+        else
+        {
+            cell+= "<div id='needsCell"+itemDescription.type+"' class='needsCell'>";
+            cell+= "<img id='needsCellIcon"+itemDescription.type+"' class='needsCellIcon' src='"+itemDescription.imageFileIcon+"' />";
+            cell+= "<div id='needsCellTitle"+itemDescription.type+"' class='needsCellTitle'>"+itemDescription.generalName+"</div>";
+        }
+    cell+= "</div>";
+    return cell;
+}
+
+function drawTradeTableHTML()
+{
+    if(debug) console.log('drawTableHTML()');
+    var inventoryHTMLText = "";
+    var wantsHTMLText = "";
+
+    for(var i in player.inventory)
+    {
+        inventoryHTMLText += constructInventoryTableCell(player.inventory[i]);
+    }
+    for(var i in player.neededItems)
+    {
+        wantsHTMLText += constructNeedsTableCell(player.neededItems[i]);
+    }
+    document.getElementById("inventory").innerHTML = inventoryHTMLText;
+    document.getElementById("wants").innerHTML = wantsHTMLText;
+}
+
+</script>
+</head>
+<body onLoad="bodyLoad()">
+<div id="screen">
+
+<!-- Loading State -->
+<div id="loading" class="scene" style="display:block;">
+    loading...
+</div>
+
+<!-- Splash State -->
+<div id="splash" class="scene">
+    <img id="splashContent"/>
+    <img class="right_arrow" src="images/core/right_arrow.png" onclick="verify()"/>
+</div>
+
+<!-- Verify State -->
+<div id="verify" class="scene">
+    <div id="verifyText">
+    </div>
+    <div id="confirm" onclick="confirmInit()">
+        Yes, give me a new role.
+    </div>
+    <div id="reject" onclick="ARIS.closeMe()">
+        No, I will find another object to scan.
+    </div>
+    <img class="left_arrow" src="images/core/left_arrow.png" onclick="splash()"/>
+    <img class="right_arrow" src="images/core/right_arrow.png" onclick="verify()"/>
+</div>
+
+<!-- Role State -->
+<div id="role" class="scene">
+    <img id="roleContent"/>
+    <img class="left_arrow" src="images/core/left_arrow.png" onclick="setScene(sceneIdSplash)"/>
+    <img class="right_arrow" src="images/core/right_arrow.png" onclick="playIntro(0)"/>
+</div>
+
+<!-- Intro State -->
+<div id="intro" class="scene">
+    Movie
+    <img class="left_arrow" src="images/core/left_arrow.png" onclick="setScene(sceneIdRole)"/>
+    <img id="introArrow" class="right_arrow" src="images/core/right_arrow.png" onclick="verify()"/>
+</div>
+
+<!-- Trade State -->    
+<div id="trade" class="scene"> 
+    <img id="inventoryBackground" src="images/core/inventory_background.png"/>
+    <div id="needCell0"></div>
+    <div id="needCell1"></div>
+    <div id="needCell2"></div>
+    <div id="needCell3"></div>
+</div>
+
+<!-- Success State -->
+<div id="success" class="scene">
+    YOU WIN
+</div>
+
+<!-- Debug -->
+<div id="debug">
+    debug
+</div> 
+
+</div><!-- body -->
+</body>
+</html>

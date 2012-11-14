@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MHS Iron Mine Controller</title>
+    <script type="text/javascript">
+
+	//SEND
+	function sendRequest(channel, event, data)
+        {
+            var xmlhttp;
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.open("POST","http://dev.arisgames.org/server/events/send.php",true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send('channel='+channel+'&event='+event+'&data='+data);
+        }
+
+        function sendStateChangeRequest(webId,instance)
+        {
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_STATE_CHANGED','{"state":['+document.getElementById("dyna_"+instance+"_1").checked+','+
+                                                                                            document.getElementById("dyna_"+instance+"_2").checked+','+
+                                                                                            document.getElementById("dyna_"+instance+"_3").checked+','+
+                                                                                            document.getElementById("dyna_"+instance+"_4").checked+','+
+                                                                                            document.getElementById("dyna_"+instance+"_5").checked+','+
+                                                                                            document.getElementById("dyna_"+instance+"_6").checked+']}');
+        }
+
+    </script>
+    <style>
+        .game
+        {
+            float:left;
+            width:300px;
+            border:1px solid black;
+            padding:10px;
+            margin:10px;
+        }
+
+        .gametitle
+        {
+            font-weight:bold;
+            color:orange;
+        }
+    </style>
+</head>
+<body>
+    I've created a test game called '<b>MHS_Iron_Mine_Test</b>'. You should be able to search to find it on the ARIS client <b>(Make sure that 'show games in development' is marked 'YES' in ARIS settings)</b>. The game has 6 web pages that are spread out randomly throughout Minnesota/Wisconsin. They are all quick-travel-able, so just clicking on them should get you right to them. Each game has a placeholder screen for an Intro, and a descriptive video. Click anywhere to go to the next screen. Once you are on the 'gameplay' screen for any game, you will see two indicators of money- the first (prefixed with a '+') is how much you currently have, and the second is how much you 'need'. Right now, all 'needs' are set to $0.00, but are ready to be swapped out with meaningful variables when ready. <br /><br /><b>*NOTE*</b>- These games are ugly. Like, really, really ugly. And they do an awful job illustrating what is going on. They are built to be easily modifiable and to allow for easy switching out/ positioning/ styling of assets. So please don't let that distract you. :)<br /><br />
+    <div class='game'>
+        <div class='gametitle'>DRILL</div>
+        <div class='instance'>
+	    <div class='instancetitle'>1</div>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1032_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1032_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+        </div>
+        <div class='instance'>
+	    <div class='instancetitle'>2</div>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1028_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1028_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+        </div>
+        <div class='instance'>
+	    <div class='instancetitle'>3</div>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1029_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1029_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+        </div>
+        <br />
+        Hold the button to start the drill, release to stop it. Align the tip of the 'drill bit' with the green part of the indicator bar to make money. Anything else loses you money.
+    </div>
+    <div class='game'>
+        <div class='gametitle'>DYNAMITE</div>
+        <div class='instance'>
+	    <div class='instancetitle'>1</div>
+            <input id='dyna_1_1' type='checkbox' checked='true'></input>
+            <input id='dyna_1_2' type='checkbox' checked='true'></input>
+            <input id='dyna_1_3' type='checkbox' checked='true'></input>
+            <input id='dyna_1_4' type='checkbox' checked='true'></input>
+            <input id='dyna_1_5' type='checkbox' checked='true'></input>
+            <input id='dyna_1_6' type='checkbox' checked='true'></input>
+	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1031,1);"></input>
+	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1031_PLUNGER_PRESSED','x');"></input>
+        </div>
+        <div class='instance'>
+	    <div class='instancetitle'>2</div>
+            <input id='dyna_2_1' type='checkbox' checked='true'></input>
+            <input id='dyna_2_2' type='checkbox' checked='true'></input>
+            <input id='dyna_2_3' type='checkbox' checked='true'></input>
+            <input id='dyna_2_4' type='checkbox' checked='true'></input>
+            <input id='dyna_2_5' type='checkbox' checked='true'></input>
+            <input id='dyna_2_6' type='checkbox' checked='true'></input>
+	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1030,2);"></input>
+	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1030_PLUNGER_PRESSED','x');"></input>
+        </div>
+        <br />
+        The checkboxes represent dynamite in/out of holes. Check/Uncheck them as desired, then click 'Change State' to see it update on the screen (in the real implementation, 'change state' will automatically be sent as each dynamite piece is moved). On the client, x represents a filled hole, o represents an empty one. Follow the instructions on the device. Deviation from these instructions loses you money.
+    </div>
+    <div class='game'>
+        <div class='gametitle'>BACKMAN</div>
+        <div class='instance'>
+	    <div class='instancetitle'>1</div>
+	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1027_WALL_POKED','x');"></input>
+        </div>
+        <div class='instance'>
+	    <div class='instancetitle'>2</div>
+	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1033_WALL_POKED','x');"></input>
+        </div>
+        <br />
+        This is just a crap shoot. 50% of the time you make money, and 50% of the time you lose money. Good luck.
+    </div>
+</body>
+</html>

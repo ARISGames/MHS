@@ -1,6 +1,28 @@
+@font-face
+{
+    font-family:archer_font;
+    src:url('fonts/Archer/Archer-Medium-Pro.otf');
+}
+
+@font-face
+{
+    font-family:gotham_font;
+    src:url('fonts/Gotham/Gotham-Black.otf');
+}
+
 #debug
 {
     display:none;
+}
+
+.gotham
+{
+    font-family:gotham_font;
+}
+
+.archer
+{
+    font-family:archer_font;
 }
 
 div
@@ -9,9 +31,12 @@ div
     border-style:solid;
     border-width:1px;
     border-color:#FF0000;
-    */
+     */
     padding:0px;
     font-weight:Bold;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }
 
 body
@@ -29,6 +54,8 @@ body
     height:416px;
     margin:0px; 
     position:absolute; 
+    top:0px;
+    left:0px;
     background-image:url("images/core/background.png");
 }
 
@@ -38,6 +65,71 @@ body
     width:100%;
     height:100%;
     position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.alert
+{
+    width:100%;
+    display:none;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+#wrongitemalert
+{
+    width:320px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+#wrongitembutton
+{
+    display:block;
+    width:270px;
+    margin:0px auto;
+    position:relative;
+    top:145px;
+}
+
+#rolechangealert
+{
+    width:320px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+#rolechangetext
+{
+    width:300px;
+    margin:0px auto;
+    text-align:center;
+    position:relative;
+    top:135px;
+}
+
+#rolechangeoptions
+{
+    width:270px;
+    margin:0px auto;
+    position:relative;
+    top:145px;
+}
+
+#keeprole_button
+{
+    float:left;
+    width:132px;
+}
+
+#switchrole_button
+{
+    float:right;
+    width:132px;
 }
 
 .right_arrow
@@ -83,141 +175,99 @@ body
     top:30px;
 }
 
-#verifyText
+#needTable
 {
-    margin:20px;
-}
-#confirm
-{
-    margin-top:10px;
-    margin-left:20px;
-    margin-bottom:10px;
-}
-#reject
-{
-    margin-top:10px;
-    margin-left:20px;
+    display:block;
+    width:80%;
+    position:relative;
+    margin:0px auto;
+    padding:0px;
+    border:0px;
+    top:-485px;
 }
 
-#introCharacter
+#needTable td
 {
-    width:100%;
-}
-#introCharacterText
-{
-}
-#introCharacterImage
-{
-    width:100px;
+    width:50%;
+    padding:0px;
+    margin:0px;
+    text-align:center;
 }
 
-#introItem
+.needbox
 {
-    width:100%;
-}
-#introItemText
-{
-}
-#introItemImage
-{
-    width:100px;
+    height:26px;
 }
 
-#topBar
+#inventorytable
 {
-    width:100%;
-}
-#topBarText
-{
-    width:50px;
-    margin:0 auto;
-}
-
-#tradeContent
-{
-    width:100%;
+    padding-top:10px;
+    width:270px;
+    height:188px;
+    position:relative;
+    top:-176px;
+    margin:0px auto;
+    overflow:scroll;
+    -webkit-overflow-scroll:touch;
 }
 
-#tradeTable
+.inventorycell
 {
-    width:100%;
-}
-#inventory
-{
-
-}
-.hasCell
-{
-    width:100%;
+    margin:0px 10px 10px 10px;
+    width:250px;
     height:48px;
-    border-style:solid;
-    border-width:1px;
-    border-color:#000000;
-}
-.hasCellIcon
-{
-    width:48px;
-    height:48px;
-    float:left;
-}
-.hasCellTitle
-{
-    font-size:12px;
-    float:left;
-}
-.hasCellQty
-{
-    font-size:10px;
-    float:left;
-}
-.selectedCell
-{
-    background-color:#EEEEEE;
-}
-#wants
-{
-}
-.needsCell
-{
-    width:100%;
-    height:48px;
-    border-style:solid;
-    border-width:1px;
-    border-color:#000000;
-}
-.needsCellIcon
-{
-    width:48px;
-    height:48px;
-    float:left;
-}
-.needsCellTitle
-{
-    font-size:12px;
-    float:left;
-}
-.verifiedCell
-{
-    background-color:#EEFFEE;
+    position:relative;
 }
 
-#bottomBar
+.selectedinventorycell
 {
-    width:100%;
-    position:absolute;
-    bottom:0px;
+
 }
-#helperMessage
+
+.meaningfulinventorycell
 {
-    width:272px;
+
+}
+
+.inventorybg
+{
+    width:250px;
+    height:54px;
     position:absolute;
     left:0px;
-    bottom:0px;
+    top:-3px;
 }
-#helper
+
+.inventoryiconbg
 {
-    width:48px;
-    position:absolute; 
-    right:0px;
-    bottom:0px;
+    width:64px;
+    position:absolute;
+    left:-8px;
+    top:-8px;
+}
+
+.inventoryiconfg
+{
+    width:46px;
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
+.inventorytitle
+{
+    font-size:large;
+    color:#4e3f3d;
+    position:absolute;
+    top:8px;
+    left:54px;
+}
+
+.inventorydescription
+{
+    font-size:small;
+    color:#4e3f3d;
+    position:absolute;
+    top:25px;
+    left:54px;
 }

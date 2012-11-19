@@ -3,12 +3,11 @@ var debug = true;
 //ENUMS
 var sceneIdLoading = 0;
 var sceneIdSplash = 1;
-var sceneIdVerify = 2;
-var sceneIdRole = 3;
-var sceneIdIntro = 4;
-var sceneIdTrade = 5;
-var sceneIdSuccess = 6;
-var sceneIds=[sceneIdLoading,sceneIdSplash,sceneIdVerify,sceneIdRole,sceneIdIntro,sceneIdTrade,sceneIdSuccess];
+var sceneIdRole = 2;
+var sceneIdIntro = 3;
+var sceneIdTrade = 4;
+var sceneIdSuccess = 5;
+var sceneIds=[sceneIdLoading,sceneIdSplash,sceneIdRole,sceneIdIntro,sceneIdTrade,sceneIdSuccess];
 
 var roleIdClerk = 0;
 var roleIdHunter = 1;
@@ -30,10 +29,10 @@ var typeIdLetter = 11;
 var typeIds=[typeIdBeaverpelt, typeIdDriedmeat, typeIdWildrice, typeIdMaplesugar, typeIdSnowshoes, typeIdMoccasins, typeIdBeads, typeIdFabric, typeIdIrontrap, typeIdBonetools, typeIdKettle, typeIdLetter];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
-var levelObjectIdA = 13;
-var levelObjectIdB = 14;
-var levelObjectIdC = 15;
-var levelObjectIdMaster = 19;
+var levelObjectIdA = 3;
+var levelObjectIdB = 16;
+var levelObjectIdC = 17;
+var levelObjectIdMaster = 18;
 var levelObjectIds=[levelObjectIdA,levelObjectIdB,levelObjectIdC,levelObjectIdMaster];
 
 //TYPE DEFS
@@ -48,17 +47,17 @@ function PlayerDescription(roleId)
     {
         case roleIdClerk:   
             this.title = "Clerk";   
-            this.roleObjectId = 18; 
+            this.roleObjectId = 4; 
             this.imageName = "clerk.png";
             break;
         case roleIdHunter:  
             this.title = "Hunter";  
-            this.roleObjectId = 16; 
+            this.roleObjectId = 5; 
             this.imageName = "hunter.png";
             break;
         case roleIdCrafter: 
             this.title = "Crafter"; 
-            this.roleObjectId = 17; 
+            this.roleObjectId = 500; 
             this.imageName = "crafter.png";
             break;
         default: 
@@ -86,87 +85,87 @@ function ItemDescription(typeId)
     {
         case typeIdBeaverpelt:
             this.itemId = 1;
-            this.webPageId = 757;
+            this.webPageId = 1086;
             this.owner = playerHunter;
             this.name = "Beaver Pelt";
             this.imageName = "beaverpelt.png";
             break;
         case typeIdDriedmeat:
-            this.itemId = 2;
-            this.webPageId = 758;
-            this.owner = playerHunter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 6;
+            this.webPageId = 1091;
+            this.owner = null;
+            this.name = "Dried Meat";
+            this.imageName = "driedmeat.png";
             break;
         case typeIdWildrice:
-            this.itemId = 3;
-            this.webPageId = 759;
-            this.owner = playerHunter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 7;
+            this.webPageId = 1092;
+            this.owner = null;
+            this.name = "Wild Rice";
+            this.imageName = "wildrice.png";
             break;
         case typeIdMaplesugar:
-            this.itemId = 4;
-            this.webPageId = 760;
-            this.owner = playerHunter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 8;
+            this.webPageId = 1093;
+            this.owner = null;
+            this.name = "Maple Sugar";
+            this.imageName = "maplesugar.png";
             break;
         case typeIdSnowshoes:
-            this.itemId = 5;
-            this.webPageId = 761;
-            this.owner = playerClerk;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 9;
+            this.webPageId = 1094;
+            this.owner = null;
+            this.name = "Snowshoes";
+            this.imageName = "snowshoes.png";
             break;
         case typeIdMoccasins:
-            this.itemId = 6;
-            this.webPageId = 762;
-            this.owner = playerClerk;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 10;
+            this.webPageId = 1095;
+            this.owner = null;
+            this.name = "Moccasins";
+            this.imageName = "moccasins.png";
             break;
         case typeIdBeads:
-            this.itemId = 7;
-            this.webPageId = 763;
-            this.owner = playerCrafter;
+            this.itemId = 2;
+            this.webPageId = 1087;
+            this.owner = null;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
         case typeIdFabric:
-            this.itemId = 10;
-            this.webPageId = 766;
-            this.owner = playerCrafter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 11;
+            this.webPageId = 1096;
+            this.owner = playerClerk;
+            this.name = "Fabric";
+            this.imageName = "fabric.png";
             break;
         case typeIdIrontrap:
-            this.itemId = 9;
-            this.webPageId = 765;
-            this.owner = playerCrafter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 12;
+            this.webPageId = 1097;
+            this.owner = null;
+            this.name = "Iron Trap";
+            this.imageName = "irontrap.png";
             break;
         case typeIdBonetools:
-            this.itemId = 8;
-            this.webPageId = 764;
-            this.owner = playerCrafter;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 13;
+            this.webPageId = 1098;
+            this.owner = null;
+            this.name = "Bone Tools";
+            this.imageName = "bonetools.png";
             break;
         case typeIdKettle:
-            this.itemId = 11;
-            this.webPageId = 767;
-            this.owner = playerClerk;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 14;
+            this.webPageId = 1099;
+            this.owner = null;
+            this.name = "Kettle";
+            this.imageName = "kettle.png";
             break;
         case typeIdLetter:
-            this.itemId = 12;
-            this.webPageId = 768;
-            this.owner = playerClerk;
-            this.name = "";
-            this.imageName = "";
+            this.itemId = 15;
+            this.webPageId = 1100;
+            this.owner = null;
+            this.name = "Letter";
+            this.imageName = "letter.png";
             break;
         default:
             return null;
@@ -193,92 +192,95 @@ function Item(typeId)
 {
     if(debug) console.log('Item('+typeId+')');
     if(!(this.description = types[typeId])) return null; //not a valid item type
-    this.selected = 0;
+    this.selected = false;
+    this.meaningful = false;
 }
 function Player()
 {
     if(debug) console.log('Player()');
+    var self = this;
     this.description = null;
     this.level = -1;
     this.inventory = [];
+    this.inventoryCells = [];
     this.givenItems = [];
     this.neededItems = [];
 
     this.construct = function(playerDescription)
     {
     if(debug) console.log('Player.construct('+playerDescription+')');
-        if(!(this.description = playerDescription)) return null; //not a valid player type
+        if(!(self.description = playerDescription)) return null; //not a valid player type
         switch(playerDescription.roleId)
         {
             case roleIdClerk:
-                switch(this.level)
+                switch(self.level)
                 {
                     case 0:
-                        this.givenItems = [typeBeads,typeBeads,typeBeads,typeBeads];
-                        this.neededItems = [new Item(typeIdBeaverpelt)];
+                        self.givenItems = [typeFabric,typeFabric,typeFabric,typeFabric];
+                        self.neededItems = [new Item(typeIdBeaverpelt)];
                         break;
                     case 1:
-                        this.givenItems = [typeBeads,typeBeads,typeBeads,typeBeads];
-                        this.neededItems = [new Item(typeIdBeaverpelt)];
+                        self.givenItems = [typeFabric,typeFabric,typeFabric,typeFabric];
+                        self.neededItems = [new Item(typeIdBeaverpelt)];
                         break;
                     case 2:
-                        this.givenItems = [];
-                        this.neededItems = [];
+                        self.givenItems = [];
+                        self.neededItems = [];
                         break;
                 }
                 break;
             case roleIdHunter:
-                switch(this.level)
+                switch(self.level)
                 {
                     case 0:
-                        this.givenItems = [typeBeaverpelt,typeBeaverpelt,typeBeaverpelt,typeBeaverpelt];
-                        this.neededItems = [new Item(typeIdBeads)];
+                        self.givenItems = [typeBeaverpelt,typeBeaverpelt,typeBeaverpelt,typeBeaverpelt];
+                        self.neededItems = [new Item(typeIdFabric)];
                         break;
                     case 1:
-                        this.givenItems = [typeBeaverpelt,typeBeaverpelt,typeBeaverpelt,typeBeaverpelt];
-                        this.neededItems = [new Item(typeIdBeads)];
+                        self.givenItems = [typeBeaverpelt,typeBeaverpelt,typeBeaverpelt,typeBeaverpelt];
+                        self.neededItems = [new Item(typeIdFabric)];
                         break;
                     case 2:
-                        this.givenItems = [];
-                        this.neededItems = [];
+                        self.givenItems = [];
+                        self.neededItems = [];
                         break;
                 }
                 break;
             case roleIdCrafter:
-                switch(this.level)
+                switch(self.level)
                 {
                     case 0://Crafter should not exist in level 0
-                        this.givenItems = [];
-                        this.neededItems = [];
+                        self.givenItems = [];
+                        self.neededItems = [];
                         break;
                     case 1:
-                        this.givenItems = [itemRice, itemSugar, itemSnowshoes, itemMoccasins];
-                        this.neededItems = [itemLeather, itemHideLacing, itemBeads, itemBlanket];
+                        self.givenItems = [itemRice, itemSugar, itemSnowshoes, itemMoccasins];
+                        self.neededItems = [itemLeather, itemHideLacing, itemBeads, itemBlanket];
                         break;
                     case 2:
-                        this.givenItems = [];
-                        this.neededItems = [];
+                        self.givenItems = [];
+                        self.neededItems = [];
                         break;
                 }
                 break;
         }
-        return this;
+        return self;
     }
     
     this.hasItem = function(typeId)
     {
         if(debug) console.log('hasItem('+typeId+')');
-        for(var i in this.inventory)
-            if(this.inventory[i].description.typeId == typeId) return this.inventory[i];
+        for(var i in self.inventory)
+            if(self.inventory[i].description.typeId == typeId) return self.inventory[i];
         return null;
     }
     this.getItemQtyInInventory = function(typeId)
     {
         if(debug) console.log('getItemQtyInInventory('+typeId+')');
         var qty = 0;
-        for(var i = 0; i < this.inventory.length; i++)
+        for(var i = 0; i < self.inventory.length; i++)
         {
-            if(this.inventory[i].description.typeId == typeId) qty++;
+            if(self.inventory[i].description.typeId == typeId) qty++;
         }
         return qty;
     }
@@ -288,7 +290,11 @@ function Player()
         var item;
         for(var i = 0; i < qty; i++)
         {
-            if(item = new Item(typeId)) this.inventory.push(item);
+            if(item = new Item(typeId)) 
+            {
+                self.inventory.push(item);
+                self.inventoryCells.push(generateInventoryCell(item));
+            }
             else return null;
         }
         return item;
@@ -297,10 +303,14 @@ function Player()
     {
         if(debug) console.log('completelyRemoveItemFromInventory('+typeId+')');
         var item = null;
-        for(var i = 0; i < this.inventory.lengthl; i++)
+        for(var i = 0; i < self.inventory.length; i++)
         {
-            if(this.inventory[i].description.typeId == typeId && (item = this.inventory[i]))
-                this.inventory.splice(i,1);
+            if(self.inventory[i].description.typeId == typeId && (item = self.inventory[i]))
+            {
+                self.inventory.splice(i,1);
+                self.inventoryCells.splice(i,1);
+                i--;
+            }
         }
         return item;
     }
@@ -308,11 +318,13 @@ function Player()
     {
         if(debug) console.log('removeItemFromInventory('+typeId+','+qty+')');
         var item;
-        for(var i = 0; i < this.inventory.length && qty > 0; i++)
+        for(var i = 0; i < self.inventory.length && qty > 0; i++)
         {
-            if(this.inventory[i].description.typeId == typeId && (item = this.inventory[i]))
+            if(self.inventory[i].description.typeId == typeId && (item = self.inventory[i]))
             {
-                this.inventory.splice(i,1);
+                self.inventory.splice(i,1);
+                self.inventoryCells.splice(i,1);
+                i--;
                 qty--;
             }
         }
@@ -321,22 +333,48 @@ function Player()
     this.setItemQtyInInventory = function(typeId,qty)
     {
         if(debug) console.log('setItemQtyInInventory('+typeId+','+qty+')');
-        var currentQty = this.getItemQtyInInventory(typeId);
+        var currentQty = self.getItemQtyInInventory(typeId);
         if(qty < currentQty)
-            return this.removeItemFromInventory(typeId,currentQty-qty);
+            return self.removeItemFromInventory(typeId,currentQty-qty);
         else if(qty > currentQty)
-            return this.addItemToInventory(typeId,qty-currentQty);
+            return self.addItemToInventory(typeId,qty-currentQty);
     }
     this.hasAllNeededItems = function()
     {
         if(debug) console.log('hasAllNeededItems()');
         var item;
-        for(var i in this.neededItems)
+        for(var i = 0; i < self.neededItems.length; i++)
         {
-            if(!this.hasItem(this.neededItems[i].typeId))
+            if(!self.neededItems[i].selected)
                 return false;
         }
         return true;
+    }
+    this.markMeaningfulInventoryContents = function()
+    {
+        for(var i = 0; i < self.inventory.length; i++)
+            self.inventory[i].meaningful = false;
+        for(var i = 0; i < self.neededItems.length; i++)
+            self.neededItems[i].selected = false;
+        for(var i = 0; i < self.inventory.length; i++)
+        {
+            for(var j = 0; j < self.neededItems.length; j++)
+            {
+                if(self.inventory[i].description.itemId == self.neededItems[j].description.itemId && !self.inventory[i].meaningful && !self.neededItems[j].selected)
+                {
+                    self.inventory[i].meaningful = true;
+                    self.neededItems[j].selected = true;
+                }
+            }
+        }
+        self.syncCellsWithData();
+    }
+    this.syncCellsWithData = function()
+    {
+        for(var i = 0; i < self.inventory[i].length; i++)
+        {
+            self.inventoryCells[i] = generateInventoryCell(self.inventory[i]);
+        }
     }
 }
 
@@ -377,3 +415,62 @@ function levelForLevelObjectId(id)
         if(levelObjectIds[i] == id) return i;
     return -1;
 }
+
+
+
+//HTML Factories(not actual 'factories', but still) (also, probably doesn't belong in 'model', but I didn't really know where else to put it...)
+
+function generateInventoryCell(item)
+{
+    var invCell = document.createElement('div');
+    invCell.drawSelf = function()
+    {
+        invCell.innerHTML = "";
+        var invBG = document.createElement('img');
+        invBG.setAttribute('class', 'inventorybg');
+        var invIconBG = document.createElement('img');
+        invIconBG.setAttribute('class','inventoryiconbg');
+        var invIconFG = document.createElement('img');
+        invIconFG.setAttribute('class','inventoryiconfg');
+        var invTitle = document.createElement('div');
+        invTitle.setAttribute('class','inventorytitle gotham');
+        var invDescription = document.createElement('div');
+        invDescription.setAttribute('class','inventorydescription gotham');
+    
+        if(item.selected)
+        {
+            invCell.setAttribute('class','selectedinventorycell inventorycell');
+            invIconBG.setAttribute('src','images/core/icon_background_down.png');
+            invBG.setAttribute('src','images/core/cell_background_down.png');
+        }
+        else
+        {
+            if(item.meaningful)
+            {
+                invCell.setAttribute('class','meaningfulinventorycell inventorycell');
+                invIconBG.setAttribute('src','images/core/icon_background_good.png');
+                invBG.setAttribute('src','images/core/cell_background_good.png');
+            }
+            else
+            {
+                invCell.setAttribute('class','inventorycell');
+                invIconBG.setAttribute('src','images/core/icon_background.png');
+                invBG.setAttribute('src','images/core/cell_background.png');
+            }
+        }
+        invIconFG.setAttribute('src','images/objects/icons/'+item.description.imageName);
+        invTitle.innerHTML = item.description.name;
+        invDescription.innerHTML = item.description.name
+        invCell.appendChild(invBG);
+        invCell.appendChild(invIconBG);
+        invCell.appendChild(invIconFG);
+        invCell.appendChild(invTitle);
+        invCell.appendChild(invDescription)
+    }
+    invCell.drawSelf();
+
+    invCell.onclick = function(e) { item.selected = !item.selected; invCell.drawSelf(); constructBumpString(); };
+
+    return invCell;
+}
+            

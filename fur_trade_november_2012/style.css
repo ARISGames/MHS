@@ -246,12 +246,23 @@ body
     top:-8px;
 }
 
-.inventoryiconfg
+.inventoryiconfgbox
 {
     width:46px;
+    height:46px;
     position:absolute;
     left:0px;
     top:0px;
+}
+
+.inventoryiconfg
+{
+    display:block;
+    max-width:46px;
+    max-height:46px;
+    position:relative;
+    top:0px;
+    margin:0px auto;
 }
 
 .inventorytitle
@@ -270,4 +281,12 @@ body
     position:absolute;
     top:25px;
     left:54px;
+}
+
+#animcell
+{
+    display:none;
+    position:relative;
+    top:-500px;
+    margin:0px auto;
 }

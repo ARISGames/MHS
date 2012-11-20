@@ -430,6 +430,8 @@ function generateInventoryCell(item)
         invBG.setAttribute('class', 'inventorybg');
         var invIconBG = document.createElement('img');
         invIconBG.setAttribute('class','inventoryiconbg');
+        var invIconFGBox = document.createElement('div'); //Just something to allow th inner icon to be centered
+        invIconFGBox.setAttribute('class','inventoryiconfgbox');
         var invIconFG = document.createElement('img');
         invIconFG.setAttribute('class','inventoryiconfg');
         var invTitle = document.createElement('div');
@@ -463,7 +465,8 @@ function generateInventoryCell(item)
         invDescription.innerHTML = item.description.name
         invCell.appendChild(invBG);
         invCell.appendChild(invIconBG);
-        invCell.appendChild(invIconFG);
+        invCell.appendChild(invIconFGBox);
+        invIconFGBox.appendChild(invIconFG);
         invCell.appendChild(invTitle);
         invCell.appendChild(invDescription)
     }

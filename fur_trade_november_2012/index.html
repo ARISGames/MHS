@@ -71,6 +71,12 @@ function initialize()
     webPageId  = parseInt(params.webPageId);
     player = new Player();
 
+    //preload images
+    var tempImg = new Image();
+    tempImg.src = "images/objects/splash/"+itemDescriptionForWebPageId(webPageId).imageName;
+    var tempImg2 = new Image();
+    tempImg2.src = "images/roles/splash/"+itemDescriptionForWebPageId(webPageId).owner.imageName;
+
     //This is called by ARIS, informing this webpage of qty values
     ARIS.didUpdateItemQty = function (updatedItemId,qty)
     {
@@ -110,6 +116,7 @@ function initialize()
                 ARIS.setItemCount(item.description.itemId,player.getItemQtyInInventory(item.description.typeId));
         }
     
+        var lostItems = [];
         for(var i = 0; i < player.inventory.length; i++) //Needs to be an old fashioned for loop, as normal enumerator can't account for dynamic changes in inventory
         {
             if(player.inventory[i].selected)
@@ -117,16 +124,61 @@ function initialize()
                 player.inventory[i].selected = false;
                 player.inventoryCells[i].drawSelf();
                 var item;
+                var potentialLostItem = player.inventoryCells[i];
                 if(item = player.removeItemFromInventory(player.inventory[i].description.typeId,1));
                 {
+                    lostItems[lostItems.length] = potentialLostItem;
                     ARIS.setItemCount(item.description.itemId,player.getItemQtyInInventory(item.description.typeId)); //Back to ARIS
                     i--;
                 }
             }
         }
-        redraw();
-        checkWinState();
-        constructBumpString();
+
+        //Animate
+
+        document.getElementById('animcell').style.display = 'none';
+        document.getElementById('animcell').innerHTML = "";
+        document.getElementById('animcell').style.opacity = '1.0';
+        document.getElementById('animcell').style.top = '-400px';
+        document.getElementById('animcell').style.left = '26px';
+        for(var i = 0; i < lostItems.length; i++)
+            document.getElementById('animcell').appendChild(lostItems[i]);
+        document.getElementById('animcell').style.display = 'block';
+
+        //jQuery in da house!
+        $('#animcell').animate(
+            {
+                opacity: 0,
+                top: -650,
+            }, 
+            1000, 
+            function() {
+                document.getElementById('animcell').style.display = 'none';
+                document.getElementById('animcell').innerHTML = '';
+                document.getElementById('animcell').style.opacity = '0.0';
+                document.getElementById('animcell').style.top = '-650px';
+                document.getElementById('animcell').style.left = '26px';
+                for(var i = 0; i < receivedItems.length; i++)
+                    document.getElementById('animcell').appendChild(generateInventoryCell(new Item(itemDescriptionForItemId(receivedItems[i]).typeId)));
+                document.getElementById('animcell').style.display = 'block';
+
+                $('#animcell').animate(
+                    {
+                        opacity: 1,
+                        top: -400,
+                    }, 
+                    1000, 
+                    function() {
+                        document.getElementById('animcell').innerHTML = '';
+                        document.getElementById('animcell').style.display = 'none';
+                        redraw();
+                        checkWinState();
+                        constructBumpString();
+                    }
+                );
+            }
+        );
+        
     }
 
     //Request sync with ARIS data
@@ -257,7 +309,7 @@ function checkWinState()
     if(debug) console.log('checkWinState()');
     if(scene == sceneIdTrade && player.hasAllNeededItems())
     {
-        document.getElementById("congrats").style.display = "block";
+        setTimeout(function(){document.getElementById("congrats").style.display = "block";},1000);
         ARIS.setItemCount(levelObjectIds[player.level],0); //Remove old level badge
         ARIS.setItemCount(levelObjectIds[player.level+1],1); //Give new level badge
     }
@@ -341,10 +393,15 @@ function constructBumpString()
     </td></tr>
     </table>
 
+    <div id="animcell">
+    </div>
+
     <div id="congrats" class="alert">
         <img id="congratsalert" src="images/core/congrats_alert.png" onclick="ARIS.closeMe()"/>
     </div>
+
 </div>
+
 
 <!-- Debug -->
 <div id="debug">

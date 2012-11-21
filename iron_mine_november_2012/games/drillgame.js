@@ -18,8 +18,9 @@ var DrillGame = function()
         {
             drillPos++;
             drillBit.style.left = drillPos+'px';
-            if(drillPos >= fail) { ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15); drillOn = false; recedeDrill(); }
-            else setTimeout(advanceDrill, drillSpeed);
+            //if(drillPos >= fail) { ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15); drillOn = false; recedeDrill(); }
+            //else setTimeout(advanceDrill, drillSpeed);
+            setTimeout(advanceDrill, drillSpeed);
         }
         else
         {
@@ -33,13 +34,12 @@ var DrillGame = function()
     {
         if(!drillOn)
         {
-            drillPos--;
+            //drillPos--;
+            drillPos = 0;
             drillBit.style.left = drillPos+'px';
-            if(drillPos > 0) setTimeout(recedeDrill, drillSpeed);
+            //if(drillPos > 0) setTimeout(recedeDrill, drillSpeed);
         }
     }
-
-
 
     this.drillStarted = function(data)
     {

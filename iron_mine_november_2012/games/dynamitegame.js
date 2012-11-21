@@ -23,23 +23,22 @@ var DynamiteGame = function()
 
     function countDown()
     {
-        countdownStatus.innerHTML += countdownCount+"...";
-        if(countdownCount != 0)
+        if(currentState == STATE_RUN)
         {
-            countdownCount--;
-            setTimeout(countDown, 1000);
+            countdownStatus.innerHTML += countdownCount+"...";
+            if(countdownCount != 0)
+            {
+                countdownCount--;
+                setTimeout(countDown, 1000);
+            }
+            else
+            {
+                currentState = STATE_PRESS_PLUNGER;
+                dynamiteInstructions.innerHTML = 'Press Plunger!';
+            }
         }
         else
-        {
-            countdownStatus.innerHTML = '';
-            countdownCount = 10;
-            currentState = STATE_EMPTY_DYNAMITE;
-            dynamiteInstructions.innerHTML = 'Empty Dynamite';
-            if(allHolesFilled)
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+15);
-            else
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15);
-        }
+            countdownStatus.innerHTML = "";
     }
     
     this.updateDynamiteState = function(data)
@@ -47,6 +46,7 @@ var DynamiteGame = function()
         holesFilledFlags = JSON.parse(data).state;
         allHolesFilled = true;
         allHolesEmpty = true;
+        countdownCount = 3;
         for(var i = 0; i < holesFilledFlags.length; i++)
         {
             if(!holesFilledFlags[i]) allHolesFilled = false;
@@ -56,8 +56,9 @@ var DynamiteGame = function()
 
         if(allHolesFilled && currentState != STATE_EMPTY_DYNAMITE)
         {
-            currentState = STATE_PRESS_PLUNGER;
-            dynamiteInstructions.innerHTML = 'Press Plunger!';
+            currentState = STATE_RUN;
+            dynamiteInstructions.innerHTML = 'RUN!';
+            countDown();
         }
         else
         {
@@ -90,9 +91,13 @@ var DynamiteGame = function()
         }
         else
         {
-            currentState = STATE_RUN;
-            dynamiteInstructions.innerHTML = 'RUN!';
-            countDown();
+            countdownStatus.innerHTML = '';
+            currentState = STATE_EMPTY_DYNAMITE;
+            dynamiteInstructions.innerHTML = 'Empty Dynamite';
+            if(countdownCount == 0 && allHolesFilled)
+                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+15);
+            else
+                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15);
         }
     }
 

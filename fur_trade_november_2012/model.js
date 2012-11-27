@@ -93,42 +93,42 @@ function ItemDescription(typeId)
         case typeIdDriedmeat:
             this.itemId = 6;
             this.webPageId = 1091;
-            this.owner = null;
+            this.owner = playerHunter;
             this.name = "Dried Meat";
             this.imageName = "driedmeat.png";
             break;
         case typeIdWildrice:
             this.itemId = 7;
             this.webPageId = 1092;
-            this.owner = null;
+            this.owner = playerCrafter;
             this.name = "Wild Rice";
             this.imageName = "wildrice.png";
             break;
         case typeIdMaplesugar:
             this.itemId = 8;
             this.webPageId = 1093;
-            this.owner = null;
+            this.owner = playerCrafter;
             this.name = "Maple Sugar";
             this.imageName = "maplesugar.png";
             break;
         case typeIdSnowshoes:
             this.itemId = 9;
             this.webPageId = 1094;
-            this.owner = null;
+            this.owner = playerCrafter;
             this.name = "Snowshoes";
             this.imageName = "snowshoes.png";
             break;
         case typeIdMoccasins:
             this.itemId = 10;
             this.webPageId = 1095;
-            this.owner = null;
+            this.owner = playerCrafter;
             this.name = "Moccasins";
             this.imageName = "moccasins.png";
             break;
         case typeIdBeads:
             this.itemId = 2;
             this.webPageId = 1087;
-            this.owner = null;
+            this.owner = playerClerk;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
@@ -142,28 +142,28 @@ function ItemDescription(typeId)
         case typeIdIrontrap:
             this.itemId = 12;
             this.webPageId = 1097;
-            this.owner = null;
+            this.owner = playerClerk;
             this.name = "Iron Trap";
             this.imageName = "irontrap.png";
             break;
         case typeIdBonetools:
             this.itemId = 13;
             this.webPageId = 1098;
-            this.owner = null;
+            this.owner = playerHunter;
             this.name = "Bone Tools";
             this.imageName = "bonetools.png";
             break;
         case typeIdKettle:
             this.itemId = 14;
             this.webPageId = 1099;
-            this.owner = null;
+            this.owner = playerClerk;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
         case typeIdLetter:
             this.itemId = 15;
             this.webPageId = 1100;
-            this.owner = null;
+            this.owner = playerHunter;
             this.name = "Letter";
             this.imageName = "letter.png";
             break;
@@ -220,8 +220,8 @@ function Player()
                         self.neededItems = [new Item(typeIdBeaverpelt)];
                         break;
                     case 1:
-                        self.givenItems = [typeFabric,typeFabric,typeFabric,typeFabric];
-                        self.neededItems = [new Item(typeIdBeaverpelt)];
+                        self.givenItems = [typeIrontrap,typeFabric,typeBeads,typeKettle];
+                        self.neededItems = [new Item(typeIdLetter),new Item(typeIdBeaverpelt),new Item(typeIdSnowshoes),new Item(typeIdMaplesugar)];
                         break;
                     case 2:
                         self.givenItems = [];
@@ -237,8 +237,8 @@ function Player()
                         self.neededItems = [new Item(typeIdFabric)];
                         break;
                     case 1:
-                        self.givenItems = [typeBeaverpelt,typeBeaverpelt,typeBeaverpelt,typeBeaverpelt];
-                        self.neededItems = [new Item(typeIdFabric)];
+                        self.givenItems = [typeLetter,typeBeaverpelt,typeDriedmeat,typeBonetools];
+                        self.neededItems = [new Item(typeIdIrontrap),new Item(typeIdFabric),new Item(typeIdWildrice),new Item(typeIdMoccasins)];
                         break;
                     case 2:
                         self.givenItems = [];
@@ -254,8 +254,8 @@ function Player()
                         self.neededItems = [];
                         break;
                     case 1:
-                        self.givenItems = [itemRice, itemSugar, itemSnowshoes, itemMoccasins];
-                        self.neededItems = [itemLeather, itemHideLacing, itemBeads, itemBlanket];
+                        self.givenItems = [typeWildrice, typeMocasins, typeSnowshoes, typeKettle];
+                        self.neededItems = [new Item(typeIdBeads), new Item(typeIdKettle), new Item(typeIdDriedmeat), new Item(typeIdBonetools)];
                         break;
                     case 2:
                         self.givenItems = [];

@@ -212,7 +212,10 @@ function verify()
 
     //Set up new role
     var newRole = itemDescriptionForWebPageId(webPageId).owner;
-    if(!newRole)
+    //Long if statement, translated to english:
+    //If there is no role for the web page (invalid web page id), give them the 'wrong item' screen.
+    //Also, if the player is on level one/ hasn't played before, and scanned an item other than the beaver pelt or fabric, send them to the 'wrong item' screen as well.
+    if(!newRole || (player.level <= 1 && (newRole.roleId == roleIdCrafter || (itemDescriptionForWebPageId(webPageId).typeId != typeIdBeaverpelt && itemDescriptionForWebPageId(webPageId).typeId != typeIdFabric))))
     {
         document.getElementById("wrongitem").style.display = "block";
     }

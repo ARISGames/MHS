@@ -29,10 +29,10 @@ var typeIdLetter = 11;
 var typeIds=[typeIdBeaverpelt, typeIdDriedmeat, typeIdWildrice, typeIdMaplesugar, typeIdSnowshoes, typeIdMoccasins, typeIdBeads, typeIdFabric, typeIdIrontrap, typeIdBonetools, typeIdKettle, typeIdLetter];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
-var levelObjectIdA = 3;
-var levelObjectIdB = 16;
-var levelObjectIdC = 17;
-var levelObjectIdMaster = 18;
+var levelObjectIdA = 26;
+var levelObjectIdB = 27;
+var levelObjectIdC = 28;
+var levelObjectIdMaster = 29;
 var levelObjectIds=[levelObjectIdA,levelObjectIdB,levelObjectIdC,levelObjectIdMaster];
 
 //TYPE DEFS
@@ -47,17 +47,17 @@ function PlayerDescription(roleId)
     {
         case roleIdClerk:   
             this.title = "Clerk";   
-            this.roleObjectId = 4; 
+            this.roleObjectId = 24; 
             this.imageName = "clerk.png";
             break;
         case roleIdHunter:  
             this.title = "Hunter";  
-            this.roleObjectId = 5; 
+            this.roleObjectId = 23; 
             this.imageName = "hunter.png";
             break;
         case roleIdCrafter: 
             this.title = "Crafter"; 
-            this.roleObjectId = 500; 
+            this.roleObjectId = 25; 
             this.imageName = "crafter.png";
             break;
         default: 
@@ -84,85 +84,85 @@ function ItemDescription(typeId)
     switch(typeId)
     {
         case typeIdBeaverpelt:
-            this.itemId = 1;
-            this.webPageId = 1086;
+            this.itemId = 10;
+            this.webPageId = 1140;
             this.owner = playerHunter;
             this.name = "Beaver Pelt";
             this.imageName = "beaverpelt.png";
             break;
         case typeIdDriedmeat:
-            this.itemId = 6;
-            this.webPageId = 1091;
+            this.itemId = 11;
+            this.webPageId = 1141;
             this.owner = playerHunter;
             this.name = "Dried Meat";
             this.imageName = "driedmeat.png";
             break;
         case typeIdWildrice:
-            this.itemId = 7;
-            this.webPageId = 1092;
+            this.itemId = 20;
+            this.webPageId = 1150;
             this.owner = playerCrafter;
             this.name = "Wild Rice";
             this.imageName = "wildrice.png";
             break;
         case typeIdMaplesugar:
-            this.itemId = 8;
-            this.webPageId = 1093;
+            this.itemId = 15;
+            this.webPageId = 1144;
             this.owner = playerCrafter;
             this.name = "Maple Sugar";
             this.imageName = "maplesugar.png";
             break;
         case typeIdSnowshoes:
-            this.itemId = 9;
-            this.webPageId = 1094;
+            this.itemId = 17;
+            this.webPageId = 1145;
             this.owner = playerCrafter;
             this.name = "Snowshoes";
             this.imageName = "snowshoes.png";
             break;
         case typeIdMoccasins:
-            this.itemId = 10;
-            this.webPageId = 1095;
+            this.itemId = 16;
+            this.webPageId = 1146;
             this.owner = playerCrafter;
             this.name = "Moccasins";
             this.imageName = "moccasins.png";
             break;
         case typeIdBeads:
-            this.itemId = 2;
-            this.webPageId = 1087;
+            this.itemId = 9;
+            this.webPageId = 1139;
             this.owner = playerClerk;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
         case typeIdFabric:
-            this.itemId = 11;
-            this.webPageId = 1096;
+            this.itemId = 12;
+            this.webPageId = 1142;
             this.owner = playerClerk;
             this.name = "Fabric";
             this.imageName = "fabric.png";
             break;
         case typeIdIrontrap:
-            this.itemId = 12;
-            this.webPageId = 1097;
+            this.itemId = 18;
+            this.webPageId = 1149;
             this.owner = playerClerk;
             this.name = "Iron Trap";
             this.imageName = "irontrap.png";
             break;
         case typeIdBonetools:
-            this.itemId = 13;
-            this.webPageId = 1098;
+            this.itemId = 19;
+            this.webPageId = 1147;
             this.owner = playerHunter;
             this.name = "Bone Tools";
             this.imageName = "bonetools.png";
             break;
         case typeIdKettle:
-            this.itemId = 14;
-            this.webPageId = 1099;
+            this.itemId = 13;
+            this.webPageId = 1148;
             this.owner = playerClerk;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
         case typeIdLetter:
-            this.itemId = 15;
-            this.webPageId = 1100;
+            this.itemId = 14;
+            this.webPageId = 1143;
             this.owner = playerHunter;
             this.name = "Letter";
             this.imageName = "letter.png";

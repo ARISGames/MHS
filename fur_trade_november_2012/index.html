@@ -94,7 +94,8 @@ function initialize()
         var i;
         if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.typeId, qty);
         else if(qty > 0 && (i = levelForLevelObjectId(updatedItemId)) != -1 && i > player.level) player.level = parseInt(i); //No idea why parseInt is necessary... oh javascript...
-        else if(qty > 0 && (i = playerDescriptionForRoleObjectId(updatedItemId))) oldRole = i;
+        else if(qty > 0 && (i = levelForLevelCompleteObjectId(updatedItemId)) != -1 && i > player.levelComplete) player.levelComplete = parseInt(i); //No idea why parseInt is necessary... oh javascript...
+        else if(qty > 0 && (i = playerDescriptionForRoleObjectId(updatedItemId))) { oldRole = i; oldRole.level = -1 };
     
         //Check if update sufficient to change state of game
         if(player.description) //Check if player has been initialized yet
@@ -186,6 +187,8 @@ function initialize()
         ARIS.getItemCount(types[i].itemId);
     for(var i in levelObjectIds)
         ARIS.getItemCount(levelObjectIds[i]);
+    for(var i in levelCompleteObjectIds)
+        ARIS.getItemCount(levelCompleteObjectIds[i]);
     for(var i in players)
         ARIS.getItemCount(players[i].roleObjectId);
     ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue has sufficiently advanced *NOT 100% RELIABLE.
@@ -215,7 +218,7 @@ function verify()
     //Long if statement, translated to english:
     //If there is no role for the web page (invalid web page id), give them the 'wrong item' screen.
     //Also, if the player is on level one/ hasn't played before, and scanned an item other than the beaver pelt or fabric, send them to the 'wrong item' screen as well.
-    if(!newRole || (player.level <= 1 && (newRole.roleId == roleIdCrafter || (itemDescriptionForWebPageId(webPageId).typeId != typeIdBeaverpelt && itemDescriptionForWebPageId(webPageId).typeId != typeIdFabric))))
+    if(!newRole || (player.level < 1 && (newRole.roleId == roleIdCrafter || (itemDescriptionForWebPageId(webPageId).typeId != typeIdBeaverpelt && itemDescriptionForWebPageId(webPageId).typeId != typeIdFabric))))
     {
         document.getElementById("wrongitem").style.display = "block";
     }
@@ -244,12 +247,21 @@ function confirmInit()
         ARIS.setItemCount(levelObjectIds[0],1); //Back to ARIS
         player.level = 0;
     }
+    if(!oldRole) oldRole = {};
+    oldRole.level = player.level;
+    //Set new level (if necessary)
+    if(player.levelComplete >= player.level)
+    {
+        ARIS.setItemCount(levelObjectIds[player.levelComplete],0);
+        ARIS.setItemCount(levelObjectIds[player.levelComplete+1],1);
+        player.level = player.levelComplete+1;
+    }
 
     //Finalize player state, as all data should now be synced with client
     if(!player.construct(itemDescriptionForWebPageId(webPageId).owner)) alert("Error");
 
     //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
-    if(!oldRole || player.description.roleId != oldRole.roleId || player.inventory.length == 0)
+    if(!oldRole || player.description.roleId != oldRole.roleId || oldRole.level != player.level || player.inventory.length == 0)
     {
         //Wipe away relevant inventory and start fresh
         for(var i in types)
@@ -313,8 +325,7 @@ function checkWinState()
     if(scene == sceneIdTrade && player.hasAllNeededItems())
     {
         setTimeout(function(){document.getElementById("congrats").style.display = "block";},1000);
-        ARIS.setItemCount(levelObjectIds[player.level],0); //Remove old level badge
-        ARIS.setItemCount(levelObjectIds[player.level+1],1); //Give new level badge
+        ARIS.setItemCount(levelCompleteObjectIds[player.level],1); //Give level complete badge
     }
 }
 

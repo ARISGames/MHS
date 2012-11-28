@@ -18,8 +18,6 @@ var DrillGame = function()
         {
             drillPos++;
             drillBit.style.left = drillPos+'px';
-            //if(drillPos >= fail) { ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15); drillOn = false; recedeDrill(); }
-            //else setTimeout(advanceDrill, drillSpeed);
             setTimeout(advanceDrill, drillSpeed);
         }
         else
@@ -34,16 +32,13 @@ var DrillGame = function()
     {
         if(!drillOn)
         {
-            //drillPos--;
             drillPos = 0;
             drillBit.style.left = drillPos+'px';
-            //if(drillPos > 0) setTimeout(recedeDrill, drillSpeed);
         }
     }
 
     this.drillStarted = function(data)
     {
-        //alert('start that drill!');
         if(drillPos == 0)
         {
             drillOn = true;
@@ -53,10 +48,23 @@ var DrillGame = function()
     
     this.drillStopped = function(data)
     {
-        //alert('stop that drill!');
         drillOn = false;
     }
 
-    this.events = [imm.stationId+'_DRILL_STARTED',imm.stationId+'_DRILL_STOPPED'];
-    this.callbacks = [this.drillStarted, this.drillStopped];
+    this.drillLit = function(data)
+    {
+        //Will position drill specifically based on what light is lit, waiting to get data regarding number/position/timing of lights
+        switch(data)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+    }
+
+    this.events = [imm.stationId+'_DRILL_STARTED',imm.stationId+'_DRILL_STOPPED',imm.stationId+'_DRILL_LIGHT'];
+    this.callbacks = [this.drillStarted, this.drillStopped, this.drillLit];
 }

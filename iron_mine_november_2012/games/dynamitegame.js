@@ -1,5 +1,7 @@
 var DynamiteGame = function()
 {
+    var self = this; //JAVASCRIIIIIIPPPPPTTTTTTT!!!!!!!!
+
     var STATE_LOAD_DYNAMITE = 0;
     var STATE_PRESS_PLUNGER = 1;
     var STATE_RUN = 2;
@@ -73,6 +75,66 @@ var DynamiteGame = function()
         }
     }
 
+    this.updateDynamiteSlot1 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[0] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
+    this.updateDynamiteSlot2 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[1] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
+    this.updateDynamiteSlot3 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[2] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
+    this.updateDynamiteSlot4 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[3] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
+    this.updateDynamiteSlot5 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[4] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
+    this.updateDynamiteSlot6 = function(data)
+    {
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = holesFilledFlags[i];
+        newHolesFilledFlags[5] = (data == "true" ? true : false);
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+    }
+
     this.plungerPressed = function(data)
     {
         if(currentState != STATE_PRESS_PLUNGER)
@@ -101,6 +163,8 @@ var DynamiteGame = function()
         }
     }
 
-    this.events = [imm.stationId+'_DYNAMITE_STATE_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];
-    this.callbacks = [this.updateDynamiteState, this.plungerPressed];
+    //this.events = [imm.stationId+'_DYNAMITE_STATE_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];
+    //this.callbacks = [this.updateDynamiteState, this.plungerPressed];
+    this.events = [imm.stationId+'_DYNAMITE_SLOT_1_CHANGED',imm.stationId+'_DYNAMITE_SLOT_2_CHANGED',imm.stationId+'_DYNAMITE_SLOT_3_CHANGED',imm.stationId+'_DYNAMITE_SLOT_4_CHANGED',imm.stationId+'_DYNAMITE_SLOT_5_CHANGED',imm.stationId+'_DYNAMITE_SLOT_6_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];
+    this.callbacks = [this.updateDynamiteSlot1,this.updateDynamiteSlot2,this.updateDynamiteSlot3,this.updateDynamiteSlot4,this.updateDynamiteSlot5,this.updateDynamiteSlot6, this.plungerPressed];
 }

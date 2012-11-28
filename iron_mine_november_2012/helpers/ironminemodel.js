@@ -16,9 +16,9 @@ var IronMineModel = function()
     
     //  Station Category->Id relations
     var STATION_IDS = [];
-    STATION_IDS[STATION_TYPE_DRILL] = [1032,1028,1029]; //All webpage/station Id's of type 'drill'
-    STATION_IDS[STATION_TYPE_DYNAMITE] = [1031,1030]; //All webpage/station Id's of type 'dynamite'
-    STATION_IDS[STATION_TYPE_BACKER] = [1027,1033]; //All webpage/station Id's of type 'backer'
+    STATION_IDS[STATION_TYPE_DRILL] = [1151,1152,1153,1154]; //All webpage/station Id's of type 'drill'
+    STATION_IDS[STATION_TYPE_DYNAMITE] = [1155,1156]; //All webpage/station Id's of type 'dynamite'
+    STATION_IDS[STATION_TYPE_BACKER] = [1160]; //All webpage/station Id's of type 'backer'
     this.STATION_IDS = STATION_IDS;
     
     //  Station Id->Category relations (populated with above info)
@@ -28,8 +28,8 @@ var IronMineModel = function()
     for(var i in STATION_IDS[STATION_TYPE_BACKER])   STATION_TYPES[STATION_IDS[STATION_TYPE_BACKER][i]] = STATION_TYPE_BACKER;
     this.STATION_TYPES = STATION_TYPES;
 
-    var LEVEL_IDS = [3,2,1,4]; this.LEVEL_IDS = LEVEL_IDS;
-    var ITEM_IDS = [5];  this.ITEM_IDS = ITEM_IDS;
+    var LEVEL_IDS = [31,32,33,34]; this.LEVEL_IDS = LEVEL_IDS;
+    var ITEM_IDS = [35];  this.ITEM_IDS = ITEM_IDS;
     
     //From URL
     this.gameId;

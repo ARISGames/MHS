@@ -16,12 +16,20 @@
 
         function sendStateChangeRequest(webId,instance)
         {
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_1_CHANGED',document.getElementById("dyna_"+instance+"_1").checked);
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_2_CHANGED',document.getElementById("dyna_"+instance+"_2").checked);
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_3_CHANGED',document.getElementById("dyna_"+instance+"_3").checked);
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_4_CHANGED',document.getElementById("dyna_"+instance+"_4").checked);
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_5_CHANGED',document.getElementById("dyna_"+instance+"_5").checked);
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_6_CHANGED',document.getElementById("dyna_"+instance+"_6").checked);
+            /*
 	    sendRequest('private-default-channel',webId+'_DYNAMITE_STATE_CHANGED','{"state":['+document.getElementById("dyna_"+instance+"_1").checked+','+
                                                                                             document.getElementById("dyna_"+instance+"_2").checked+','+
                                                                                             document.getElementById("dyna_"+instance+"_3").checked+','+
                                                                                             document.getElementById("dyna_"+instance+"_4").checked+','+
                                                                                             document.getElementById("dyna_"+instance+"_5").checked+','+
                                                                                             document.getElementById("dyna_"+instance+"_6").checked+']}');
+                                                                                            */
         }
 
     </script>
@@ -48,18 +56,42 @@
         <div class='gametitle'>DRILL</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1032_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1032_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1151_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1151_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input><br />
+	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','1');"></input><br />
+	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','2');"></input><br />
+	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','3');"></input><br />
+	    <input type="button" value="Light 4" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','4');"></input><br />
+	    <input type="button" value="Light 5" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','5');"></input>
         </div>
         <div class='instance'>
 	    <div class='instancetitle'>2</div>
-	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1028_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1028_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1152_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1152_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input><br />
+	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','1152_DRILL_LIGHT','1');"></input><br />
+	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','1152_DRILL_LIGHT','2');"></input><br />
+	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','1152_DRILL_LIGHT','3');"></input><br />
+	    <input type="button" value="Light 4" onmousedown="sendRequest('private-default-channel','1152_DRILL_LIGHT','4');"></input><br />
+	    <input type="button" value="Light 5" onmousedown="sendRequest('private-default-channel','1152_DRILL_LIGHT','5');"></input>
         </div>
         <div class='instance'>
 	    <div class='instancetitle'>3</div>
-	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1029_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1029_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1153_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1153_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input><br />
+	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','1153_DRILL_LIGHT','1');"></input><br />
+	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','1153_DRILL_LIGHT','2');"></input><br />
+	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','1153_DRILL_LIGHT','3');"></input><br />
+	    <input type="button" value="Light 4" onmousedown="sendRequest('private-default-channel','1153_DRILL_LIGHT','4');"></input><br />
+	    <input type="button" value="Light 5" onmousedown="sendRequest('private-default-channel','1153_DRILL_LIGHT','5');"></input>
+        </div>
+        <div class='instance'>
+	    <div class='instancetitle'>4</div>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1154__DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1154__DRILL_STOPPED','x'); this.value = 'Start Drill';"></input><br />
+	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','1');"></input><br />
+	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','2');"></input><br />
+	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','3');"></input><br />
+	    <input type="button" value="Light 4" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','4');"></input><br />
+	    <input type="button" value="Light 5" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','5');"></input>
         </div>
         <br />
-        Hold the button to start the drill, release to stop it. Align the tip of the 'drill bit' with the green part of the indicator bar to make money. Anything else loses you money.
+        Hold the button to start the drill, release to stop it. Align the tip of the 'drill bit' with the green part of the indicator bar to make money. Anything else loses you money. <b>The 'Light' events don't do anything yet. They are successfully sent/recieved, I'm just waiting on timing information to make them actually do something.</b>
     </div>
     <div class='game'>
         <div class='gametitle'>DYNAMITE</div>
@@ -71,8 +103,8 @@
             <input id='dyna_1_4' type='checkbox' checked='true'></input>
             <input id='dyna_1_5' type='checkbox' checked='true'></input>
             <input id='dyna_1_6' type='checkbox' checked='true'></input>
-	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1031,1);"></input>
-	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1031_PLUNGER_PRESSED','x');"></input>
+	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1155,1);"></input>
+	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1155_PLUNGER_PRESSED','x');"></input>
         </div>
         <div class='instance'>
 	    <div class='instancetitle'>2</div>
@@ -82,8 +114,8 @@
             <input id='dyna_2_4' type='checkbox' checked='true'></input>
             <input id='dyna_2_5' type='checkbox' checked='true'></input>
             <input id='dyna_2_6' type='checkbox' checked='true'></input>
-	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1030,2);"></input>
-	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1030_PLUNGER_PRESSED','x');"></input>
+	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1156,2);"></input>
+	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1156_PLUNGER_PRESSED','x');"></input>
         </div>
         <br />
         The checkboxes represent dynamite in/out of holes. Check/Uncheck them as desired, then click 'Change State' to see it update on the screen (in the real implementation, 'change state' will automatically be sent as each dynamite piece is moved). On the client, x represents a filled hole, o represents an empty one. Follow the instructions on the device. Deviation from these instructions loses you money.
@@ -92,11 +124,7 @@
         <div class='gametitle'>BACKMAN</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1027_WALL_POKED','x');"></input>
-        </div>
-        <div class='instance'>
-	    <div class='instancetitle'>2</div>
-	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1033_WALL_POKED','x');"></input>
+	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1160_WALL_POKED','x');"></input>
         </div>
         <br />
         This is just a crap shoot. 50% of the time you make money, and 50% of the time you lose money. Good luck.

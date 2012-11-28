@@ -34,6 +34,10 @@ var levelObjectIdB = 27;
 var levelObjectIdC = 28;
 var levelObjectIdMaster = 29;
 var levelObjectIds=[levelObjectIdA,levelObjectIdB,levelObjectIdC,levelObjectIdMaster];
+var levelCompleteObjectIdA = 38;
+var levelCompleteObjectIdB = 39;
+var levelCompleteObjectIdC = 40;
+var levelCompleteObjectIds=[levelCompleteObjectIdA,levelCompleteObjectIdB,levelCompleteObjectIdC];
 
 //TYPE DEFS
 function PlayerDescription(roleId)
@@ -201,6 +205,7 @@ function Player()
     var self = this;
     this.description = null;
     this.level = -1;
+    this.levelComplete = -1;
     this.inventory = [];
     this.inventoryCells = [];
     this.givenItems = [];
@@ -415,7 +420,13 @@ function levelForLevelObjectId(id)
         if(levelObjectIds[i] == id) return i;
     return -1;
 }
-
+function levelForLevelCompleteObjectId(id)
+{
+    if(debug) console.log('levelForLevelCompleteObjectId('+id+')');
+    for(var i in levelCompleteObjectIds)
+        if(levelCompleteObjectIds[i] == id) return i;
+    return -1;
+}
 
 
 //HTML Factories(not actual 'factories', but still) (also, probably doesn't belong in 'model', but I didn't really know where else to put it...)

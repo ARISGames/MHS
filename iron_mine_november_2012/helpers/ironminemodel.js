@@ -29,6 +29,8 @@ var IronMineModel = function()
     this.STATION_TYPES = STATION_TYPES;
 
     var LEVEL_IDS = [31,32,33,34]; this.LEVEL_IDS = LEVEL_IDS;
+    var LEVEL_COMPLETE_IDS = [54,55,56]; this.LEVEL_COMPLETE_IDS = LEVEL_COMPLETE_IDS;
+    var LEVEL_GOALS = [100, 200, 300]; this.LEVEL_GOALS = LEVEL_GOALS;
     var ITEM_IDS = [35];  this.ITEM_IDS = ITEM_IDS;
     
     //From URL
@@ -42,6 +44,7 @@ var IronMineModel = function()
     
     //Personal
     this.currentLevel = 0;
+    this.completeLevel = 0;
     this.money = 0;
     
     this.loadStateFromARIS = function()
@@ -53,12 +56,15 @@ var IronMineModel = function()
         {
             if(updatedItemId == bogusEndOfQueueId)
             {
-                if(self.currentLevel == 0) ARIS.setItemCount(LEVEL_IDS[0],1);
+                if(self.currentLevel <= self.completeLevel) { ARIS.setItemCount(LEVEL_IDS[self.completeLevel],1); self.currentLevel = self.completeLevel+1; }
+                imv.wantDisplay.innerHTML = 'GOAL: $'+((LEVEL_GOALS[self.currentLevel-1]-(LEVEL_GOALS[self.currentLevel-1]%100))/100)+'.'+(LEVEL_GOALS[self.currentLevel-1]%100 < 10 ? '0' : '')+(LEVEL_GOALS[self.currentLevel-1]%100);
                 initGame(self.stationType); //All requests have completed; ARIS state is known. Init games.
             }
 
             for(var i in LEVEL_IDS)
-                if(qty > 0 && updatedItemId == LEVEL_IDS[i]) self.currentLevel = i+1;
+                if(qty > 0 && updatedItemId == LEVEL_IDS[i] && i >= self.currentLevel) self.currentLevel = parseInt(i)+1;
+            for(var i in LEVEL_COMPLETE_IDS)
+                if(qty > 0 && updatedItemId == LEVEL_COMPLETE_IDS[i] && i >= self.completeLevel) self.completeLevel = parseInt(i)+1;
             for(var i in ITEM_IDS)
                 if(qty > 0 && updatedItemId == ITEM_IDS[i])
                 {
@@ -80,6 +86,8 @@ var IronMineModel = function()
             ARIS.getItemCount(ITEM_IDS[i]);
         for(var i in LEVEL_IDS)
             ARIS.getItemCount(LEVEL_IDS[i]);
+        for(var i in LEVEL_COMPLETE_IDS)
+            ARIS.getItemCount(LEVEL_COMPLETE_IDS[i]);
             
         //On dequeue of this ID, we will know that all prior enqueued information has been recieved.
         ARIS.getItemCount(bogusEndOfQueueId); 

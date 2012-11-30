@@ -64,6 +64,14 @@ MHS Iron Mine
                 imm.money = qty;
             //Formats money as '$x.xx' for all edge cases
             imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
+            if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
+            {
+                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],0);
+                ARIS.setItemCount(imm.LEVEL_COMPLETE_IDS[imm.currentLevel-1],1);
+                document.getElementById('congratsoverlay'+imm.currentLevel).style.display = 'block';
+                document.getElementById('congrats').style.display = 'block';
+                document.getElementById('drillbit').style.display = 'none';
+            }
         }
 
         pm = new PusherMan('<?php echo Config::pusher_key; ?>', 
@@ -106,9 +114,9 @@ MHS Iron Mine
         <div id='drillactivity' class='activity'>
             <img id='drillbit' src='assets/drill.png' />
             <div id='drillprompts'>
-                <div class='drillprompt' style='top:70px;'>too deep</div>
-                <div class='drillprompt' style='top:220px;'>correct depth</div>
-                <div class='drillprompt' style='top:370px;'>too shallow</div>
+                <div class='drillprompt' style='top:65px;'>too deep</div>
+                <div class='drillprompt' style='top:215px;'>correct depth</div>
+                <div class='drillprompt' style='top:365px;'>too shallow</div>
             </div>
             <div id='drilllights'>
                 <img id='light7' class='drilllight' src='assets/red_btn_off.png' style='top:50px;'/>
@@ -119,6 +127,10 @@ MHS Iron Mine
                 <img id='light2' class='drilllight' src='assets/yellow_btn_off.png' style='top:300px;'/>
                 <img id='light1' class='drilllight' src='assets/yellow_btn_off.png' style='top:350px;'/>
             </div>
+        </div>
+        <div id='drilloverlayintro' class='overlay' onclick='document.getElementById("drilloverlayintro").style.display = "none";'>
+            <img id='drillalertintro' class='alert' src='assets/use_drill_splash.png' onclick='document.getElementById("drilloverlayintro").style.display = "none";'/>
+            <img id='drillalertarrow' class='alert' src='assets/right_arrow.png' onclick='document.getElementById("drilloverlayintro").style.display = "none";'/>
         </div>
         <div id='drilldebug' class='debug'></div>
     </div>
@@ -144,6 +156,18 @@ MHS Iron Mine
         <div id='backerhud' class='hud'></div>
         <div id='backerdebug' class='debug'></div>
     </div>
+</div>
+
+<div id='congrats' class='scene' onclick='ARIS.closeMe();'>
+        <div id='congratsoverlay1' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
+            <img id='congratsalert1' class='congratsalert alert' src='assets/level_one_splash.png' onclick='ARIS.closeMe();'/>
+        </div>
+        <div id='congratsoverlay2' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
+            <img id='congratsalert2' class='congratsalert alert' src='assets/level_two_splash.png' onclick='ARIS.closeMe();'/>
+        </div>
+        <div id='congratsoverlay3' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
+            <img id='congratsalert3' class='congratsalert alert' src='assets/level_three_splash.png' onclick='ARIS.closeMe();'/>
+        </div>
 </div>
 
 </body>

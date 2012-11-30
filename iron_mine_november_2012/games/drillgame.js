@@ -7,8 +7,8 @@ var DrillGame = function()
     var drillPos = drillPosMin;
     var drillSpeed = 50; //lower = faster
 
-    var goalMin = 40;
-    var goalMax = 60;
+    var goalMin = -300;
+    var goalMax = 0;
 
     var fail = 100;
 

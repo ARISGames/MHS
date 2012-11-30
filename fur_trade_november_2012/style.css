@@ -43,6 +43,7 @@ body
 {
     -webkit-user-select:none;
     user-select:none;
+    font-family:gotham_font;
     background-color:#FFFFFF;
     margin:0px;
     padding:0px;

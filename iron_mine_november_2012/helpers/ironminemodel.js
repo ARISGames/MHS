@@ -63,8 +63,8 @@ var IronMineModel = function()
                 if(qty > 0 && updatedItemId == ITEM_IDS[i])
                 {
                     self.money = qty;
-                    //Formats money as '+$x.xx' for all edge cases
-                    imv.haveDisplay.innerHTML = '+$'+((self.money-(self.money%100))/100)+'.'+(self.money%100 < 10 ? '0' : '')+(self.money%100);
+                    //Formats money as '$x.xx' for all edge cases
+                    imv.haveDisplay.innerHTML = '$'+((self.money-(self.money%100))/100)+'.'+(self.money%100 < 10 ? '0' : '')+(self.money%100);
                 }
         }
     

@@ -18,6 +18,12 @@ var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '
 
 function bodyLoad()
 {
+    window.onerror = function(msg, url, linenumber) 
+    {
+        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        return true;
+    };
+
     //junk to prevent scrolling
     document.ontouchmove = function(e){ e.preventDefault(); };
     document.getElementById('inventorytable').ontouchmove = function(e) { e.stopPropagation(); };
@@ -51,6 +57,8 @@ function setScene(newScene)
             break;
         case sceneIdIntro:
             document.getElementById("intro").style.display="block";
+            document.getElementById("bumpvideo").play();
+            document.getElementById("bumpvideo").webkitExitFullscreen();
             break;
         case sceneIdTrade:
             constructBumpString();
@@ -384,7 +392,12 @@ function constructBumpString()
 
 <!-- Intro State -->
 <div id="intro" class="scene">
-    Movie
+    <video id="bumpvideo" webkit-playsinline width="300" height="400" style="position:relative; top:10px; display:block; margin:0px auto;">
+        <source src="bumpmovie.mp4" type="video/mp4">
+    </video>
+    <!--
+    <div style="text-align:center; position:relative; top:80px;">(video)</div>
+    -->
     <img class="left_arrow" src="images/core/left_arrow.png" onclick="setScene(sceneIdRole)"/>
     <img id="introArrow" class="right_arrow" src="images/core/right_arrow.png" onclick="verify()"/>
 </div>

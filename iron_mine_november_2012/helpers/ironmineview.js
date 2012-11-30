@@ -3,21 +3,14 @@ var IronMineView = function()
     this.currentScene = null;
     this.loadingScene = document.getElementById('loading');
     this.introsScene = document.getElementById('intros');
-    this.videosScene = document.getElementById('videos');
     this.gamesScene = document.getElementById('games');
-    this.scenes = [this.loadingScene, this.introsScene, this.videosScene, this.gamesScene, null];
+    this.scenes = [this.loadingScene, this.introsScene, this.gamesScene, null];
 
     this.currentIntro = null;
     this.drillIntro = document.getElementById('drillintro');
     this.dynamiteIntro = document.getElementById('dynamiteintro');
     this.backerIntro = document.getElementById('backerintro');
     this.intros = [this.drillIntro, this.dynamiteIntro, this.backerIntro];
-
-    this.currentVideo = null;
-    this.drillVideo = document.getElementById('drillvideo');
-    this.dynamiteVideo = document.getElementById('dynamitevideo');
-    this.backerVideo = document.getElementById('backervideo');
-    this.videos = [this.drillVideo, this.dynamiteVideo, this.backerVideo];
 
     this.currentGame = null;
     this.drillGame = document.getElementById('drillgame');
@@ -26,14 +19,18 @@ var IronMineView = function()
     this.games = [this.drillGame, this.dynamiteGame, this.backerGame];
 
     //These 'views' are injected into the current game
+    this.HUDbg = document.createElement('img');
+    this.HUDbg.setAttribute('src','assets/money_back.png');
+    this.HUDbg.style.width='72px';
+    this.HUDbg.style.position='absolute';
     this.haveDisplay = document.createElement('div');
     this.haveDisplay.setAttribute('id','havedisplay');
     this.haveDisplay.setAttribute('class','display');
-    this.haveDisplay.innerHTML = '+$0.00';
+    this.haveDisplay.innerHTML = '$0.00';
     this.wantDisplay = document.createElement('div');
     this.wantDisplay.setAttribute('id','wantdisplay');
     this.wantDisplay.setAttribute('class','display');
-    this.wantDisplay.innerHTML = '$0.00';
+    this.wantDisplay.innerHTML = 'GOAL: $0.00';
 
     this.currentHud = null;
     this.drillHUD = document.getElementById('drillhud');
@@ -45,11 +42,10 @@ var IronMineView = function()
     {
         this.currentIntro = this.intros[game];
         this.currentIntro.style.display = 'block';
-        this.currentVideo = this.videos[game];
-        this.currentVideo.style.display = 'block';
         this.currentGame = this.games[game];
         this.currentGame.style.display = 'block';
         this.currentHUD = this.HUDs[game];
+        this.currentHUD.appendChild(this.HUDbg);
         this.currentHUD.appendChild(this.haveDisplay);
         this.currentHUD.appendChild(this.wantDisplay);
     }

@@ -28,6 +28,11 @@ MHS Iron Mine
 
     function pageLoaded()
     {
+        window.onerror = function(msg, url, linenumber) 
+        {
+            alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+            return true;
+        }
         imm = new IronMineModel();
         imv = new IronMineView();
         imm.loadStateFromARIS(); //calls 'initGame' on complete
@@ -35,8 +40,6 @@ MHS Iron Mine
 
     function initGame(type)
     {
-        var events = []; //An array of pusher events to keep track of
-        var callbacks = []; //An array of how to handle each event (will get sent 'data')
         switch(type)
         {
             case imm.STATION_TYPE_DRILL:
@@ -59,8 +62,8 @@ MHS Iron Mine
         {
             if(updatedItemId == imm.ITEM_IDS[0])
                 imm.money = qty;
-            //Formats money as '+$x.xx' for all edge cases
-            imv.haveDisplay.innerHTML = '+$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
+            //Formats money as '$x.xx' for all edge cases
+            imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
         }
 
         pm = new PusherMan('<?php echo Config::pusher_key; ?>', 
@@ -84,7 +87,8 @@ MHS Iron Mine
 
 <div id='intros' class='scene' onclick='imv.nextScene();'>
     <div id='drillintro' class='intro'>
-        Drill Intro...
+        <img class='role' src='assets/driller.png' />
+        <img id="introArrow" class="right_arrow" src="assets/right_arrow.png" />
     </div>
 
     <div id='dynamiteintro' class='intro'>
@@ -96,27 +100,25 @@ MHS Iron Mine
     </div>
 </div>
 
-<div id='videos' class='scene' onclick='imv.nextScene();'>
-    <div id='drillvideo' class='video'>
-        Drill Video...
-    </div>
-
-    <div id='dynamitevideo' class='video'>
-        Dynamite Video...
-    </div>
-
-    <div id='backervideo' class='video'>
-        Backer Video...
-    </div>
-</div>
-
 <div id='games' class='scene'>
     <div id='drillgame' class='game'>
-        Drill Game...
         <div id='drillhud' class='hud'></div>
         <div id='drillactivity' class='activity'>
-            <div id='drillbit'>---------<span style='color:green;'>-</span></div>
-            <div id='drillmeter'><span style='color:red;'>|||||||||||||||</span><span style='color:yellow;'>||||||||||||||</span><span style='color:green;'>|||||||</span><span style='color:yellow;'>||||||||||||</span><span style='color:red;'>||||||||||||||||||||||||||||||</span></div>
+            <img id='drillbit' src='assets/drill.png' />
+            <div id='drillprompts'>
+                <div class='drillprompt' style='top:70px;'>too deep</div>
+                <div class='drillprompt' style='top:220px;'>correct depth</div>
+                <div class='drillprompt' style='top:370px;'>too shallow</div>
+            </div>
+            <div id='drilllights'>
+                <img id='light7' class='drilllight' src='assets/red_btn_off.png' style='top:50px;'/>
+                <img id='light6' class='drilllight' src='assets/yellow_btn_off.png' style='top:100px;'/>
+                <img id='light5' class='drilllight' src='assets/yellow_btn_off.png' style='top:150px;'/>
+                <img id='light4' class='drilllight' src='assets/green_btn_off.png' style='top:200px;'/>
+                <img id='light3' class='drilllight' src='assets/yellow_btn_off.png' style='top:250px;'/>
+                <img id='light2' class='drilllight' src='assets/yellow_btn_off.png' style='top:300px;'/>
+                <img id='light1' class='drilllight' src='assets/yellow_btn_off.png' style='top:350px;'/>
+            </div>
         </div>
         <div id='drilldebug' class='debug'></div>
     </div>

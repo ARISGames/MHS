@@ -1,7 +1,10 @@
 var DrillGame = function()
 {
+    var drillPosMin = -349;
+    var drillPosMax = 0;
+
     var drillOn = false;
-    var drillPos = 0;
+    var drillPos = drillPosMin;
     var drillSpeed = 50; //lower = faster
 
     var goalMin = 40;
@@ -16,8 +19,8 @@ var DrillGame = function()
     {
         if(drillOn)
         {
-            drillPos++;
-            drillBit.style.left = drillPos+'px';
+            drillPos+=2;
+            drillBit.style.bottom = drillPos+'px';
             setTimeout(advanceDrill, drillSpeed);
         }
         else
@@ -32,14 +35,14 @@ var DrillGame = function()
     {
         if(!drillOn)
         {
-            drillPos = 0;
-            drillBit.style.left = drillPos+'px';
+            drillPos = drillPosMin;
+            drillBit.style.bottom = drillPos+'px';
         }
     }
 
     this.drillStarted = function(data)
     {
-        if(drillPos == 0)
+        if(drillPos == drillPosMin)
         {
             drillOn = true;
             advanceDrill();

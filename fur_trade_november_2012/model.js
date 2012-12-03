@@ -186,11 +186,11 @@ var typeSnowshoes = new ItemDescription(typeIdSnowshoes);
 var typeMoccasins = new ItemDescription(typeIdMoccasins);
 var typeBeads = new ItemDescription(typeIdBeads);
 var typeFabric = new ItemDescription(typeIdFabric);
-var typeLetter = new ItemDescription(typeIdLetter);
-var typeKettle = new ItemDescription(typeIdKettle);
-var typeBonetools = new ItemDescription(typeIdBonetools);
 var typeIrontrap = new ItemDescription(typeIdIrontrap);
-var types=[typeBeaverpelt, typeDriedmeat, typeWildrice, typeMaplesugar, typeSnowshoes, typeMoccasins, typeBeads, typeFabric, typeLetter, typeKettle, typeBonetools, typeIrontrap];
+var typeBonetools = new ItemDescription(typeIdBonetools);
+var typeKettle = new ItemDescription(typeIdKettle);
+var typeLetter = new ItemDescription(typeIdLetter);
+var types=[typeBeaverpelt, typeDriedmeat, typeWildrice, typeMaplesugar, typeSnowshoes, typeMoccasins, typeBeads, typeFabric, typeIrontrap, typeBonetools, typeKettle, typeLetter];
 
 function Item(typeId)
 {
@@ -259,7 +259,7 @@ function Player()
                         self.neededItems = [];
                         break;
                     case 1:
-                        self.givenItems = [typeWildrice, typeMocasins, typeSnowshoes, typeMoccasins];
+                        self.givenItems = [typeWildrice, typeMaplesugar, typeSnowshoes, typeMoccasins];
                         self.neededItems = [new Item(typeIdBeads), new Item(typeIdKettle), new Item(typeIdDriedmeat), new Item(typeIdBonetools)];
                         break;
                     case 2:

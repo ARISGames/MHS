@@ -51,17 +51,17 @@ function PlayerDescription(roleId)
     {
         case roleIdClerk:   
             this.title = "Clerk";   
-            this.roleObjectId = 24; 
+            this.roleObjectId = 17240; 
             this.imageName = "clerk.png";
             break;
         case roleIdHunter:  
             this.title = "Hunter";  
-            this.roleObjectId = 23; 
+            this.roleObjectId = 17226; 
             this.imageName = "hunter.png";
             break;
         case roleIdCrafter: 
             this.title = "Crafter"; 
-            this.roleObjectId = 25; 
+            this.roleObjectId = 17241; 
             this.imageName = "crafter.png";
             break;
         default: 
@@ -88,84 +88,84 @@ function ItemDescription(typeId)
     switch(typeId)
     {
         case typeIdBeaverpelt:
-            this.itemId = 10;
+            this.itemId = 17228;
             this.webPageId = 1140;
             this.owner = playerHunter;
             this.name = "Beaver Pelt";
             this.imageName = "beaverpelt.png";
             break;
         case typeIdDriedmeat:
-            this.itemId = 11;
+            this.itemId = 17229;
             this.webPageId = 1141;
             this.owner = playerHunter;
             this.name = "Dried Meat";
             this.imageName = "driedmeat.png";
             break;
         case typeIdWildrice:
-            this.itemId = 20;
+            this.itemId = 17238;
             this.webPageId = 1150;
             this.owner = playerCrafter;
             this.name = "Wild Rice";
             this.imageName = "wildrice.png";
             break;
         case typeIdMaplesugar:
-            this.itemId = 15;
+            this.itemId = 17233;
             this.webPageId = 1144;
             this.owner = playerCrafter;
             this.name = "Maple Sugar";
             this.imageName = "maplesugar.png";
             break;
         case typeIdSnowshoes:
-            this.itemId = 17;
+            this.itemId = 17235;
             this.webPageId = 1145;
             this.owner = playerCrafter;
             this.name = "Snowshoes";
             this.imageName = "snowshoes.png";
             break;
         case typeIdMoccasins:
-            this.itemId = 16;
+            this.itemId = 17234;
             this.webPageId = 1146;
             this.owner = playerCrafter;
             this.name = "Moccasins";
             this.imageName = "moccasins.png";
             break;
         case typeIdBeads:
-            this.itemId = 9;
+            this.itemId = 17227;
             this.webPageId = 1139;
             this.owner = playerClerk;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
         case typeIdFabric:
-            this.itemId = 12;
+            this.itemId = 17230;
             this.webPageId = 1142;
             this.owner = playerClerk;
             this.name = "Fabric";
             this.imageName = "fabric.png";
             break;
         case typeIdIrontrap:
-            this.itemId = 18;
+            this.itemId = 17236;
             this.webPageId = 1149;
             this.owner = playerClerk;
             this.name = "Iron Trap";
             this.imageName = "irontrap.png";
             break;
         case typeIdBonetools:
-            this.itemId = 19;
+            this.itemId = 17237;
             this.webPageId = 1147;
             this.owner = playerHunter;
             this.name = "Bone Tools";
             this.imageName = "bonetools.png";
             break;
         case typeIdKettle:
-            this.itemId = 13;
+            this.itemId = 17231;
             this.webPageId = 1148;
             this.owner = playerClerk;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
         case typeIdLetter:
-            this.itemId = 14;
+            this.itemId = 17232;
             this.webPageId = 1143;
             this.owner = playerHunter;
             this.name = "Letter";

@@ -29,14 +29,14 @@ var typeIdLetter = 11;
 var typeIds=[typeIdBeaverpelt, typeIdDriedmeat, typeIdWildrice, typeIdMaplesugar, typeIdSnowshoes, typeIdMoccasins, typeIdBeads, typeIdFabric, typeIdIrontrap, typeIdBonetools, typeIdKettle, typeIdLetter];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
-var levelObjectIdA = 26;
-var levelObjectIdB = 27;
-var levelObjectIdC = 28;
-var levelObjectIdMaster = 29;
+var levelObjectIdA = 17242;
+var levelObjectIdB = 17243;
+var levelObjectIdC = 17244;
+var levelObjectIdMaster = 17245;
 var levelObjectIds=[levelObjectIdA,levelObjectIdB,levelObjectIdC,levelObjectIdMaster];
-var levelCompleteObjectIdA = 38;
-var levelCompleteObjectIdB = 39;
-var levelCompleteObjectIdC = 40;
+var levelCompleteObjectIdA = 17253;
+var levelCompleteObjectIdB = 17254;
+var levelCompleteObjectIdC = 17255;
 var levelCompleteObjectIds=[levelCompleteObjectIdA,levelCompleteObjectIdB,levelCompleteObjectIdC];
 
 //TYPE DEFS
@@ -259,7 +259,7 @@ function Player()
                         self.neededItems = [];
                         break;
                     case 1:
-                        self.givenItems = [typeWildrice, typeMocasins, typeSnowshoes, typeKettle];
+                        self.givenItems = [typeWildrice, typeMocasins, typeSnowshoes, typeMoccasins];
                         self.neededItems = [new Item(typeIdBeads), new Item(typeIdKettle), new Item(typeIdDriedmeat), new Item(typeIdBonetools)];
                         break;
                     case 2:
@@ -487,4 +487,3 @@ function generateInventoryCell(item)
 
     return invCell;
 }
-            

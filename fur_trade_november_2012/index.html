@@ -103,7 +103,7 @@ function initialize()
         if(i = itemDescriptionForItemId(updatedItemId)) player.setItemQtyInInventory(i.typeId, qty);
         else if(qty > 0 && (i = levelForLevelObjectId(updatedItemId)) != -1 && i > player.level) player.level = parseInt(i); //No idea why parseInt is necessary... oh javascript...
         else if(qty > 0 && (i = levelForLevelCompleteObjectId(updatedItemId)) != -1 && i > player.levelComplete) player.levelComplete = parseInt(i); //No idea why parseInt is necessary... oh javascript...
-        else if(qty > 0 && (i = playerDescriptionForRoleObjectId(updatedItemId))) { oldRole = i; oldRole.level = -1 };
+        else if(qty > 0 && (i = playerDescriptionForRoleObjectId(updatedItemId))) oldRole = i;
     
         //Check if update sufficient to change state of game
         if(player.description) //Check if player has been initialized yet
@@ -249,19 +249,13 @@ function confirmInit()
     document.getElementById("wrongitem").style.display = "none";
 
     if(debug) console.log('confirmInit()');
-    //Give them the 'Level 1' Badge for starting to play
+    
+    //Means 'not currently in a level'
+    var newLevel = false;
     if(player.level == -1)
     {
-        ARIS.setItemCount(levelObjectIds[0],1); //Back to ARIS
-        player.level = 0;
-    }
-    if(!oldRole) oldRole = {};
-    oldRole.level = player.level;
-    //Set new level (if necessary)
-    if(player.levelComplete >= player.level)
-    {
-        ARIS.setItemCount(levelObjectIds[player.levelComplete],0);
-        ARIS.setItemCount(levelObjectIds[player.levelComplete+1],1);
+        newLevel = true;
+        ARIS.setItemCount(levelObjectIds[player.levelComplete+1],1); //Back to ARIS
         player.level = player.levelComplete+1;
     }
 
@@ -269,7 +263,7 @@ function confirmInit()
     if(!player.construct(itemDescriptionForWebPageId(webPageId).owner)) alert("Error");
 
     //Check if they are deserving of a reset (new to game, switched role, lost entire inventory)
-    if(!oldRole || player.description.roleId != oldRole.roleId || oldRole.level != player.level || player.inventory.length == 0)
+    if(!oldRole || player.description.roleId != oldRole.roleId || newLevel || player.inventory.length == 0)
     {
         //Wipe away relevant inventory and start fresh
         for(var i in types)
@@ -334,6 +328,7 @@ function checkWinState()
     {
         setTimeout(function(){document.getElementById("congrats").style.display = "block";},1000);
         ARIS.setItemCount(levelCompleteObjectIds[player.level],1); //Give level complete badge
+        ARIS.setItemCount(levelObjectIds[player.level],0); //Remove Level badge
     }
 }
 

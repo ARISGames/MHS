@@ -1,5 +1,16 @@
 var DrillGame = function()
 {
+    var self = this;
+
+    //Load images
+    var tmpYellowLightImage = new Image();
+    var tmpRedLightImage = new Image();
+    var tmpGreenLightImage = new Image();
+    tmpYellowLightImage.setAttribute('src','assets/yellow_btn_on.png');
+    tmpRedLightImage.setAttribute('src','assets/red_btn_on.png');
+    tmpGreenLightImage.setAttribute('src','assets/green_btn_on.png');
+    //Won't do anything with these ^, this just brings them into memory
+
     var drillPosMin = -349;
     var drillPosMax = 0;
 
@@ -52,16 +63,41 @@ var DrillGame = function()
     this.drillStopped = function(data)
     {
         drillOn = false;
+        document.getElementById('light1').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light2').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light3').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light4').src = 'assets/green_btn_off.png';
+        document.getElementById('light5').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light6').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light7').src = 'assets/red_btn_off.png';
     }
 
     this.drillLit = function(data)
     {
         //Will position drill specifically based on what light is lit, waiting to get data regarding number/position/timing of lights
-        switch(data)
+        switch(parseInt(data))
         {
             case 1:
+                self.drillStarted();
+                document.getElementById('light1').src = 'assets/yellow_btn_on.png';
                 break;
             case 2:
+                document.getElementById('light2').src = 'assets/yellow_btn_on.png';
+                break;
+            case 3:
+                document.getElementById('light3').src = 'assets/yellow_btn_on.png';
+                break;
+            case 4:
+                document.getElementById('light4').src = 'assets/green_btn_on.png';
+                break;
+            case 5:
+                document.getElementById('light5').src = 'assets/yellow_btn_on.png';
+                break;
+            case 6:
+                document.getElementById('light6').src = 'assets/yellow_btn_on.png';
+                break;
+            case 7:
+                document.getElementById('light7').src = 'assets/red_btn_on.png';
                 break;
             default:
                 break;

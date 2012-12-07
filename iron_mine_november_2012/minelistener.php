@@ -33,17 +33,65 @@
 	//Drill
 	priv_channel.bind('1151_DRILL_STARTED', function(data) {
             var message = document.createElement('div');
-            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill Started</div>";
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 1 Started</div>";
 	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
 	});
 	priv_channel.bind('1151_DRILL_STOPPED', function(data) {
             var message = document.createElement('div');
-            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill Stopped</div>";
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 1 Stopped</div>";
 	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
 	});
 	priv_channel.bind('1151_DRILL_LIGHT', function(data) {
             var message = document.createElement('div');
-            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill Light "+data+"</div>";
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 1 Light "+data+"</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+
+	priv_channel.bind('1152_DRILL_STARTED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 2 Started</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1152_DRILL_STOPPED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 2 Stopped</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1152_DRILL_LIGHT', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 2 Light "+data+"</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+
+	priv_channel.bind('1153_DRILL_STARTED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 3 Started</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1153_DRILL_STOPPED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 3 Stopped</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1153_DRILL_LIGHT', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 3 Light "+data+"</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+
+	priv_channel.bind('1154_DRILL_STARTED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 4 Started</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1154_DRILL_STOPPED', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 4 Stopped</div>";
+	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
+	});
+	priv_channel.bind('1154_DRILL_LIGHT', function(data) {
+            var message = document.createElement('div');
+            message.innerHTML = "<div class='messagetitle receivedmessagetitle'>Received: <span class='messagesubtitle'>("+humanTimeStamp()+")</span></div><div class='messagecontent'>Drill 4 Light "+data+"</div>";
 	    document.getElementById('drill_messages').insertBefore(message,document.getElementById('drill_messages').firstChild);
 	});
 

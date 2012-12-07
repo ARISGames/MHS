@@ -96,15 +96,18 @@ MHS Iron Mine
 <div id='intros' class='scene' onclick='imv.nextScene();'>
     <div id='drillintro' class='intro'>
         <img class='role' src='assets/driller.png' />
-        <img id="introArrow" class="right_arrow" src="assets/right_arrow.png" />
+        <img class="right_arrow" src="assets/right_arrow.png" />
     </div>
 
     <div id='dynamiteintro' class='intro'>
-        Dynamite Intro...
+        <img class='role' src='assets/blaster.png' />
+        <img class="right_arrow" src="assets/right_arrow.png" />
     </div>
 
     <div id='backerintro' class='intro'>
-        Backer Intro...
+        Backer...(no images)
+        <img class='role' src='assets/backer.png' />
+        <img class="right_arrow" src="assets/right_arrow.png" />
     </div>
 </div>
 
@@ -136,15 +139,16 @@ MHS Iron Mine
     </div>
 
     <div id='dynamitegame' class='game'>
-        Dynamite Game...
         <div id='dynamitehud' class='hud'></div>
         <div id='dynamiteactivity' class='activity'>
-            <div id='dynamitehole1'>o</div>
-            <div id='dynamitehole2'>o</div>
-            <div id='dynamitehole3'>o</div>
-            <div id='dynamitehole4'>o</div>
-            <div id='dynamitehole5'>o</div>
-            <div id='dynamitehole6'>o</div>
+            <div id='dynamiteholes' >
+                <div id='dynamitehole1'>o</div>
+                <div id='dynamitehole2'>o</div>
+                <div id='dynamitehole3'>o</div>
+                <div id='dynamitehole4'>o</div>
+                <div id='dynamitehole5'>o</div>
+                <div id='dynamitehole6'>o</div>
+            </div>
             <div id='dynamiteinstructions'></div>
             <div id='countdown'></div>
         </div>

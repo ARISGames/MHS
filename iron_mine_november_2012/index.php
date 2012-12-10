@@ -142,17 +142,20 @@ MHS Iron Mine
         <div id='dynamitehud' class='hud'></div>
         <div id='dynamiteactivity' class='activity'>
             <div id='dynamiteholes' >
-                <div id='dynamitehole1'>o</div>
-                <div id='dynamitehole2'>o</div>
-                <div id='dynamitehole3'>o</div>
-                <div id='dynamitehole4'>o</div>
-                <div id='dynamitehole5'>o</div>
-                <div id='dynamitehole6'>o</div>
+                <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; left:0px;' />
+                <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; left:60px;' />
+                <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px; left:90px;' />
+                <img id='dynamitehole4' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px; right:90px;' />
+                <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; right:60px;' />
+                <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; right:0px;' />
             </div>
-            <div id='dynamiteinstructions'></div>
-            <div id='countdown'></div>
+            <img id='dynamiteindicator' src='assets/load_dynamite.png' />
         </div>
-        <div id='drilldebug' class='debug'></div>
+        <div id='dynamiteoverlayintro' class='overlay' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'>
+            <img id='dynamitealertintro' class='alert' src='assets/load_dynamite_splash.png' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'/>
+            <img id='dynamitealertarrow' class='alert' src='assets/right_arrow.png' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'/>
+        </div>
+        <div id='dynamitedebug' class='debug'></div>
     </div>
 
     <div id='backergame' class='game'>

@@ -19,15 +19,14 @@ var DynamiteGame = function()
                          document.getElementById('dynamitehole5'),
                          document.getElementById('dynamitehole6'),
                          document.getElementById('dynamitehole7')];
-    var dynamiteInstructions = document.getElementById('dynamiteinstructions');
-    var countdownStatus = document.getElementById('countdown');
-    var countdownCount = 10;
+    var dynamiteIndicator = document.getElementById('dynamiteindicator');
+    var countdownCount = 5;
 
     function countDown()
     {
         if(currentState == STATE_RUN)
         {
-            countdownStatus.innerHTML += countdownCount+"...";
+            dynamiteIndicator.src = 'assets/clock_'+countdownCount+'.png';
             if(countdownCount != 0)
             {
                 countdownCount--;
@@ -36,11 +35,9 @@ var DynamiteGame = function()
             else
             {
                 currentState = STATE_PRESS_PLUNGER;
-                dynamiteInstructions.innerHTML = 'Press Plunger!';
+                dynamiteIndicator.src = 'assets/push_blaster.png';
             }
         }
-        else
-            countdownStatus.innerHTML = "";
     }
     
     this.updateDynamiteState = function(data)
@@ -48,18 +45,17 @@ var DynamiteGame = function()
         holesFilledFlags = JSON.parse(data).state;
         allHolesFilled = true;
         allHolesEmpty = true;
-        countdownCount = 3;
+        countdownCount = 5;
         for(var i = 0; i < holesFilledFlags.length; i++)
         {
             if(!holesFilledFlags[i]) allHolesFilled = false;
             else allHolesEmpty = false;
-            dynamiteHoles[i].innerHTML = holesFilledFlags[i] ? 'x' : 'o';
+            dynamiteHoles[i].src = holesFilledFlags[i] ? 'assets/dynamite_red.png' : 'assets/dynamite_black.png';
         }
 
-        if(allHolesFilled && currentState != STATE_EMPTY_DYNAMITE)
+        if(allHolesFilled && currentState != STATE_EMPTY_DYNAMITE && currentState != STATE_RUN)
         {
             currentState = STATE_RUN;
-            dynamiteInstructions.innerHTML = 'RUN!';
             countDown();
         }
         else
@@ -69,7 +65,7 @@ var DynamiteGame = function()
                 if(allHolesEmpty || currentState != STATE_EMPTY_DYNAMITE)
                 {
                     currentState = STATE_LOAD_DYNAMITE;
-                    dynamiteInstructions.innerHTML = 'Load Dynamite';
+                    dynamiteIndicator.src = 'assets/load_dynamite.png';
                 }
             }
         }
@@ -139,27 +135,15 @@ var DynamiteGame = function()
     {
         if(currentState != STATE_PRESS_PLUNGER)
         {
-            if(allHolesEmpty)
-            {
-                currentState = STATE_LOAD_DYNAMITE;
-                dynamiteInstructions.innerHTML = 'Load Dynamite!';
-            }
-            else
-            {
-                currentState = STATE_EMPTY_DYNAMITE;
-                dynamiteInstructions.innerHTML = 'Empty Dynamite';
-            }
-            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15);
+            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-20);
         }
         else
         {
-            countdownStatus.innerHTML = '';
             currentState = STATE_EMPTY_DYNAMITE;
-            dynamiteInstructions.innerHTML = 'Empty Dynamite';
             if(countdownCount == 0 && allHolesFilled)
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+15);
+                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+20);
             else
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15);
+                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-20);
         }
     }
 

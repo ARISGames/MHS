@@ -36,8 +36,8 @@ var DrillGame = function()
         }
         else
         {
-            if(drillPos > goalMin && drillPos < goalMax) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+15);
-            else ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-15);
+            if(drillPos > goalMin && drillPos < goalMax) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
+            else ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-10);
             recedeDrill();
         }
     }

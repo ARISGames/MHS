@@ -226,7 +226,7 @@ function Player()
                         break;
                     case 1:
                         self.givenItems = [typeIrontrap,typeFabric,typeBeads,typeKettle];
-                        self.neededItems = [new Item(typeIdLetter),new Item(typeIdBeaverpelt),new Item(typeIdSnowshoes),new Item(typeIdMaplesugar)];
+                        self.neededItems = [new Item(typeIdLetter),new Item(typeIdBeaverpelt),new Item(typeIdDriedmeat),new Item(typeIdBonetools)];
                         break;
                     case 2:
                         self.givenItems = [];
@@ -243,7 +243,7 @@ function Player()
                         break;
                     case 1:
                         self.givenItems = [typeLetter,typeBeaverpelt,typeDriedmeat,typeBonetools];
-                        self.neededItems = [new Item(typeIdIrontrap),new Item(typeIdFabric),new Item(typeIdWildrice),new Item(typeIdMoccasins)];
+                        self.neededItems = [new Item(typeIdIrontrap),new Item(typeIdFabric),new Item(typeIdBeads),new Item(typeIdKettle)];
                         break;
                     case 2:
                         self.givenItems = [];

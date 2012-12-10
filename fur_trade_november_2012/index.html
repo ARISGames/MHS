@@ -16,6 +16,28 @@ var scene = sceneIdIntro;
 var oldRole;
 var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
 
+function gotoNextLevel()
+{
+    player.level++;
+    player.construct(player.description);
+
+    //Wipe away relevant inventory and start fresh
+    for(var i in types)
+        player.completelyRemoveItemFromInventory(types[i].typeId); //Local
+    for(var i in player.givenItems)
+        player.addItemToInventory(player.givenItems[i].typeId,1); //Local
+    for(var i in types)
+        ARIS.setItemCount(types[i].itemId,player.getItemQtyInInventory(types[i].typeId)); //Back to ARIS
+
+    player.levelComplete++;
+    player.level++;
+    ARIS.setItemCount(levelObjectIds[player.level],1); //Back to ARIS
+
+    redraw();
+    setScene(sceneIdTrade);
+    document.getElementById("congrats").style.display = "none";
+}
+
 function bodyLoad()
 {
     window.onerror = function(msg, url, linenumber) 
@@ -419,7 +441,7 @@ function constructBumpString()
     </div>
 
     <div id="congrats" class="alert">
-        <img id="congratsalert" src="images/core/congrats_alert.png" onClick="document.location.reload(true)" />
+        <img id="congratsalert" src="images/core/congrats_alert.png" onClick="gotoNextLevel()" />
     </div>
 
 </div>

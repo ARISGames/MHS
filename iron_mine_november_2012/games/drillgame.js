@@ -18,8 +18,8 @@ var DrillGame = function()
     var drillPos = drillPosMin;
     var drillSpeed = 50; //lower = faster
 
-    var goalMin = -300;
-    var goalMax = 0;
+    var goalMin = -175;
+    var goalMax = -125;
 
     var fail = 100;
 
@@ -30,14 +30,14 @@ var DrillGame = function()
     {
         if(drillOn)
         {
-            drillPos+=2;
+            drillPos+=3;
             drillBit.style.bottom = drillPos+'px';
             setTimeout(advanceDrill, drillSpeed);
         }
         else
         {
             if(drillPos > goalMin && drillPos < goalMax) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
-            else ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-10);
+            else { if(imm.money < 50) imm.money = 50; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);}
             recedeDrill();
         }
     }
@@ -53,11 +53,8 @@ var DrillGame = function()
 
     this.drillStarted = function(data)
     {
-        if(drillPos == drillPosMin)
-        {
-            drillOn = true;
-            advanceDrill();
-        }
+        drillOn = true;
+        advanceDrill();
     }
     
     this.drillStopped = function(data)
@@ -80,24 +77,31 @@ var DrillGame = function()
             case 1:
                 self.drillStarted();
                 document.getElementById('light1').src = 'assets/yellow_btn_on.png';
+                drillPos = -325;
                 break;
             case 2:
                 document.getElementById('light2').src = 'assets/yellow_btn_on.png';
+                drillPos = -275;
                 break;
             case 3:
                 document.getElementById('light3').src = 'assets/yellow_btn_on.png';
+                drillPos = -225;
                 break;
             case 4:
                 document.getElementById('light4').src = 'assets/green_btn_on.png';
+                drillPos = -175;
                 break;
             case 5:
                 document.getElementById('light5').src = 'assets/yellow_btn_on.png';
+                drillPos = -125;
                 break;
             case 6:
                 document.getElementById('light6').src = 'assets/yellow_btn_on.png';
+                drillPos = -75;
                 break;
             case 7:
                 document.getElementById('light7').src = 'assets/red_btn_on.png';
+                drillPos = -25;
                 break;
             default:
                 break;

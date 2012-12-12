@@ -170,10 +170,18 @@ body
 #inventoryBackground
 {
     display:block;
-    height:359px;
-    margin:0px auto;
+    /*height:359px;*/
+    width:320px;
     position:relative;
-    top:30px;
+}
+
+#inventoryIdentifier
+{
+    display:block;
+    width:198px;
+    position:absolute;
+    top:0px;
+    left:20px;
 }
 
 #needTable
@@ -184,7 +192,7 @@ body
     margin:0px auto;
     padding:0px;
     border:0px;
-    top:-485px;
+    top:-550px;
 }
 
 #needTable td
@@ -204,9 +212,9 @@ body
 {
     padding-top:10px;
     width:270px;
-    height:188px;
+    height:202px;
     position:relative;
-    top:-176px;
+    top:-230px;
     margin:0px auto;
     overflow:scroll;
     -webkit-overflow-scroll:touch;

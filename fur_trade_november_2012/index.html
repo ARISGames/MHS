@@ -305,6 +305,7 @@ function confirmInit()
         }
     }
     document.getElementById('roleContent').src = "images/roles/splash/"+player.description.imageName;
+    document.getElementById('inventoryIdentifier').src = "images/roles/indicator/"+player.description.imageName;
     setScene(sceneIdRole);
 }
 
@@ -422,6 +423,7 @@ function constructBumpString()
 <!-- Trade State -->    
 <div id="trade" class="scene"> 
     <img id="inventoryBackground" src="images/core/inventory_background.png"/>
+    <img id="inventoryIdentifier" />
     <div id="inventorytable">
     </div>
     <table id="needTable">

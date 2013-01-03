@@ -18,6 +18,16 @@ var bogusEndOfQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '
 
 function gotoNextLevel()
 {
+    //DELETE ME WHEN LEVEL 3 EXISTS!
+    if(player.level == 2)
+    {
+        redraw();
+        setScene(sceneIdTrade);
+        document.getElementById("congrats").style.display = "none";
+        return;
+    }
+    //END DELETE ME
+
     player.level++;
     player.construct(player.description);
 
@@ -351,6 +361,11 @@ function checkWinState()
     {
         setTimeout(function(){document.getElementById("congrats").style.display = "block";},1000);
         ARIS.setItemCount(levelCompleteObjectIds[player.level],1); //Give level complete badge
+
+        //DELETE ME WHEN LEVEL 3 EXISTS
+        if(player.level == 2) return;
+        //END DELETE ME
+
         ARIS.setItemCount(levelObjectIds[player.level],0); //Remove Level badge
     }
 }

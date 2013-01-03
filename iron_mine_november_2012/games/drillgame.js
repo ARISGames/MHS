@@ -30,7 +30,7 @@ var DrillGame = function()
     {
         if(drillOn)
         {
-            drillPos+=3;
+            drillPos+=2;
             drillBit.style.bottom = drillPos+'px';
             setTimeout(advanceDrill, drillSpeed);
         }

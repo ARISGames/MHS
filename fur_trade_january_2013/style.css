@@ -1,0 +1,145 @@
+@font-face
+{
+    font-family:archer_font;
+    src:url('fonts/Archer/Archer-Medium-Pro.otf');
+}
+
+@font-face
+{
+    font-family:gotham_font;
+    src:url('fonts/Gotham/Gotham-Black.otf');
+}
+
+#debug
+{
+    display:none;
+}
+
+.gotham
+{
+    font-family:gotham_font;
+}
+
+.archer
+{
+    font-family:archer_font;
+}
+
+div
+{
+    /*
+    border-style:solid;
+    border-width:1px;
+    border-color:#FF0000;
+     */
+    padding:0px;
+    font-weight:Bold;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+body
+{
+    -webkit-user-select:none;
+    user-select:none;
+    font-family:archer_font;
+    font-size:30px;
+    background-color:#FFFFFF;
+    margin:0px;
+    padding:0px;
+}
+
+#screen
+{
+    width:640px; 
+    height:832px;
+    margin:0px; 
+    position:absolute; 
+    top:0px;
+    left:0px;
+    background-image:url("images/core/background.png");
+}
+
+.scene
+{
+    display:none;
+    width:640px;
+    height:832px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.button
+{
+    border:1px solid black;
+    width:550px;
+    text-align:center;
+    margin:0px auto;
+    padding:20px 0px;
+}
+
+#itemgetpic
+{
+    display:block;
+    margin:30px auto 0px auto;
+}
+
+#itemgetdescription
+{
+    margin:10px auto;
+    text-align:center;
+}
+
+.itemgetbutton
+{
+    display:none;
+}
+
+#intropic
+{
+    display:block;
+    margin:0px auto;
+}
+
+#chooseroletitle
+{
+    margin:60px auto;
+    text-align:center;
+    font-size:60px;
+    font-family:gotham_font;
+}
+
+.chooserolebutton
+{
+    width:200px;
+    height:250px;
+    position:absolute;
+    top:300px;
+    font-family:gotham_font;
+    color:#C0581F;
+    border:0px;
+}
+
+#chooserolehunterbutton
+{
+    left:100px;
+}
+
+#chooseroleclerkbutton
+{
+    right:100px;
+}
+
+.chooserolepic
+{
+    display:block;
+    margin:0px auto;
+}
+
+#rolegetpic
+{
+    margin:50px auto;
+    display:block;
+}

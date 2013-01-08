@@ -92,27 +92,58 @@ body
 #graphoutline
 {
     width:550px;
-    height:210px;
+    height:335px;
     border:1px solid white;
     position:absolute;
     bottom:155px;
     left:25px;
 }
 
-#chore
+#goal
 {
-    width:140px;
-    height:140px;
+    width:550px;
+    border-bottom:1px dashed white;
     position:absolute;
-    top:20px;
-    right:20px;
+    bottom:-500px; /*hide it*/
+    left:25px;
+    font-family:gotham_font;
 }
 
-#chorecanvas
+#chore
 {
     position:absolute;
-    top:0px;
-    left:0px;
+    width:530px;
+    top:30px;
+    padding:0px 85px 0px 85px;
+}
+
+#chorebar
+{
+    width:555px;
+    height:100px;
+    margin:0px auto;
+}
+
+.choreslot
+{
+    float:left;
+    border:1px solid white;
+    border-right:0px;
+    padding-top:15px;
+    width:89px;
+    height:73px;
+    text-align:center;
+}
+
+#choreslot5
+{
+    border-right:1px solid white;
+}
+
+.choreslotimg
+{
+    opacity:0.0;
+    width:60px;
 }
 
 .variable
@@ -160,4 +191,10 @@ body
     font-family:gotham_font;
     position:absolute;
     bottom:0px;
+}
+
+#choretext
+{
+    height:2-px;
+    font-family:gotham_font;
 }

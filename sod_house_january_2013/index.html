@@ -14,9 +14,6 @@
 var scene = sceneEnumLoading;
 var bogusEndOfStateQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
 
-var canvas;
-var context;
-
 function bodyLoad()
 {
     if(debug) console.log('bodyLoad()');
@@ -26,13 +23,6 @@ function bodyLoad()
         alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
         return true;
     };
-
-    //set up the drawing stuff
-    canvas = document.getElementById('chorecanvas');
-    context = canvas.getContext('2d');
-    context.clearRect(0,0,150,150);
-    context.strokeStyle = "white";
-    context.lineWidth = "3";
 
     //junk to prevent scrolling
     document.ontouchmove = function(e){ e.preventDefault(); };
@@ -51,6 +41,7 @@ function requestState()
     gameId     = parseInt(params.gameId);
     playerId   = parseInt(params.playerId);
     webPageId  = parseInt(params.webPageId);
+    showGoal = parseInt(params.showGoal);
     itemChore.delta = parseInt(params.choreDelta);
     itemFood.delta = parseInt(params.foodDelta);
     itemFood.goal = parseInt(params.foodGoal);
@@ -91,15 +82,23 @@ function stateReceived()
     {
         if(items[i].name == "chore")
         {
-            //document.getElementById("choretext").innerHTML = "Chore x"+items[i].qty;
-            context.clearRect(0,0,150,150);
-            context.beginPath();
-            context.arc(60,60,55,-Math.PI/2,(-Math.PI/2)+Math.PI*2*(itemChore.qty/10),false); // Outer circle
-            context.stroke();
+            var chorepacity = itemChore.qty; //float 0.0-5.0
+            document.getElementById('choreslotimg1').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-0.0));
+            document.getElementById('choreslotimg2').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-1.0));
+            document.getElementById('choreslotimg3').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-2.0));
+            document.getElementById('choreslotimg4').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-3.0));
+            document.getElementById('choreslotimg5').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-4.0));
         }
         else
-            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*20)+"px";
+        {
+            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*32)+"px";
+            if((items[i].qty + items[i].delta) > 10) items[i].delta = 10-items[i].qty;
+            if((items[i].qty + items[i].delta) < 0) items[i].delta = 0-items[i].qty;
+        }
     }
+
+    if(showGoal > 0)
+        document.getElementById('goal').style.bottom = (160+(32*showGoal))+'px';
 
     setScene(sceneEnumContent);
     setTimeout(function(){ animate(0);}, 1000);
@@ -108,14 +107,16 @@ function stateReceived()
 function animate(progress)
 {
     console.log('animate('+progress+')');
-    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*20)+"px";
-    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*20)+"px";
-    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*20)+"px";
+    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*32)+"px";
+    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*32)+"px";
+    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*32)+"px";
 
-    context.clearRect(0,0,150,150);
-    context.beginPath();
-    context.arc(60,60,55,-Math.PI/2,(-Math.PI/2)+Math.PI*2*((itemChore.qty+((progress/100)*itemChore.delta))/10),false); // Outer circle
-    context.stroke();
+    var chorepacity = (itemChore.qty+((progress/100)*itemChore.delta)); //float 0.0-5.0
+    document.getElementById('choreslotimg1').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-0.0));
+    document.getElementById('choreslotimg2').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-1.0));
+    document.getElementById('choreslotimg3').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-2.0));
+    document.getElementById('choreslotimg4').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-3.0));
+    document.getElementById('choreslotimg5').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-4.0));
 
     if(progress < 100)
         setTimeout(function(){animate(progress+1);}, 10);
@@ -183,13 +184,29 @@ window.addEventListener('load', bodyLoad, false);
         </div>
         <div id="graphoutline">
         </div>
+        <div id="goal">
+            &nbsp;&nbsp;goal
+        </div>
     </div>
     <div id="chore">
-        <div id="choreicon" class="icon">
-            <canvas id="chorecanvas" width="120px" height="120px"></canvas>
-            <img class="iconimg" src='assets/chore.png' />
+        <div id="choretext" >Activities Remaining:</div>
+        <div id="chorebar">
+            <div id="choreslot1" class="choreslot">
+                <img src="assets/chore.png" id="choreslotimg1" class="choreslotimg" />
+            </div>
+            <div id="choreslot2" class="choreslot">
+                <img src="assets/chore.png" id="choreslotimg2" class="choreslotimg" />
+            </div>
+            <div id="choreslot3" class="choreslot">
+                <img src="assets/chore.png" id="choreslotimg3" class="choreslotimg" />
+            </div>
+            <div id="choreslot4" class="choreslot">
+                <img src="assets/chore.png" id="choreslotimg4" class="choreslotimg" />
+            </div>
+            <div id="choreslot5" class="choreslot">
+                <img src="assets/chore.png" id="choreslotimg5" class="choreslotimg" />
+            </div>
         </div>
-        <div id="choretext" class="text">Chore</div>
     </div>
 
     <div id="okbutton" class="button" onclick="okButtonClicked()">OK</div>

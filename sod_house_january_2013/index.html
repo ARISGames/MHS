@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width; user-scalable=no;"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Trading Post</title>
+<link href="style.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="utils/json2.js"></script>
+<script type="text/javascript" src="utils/arisjs.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript">
+
+var scene = sceneEnumLoading;
+var bogusEndOfStateQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
+
+var canvas;
+var context;
+
+function bodyLoad()
+{
+    if(debug) console.log('bodyLoad()');
+
+    window.onerror = function(msg, url, linenumber) 
+    {
+        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        return true;
+    };
+
+    //set up the drawing stuff
+    canvas = document.getElementById('chorecanvas');
+    context = canvas.getContext('2d');
+    context.clearRect(0,0,150,150);
+    context.strokeStyle = "white";
+    context.lineWidth = "3";
+
+    //junk to prevent scrolling
+    document.ontouchmove = function(e){ e.preventDefault(); };
+
+    setScene(sceneEnumLoading);
+    setTimeout(requestState,100);
+}
+
+//Fetches all data it needs
+function requestState()
+{
+    if(debug) console.log('requestState()');
+
+    //Get URL Fields
+    var params = ARIS.parseURLParams(document.URL);
+    gameId     = parseInt(params.gameId);
+    playerId   = parseInt(params.playerId);
+    webPageId  = parseInt(params.webPageId);
+    itemChore.delta = parseInt(params.choreDelta);
+    itemFood.delta = parseInt(params.foodDelta);
+    itemFood.goal = parseInt(params.foodGoal);
+    itemHealth.delta = parseInt(params.healthDelta);
+    itemHealth.goal = parseInt(params.healthGoal);
+    itemHeat.delta = parseInt(params.heatDelta);
+    itemHeat.goal = parseInt(params.heatGoal);
+
+    //This is called by ARIS, informing this webpage of qty values
+    ARIS.didUpdateItemQty = function (updatedItemId,qty)
+    {
+        if(debug) console.log('ARIS.didUpdateItemQty('+updatedItemId+','+qty+')');
+
+        //Knows all enqueued requests have finished
+        if(updatedItemId == bogusEndOfStateQueueId)
+        {
+            stateReceived();
+            return;
+        }
+
+        //Update local record of qty to sync with ARIS data
+        var o;
+        if(o = itemForItemId(updatedItemId)) items[o.itemEnum].qty = qty;
+    }
+
+    //Request sync with ARIS data
+    for(var i in items)
+        ARIS.getItemCount(items[i].itemId);
+    ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
+}
+
+//Once all data is retreived, actually initialize game state
+function stateReceived()
+{
+    if(debug) console.log('stateReceived()');
+    
+    for(var i = 0; i < items.length; i++)
+    {
+        if(items[i].name == "chore")
+        {
+            //document.getElementById("choretext").innerHTML = "Chore x"+items[i].qty;
+            context.clearRect(0,0,150,150);
+            context.beginPath();
+            context.arc(60,60,55,-Math.PI/2,(-Math.PI/2)+Math.PI*2*(itemChore.qty/10),false); // Outer circle
+            context.stroke();
+        }
+        else
+            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*20)+"px";
+    }
+
+    setScene(sceneEnumContent);
+    setTimeout(function(){ animate(0);}, 1000);
+}
+
+function animate(progress)
+{
+    console.log('animate('+progress+')');
+    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*20)+"px";
+    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*20)+"px";
+    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*20)+"px";
+
+    context.clearRect(0,0,150,150);
+    context.beginPath();
+    context.arc(60,60,55,-Math.PI/2,(-Math.PI/2)+Math.PI*2*((itemChore.qty+((progress/100)*itemChore.delta))/10),false); // Outer circle
+    context.stroke();
+
+    if(progress < 100)
+        setTimeout(function(){animate(progress+1);}, 10);
+    else
+    {
+        ARIS.setItemCount(itemFood.itemId, itemFood.qty+itemFood.delta);
+        ARIS.setItemCount(itemHealth.itemId, itemHealth.qty+itemHealth.delta);
+        ARIS.setItemCount(itemHeat.itemId, itemHeat.qty+itemHeat.delta);
+        ARIS.setItemCount(itemChore.itemId, itemChore.qty+itemChore.delta);
+    }
+}
+
+function setScene(newScene)
+{
+    if(debug) console.log('setScene('+newScene+')');
+    scene = newScene;
+
+    document.getElementById("loading").style.display="none";
+    document.getElementById("content").style.display="none";
+
+    switch(scene)
+    {
+        case sceneEnumLoading:
+            document.getElementById("loading").style.display="block";
+            break;
+        case sceneEnumContent:
+            document.getElementById("content").style.display="block";
+            break;
+    }
+}
+
+function okButtonClicked()
+{
+    ARIS.closeMe();
+}
+
+window.addEventListener('load', bodyLoad, false);
+</script>
+</head>
+<body>
+<div id="screen">
+
+<!-- Loading State -->
+<div id="loading" class="scene" style="display:block;">
+    loading...
+</div>
+
+<!-- Content State -->
+<div id="content" class="scene">
+    <div id="graph">
+        <div id="food" class="variable">
+            <div id="foodbar" class="bar"></div>
+            <div id="foodicon" class="icon"><img class="iconimg" src='assets/food.png' /></div>
+            <div id="foodtext" class="text">Food</div>
+        </div>
+        <div id="health" class="variable">
+            <div id="healthbar" class="bar"></div>
+            <div id="healthicon" class="icon"><img class="iconimg" src='assets/health.png' /></div>
+            <div id="healthtext" class="text">Health</div>
+        </div>
+        <div id="heat" class="variable">
+            <div id="heatbar" class="bar"></div>
+            <div id="heaticon" class="icon"><img class="iconimg" src='assets/heat.png' /></div>
+            <div id="heattext" class="text">Heat</div>
+        </div>
+        <div id="graphoutline">
+        </div>
+    </div>
+    <div id="chore">
+        <div id="choreicon" class="icon">
+            <canvas id="chorecanvas" width="120px" height="120px"></canvas>
+            <img class="iconimg" src='assets/chore.png' />
+        </div>
+        <div id="choretext" class="text">Chore</div>
+    </div>
+
+    <div id="okbutton" class="button" onclick="okButtonClicked()">OK</div>
+</div>
+
+<!-- Debug -->
+<div id="debug">
+    debug
+</div> 
+
+</div><!-- body -->
+</body>
+</html>

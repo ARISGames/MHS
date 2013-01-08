@@ -30,14 +30,15 @@ var DrillGame = function()
     {
         if(drillOn)
         {
-            drillPos+=2;
+            drillPos+=1;
             drillBit.style.bottom = drillPos+'px';
             setTimeout(advanceDrill, drillSpeed);
         }
         else
         {
             if(drillPos > goalMin && drillPos < goalMax) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
-            else { if(imm.money < 50) imm.money = 50; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);}
+            else if(drillPos < -275) ; //Do nothing / give em a freebie for being so shallow
+            else { if(imm.money < 50) imm.money = 50; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);} //<- trust this
             recedeDrill();
         }
     }

@@ -1,0 +1,163 @@
+@font-face
+{
+    font-family:archer_font;
+    src:url('fonts/Archer/Archer-Medium-Pro.otf');
+}
+
+@font-face
+{
+    font-family:gotham_font;
+    src:url('fonts/Gotham/Gotham-Black.otf');
+}
+
+#debug
+{
+    display:none;
+}
+
+.gotham
+{
+    font-family:gotham_font;
+}
+
+.archer
+{
+    font-family:archer_font;
+}
+
+div
+{
+    /*
+    border-style:solid;
+    border-width:1px;
+    border-color:#FF0000;
+     */
+    padding:0px;
+    font-weight:Bold;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+body
+{
+    -webkit-user-select:none;
+    user-select:none;
+    font-family:Helvetica;
+    font-size:30px;
+    background-color:#111111;
+    color:#FFFFFF;
+    margin:0px;
+    padding:0px;
+}
+
+#screen
+{
+    width:640px; 
+    height:832px;
+    margin:0px; 
+    position:absolute; 
+    top:0px;
+    left:0px;
+}
+
+.scene
+{
+    display:none;
+    width:640px;
+    height:832px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.button
+{
+    border:1px solid #32A2AD;
+    width:550px;
+    text-align:center;
+    margin:0px auto;
+    padding:20px 0px;
+}
+
+#graph
+{
+    width:600px;
+    height:600px;
+    margin:70px auto 50px auto;
+    padding:0px;
+    position:relative;
+}
+
+#graphoutline
+{
+    width:550px;
+    height:210px;
+    border:1px solid white;
+    position:absolute;
+    bottom:155px;
+    left:25px;
+}
+
+#chore
+{
+    width:140px;
+    height:140px;
+    position:absolute;
+    top:20px;
+    right:20px;
+}
+
+#chorecanvas
+{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.variable
+{
+    width:120px;
+    height:600px;
+    margin:0px;
+    padding:0px 40px;
+    float:left;
+    position:relative;
+}
+
+.bar
+{
+    width:120px;
+    height:0px;
+    padding:0px;
+    background-color:#32A2AD;
+    border:1px solid #32A2AD;
+    position:absolute;
+    bottom:160px;
+}
+
+.icon
+{
+    display:block;
+    width:120px;
+    height:120px;
+    position:absolute;
+    bottom:20px;
+}
+
+.iconimg
+{
+    width:100px;
+    height:100px;
+    margin:10px;
+}
+
+.text
+{
+    width:120px;
+    height:20px;
+    text-align:center;
+    font-family:gotham_font;
+    position:absolute;
+    bottom:0px;
+}

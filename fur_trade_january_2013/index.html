@@ -13,6 +13,7 @@
 
 var scene = sceneEnumLoading;
 var bogusEndOfStateQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
+var stateGotten = false;
 
 function bodyLoad()
 {
@@ -35,6 +36,7 @@ function bodyLoad()
 function requestState()
 {
     if(debug) console.log('requestState()');
+    stateGotten = false;
 
     //Get URL Fields
     var params = ARIS.parseURLParams(document.URL);
@@ -69,8 +71,39 @@ function requestState()
         else if(o = levelForLevelId(updatedItemId) && o >= currentLevel) currentLevel = parseInt(o)+1; //Player is at level one greater than the level represented by their inventory (at level 2 when 'level 1' badge in inventory)
         else if(qty > 0 && (o = roleForRoleId(updatedItemId))) currentRole = o;
 
-        if(hasAllNeededItems())
+        if(hasAllNeededItems() && stateGotten)
         {
+            if(currentLevel == 1)
+            {
+                if(webPageItem.itemEnum == itemEnumBeaverpelt)
+                {
+                    //alert("Quest Complete!\nYou've successfully collected 3 Beaver Pelts!");
+                    //alert("New Quest:\nCollect 3 Fabrics.\nNOTE- A Hunter must trade with a Clerk to collect fabrics. Find a Clerk, and go to your inventory to trade!");
+                    //alert("New Quest!\nCheck the quests tab for details!");
+                }
+                else
+                {
+                    //alert("Quest Complete!\nYou've successfully collected 3 Fabrics!");
+                    //alert("New Quest:\nCollect 3 Beaver Pelts.\nNOTE- A Clerk must trade with a Hunter to collect fabrics. Find a Hunter, and go to your inventory to trade!");
+                    //alert("New Quest!\nCheck the quests tab for details!");
+                }
+            }
+            else if(currentLevel == 2)
+            {
+                if(webPageItem.itemEnum == itemEnumBeaverpelt)
+                {
+                    //alert("Quest Complete!\nYou've successfully collected 3 Fabrics!");
+                    //alert("New Quest:\nCollect 10 Fabrics.\nNOTE- A Hunter must trade with a Clerk to collect fabrics. Find a Clerk, and go to your inventory to trade!");
+                    //alert("New Quest!\nCheck the quests tab for details!");
+                }
+                else
+                {
+                    //alert("Quest Complete!\nYou've successfully collected 3 Beaver Pelts!");
+                    //alert("New Quest:\nCollect 10 Beaver Pelts.\nNOTE- A Clerk must trade with a Hunter to collect fabrics. Find a Hunter, and go to your inventory to trade!");
+                    //alert("New Quest!\nCheck the quests tab for details!");
+                }
+            }
+
             ARIS.setItemCount(levelIds[currentLevel-1],1);
             currentLevel++;
         }
@@ -90,7 +123,10 @@ function requestState()
 function stateReceived()
 {
     if(debug) console.log('stateReceived()');
+    stateGotten = true;
 
+    document.getElementById('itemgetpic').src = 'images/objects/splash/'+webPageItem.imageName;
+    setScene(sceneEnumItemGet);
     if(!currentRole)
     {
         //No role/new to activity- Set itemget screen to new player mode
@@ -101,7 +137,7 @@ function stateReceived()
     else if(currentRole != webPageRole)
     {
         //Scanned item that is conflicting with current role- Set itemget screen to wrong item mode
-        document.getElementById('itemgetdescription').innerHTML = "Your role ("+currentRole.name+") can't pick up a "+webPageItem.name+".";
+        document.getElementById('itemgetdescription').innerHTML = "Your role ("+currentRole.title+") can't pick up a "+webPageItem.name+".";
         document.getElementById('itemgetchangerolebutton').style.display = 'block';
     }
     else if(currentLevel == 1)
@@ -118,30 +154,6 @@ function stateReceived()
         document.getElementById('itemgetokbutton').style.display = 'block';
         ARIS.setItemCount(webPageItem.itemId,getItemQtyInInventory(webPageItem.itemEnum)+1);
     }
-    document.getElementById('itemgetpic').src = 'images/objects/splash/'+webPageItem.imageName;
-    setScene(sceneEnumItemGet);
-}
-
-function what()
-{
-    //Wipe away relevant inventory and start fresh
-    for(var i in items)
-        completelyRemoveItemFromInventory(items[i].itemId); //Local
-    for(var i in items)
-        ARIS.setItemCount(items[i].itemId,getItemQtyInInventory(items[i].itemId)); //Back to ARIS
-
-    //Save New Role
-    for(var i in roles)
-    {
-        if(roles[i].roleId == currentRole.roleId)
-            ARIS.setItemCount(roles[i].roleId,1); //Back to ARIS
-        else
-            ARIS.setItemCount(roles[i].roleId,0); //Back to ARIS
-    }
-
-    document.getElementById('roleContent').src = "images/roles/splash/"+currentRole.imageName;
-    document.getElementById('inventoryIdentifier').src = "images/roles/indicator/"+currentRole.imageName;
-    setScene(sceneEnumRole);
 }
 
 function setScene(newScene)
@@ -174,8 +186,6 @@ function setScene(newScene)
             break;
     }
 }
-            //document.getElementById("bumpvideo").play();
-            //document.getElementById("bumpvideo").webkitExitFullscreen();
 
 function startActivityButtonClicked()
 {
@@ -218,54 +228,8 @@ function setRole(roleEnum)
             currentRole = roles[roleEnumClerk];
             break;
     }
+    //alert("New Quest!\nCheck the quests tab for details!");
     document.getElementById('rolegetpic').src = 'images/roles/splash/'+currentRole.imageName;
-}
-
-//Verify that user is on correct path in game (scanned meaningful item, not switching roles, etc...)
-function verify()
-{
-    if(debug) console.log('verify()');
-
-    //If player was already init'd, and must have gotten here by pressing 'back'
-    if(currentRole)
-    {
-        setScene(sceneEnumRole);
-        return;
-    }
-
-    //Set up new role
-    var newRole = webPageRole;
-    //Long if statement, translated to english:
-    //If there is no role for the web page (invalid web page id), give them the 'wrong item' screen.
-    //Also, if the player is on level one/ hasn't played before, and scanned an item other than the beaver pelt or fabric, send them to the 'wrong item' screen as well.
-    if(!newRole || (player.levelComplete == -1 && (newRole.roleId == roleIdCrafter || (webPageItem.itemId != itemIdBeaverpelt && webPageItem.itemId != itemIdFabric))))
-    {
-        document.getElementById("wrongitem").style.display = "block";
-    }
-    else if(!currentRole) confirmInit();
-    else if(currentRole.roleId != newRole.roleId) //New role
-    {
-        document.getElementById("rolechangetext").innerHTML = "You were a <b>'"+currentRole.title+"'</b><br />This puts you in the role of <b>'"+newRole.title+"'</b>";
-        document.getElementById("rolechange").style.display = "block";
-    }
-    else //Same role as before
-        confirmInit();
-
-}
-
-function checkWinState()
-{
-    if(debug) console.log('checkWinState()');
-    if(scene == sceneEnumTrade && player.hasAllNeededItems())
-    {
-        setTimeout(function(){document.getElementById("congrats").style.display = "block";},1000);
-
-        //DELETE ME WHEN LEVEL 3 EXISTS
-        if(currentLevel == 2) return;
-        //END DELETE ME
-
-        ARIS.setItemCount(levelIds[currentLevel],0); //Remove Level badge
-    }
 }
 
 window.addEventListener('load', bodyLoad, false);
@@ -292,20 +256,22 @@ window.addEventListener('load', bodyLoad, false);
 
 <!-- Intro State -->
 <div id="intro" class="scene">
-    <img id="intropic" src="map_trade.png" onclick="chooseRoleButtonClicked()" />
+    <img id="intropic" src="images/core/map.png" onclick="chooseRoleButtonClicked()" />
     <div id="introchooserolebutton" class="introbutton button" onclick="chooseRoleButtonClicked()">Choose Role</div>
 </div>
 
 <!-- ChooseRole State -->
 <div id="chooserole" class="scene">
     <div id="chooseroletitle">Choose Role</div>
-    <div id="chooserolehunterbutton" class="chooserolebutton button" onclick="setRoleButtonClicked(roleEnumHunter)">
+    <div id="chooserolehunterbutton" class="chooserolebutton" onclick="setRoleButtonClicked(roleEnumHunter)">
         <img id="chooserolehunterpic" class="chooserolepic" src="images/roles/icon/hunter.png" />
-        Hunter
+	<div class="roletitle">Hunter</div>
+	<div class="roledescription">Has Pelts</div>
     </div>
-    <div id="chooseroleclerkbutton" class="chooserolebutton button" onclick="setRoleButtonClicked(roleEnumClerk)">
+    <div id="chooseroleclerkbutton" class="chooserolebutton" onclick="setRoleButtonClicked(roleEnumClerk)">
         <img id="chooseroleclerkpic" class="chooserolepic" src="images/roles/icon/clerk.png" />
-        Clerk
+        <div class="roletitle">Clerk</div>
+	<div class="roledescription">Has Goods</div>
     </div>
     <div id="chooseroledescription"></div>
 </div>
@@ -314,7 +280,7 @@ window.addEventListener('load', bodyLoad, false);
 <div id="roleget" class="scene"> 
     <img id="rolegetpic" />
     <div id="rolegetdescription"></div>
-    <div id="rolegetokbutton" class="rolegetbutton button" onclick="okButtonClicked()">OK</div>
+    <div id="rolegetokbutton" class="rolegetbutton button" onclick="okButtonClicked()">Return to Decoder</div>
 </div>
 
 <!-- Debug -->

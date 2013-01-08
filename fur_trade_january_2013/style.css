@@ -43,7 +43,7 @@ body
 {
     -webkit-user-select:none;
     user-select:none;
-    font-family:archer_font;
+    font-family:Helvetica;
     font-size:30px;
     background-color:#FFFFFF;
     margin:0px;
@@ -73,11 +73,13 @@ body
 
 .button
 {
-    border:1px solid black;
     width:550px;
     text-align:center;
     margin:0px auto;
-    padding:20px 0px;
+    padding:15px 0px;
+    border-radius:40px;
+    background-color:#BCB1A6;
+    font-family:gotham_font;
 }
 
 #itemgetpic
@@ -103,33 +105,61 @@ body
     margin:0px auto;
 }
 
+#introchooserolebutton
+{
+    position:relative;
+    bottom:90px;
+}
+
 #chooseroletitle
 {
-    margin:60px auto;
+    height:120px;
+    margin:80px auto;
+    padding-top:60px;
     text-align:center;
     font-size:60px;
     font-family:gotham_font;
+    color:#C05815;
+    background-color:rgba(0,0,0,0.5);
+}
+
+.roledescription
+{
+    font-size:26px;
+    font-family:gotham_font;
+    color:#BCB1A6;
+}
+
+.roletitle
+{
+    font-size:38px;
+    font-family:gotham_font;
+    color:#C05815;
 }
 
 .chooserolebutton
 {
-    width:200px;
-    height:250px;
+    width:220px;
+    height:200px;
+    text-align:center;
+    margin:0px;
+    padding-top:25px;
     position:absolute;
     top:300px;
     font-family:gotham_font;
     color:#C0581F;
-    border:0px;
+    border-radius:40px;
+    border:5px solid #BCB1A6;
 }
 
 #chooserolehunterbutton
 {
-    left:100px;
+    left:60px;
 }
 
 #chooseroleclerkbutton
 {
-    right:100px;
+    right:60px;
 }
 
 .chooserolepic

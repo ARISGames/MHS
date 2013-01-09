@@ -91,14 +91,16 @@ function stateReceived()
         }
         else
         {
-            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*32)+"px";
-            if((items[i].qty + items[i].delta) > 10) items[i].delta = 10-items[i].qty;
+            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*64)+"px";
+            if((items[i].qty + items[i].delta) > 5) items[i].delta = 5-items[i].qty;
             if((items[i].qty + items[i].delta) < 0) items[i].delta = 0-items[i].qty;
         }
     }
 
-    if(showGoal > 0)
-        document.getElementById('goal').style.bottom = (160+(32*showGoal))+'px';
+    if(showGoal == 0)
+        document.getElementById('goal').style.display = 'none';
+    document.getElementById('goal').style.bottom = (160+(64*showGoal))+'px';
+
 
     setScene(sceneEnumContent);
     setTimeout(function(){ animate(0);}, 1000);
@@ -107,9 +109,9 @@ function stateReceived()
 function animate(progress)
 {
     console.log('animate('+progress+')');
-    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*32)+"px";
-    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*32)+"px";
-    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*32)+"px";
+    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*64)+"px";
+    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*64)+"px";
+    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*64)+"px";
 
     var chorepacity = (itemChore.qty+((progress/100)*itemChore.delta)); //float 0.0-5.0
     document.getElementById('choreslotimg1').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-0.0));

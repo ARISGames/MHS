@@ -74,6 +74,7 @@ body
 .button
 {
     border:1px solid #32A2AD;
+    border-radius:40px;
     width:550px;
     text-align:center;
     margin:0px auto;
@@ -102,7 +103,7 @@ body
 #goal
 {
     width:550px;
-    border-bottom:1px dashed white;
+    border-bottom:5px dashed white;
     position:absolute;
     bottom:-500px; /*hide it*/
     left:25px;
@@ -127,21 +128,22 @@ body
 .choreslot
 {
     float:left;
-    border:1px solid white;
-    border-right:0px;
-    padding-top:15px;
-    width:89px;
-    height:73px;
+    border:2px solid white;
+    border-radius:40px;
+    margin-left:5px;
+    width:80px;
+    height:80px;
     text-align:center;
 }
 
 #choreslot5
 {
-    border-right:1px solid white;
+    /*border-right:1px solid white;*/
 }
 
 .choreslotimg
 {
+    margin-top:10px;
     opacity:0.0;
     width:60px;
 }

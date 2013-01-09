@@ -23,13 +23,15 @@ var ARISJS = function()
         if(this.requestsQueue.length) 
         {
             var req = this.requestsQueue.shift();
-            //setTimeout(100,window.location = req);
+            setTimeout(100,window.location = req);
 
             /* DEBUG - uncomment to use in browser without error */
+            /*
             this.isCurrentlyCalling();
             if(req == "aris://inventory/get/" + 99999999)
                 this.didUpdateItemQty(99999999,1);
             this.isNotCurrentlyCalling();
+            */
         }
     }
 

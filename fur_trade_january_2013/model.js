@@ -13,19 +13,21 @@ var roleEnumClerk = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
-var itemEnumBeaverpelt = 0;
-var itemEnumDriedmeat = 1;
-var itemEnumWildrice = 2;
-var itemEnumMaplesugar = 3;
-var itemEnumSnowshoes = 4;
-var itemEnumMoccasins = 5;
-var itemEnumBeads = 6;
-var itemEnumFabric = 7;
-var itemEnumIrontrap = 8;
-var itemEnumBonetools = 9;
-var itemEnumKettle = 10;
-var itemEnumLetter = 11;
-var itemEnums=[itemEnumBeaverpelt, itemEnumDriedmeat, itemEnumWildrice, itemEnumMaplesugar, itemEnumSnowshoes, itemEnumMoccasins, itemEnumBeads, itemEnumFabric, itemEnumIrontrap, itemEnumBonetools, itemEnumKettle, itemEnumLetter];
+var itemEnumFisher = 0;
+var itemEnumRaccoon = 1;
+var itemEnumMarten = 2;
+var itemEnumMink = 3;
+var itemEnumMuskrat = 4;
+var itemEnumWolf = 5;
+var itemEnumOtter = 6;
+var itemEnumRedFox = 7;
+var itemEnumHempTwine = 8;
+var itemEnumBeads = 9;
+var itemEnumScissors = 10;
+var itemEnumKettle = 11;
+var itemEnumAxeHead = 12;
+var itemEnumIronHoe = 13;
+var itemEnums = [itemEnumFisher,itemEnumRaccoon,itemEnumMarten,itemEnumMink,itemEnumMuskrat,itemEnumWolf,itemEnumOtter,itemEnumRedFox,itemEnumHempTwine,itemEnumBeads,itemEnumScissors,itemEnumKettle,itemEnumAxeHead,itemEnumIronHoe];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 17242;
@@ -77,89 +79,103 @@ function Item(itemEnum)
 
     switch(itemEnum)
     {
-        case itemEnumBeaverpelt:
-            this.itemId = 17228;
-            this.webPageId = 1313;
+        case itemEnumFisher:
+            this.itemId = 19349;
+            this.webPageId = 1367;
             this.owner = roleHunter;
-            this.name = "Beaver Pelt";
-            this.imageName = "beaverpelt.png";
+            this.name = "Fisher Pelt";
+            this.imageName = "fisherpelt.png";
             break;
-        case itemEnumDriedmeat:
-            this.itemId = 17229;
-            this.webPageId = 1141;
+        case itemEnumRaccoon:
+            this.itemId = 19350;
+            this.webPageId = 1358;
             this.owner = roleHunter;
-            this.name = "Dried Meat";
-            this.imageName = "driedmeat.png";
+            this.name = "Raccoon Pelt";
+            this.imageName = "raccoonpelt.png";
             break;
-        case itemEnumWildrice:
-            this.itemId = 17238;
-            this.webPageId = 1150;
-            this.owner = roleClerk;
-            this.name = "Wild Rice";
-            this.imageName = "wildrice.png";
+        case itemEnumMarten:
+            this.itemId = 19348;
+            this.webPageId = 1366;
+            this.owner = roleHunter;
+            this.name = "Marten Pelt";
+            this.imageName = "martenpelt.png";
             break;
-        case itemEnumMaplesugar:
-            this.itemId = 17233;
-            this.webPageId = 1144;
-            this.owner = roleClerk;
-            this.name = "Maple Sugar";
-            this.imageName = "maplesugar.png";
+        case itemEnumMink:
+            this.itemId = 19351;
+            this.webPageId = 1359;
+            this.owner = roleHunter;
+            this.name = "Mink Pelt";
+            this.imageName = "minkpelt.png";
             break;
-        case itemEnumSnowshoes:
-            this.itemId = 17235;
-            this.webPageId = 1145;
-            this.owner = roleClerk;
-            this.name = "Snowshoes";
-            this.imageName = "snowshoes.png";
+        case itemEnumMuskrat:
+            this.itemId = 19353;
+            this.webPageId = 1364;
+            this.owner = roleHunter;
+            this.name = "Muskrat Pelt";
+            this.imageName = "muskratpelt.png";
             break;
-        case itemEnumMoccasins:
-            this.itemId = 17234;
-            this.webPageId = 1146;
-            this.owner = roleClerk;
-            this.name = "Moccasins";
-            this.imageName = "moccasins.png";
+        case itemEnumWolf:
+            this.itemId = 19354;
+            this.webPageId = 1369;
+            this.owner = roleHunter;
+            this.name = "Wolf Pelt";
+            this.imageName = "wolfpelt.png";
+            break;
+        case itemEnumOtter:
+            this.itemId = 19355;
+            this.webPageId = 1365;
+            this.owner = roleHunter;
+            this.name = "Otter Pelt";
+            this.imageName = "otterpelt.png";
+            break;
+        case itemEnumRedFox:
+            this.itemId = 19356;
+            this.webPageId = 1360;
+            this.owner = roleHunter;
+            this.name = "Red Fox Pelt";
+            this.imageName = "redfoxpelt.png";
+            break;
+        case itemEnumHempTwine:
+            this.itemId = 19357;
+            this.webPageId = 1356;
+            this.owner = roleHunter;
+            this.name = "Hemp Twine";
+            this.imageName = "hemptwine.png";
             break;
         case itemEnumBeads:
-            this.itemId = 17227;
-            this.webPageId = 1139;
+            this.itemId = 19358;
+            this.webPageId = 1361;
             this.owner = roleClerk;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
-        case itemEnumFabric:
-            this.itemId = 17230;
-            this.webPageId = 1314;
+        case itemEnumScissors:
+            this.itemId = 19359;
+            this.webPageId = 1362;
             this.owner = roleClerk;
-            this.name = "Fabric";
-            this.imageName = "fabric.png";
-            break;
-        case itemEnumIrontrap:
-            this.itemId = 17236;
-            this.webPageId = 1149;
-            this.owner = roleClerk;
-            this.name = "Iron Trap";
-            this.imageName = "irontrap.png";
-            break;
-        case itemEnumBonetools:
-            this.itemId = 17237;
-            this.webPageId = 1147;
-            this.owner = roleHunter;
-            this.name = "Bone Tools";
-            this.imageName = "bonetools.png";
+            this.name = "Scissors";
+            this.imageName = "scissors.png";
             break;
         case itemEnumKettle:
-            this.itemId = 17231;
-            this.webPageId = 1148;
+            this.itemId = 19360;
+            this.webPageId = 1357;
             this.owner = roleClerk;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
-        case itemEnumLetter:
-            this.itemId = 17232;
-            this.webPageId = 1143;
-            this.owner = roleHunter;
-            this.name = "Letter";
-            this.imageName = "letter.png";
+        case itemEnumAxeHead:
+            this.itemId = 19361;
+            this.webPageId = 1368;
+            this.owner = roleClerk;
+            this.name = "Axe Head";
+            this.imageName = "axehead.png";
+            break;
+        case itemEnumIronHoe:
+            this.itemId = 19352;
+            this.webPageId = 1363;
+            this.owner = roleClerk;
+            this.name = "Iron Hoe";
+            this.imageName = "ironhoe.png";
             break;
         default:
             return null;
@@ -168,19 +184,21 @@ function Item(itemEnum)
 }
 
 //REFERENCES
-var itemBeaverpelt = new Item(itemEnumBeaverpelt);
-var itemDriedmeat = new Item(itemEnumDriedmeat);
-var itemWildrice = new Item(itemEnumWildrice);
-var itemMaplesugar = new Item(itemEnumMaplesugar);
-var itemSnowshoes = new Item(itemEnumSnowshoes);
-var itemMoccasins = new Item(itemEnumMoccasins);
+var itemFisher = new Item(itemEnumFisher);
+var itemRaccoon = new Item(itemEnumRaccoon);
+var itemMarten = new Item(itemEnumMarten);
+var itemMink = new Item(itemEnumMink);
+var itemMuskrat = new Item(itemEnumMuskrat);
+var itemWolf = new Item(itemEnumWolf);
+var itemOtter = new Item(itemEnumOtter);
+var itemRedFox = new Item(itemEnumRedFox);
+var itemHempTwine = new Item(itemEnumHempTwine);
 var itemBeads = new Item(itemEnumBeads);
-var itemFabric = new Item(itemEnumFabric);
-var itemIrontrap = new Item(itemEnumIrontrap);
-var itemBonetools = new Item(itemEnumBonetools);
+var itemScissors = new Item(itemEnumScissors);
 var itemKettle = new Item(itemEnumKettle);
-var itemLetter = new Item(itemEnumLetter);
-var items=[itemBeaverpelt, itemDriedmeat, itemWildrice, itemMaplesugar, itemSnowshoes, itemMoccasins, itemBeads, itemFabric, itemIrontrap, itemBonetools, itemKettle, itemLetter];
+var itemAxeHead = new Item(itemEnumAxeHead);
+var itemIronHoe = new Item(itemEnumIronHoe);
+var items = [itemFisher,itemRaccoon,itemMarten,itemMink,itemMuskrat,itemWolf,itemOtter,itemRedFox,itemHempTwine,itemBeads,itemScissors,itemKettle,itemAxeHead,itemIronHoe];
 
 function hasItem(itemEnum)
 {
@@ -219,22 +237,37 @@ function setItemQtyInInventory(itemEnum,qty)
     items[itemEnum].qty = qty;
     return items[itemEnum];
 }
+function qtyOfItemFromOwner(roleEnum)
+{
+    var qty = 0;
+    for(var i = 0; i < items.length; i++)
+    {
+        if(items[i].owner.roleEnum == roleEnum)
+        {
+            qty+=items[i].qty;
+        }
+    }
+    return qty;
+}
 function hasAllNeededItems()
 {
     if(debug) console.log('hasAllNeededItems()');
     if(!currentRole) return;
+
+    var hunterItems = qtyOfItemFromOwner(roleEnumHunter);
+    var clerkItems = qtyOfItemFromOwner(roleEnumClerk);
     switch(currentRole.roleEnum)
     {
         case roleEnumHunter:
-            if(currentLevel == 1 && items[itemEnumBeaverpelt].qty >= 3) return true;
-            else if(currentLevel == 2 && items[itemEnumFabric].qty >= 3) return true;
-            else if(currentLevel == 3 && items[itemEnumFabric].qty >= 10) return true;
+            if(currentLevel == 1 && hunterItems.qty >= 3) return true;
+            else if(currentLevel == 2 && clerkItems.qty >= 3) return true;
+            else if(currentLevel == 3 && clerkItems.qty >= 10) return true;
             return false;
             break;
         case roleEnumClerk:
-            if(currentLevel == 1 && items[itemEnumFabric].qty >= 3) return true;
-            else if(currentLevel == 2 && items[itemEnumBeaverpelt].qty >= 3) return true;
-            else if(currentLevel == 3 && items[itemEnumBeaverpelt].qty >= 10) return true;
+            if(currentLevel == 1 && clerkItems.qty >= 3) return true;
+            else if(currentLevel == 2 && hunterItems.qty >= 3) return true;
+            else if(currentLevel == 3 && hunterItems.qty >= 10) return true;
             return false;
             break;
     }

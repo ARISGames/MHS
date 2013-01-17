@@ -27,7 +27,9 @@ var itemEnumScissors = 10;
 var itemEnumKettle = 11;
 var itemEnumAxeHead = 12;
 var itemEnumIronHoe = 13;
-var itemEnums = [itemEnumFisher,itemEnumRaccoon,itemEnumMarten,itemEnumMink,itemEnumMuskrat,itemEnumWolf,itemEnumOtter,itemEnumRedFox,itemEnumHempTwine,itemEnumBeads,itemEnumScissors,itemEnumKettle,itemEnumAxeHead,itemEnumIronHoe];
+var itemEnumBeaver = 14;
+var itemEnumFabric = 15;
+var itemEnums = [itemEnumFisher,itemEnumRaccoon,itemEnumMarten,itemEnumMink,itemEnumMuskrat,itemEnumWolf,itemEnumOtter,itemEnumRedFox,itemEnumHempTwine,itemEnumBeads,itemEnumScissors,itemEnumKettle,itemEnumAxeHead,itemEnumIronHoe,itemEnumBeaver, itemEnumFabric];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 17242;
@@ -177,6 +179,20 @@ function Item(itemEnum)
             this.name = "Iron Hoe";
             this.imageName = "ironhoe.png";
             break;
+        case itemEnumBeaver:
+            this.itemId = 19432;
+            this.webPageId = 1371;
+            this.owner = roleHunter;
+            this.name = "Beaver Pelt";
+            this.imageName = "beaverpelt.png";
+            break;
+        case itemEnumFabric:
+            this.itemId = 19433;
+            this.webPageId = 1372;
+            this.owner = roleClerk;
+            this.name = "Blanket";
+            this.imageName = "fabric.png";
+            break;
         default:
             return null;
             break; //<- lol
@@ -198,7 +214,11 @@ var itemScissors = new Item(itemEnumScissors);
 var itemKettle = new Item(itemEnumKettle);
 var itemAxeHead = new Item(itemEnumAxeHead);
 var itemIronHoe = new Item(itemEnumIronHoe);
-var items = [itemFisher,itemRaccoon,itemMarten,itemMink,itemMuskrat,itemWolf,itemOtter,itemRedFox,itemHempTwine,itemBeads,itemScissors,itemKettle,itemAxeHead,itemIronHoe];
+var itemAxeHead = new Item(itemEnumAxeHead);
+var itemIronHoe = new Item(itemEnumIronHoe);
+var itemBeaver = new Item(itemEnumBeaver);
+var itemFabric = new Item(itemEnumFabric);
+var items = [itemFisher,itemRaccoon,itemMarten,itemMink,itemMuskrat,itemWolf,itemOtter,itemRedFox,itemHempTwine,itemBeads,itemScissors,itemKettle,itemAxeHead,itemIronHoe, itemBeaver, itemFabric];
 
 function hasItem(itemEnum)
 {

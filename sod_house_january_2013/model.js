@@ -57,6 +57,7 @@ var gameId = 0;
 var playerId = 0;
 var webPageId = 0;
 var showGoal = 0;
+var showChores = 0;
 
 //MODEL ACCESSORS
 function itemForItemId(id)

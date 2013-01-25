@@ -140,7 +140,7 @@ function Item(itemEnum)
         case itemEnumHempTwine:
             this.itemId = 19357;
             this.webPageId = 1356;
-            this.owner = roleHunter;
+            this.owner = roleClerk;
             this.name = "Hemp Twine";
             this.imageName = "hemptwine.png";
             break;

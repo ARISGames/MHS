@@ -42,6 +42,7 @@ function requestState()
     playerId   = parseInt(params.playerId);
     webPageId  = parseInt(params.webPageId);
     showGoal = parseInt(params.showGoal);
+    showChores = parseInt(params.showChores);
     itemChore.delta = parseInt(params.choreDelta);
     itemFood.delta = parseInt(params.foodDelta);
     itemFood.goal = parseInt(params.foodGoal);
@@ -91,16 +92,14 @@ function stateReceived()
         }
         else
         {
-            document.getElementById(items[i].name+"bar").style.height = Math.round(items[i].qty*64)+"px";
+            if(items[i].qty != 0)
+                document.getElementById(items[i].name+"bar").style.height = (Math.round(items[i].qty*110)+20)+"px";
+            if(items[i].goal != 0)
+                document.getElementById(items[i].name+"goalbar").style.height = (Math.round(items[i].goal*110)+20)+"px";
             if((items[i].qty + items[i].delta) > 5) items[i].delta = 5-items[i].qty;
             if((items[i].qty + items[i].delta) < 0) items[i].delta = 0-items[i].qty;
         }
     }
-
-    if(showGoal == 0)
-        document.getElementById('goal').style.display = 'none';
-    document.getElementById('goal').style.bottom = (160+(64*showGoal))+'px';
-
 
     setScene(sceneEnumContent);
     setTimeout(function(){ animate(0);}, 1000);
@@ -109,9 +108,8 @@ function stateReceived()
 function animate(progress)
 {
     console.log('animate('+progress+')');
-    document.getElementById(itemFood.name+"bar").style.height = Math.round((itemFood.qty + ((progress/100) * itemFood.delta))*64)+"px";
-    document.getElementById(itemHealth.name+"bar").style.height = Math.round((itemHealth.qty + ((progress/100) * itemHealth.delta))*64)+"px";
-    document.getElementById(itemHeat.name+"bar").style.height = Math.round((itemHeat.qty + ((progress/100) * itemHeat.delta))*64)+"px";
+    for(var i = 0; i < items.length; i++)
+        if(items[i].qty + items[i].delta != 0) document.getElementById(items[i].name+"bar").style.height = Math.round((items[i].qty + (((progress/100) * items[i].delta))*110)+20)+"px";
 
     var chorepacity = (itemChore.qty+((progress/100)*itemChore.delta)); //float 0.0-5.0
     document.getElementById('choreslotimg1').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-0.0));
@@ -150,11 +148,6 @@ function setScene(newScene)
     }
 }
 
-function okButtonClicked()
-{
-    ARIS.closeMe();
-}
-
 window.addEventListener('load', bodyLoad, false);
 </script>
 </head>
@@ -170,48 +163,49 @@ window.addEventListener('load', bodyLoad, false);
 <div id="content" class="scene">
     <div id="graph">
         <div id="food" class="variable">
+            <div id="foodgoalbar" class="bar goalbar">GOAL</div>
             <div id="foodbar" class="bar"></div>
             <div id="foodicon" class="icon"><img class="iconimg" src='assets/food.png' /></div>
-            <div id="foodtext" class="text">Food</div>
+            <div id="foodtext" class="text">FOOD</div>
         </div>
         <div id="health" class="variable">
+            <div id="healthgoalbar" class="bar goalbar">GOAL</div>
             <div id="healthbar" class="bar"></div>
             <div id="healthicon" class="icon"><img class="iconimg" src='assets/health.png' /></div>
-            <div id="healthtext" class="text">Health</div>
+            <div id="healthtext" class="text">HEALTH</div>
         </div>
         <div id="heat" class="variable">
+            <div id="heatgoalbar" class="bar goalbar">GOAL</div>
             <div id="heatbar" class="bar"></div>
             <div id="heaticon" class="icon"><img class="iconimg" src='assets/heat.png' /></div>
-            <div id="heattext" class="text">Heat</div>
-        </div>
-        <div id="graphoutline">
-        </div>
-        <div id="goal">
-            &nbsp;&nbsp;goal
+            <div id="heattext" class="text">HEAT</div>
         </div>
     </div>
     <div id="chore">
         <div id="choretext" >Activities Remaining:</div>
         <div id="chorebar">
             <div id="choreslot1" class="choreslot">
-                <img src="assets/chore.png" id="choreslotimg1" class="choreslotimg" />
+                <img src="assets/chore_box.png" class="choreslotimg choreslotdefault" />
+                <img src="assets/chore_check.png" id="choreslotimg1" class="choreslotimg" />
             </div>
             <div id="choreslot2" class="choreslot">
-                <img src="assets/chore.png" id="choreslotimg2" class="choreslotimg" />
+                <img src="assets/chore_box.png" class="choreslotimg choreslotdefault" />
+                <img src="assets/chore_check.png" id="choreslotimg2" class="choreslotimg" />
             </div>
             <div id="choreslot3" class="choreslot">
-                <img src="assets/chore.png" id="choreslotimg3" class="choreslotimg" />
+                <img src="assets/chore_box.png" class="choreslotimg choreslotdefault" />
+                <img src="assets/chore_check.png" id="choreslotimg3" class="choreslotimg" />
             </div>
             <div id="choreslot4" class="choreslot">
-                <img src="assets/chore.png" id="choreslotimg4" class="choreslotimg" />
+                <img src="assets/chore_box.png" class="choreslotimg choreslotdefault" />
+                <img src="assets/chore_check.png" id="choreslotimg4" class="choreslotimg" />
             </div>
             <div id="choreslot5" class="choreslot">
-                <img src="assets/chore.png" id="choreslotimg5" class="choreslotimg" />
+                <img src="assets/chore_box.png" class="choreslotimg choreslotdefault" />
+                <img src="assets/chore_check.png" id="choreslotimg5" class="choreslotimg" />
             </div>
         </div>
     </div>
-
-    <div id="okbutton" class="button" onclick="okButtonClicked()">OK</div>
 </div>
 
 <!-- Debug -->

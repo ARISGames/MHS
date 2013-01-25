@@ -59,6 +59,7 @@ body
     position:absolute; 
     top:0px;
     left:0px;
+    background-image:url("assets/bgimage.png");
 }
 
 .scene
@@ -85,19 +86,10 @@ body
 {
     width:600px;
     height:600px;
-    margin:70px auto 50px auto;
+    margin:0px;
     padding:0px;
-    position:relative;
-}
-
-#graphoutline
-{
-    width:550px;
-    height:335px;
-    border:1px solid white;
     position:absolute;
-    bottom:155px;
-    left:25px;
+    bottom:20px;
 }
 
 #goal
@@ -128,34 +120,29 @@ body
 .choreslot
 {
     float:left;
-    border:2px solid white;
-    border-radius:40px;
     margin-left:5px;
     width:80px;
     height:80px;
     text-align:center;
-}
-
-#choreslot5
-{
-    /*border-right:1px solid white;*/
+    position:relative;
+    top:20px;
 }
 
 .choreslotimg
 {
-    margin-top:10px;
-    opacity:0.0;
+    position:absolute;
+    top:10px;
     width:60px;
 }
 
 .variable
 {
-    width:120px;
+    width:140px;
     height:600px;
-    margin:0px;
-    padding:0px 40px;
+    margin:0px 30px;
     float:left;
     position:relative;
+    left:15px;
 }
 
 .bar
@@ -166,37 +153,50 @@ body
     background-color:#32A2AD;
     border:1px solid #32A2AD;
     position:absolute;
-    bottom:160px;
+    left:10px;
+    bottom:130px;
+}
+
+.goalbar
+{
+    background-color:transparent;
+    border:5px dashed white;
+    left:7px;
+    bottom:126px;
+    text-align:center;
+    font-family:archer_font;
 }
 
 .icon
 {
     display:block;
-    width:120px;
-    height:120px;
+    width:140px;
+    height:140px;
     position:absolute;
-    bottom:20px;
+    bottom:60px;
 }
 
 .iconimg
 {
-    width:100px;
-    height:100px;
-    margin:10px;
+    width:140px;
+    height:140px;
 }
 
 .text
 {
-    width:120px;
+    width:140px;
     height:20px;
     text-align:center;
-    font-family:gotham_font;
+    font-size:35px;
+    font-family:archer_font;
+    color:black;
     position:absolute;
-    bottom:0px;
+    bottom:30px;
 }
 
 #choretext
 {
-    height:2-px;
-    font-family:gotham_font;
+    height:20px;
+    font-size:40px;
+    font-family:archer_font;
 }

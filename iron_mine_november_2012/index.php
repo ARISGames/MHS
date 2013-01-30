@@ -119,14 +119,14 @@ MHS Iron Mine
             <img id='drillbit' src='assets/drill.png' />
             <div id='drillprompts'>
                 <div class='drillprompt' style='top:65px;'>too deep</div>
-                <div class='drillprompt' style='top:215px;'>correct depth</div>
+                <div class='drillprompt' style='top:165px;'>correct depth</div>
                 <div class='drillprompt' style='top:365px;'>too shallow</div>
             </div>
             <div id='drilllights'>
                 <img id='light7' class='drilllight' src='assets/red_btn_off.png' style='top:50px;'/>
                 <img id='light6' class='drilllight' src='assets/yellow_btn_off.png' style='top:100px;'/>
-                <img id='light5' class='drilllight' src='assets/yellow_btn_off.png' style='top:150px;'/>
-                <img id='light4' class='drilllight' src='assets/green_btn_off.png' style='top:200px;'/>
+                <img id='light5' class='drilllight' src='assets/green_btn_off.png' style='top:150px;'/>
+                <img id='light4' class='drilllight' src='assets/yellow_btn_off.png' style='top:200px;'/>
                 <img id='light3' class='drilllight' src='assets/yellow_btn_off.png' style='top:250px;'/>
                 <img id='light2' class='drilllight' src='assets/yellow_btn_off.png' style='top:300px;'/>
                 <img id='light1' class='drilllight' src='assets/yellow_btn_off.png' style='top:350px;'/>

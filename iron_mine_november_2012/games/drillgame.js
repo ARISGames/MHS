@@ -18,8 +18,8 @@ var DrillGame = function()
     var drillPos = drillPosMin;
     var drillSpeed = 50; //lower = faster
 
-    var goalMin = -175;
-    var goalMax = -125;
+    var goalMin = -125;
+    var goalMax = -75;
 
     var fail = 100;
 
@@ -64,8 +64,8 @@ var DrillGame = function()
         document.getElementById('light1').src = 'assets/yellow_btn_off.png';
         document.getElementById('light2').src = 'assets/yellow_btn_off.png';
         document.getElementById('light3').src = 'assets/yellow_btn_off.png';
-        document.getElementById('light4').src = 'assets/green_btn_off.png';
-        document.getElementById('light5').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light4').src = 'assets/yellow_btn_off.png';
+        document.getElementById('light5').src = 'assets/green_btn_off.png';
         document.getElementById('light6').src = 'assets/yellow_btn_off.png';
         document.getElementById('light7').src = 'assets/red_btn_off.png';
     }
@@ -89,11 +89,11 @@ var DrillGame = function()
                 drillPos = -225;
                 break;
             case 4:
-                document.getElementById('light4').src = 'assets/green_btn_on.png';
+                document.getElementById('light4').src = 'assets/yellow_btn_on.png';
                 drillPos = -175;
                 break;
             case 5:
-                document.getElementById('light5').src = 'assets/yellow_btn_on.png';
+                document.getElementById('light5').src = 'assets/green_btn_on.png';
                 drillPos = -125;
                 break;
             case 6:

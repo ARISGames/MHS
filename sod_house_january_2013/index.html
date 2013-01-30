@@ -41,7 +41,6 @@ function requestState()
     gameId     = parseInt(params.gameId);
     playerId   = parseInt(params.playerId);
     webPageId  = parseInt(params.webPageId);
-    showGoal = parseInt(params.showGoal);
     showChores = parseInt(params.showChores);
     itemChore.delta = parseInt(params.choreDelta);
     itemFood.delta = parseInt(params.foodDelta);
@@ -78,6 +77,8 @@ function requestState()
 function stateReceived()
 {
     if(debug) console.log('stateReceived()');
+
+    if(!showChores) document.getElementById('chore').style.display = 'none';
     
     for(var i = 0; i < items.length; i++)
     {
@@ -109,7 +110,7 @@ function animate(progress)
 {
     console.log('animate('+progress+')');
     for(var i = 0; i < items.length; i++)
-        if(items[i].qty + items[i].delta != 0) document.getElementById(items[i].name+"bar").style.height = Math.round((items[i].qty + (((progress/100) * items[i].delta))*110)+20)+"px";
+        if(items[i].qty + items[i].delta != 0) document.getElementById(items[i].name+"bar").style.height = Math.round(((items[i].qty + ((progress/100) * items[i].delta))*110)+20)+"px";
 
     var chorepacity = (itemChore.qty+((progress/100)*itemChore.delta)); //float 0.0-5.0
     document.getElementById('choreslotimg1').style.opacity = Math.min(1.0,Math.max(0.0,chorepacity-0.0));

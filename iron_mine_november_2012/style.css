@@ -119,6 +119,7 @@ div
     width:320px;
     height:416px;
     background-color:rgba(70,70,70,0.8);
+    display:none;
 }
 
 .alert
@@ -233,11 +234,6 @@ div
 {
     top:0px;
     left:0px;
-}
-
-.congratsoverlay
-{
-    display:none;
 }
 
 .congratsalert

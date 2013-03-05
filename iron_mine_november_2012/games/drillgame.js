@@ -11,6 +11,8 @@ var DrillGame = function()
     tmpGreenLightImage.setAttribute('src','assets/green_btn_on.png');
     //Won't do anything with these ^, this just brings them into memory
 
+    var lastReceivedLight = 0;
+
     var drillPosMin = -349;
     var drillPosMax = 0;
 
@@ -36,9 +38,10 @@ var DrillGame = function()
         }
         else
         {
-            if(drillPos > goalMin && drillPos < goalMax) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
-            else if(drillPos < -275) ; //Do nothing / give em a freebie for being so shallow
+            if(lastReceivedLight == 5) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
+            else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
             else { if(imm.money < 50) imm.money = 50; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);} //<- trust this
+            lastReceivedLight = 0;
             recedeDrill();
         }
     }
@@ -73,6 +76,7 @@ var DrillGame = function()
     this.drillLit = function(data)
     {
         //Will position drill specifically based on what light is lit, waiting to get data regarding number/position/timing of lights
+        lastReceivedLight = data;
         switch(parseInt(data))
         {
             case 1:

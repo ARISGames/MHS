@@ -76,7 +76,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[0] = (data == "true" ? true : false);
+        newHolesFilledFlags[0] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -86,7 +86,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[1] = (data == "true" ? true : false);
+        newHolesFilledFlags[1] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -96,7 +96,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[2] = (data == "true" ? true : false);
+        newHolesFilledFlags[2] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -106,7 +106,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[3] = (data == "true" ? true : false);
+        newHolesFilledFlags[3] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -116,7 +116,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[4] = (data == "true" ? true : false);
+        newHolesFilledFlags[4] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -126,7 +126,7 @@ var DynamiteGame = function()
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[5] = (data == "true" ? true : false);
+        newHolesFilledFlags[5] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
@@ -145,6 +145,15 @@ var DynamiteGame = function()
             else
                 ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
         }
+
+        //Empty the dynamite
+        var newHolesFilledFlags = [];
+        for(var i = 0; i < holesFilledFlags.length; i++)
+            newHolesFilledFlags[i] = false;
+        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
+        self.updateDynamiteState(fakeData);
+        currentState = STATE_LOAD_DYNAMITE;
+        dynamiteIndicator.src = 'assets/load_dynamite.png';
     }
 
     //this.events = [imm.stationId+'_DYNAMITE_STATE_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];

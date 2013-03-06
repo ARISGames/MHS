@@ -15,6 +15,12 @@
             console.log("http://dev.arisgames.org/server/events/send.php?"+"channel="+channel+"&event="+event+"&data="+data);
         }
 
+        function setDynamite(webId,slot)
+        {
+	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_'+slot+'_CHANGED',true);
+        };
+
+        //This is depreicated
         function sendStateChangeRequest(webId,instance)
         {
 	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_1_CHANGED',document.getElementById("dyna_"+instance+"_1").checked);
@@ -100,34 +106,32 @@
 	    <input type="button" value="Light 7" onmousedown="sendRequest('private-default-channel','1154_DRILL_LIGHT','7');"></input>
         </div>
         <br />
-        Hold the button to start the drill, release to stop it. Align the tip of the 'drill bit' with the green part of the indicator bar to make money. Anything else loses you money. <b>The 'Light' events don't do anything yet. They are successfully sent/recieved, I'm just waiting on timing information to make them actually do something.</b>
+        Hold the button to start the drill, release to stop it. Align the tip of the 'drill bit' with the green part of the indicator bar to make money. Anything else loses you money. 
     </div>
     <div class='game'>
         <div class='gametitle'>DYNAMITE</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-            <input id='dyna_1_1' type='checkbox' checked='true'></input>
-            <input id='dyna_1_2' type='checkbox' checked='true'></input>
-            <input id='dyna_1_3' type='checkbox' checked='true'></input>
-            <input id='dyna_1_4' type='checkbox' checked='true'></input>
-            <input id='dyna_1_5' type='checkbox' checked='true'></input>
-            <input id='dyna_1_6' type='checkbox' checked='true'></input>
-	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1155,1);"></input>
+            <input id='dyna_1_1' type='button' value='1' onClick="setDynamite(1155,1);"></input>
+            <input id='dyna_1_2' type='button' value='2' onClick="setDynamite(1155,2);"></input>
+            <input id='dyna_1_3' type='button' value='3' onClick="setDynamite(1155,3);"></input>
+            <input id='dyna_1_4' type='button' value='4' onClick="setDynamite(1155,4);"></input>
+            <input id='dyna_1_5' type='button' value='5' onClick="setDynamite(1155,5);"></input>
+            <input id='dyna_1_6' type='button' value='6' onClick="setDynamite(1155,6);"></input>
 	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1155_PLUNGER_PRESSED','x');"></input>
         </div>
         <div class='instance'>
 	    <div class='instancetitle'>2</div>
-            <input id='dyna_2_1' type='checkbox' checked='true'></input>
-            <input id='dyna_2_2' type='checkbox' checked='true'></input>
-            <input id='dyna_2_3' type='checkbox' checked='true'></input>
-            <input id='dyna_2_4' type='checkbox' checked='true'></input>
-            <input id='dyna_2_5' type='checkbox' checked='true'></input>
-            <input id='dyna_2_6' type='checkbox' checked='true'></input>
-	    <input type="button" value="State Changed" onClick="sendStateChangeRequest(1156,2);"></input>
+            <input id='dyna_2_1' type='button' value='1' onClick="setDynamite(1156,1);"></input>
+            <input id='dyna_2_2' type='button' value='2' onClick="setDynamite(1156,2);"></input>
+            <input id='dyna_2_3' type='button' value='3' onClick="setDynamite(1156,3);"></input>
+            <input id='dyna_2_4' type='button' value='4' onClick="setDynamite(1156,4);"></input>
+            <input id='dyna_2_5' type='button' value='5' onClick="setDynamite(1156,5);"></input>
+            <input id='dyna_2_6' type='button' value='6' onClick="setDynamite(1156,6);"></input>
 	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1156_PLUNGER_PRESSED','x');"></input>
         </div>
         <br />
-        The checkboxes represent dynamite in/out of holes. Check/Uncheck them as desired, then click 'Change State' to see it update on the screen (in the real implementation, 'change state' will automatically be sent as each dynamite piece is moved). On the client, x represents a filled hole, o represents an empty one. Follow the instructions on the device. Deviation from these instructions loses you money.
+        The buttons represent each a slot of dynamite. On the client, red represents a filled hole, black represents an empty one. Follow the instructions on the device. Deviation from these instructions loses you money.
     </div>
     <div class='game'>
         <div class='gametitle'>BACKMAN</div>

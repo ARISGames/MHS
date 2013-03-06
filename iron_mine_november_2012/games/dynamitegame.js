@@ -135,7 +135,7 @@ var DynamiteGame = function()
     {
         if(currentState != STATE_PRESS_PLUNGER)
         {
-            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-20);
+            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
         }
         else
         {
@@ -143,7 +143,7 @@ var DynamiteGame = function()
             if(countdownCount == 0 && allHolesFilled)
                 ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+20);
             else
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-20);
+                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
         }
     }
 

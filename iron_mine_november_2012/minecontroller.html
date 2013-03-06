@@ -12,6 +12,7 @@
             xmlhttp.open("POST","http://dev.arisgames.org/server/events/send.php",true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send('channel='+channel+'&event='+event+'&data='+data);
+            console.log("http://dev.arisgames.org/server/events/send.php?"+"channel="+channel+"&event="+event+"&data="+data);
         }
 
         function sendStateChangeRequest(webId,instance)
@@ -55,7 +56,8 @@
         <div class='gametitle'>DRILL</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1151_DRILL_STARTED','x'); this.value = 'Stop Drill';" onmouseup="sendRequest('private-default-channel','1151_DRILL_STOPPED','x'); this.value = 'Start Drill';"></input><br />
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1151_DRILL_STARTED','x');"></input><br />
+	    <input type="button" value = "Stop Drill" onmouseup="sendRequest('private-default-channel','1151_DRILL_STOPPED','x');"></input><br />
 	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','1');"></input><br />
 	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','2');"></input><br />
 	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','1151_DRILL_LIGHT','3');"></input><br />

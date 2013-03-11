@@ -3,15 +3,14 @@ var DynamiteGame = function()
     var self = this; //JAVASCRIIIIIIPPPPPTTTTTTT!!!!!!!!
 
     var STATE_LOAD_DYNAMITE = 0;
-    var STATE_PRESS_PLUNGER = 1;
-    var STATE_RUN = 2;
-    var STATE_EMPTY_DYNAMITE = 3;
-    var states = [STATE_LOAD_DYNAMITE, STATE_PRESS_PLUNGER, STATE_RUN, STATE_EMPTY_DYNAMITE];
+    var STATE_RUN = 1;
+    var STATE_PRESS_PLUNGER = 2;
+    var states = [STATE_LOAD_DYNAMITE, STATE_RUN, STATE_PRESS_PLUNGER];
     var currentState = STATE_LOAD_DYNAMITE;
 
     var holesFilledFlags = [false,false,false,false,false,false];
-    var allHolesFilled = false;
-    var allHolesEmpty = false;
+    var allHolesFilled   = false;
+    var allHolesEmpty    = false;
     var dynamiteHoles = [document.getElementById('dynamitehole1'),
                          document.getElementById('dynamitehole2'),
                          document.getElementById('dynamitehole3'),
@@ -20,131 +19,62 @@ var DynamiteGame = function()
                          document.getElementById('dynamitehole6'),
                          document.getElementById('dynamitehole7')];
     var dynamiteIndicator = document.getElementById('dynamiteindicator');
-    var countdownCount = 5;
 
-    function countDown()
-    {
-        if(currentState == STATE_RUN)
-        {
-            dynamiteIndicator.src = 'assets/clock_'+countdownCount+'.png';
-            if(countdownCount != 0)
-            {
-                countdownCount--;
-                setTimeout(countDown, 1000);
-            }
-            else
-            {
-                currentState = STATE_PRESS_PLUNGER;
-                dynamiteIndicator.src = 'assets/push_blaster.png';
-            }
-        }
-    }
-    
     this.updateDynamiteState = function(data)
     {
         holesFilledFlags = JSON.parse(data).state;
         allHolesFilled = true;
         allHolesEmpty = true;
-        countdownCount = 5;
         for(var i = 0; i < holesFilledFlags.length; i++)
         {
             if(!holesFilledFlags[i]) allHolesFilled = false;
-            else allHolesEmpty = false;
+            else                     allHolesEmpty  = false;
             dynamiteHoles[i].src = holesFilledFlags[i] ? 'assets/dynamite_red.png' : 'assets/dynamite_black.png';
         }
 
-        if(allHolesFilled && currentState != STATE_EMPTY_DYNAMITE && currentState != STATE_RUN)
+        if(currentState == STATE_LOAD_DYNAMITE && allHolesFilled)
         {
             currentState = STATE_RUN;
-            countDown();
-        }
-        else
-        {
-            if(currentState != STATE_RUN)
-            {
-                if(allHolesEmpty || currentState != STATE_EMPTY_DYNAMITE)
-                {
-                    currentState = STATE_LOAD_DYNAMITE;
-                    dynamiteIndicator.src = 'assets/load_dynamite.png';
-                }
-            }
+            dynamiteIndicator.src = 'assets/clock_0.png';
         }
     }
 
-    this.updateDynamiteSlot1 = function(data)
+    var updateDynamiteSlotTrue = function(slot)
     {
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[0] = true;
+        newHolesFilledFlags[slot-1] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
     }
 
-    this.updateDynamiteSlot2 = function(data)
-    {
-        var newHolesFilledFlags = [];
-        for(var i = 0; i < holesFilledFlags.length; i++)
-            newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[1] = true;
-        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
-        self.updateDynamiteState(fakeData);
-    }
+    this.updateDynamiteSlot1 = function(data) { updateDynamiteSlotTrue(1); }
+    this.updateDynamiteSlot2 = function(data) { updateDynamiteSlotTrue(2); }
+    this.updateDynamiteSlot3 = function(data) { updateDynamiteSlotTrue(3); }
+    this.updateDynamiteSlot4 = function(data) { updateDynamiteSlotTrue(4); }
+    this.updateDynamiteSlot5 = function(data) { updateDynamiteSlotTrue(5); }
+    this.updateDynamiteSlot6 = function(data) { updateDynamiteSlotTrue(6); }
 
-    this.updateDynamiteSlot3 = function(data)
+    this.plungerReady = function(data)
     {
+        //Fill the dynamite
         var newHolesFilledFlags = [];
         for(var i = 0; i < holesFilledFlags.length; i++)
-            newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[2] = true;
+            newHolesFilledFlags[i] = true;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
-    }
 
-    this.updateDynamiteSlot4 = function(data)
-    {
-        var newHolesFilledFlags = [];
-        for(var i = 0; i < holesFilledFlags.length; i++)
-            newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[3] = true;
-        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
-        self.updateDynamiteState(fakeData);
-    }
-
-    this.updateDynamiteSlot5 = function(data)
-    {
-        var newHolesFilledFlags = [];
-        for(var i = 0; i < holesFilledFlags.length; i++)
-            newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[4] = true;
-        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
-        self.updateDynamiteState(fakeData);
-    }
-
-    this.updateDynamiteSlot6 = function(data)
-    {
-        var newHolesFilledFlags = [];
-        for(var i = 0; i < holesFilledFlags.length; i++)
-            newHolesFilledFlags[i] = holesFilledFlags[i];
-        newHolesFilledFlags[5] = true;
-        var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
-        self.updateDynamiteState(fakeData);
+        dynamiteIndicator.src = 'assets/push_blaster.png';
+        currentState = STATE_PRESS_PLUNGER;
     }
 
     this.plungerPressed = function(data)
     {
         if(currentState != STATE_PRESS_PLUNGER)
-        {
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
-        }
         else
-        {
-            currentState = STATE_EMPTY_DYNAMITE;
-            if(countdownCount == 0 && allHolesFilled)
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+20);
-            else
-                ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
-        }
+            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+20);
 
         //Empty the dynamite
         var newHolesFilledFlags = [];
@@ -152,12 +82,11 @@ var DynamiteGame = function()
             newHolesFilledFlags[i] = false;
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
+
         currentState = STATE_LOAD_DYNAMITE;
         dynamiteIndicator.src = 'assets/load_dynamite.png';
     }
 
-    //this.events = [imm.stationId+'_DYNAMITE_STATE_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];
-    //this.callbacks = [this.updateDynamiteState, this.plungerPressed];
-    this.events = [imm.stationId+'_DYNAMITE_SLOT_1_CHANGED',imm.stationId+'_DYNAMITE_SLOT_2_CHANGED',imm.stationId+'_DYNAMITE_SLOT_3_CHANGED',imm.stationId+'_DYNAMITE_SLOT_4_CHANGED',imm.stationId+'_DYNAMITE_SLOT_5_CHANGED',imm.stationId+'_DYNAMITE_SLOT_6_CHANGED',imm.stationId+'_PLUNGER_PRESSED'];
-    this.callbacks = [this.updateDynamiteSlot1,this.updateDynamiteSlot2,this.updateDynamiteSlot3,this.updateDynamiteSlot4,this.updateDynamiteSlot5,this.updateDynamiteSlot6, this.plungerPressed];
+    this.events = [imm.stationId+'_DYNAMITE_SLOT_1_CHANGED',imm.stationId+'_DYNAMITE_SLOT_2_CHANGED',imm.stationId+'_DYNAMITE_SLOT_3_CHANGED',imm.stationId+'_DYNAMITE_SLOT_4_CHANGED',imm.stationId+'_DYNAMITE_SLOT_5_CHANGED',imm.stationId+'_DYNAMITE_SLOT_6_CHANGED',imm.stationId+'_PLUNGER_READY',imm.stationId+'_PLUNGER_PRESSED'];
+    this.callbacks = [this.updateDynamiteSlot1,this.updateDynamiteSlot2,this.updateDynamiteSlot3,this.updateDynamiteSlot4,this.updateDynamiteSlot5,this.updateDynamiteSlot6, this.plungerReady,this.plungerPressed];
 }

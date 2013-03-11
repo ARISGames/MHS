@@ -28,10 +28,9 @@ var IronMineModel = function()
     for(var i in STATION_IDS[STATION_TYPE_BACKER])   STATION_TYPES[STATION_IDS[STATION_TYPE_BACKER][i]] = STATION_TYPE_BACKER;
     this.STATION_TYPES = STATION_TYPES;
 
-    var LEVEL_IDS = [17247,17248,17249,17250]; this.LEVEL_IDS = LEVEL_IDS;
-    var LEVEL_COMPLETE_IDS = [17269,17270,17271]; this.LEVEL_COMPLETE_IDS = LEVEL_COMPLETE_IDS;
-    var LEVEL_GOALS = [100, 200, 300]; this.LEVEL_GOALS = LEVEL_GOALS;
-    var ITEM_IDS = [17251];  this.ITEM_IDS = ITEM_IDS;
+    var LEVEL_IDS =   [17247,17248,17249,17250]; this.LEVEL_IDS = LEVEL_IDS;
+    var LEVEL_GOALS = [100, 200, 300];           this.LEVEL_GOALS = LEVEL_GOALS;
+    var ITEM_IDS =    [17251];                   this.ITEM_IDS = ITEM_IDS;
     
     //From URL
     this.gameId;
@@ -43,8 +42,7 @@ var IronMineModel = function()
     this.stationId;//Same as webPageId, but more functionally named (identifies one drill from another...)
     
     //Personal
-    this.currentLevel = 0;
-    this.completeLevel = 0;
+    this.currentLevel = 1;
     this.money = 0;
     
     this.loadStateFromARIS = function()
@@ -56,7 +54,6 @@ var IronMineModel = function()
         {
             if(updatedItemId == bogusEndOfQueueId)
             {
-                if(self.currentLevel <= self.completeLevel) { ARIS.setItemCount(LEVEL_IDS[self.completeLevel],1); self.currentLevel = self.completeLevel+1; }
                 if(self.currentLevel < 4)
                     imv.wantDisplay.innerHTML = 'GOAL: $'+((LEVEL_GOALS[self.currentLevel-1]-(LEVEL_GOALS[self.currentLevel-1]%100))/100)+'.'+(LEVEL_GOALS[self.currentLevel-1]%100 < 10 ? '0' : '')+(LEVEL_GOALS[self.currentLevel-1]%100);
                 else
@@ -65,14 +62,12 @@ var IronMineModel = function()
             }
 
             for(var i in LEVEL_IDS)
-                if(qty > 0 && updatedItemId == LEVEL_IDS[i] && i >= self.currentLevel) self.currentLevel = parseInt(i)+1;
-            for(var i in LEVEL_COMPLETE_IDS)
-                if(qty > 0 && updatedItemId == LEVEL_COMPLETE_IDS[i] && i >= self.completeLevel) self.completeLevel = parseInt(i)+1;
+                if(qty > 0 && updatedItemId == LEVEL_IDS[i] && i+1 >= self.currentLevel) self.currentLevel = parseInt(i)+2;
             for(var i in ITEM_IDS)
                 if(qty > 0 && updatedItemId == ITEM_IDS[i])
                 {
                     self.money = qty;
-                    //Formats money as '$x.xx' for all edge cases
+                    //Formats money as '$x.xx' for all edge cases //trust me //I think...
                     imv.haveDisplay.innerHTML = '$'+((self.money-(self.money%100))/100)+'.'+(self.money%100 < 10 ? '0' : '')+(self.money%100);
                 }
         }
@@ -89,8 +84,6 @@ var IronMineModel = function()
             ARIS.getItemCount(ITEM_IDS[i]);
         for(var i in LEVEL_IDS)
             ARIS.getItemCount(LEVEL_IDS[i]);
-        for(var i in LEVEL_COMPLETE_IDS)
-            ARIS.getItemCount(LEVEL_COMPLETE_IDS[i]);
             
         //On dequeue of this ID, we will know that all prior enqueued information has been recieved.
         ARIS.getItemCount(bogusEndOfQueueId); 

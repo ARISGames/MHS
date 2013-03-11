@@ -67,8 +67,8 @@ MHS Iron Mine
             imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
             if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
             {
-                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],0);
-                ARIS.setItemCount(imm.LEVEL_COMPLETE_IDS[imm.currentLevel-1],1);
+                ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
+                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
                 document.getElementById('congratsoverlay'+imm.currentLevel).style.display = 'block';
                 document.getElementById('congrats').style.display = 'block';
                 document.getElementById('drillbit').style.display = 'none';

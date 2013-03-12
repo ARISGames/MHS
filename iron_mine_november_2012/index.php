@@ -45,6 +45,7 @@ MHS Iron Mine
         {
             case imm.STATION_TYPE_DRILL:
                 game = new DrillGame();
+                ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
                 break;
             case imm.STATION_TYPE_DYNAMITE:
                 game = new DynamiteGame();

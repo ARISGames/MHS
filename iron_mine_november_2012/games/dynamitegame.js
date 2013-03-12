@@ -35,7 +35,7 @@ var DynamiteGame = function()
         if(currentState == STATE_LOAD_DYNAMITE && allHolesFilled)
         {
             currentState = STATE_RUN;
-            dynamiteIndicator.src = 'assets/clock_0.png';
+            dynamiteIndicator.src = 'assets/clock.png';
         }
     }
 

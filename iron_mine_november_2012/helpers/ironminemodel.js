@@ -31,6 +31,9 @@ var IronMineModel = function()
     var LEVEL_IDS =   [17247,17248,17249,17250]; this.LEVEL_IDS = LEVEL_IDS;
     var LEVEL_GOALS = [100, 200, 300];           this.LEVEL_GOALS = LEVEL_GOALS;
     var ITEM_IDS =    [17251];                   this.ITEM_IDS = ITEM_IDS;
+
+    this.ITEM_ID_MONEY = 17251;
+    this.ITEM_ID_DRILL = 22435;
     
     //From URL
     this.gameId;

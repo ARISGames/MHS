@@ -73,6 +73,18 @@ div
     display:none;
 }
 
+#notice
+{
+    width:100%;
+    height:100%;
+    text-align:center;
+    font-size:xx-large;
+    color:rgba(255,255,255,1.0);
+    position:absolute;
+    top:100px;
+    display:none;
+}
+
 .hud
 {
     width:90px;

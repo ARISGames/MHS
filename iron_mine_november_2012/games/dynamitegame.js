@@ -79,9 +79,13 @@ var DynamiteGame = function()
             //trust this
             if(imm.money < moneyLost) imm.money = moneyLost; 
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost);
+            imv.displayNotice("You've gained "+moneyReceived+" cents!");
         }
         else
+        {
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived);
+            imv.displayNotice("You've lost "+moneyLost+" cents!");
+        }
 
         //Empty the dynamite
         var newHolesFilledFlags = [];

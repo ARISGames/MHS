@@ -19,6 +19,11 @@ var IronMineView = function()
     this.games = [this.drillGame, this.dynamiteGame, this.backerGame];
 
     //These 'views' are injected into the current game
+    this.notice = document.createElement('div');
+    this.notice.setAttribute('id','notice');
+    this.notice.fade = 0; //0-100
+    document.getElementById('games').appendChild(this.notice);
+
     this.HUDbg = document.createElement('img');
     this.HUDbg.setAttribute('src','assets/money_back.png');
     this.HUDbg.style.width='90px';
@@ -48,6 +53,35 @@ var IronMineView = function()
         this.currentHUD.appendChild(this.HUDbg);
         this.currentHUD.appendChild(this.haveDisplay);
         this.currentHUD.appendChild(this.wantDisplay);
+    }
+
+    this.displayNotice = function(notice)
+    {
+        var alreadyTicking = false;
+        this.notice.innerHTML = notice;
+        if(this.notice.fade != 0)
+            alreadyTicking = true;
+        this.notice.fade = 100;
+        this.notice.style.display = 'block';
+        if(!alreadyTicking)
+            tickNotice();
+    }
+
+    var tickNotice = function()
+    {
+        this.notice.style.color = 'rgba(255,255,255,'+(this.notice.fade/100)+')';
+        this.notice.fade--;
+        if(this.notice.fade > 0)
+            setTimeout(tickNotice, 10);
+        else
+            hideNotice();
+    }
+
+    var hideNotice = function()
+    {
+        this.notice.fade = 0;
+        this.notice.style.color = 'rgba(255,255,255,0.0)';
+        this.notice.style.display = 'none';
     }
 
     this.setScene = function(scene)

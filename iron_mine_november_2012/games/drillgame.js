@@ -25,6 +25,9 @@ var DrillGame = function()
 
     var fail = 100;
 
+    var moneyReceived = 40;
+    var moneyLost = 60;
+
     var drillBit = document.getElementById('drillbit');
     var drillDebug = document.getElementById('drilldebug');
 
@@ -38,9 +41,9 @@ var DrillGame = function()
         }
         else
         {
-            if(lastReceivedLight == 5) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+10);
+            if(lastReceivedLight == 5) ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived);
             else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
-            else { if(imm.money < 20) imm.money = 20; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-20);} //<- trust this
+            else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost);} //<- trust this
             lastReceivedLight = 0;
             recedeDrill();
         }

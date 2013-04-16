@@ -32,6 +32,7 @@ var ARISJS = function()
                 this.didUpdateItemQty(99999999,1);
             this.isNotCurrentlyCalling();
             */
+            
         }
     }
 

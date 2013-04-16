@@ -8,6 +8,9 @@ var DynamiteGame = function()
     var states = [STATE_LOAD_DYNAMITE, STATE_RUN, STATE_PRESS_PLUNGER];
     var currentState = STATE_LOAD_DYNAMITE;
 
+    var moneyReceived = 100;
+    var moneyLost = 200;
+
     var holesFilledFlags = [false,false,false,false,false,false];
     var allHolesFilled   = false;
     var allHolesEmpty    = false;
@@ -35,7 +38,7 @@ var DynamiteGame = function()
         if(currentState == STATE_LOAD_DYNAMITE && allHolesFilled)
         {
             currentState = STATE_RUN;
-            dynamiteIndicator.src = 'assets/clock.png';
+            dynamiteIndicator.src = 'assets/blaster_instruction_clear.png';
         }
     }
 
@@ -65,16 +68,20 @@ var DynamiteGame = function()
         var fakeData = "{\"state\":"+JSON.stringify(newHolesFilledFlags)+"}";
         self.updateDynamiteState(fakeData);
 
-        dynamiteIndicator.src = 'assets/push_blaster.png';
+        dynamiteIndicator.src = 'assets/blaster_instruction_ready.png';
         currentState = STATE_PRESS_PLUNGER;
     }
 
     this.plungerPressed = function(data)
     {
         if(currentState != STATE_PRESS_PLUNGER)
-            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-50);
+        { 
+            //trust this
+            if(imm.money < moneyLost) imm.money = moneyLost; 
+            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost);
+        }
         else
-            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+20);
+            ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived);
 
         //Empty the dynamite
         var newHolesFilledFlags = [];
@@ -84,7 +91,7 @@ var DynamiteGame = function()
         self.updateDynamiteState(fakeData);
 
         currentState = STATE_LOAD_DYNAMITE;
-        dynamiteIndicator.src = 'assets/load_dynamite.png';
+        dynamiteIndicator.src = 'assets/blaster_instruction_load.png';
     }
 
     this.events = [imm.stationId+'_DYNAMITE_SLOT_1_CHANGED',imm.stationId+'_DYNAMITE_SLOT_2_CHANGED',imm.stationId+'_DYNAMITE_SLOT_3_CHANGED',imm.stationId+'_DYNAMITE_SLOT_4_CHANGED',imm.stationId+'_DYNAMITE_SLOT_5_CHANGED',imm.stationId+'_DYNAMITE_SLOT_6_CHANGED',imm.stationId+'_PLUNGER_READY',imm.stationId+'_PLUNGER_PRESSED'];

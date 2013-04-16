@@ -21,7 +21,7 @@ var IronMineView = function()
     //These 'views' are injected into the current game
     this.HUDbg = document.createElement('img');
     this.HUDbg.setAttribute('src','assets/money_back.png');
-    this.HUDbg.style.width='72px';
+    this.HUDbg.style.width='90px';
     this.HUDbg.style.position='absolute';
     this.haveDisplay = document.createElement('div');
     this.haveDisplay.setAttribute('id','havedisplay');

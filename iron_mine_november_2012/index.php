@@ -145,13 +145,13 @@ MHS Iron Mine
         <div id='dynamiteactivity' class='activity'>
             <div id='dynamiteholes' >
                 <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; left:0px;' />
-                <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; left:60px;' />
-                <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px; left:90px;' />
-                <img id='dynamitehole4' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px; right:90px;' />
-                <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; right:60px;' />
+                <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px;  left:60px;' />
+                <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; left:90px;' />
+                <img id='dynamitehole4' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; right:90px;' />
+                <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px;  right:60px;' />
                 <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; right:0px;' />
             </div>
-            <img id='dynamiteindicator' src='assets/load_dynamite.png' />
+            <img id='dynamiteindicator' src='assets/blaster_instruction_load.png' />
         </div>
         <div id='dynamiteoverlayintro' class='overlay' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'>
             <img id='dynamitealertintro' class='alert' src='assets/load_dynamite_splash.png' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'/>

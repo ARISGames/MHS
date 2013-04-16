@@ -75,7 +75,7 @@ div
 
 .hud
 {
-    width:72px;
+    width:90px;
     position:absolute;
     top:20px;
     right:20px;
@@ -84,18 +84,18 @@ div
 #havedisplay
 {
     position:absolute;
-    top:6px;
+    top:0px;
     left:9px;
-    font-size:x-large;
+    font-size:xx-large;
     color:white;
 }
 
 #wantdisplay
 {
     position:absolute;
-    top:46px;
-    left:6px;
-    font-size:x-small;
+    top:36px;
+    left:10px;
+    font-size:small;
     color:white;
 }
 
@@ -224,10 +224,10 @@ div
 #dynamiteindicator
 {
     display:block;
-    width:195px;
+    width:300px;
     position:absolute;
-    left:62px;
-    bottom:10px;
+    left:10px;
+    bottom:100px;
 }
 
 #congrats

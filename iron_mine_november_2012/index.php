@@ -49,6 +49,7 @@ MHS Iron Mine
                 break;
             case imm.STATION_TYPE_DYNAMITE:
                 game = new DynamiteGame();
+                ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
                 break;
             case imm.STATION_TYPE_BACKER:
                 game = new BackerGame();

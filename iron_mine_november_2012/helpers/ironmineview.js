@@ -21,7 +21,7 @@ var IronMineView = function()
     //These 'views' are injected into the current game
     this.notice = document.createElement('div');
     this.notice.setAttribute('id','notice');
-    this.notice.fade = 0; //0-100
+    this.notice.fade = 0; //0-500
     document.getElementById('games').appendChild(this.notice);
 
     this.HUDbg = document.createElement('img');
@@ -61,7 +61,7 @@ var IronMineView = function()
         this.notice.innerHTML = notice;
         if(this.notice.fade != 0)
             alreadyTicking = true;
-        this.notice.fade = 100;
+        this.notice.fade = 500;
         this.notice.style.display = 'block';
         if(!alreadyTicking)
             tickNotice();
@@ -69,7 +69,7 @@ var IronMineView = function()
 
     var tickNotice = function()
     {
-        this.notice.style.color = 'rgba(255,255,255,'+(this.notice.fade/100)+')';
+        this.notice.style.color = 'rgba(255,255,255,'+(this.notice.fade/500)+')';
         this.notice.fade--;
         if(this.notice.fade > 0)
             setTimeout(tickNotice, 10);

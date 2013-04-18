@@ -99,6 +99,14 @@ body
     display:none;
 }
 
+.itemgetbuttonthatsactuallyanimage
+{
+    display:none;
+    width:90px;
+    height:80px;
+    background-color:transparent;
+}
+
 #intropic
 {
     display:block;

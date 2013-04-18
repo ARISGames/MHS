@@ -79,12 +79,12 @@ var DynamiteGame = function()
             //trust this
             if(imm.money < moneyLost) imm.money = moneyLost; 
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost);
-            imv.displayNotice("You've gained "+moneyReceived+" cents!");
+            imv.displayNotice("You've lost "+moneyLost+" cents!");
         }
         else
         {
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived);
-            imv.displayNotice("You've lost "+moneyLost+" cents!");
+            imv.displayNotice("You've gained "+moneyReceived+" cents!");
         }
 
         //Empty the dynamite

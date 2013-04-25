@@ -73,10 +73,35 @@ div
     display:none;
 }
 
-#notice
+#fail
 {
     width:100%;
     height:100%;
+    position:absolute;
+    top:0px;
+    display:none;
+}
+
+#failBG
+{
+    display:block;
+    width:100%;
+    position:absolute;
+    top:0px;
+}
+
+#failFG
+{
+    display:block;
+    position:absolute;
+    top:20px;
+    left:60px;
+    width:200px;
+}
+
+#notice
+{
+    width:100%;
     text-align:center;
     font-size:xx-large;
     color:rgba(255,255,255,1.0);

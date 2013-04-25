@@ -43,7 +43,7 @@ var DrillGame = function()
         {
             if(lastReceivedLight == 5) { ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived); imv.displayNotice("You've gained "+moneyReceived+" cents!"); }
             else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
-            else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost); imv.displayNotice("You've lost "+moneyLost+" cents!"); } //<- trust this
+            else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost); imv.displayFail("You've lost "+moneyLost+" cents!"); } //<- trust this
             lastReceivedLight = 0;
             recedeDrill();
         }

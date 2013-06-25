@@ -101,6 +101,41 @@ var ARISJS = function()
         this.enqueueRequest("aris://bump/"+bString);
     }
 
+    //Call ARIS API directly (USE WITH CAUTION)
+    this.callService = function(serviceName, callback, GETparams, POSTparams)
+    {
+        var ROOT_URL = "http://arisgames.org"
+        var url;
+        if(GETparams) url = ROOT_URL+'/server/json.php/v1.'+serviceName+GETparams;
+        else          url = ROOT_URL+'/server/json.php/v1.'+serviceName;
+    
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function()
+        {
+            if(request.readyState == 4)
+            {
+                if(request.status == 200)
+                    callback(request.responseText);
+                else
+                    callback(false);
+            }
+        };
+        if(POSTparams)
+        {
+            request.open('POST', url, true);
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.send(POSTparams);
+            console.log("POSTparams:" + POSTparams);
+            console.log("url:" + url);
+        }
+        else
+        {
+            request.open('GET', url, true);
+            request.send();
+            console.log("GETurl:" + url);
+        }
+    }
+
     //Not ARIS related... just kinda useful
     this.parseURLParams = function(url) 
     {

@@ -13,12 +13,14 @@ var IronMineModel = function()
     var STATION_TYPE_DRILL = 0;     this.STATION_TYPE_DRILL = STATION_TYPE_DRILL;
     var STATION_TYPE_DYNAMITE = 1;  this.STATION_TYPE_DYNAMITE = STATION_TYPE_DYNAMITE;
     var STATION_TYPE_BACKER = 2;    this.STATION_TYPE_BACKER = STATION_TYPE_BACKER;
+    var STATION_TYPE_STRIKE = 3;    this.STATION_TYPE_STRIKE = STATION_TYPE_STRIKE;
     
     //  Station Category->Id relations
     var STATION_IDS = [];
     STATION_IDS[STATION_TYPE_DRILL] = [1151,1152,1153,1154]; //All webpage/station Id's of type 'drill'
     STATION_IDS[STATION_TYPE_DYNAMITE] = [1155,1156]; //All webpage/station Id's of type 'dynamite'
     STATION_IDS[STATION_TYPE_BACKER] = [1160]; //All webpage/station Id's of type 'backer'
+    STATION_IDS[STATION_TYPE_STRIKE] = [0]; //All webpage/station Id's of type 'strike'
     this.STATION_IDS = STATION_IDS;
     
     //  Station Id->Category relations (populated with above info)
@@ -26,6 +28,7 @@ var IronMineModel = function()
     for(var i in STATION_IDS[STATION_TYPE_DRILL])    STATION_TYPES[STATION_IDS[STATION_TYPE_DRILL][i]] = STATION_TYPE_DRILL;
     for(var i in STATION_IDS[STATION_TYPE_DYNAMITE]) STATION_TYPES[STATION_IDS[STATION_TYPE_DYNAMITE][i]] = STATION_TYPE_DYNAMITE;
     for(var i in STATION_IDS[STATION_TYPE_BACKER])   STATION_TYPES[STATION_IDS[STATION_TYPE_BACKER][i]] = STATION_TYPE_BACKER;
+    for(var i in STATION_IDS[STATION_TYPE_STRIKE])   STATION_TYPES[STATION_IDS[STATION_TYPE_STRIKE][i]] = STATION_TYPE_STRIKE;
     this.STATION_TYPES = STATION_TYPES;
 
     var LEVEL_IDS =   [17247,17248,17249,17250]; this.LEVEL_IDS = LEVEL_IDS;

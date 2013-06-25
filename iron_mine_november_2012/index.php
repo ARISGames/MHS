@@ -10,22 +10,23 @@
 <title>
 MHS Iron Mine
 </title>
-<script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
-<script src="utils/arisjs.js" type="text/javascript"></script>
-<script src="helpers/pusherman.js" type="text/javascript"></script>
-<script src="helpers/ironminemodel.js" type="text/javascript"></script>
-<script src="helpers/ironmineview.js" type="text/javascript"></script>
-<script src="games/drillgame.js" type="text/javascript"></script>
-<script src="games/dynamitegame.js" type="text/javascript"></script>
-<script src="games/backergame.js" type="text/javascript"></script>
 <link href="style.css" rel="stylesheet" type="text/css""style.css"></style>
+<script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
+<script type="text/javascript" src="utils/arisjs.js">         </script>
+<script type="text/javascript" src="helpers/pusherman.js">    </script>
+<script type="text/javascript" src="helpers/ironminemodel.js"></script>
+<script type="text/javascript" src="helpers/ironmineview.js"> </script>
+<script type="text/javascript" src="games/drillgame.js">      </script>
+<script type="text/javascript" src="games/dynamitegame.js">   </script>
+<script type="text/javascript" src="games/backergame.js">     </script>
+<script type="text/javascript" src="games/strikegame.js">     </script>
 <script type="text/javascript">
 
     //Helpers
     var pm; //PusherMan- handles all realtime events
     var imm; //IronMineModel- handles all state data
     var imv; //IronMineView- handles all UI data
-    var game; //Either an instance of DrillGame, DynamiteGame, or BackerGame
+    var game; //Either an instance of DrillGame, DynamiteGame, or BackerGame //, or StrikeGame, but that behaves slightly differently
 
     function pageLoaded()
     {
@@ -53,6 +54,9 @@ MHS Iron Mine
                 break;
             case imm.STATION_TYPE_BACKER:
                 game = new BackerGame();
+                break;
+            case imm.STATION_TYPE_STRIKE:
+                game = new StrikeGame();
                 break;
             default:
                 alert("This game type doesn't exist...");
@@ -112,6 +116,12 @@ MHS Iron Mine
         <img class='role' src='assets/backer.png' />
         <img class="right_arrow" src="assets/right_arrow.png" />
     </div>
+
+    <div id='strikeintro' class='intro'>
+        Strike...(no images)
+        <img class='role' src='assets/strike.png' />
+        <img class="right_arrow" src="assets/right_arrow.png" />
+    </div>
 </div>
 
 <div id='games' class='scene'>
@@ -164,7 +174,19 @@ MHS Iron Mine
     <div id='backergame' class='game'>
         Backer Game...
         <div id='backerhud' class='hud'></div>
+        <div id='backeractivity' class='activity'>
+        </div>
         <div id='backerdebug' class='debug'></div>
+    </div>
+
+    <div id='strikegame' class='game'>
+        Strike Game...
+        <div id='strikehud' class='hud'></div>
+        <div id='strikeactivity' class='activity'>
+            <img id='strike_main_portrait' width="320" height="320" src='assets/spinner.gif' style="display:block;"></img>
+            <div id='strike_joined_portraits'></div>
+        </div>
+        <div id='strikedebug' class='debug'></div>
     </div>
 </div>
 

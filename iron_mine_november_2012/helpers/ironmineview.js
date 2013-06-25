@@ -10,19 +10,22 @@ var IronMineView = function()
     this.drillIntro = document.getElementById('drillintro');
     this.dynamiteIntro = document.getElementById('dynamiteintro');
     this.backerIntro = document.getElementById('backerintro');
-    this.intros = [this.drillIntro, this.dynamiteIntro, this.backerIntro];
+    this.strikeIntro = document.getElementById('strikeintro');
+    this.intros = [this.drillIntro, this.dynamiteIntro, this.backerIntro, this.strikeIntro];
 
     this.currentGameName = "";
     this.drillGameName = "driller";
     this.dynamiteGameName = "blaster";
     this.backerGameName = "barman";
-    this.gameNames = [this.drillGameName, this.dynamiteGameName, this.backerGameName];
+    this.strikeGameName = "barman";
+    this.gameNames = [this.drillGameName, this.dynamiteGameName, this.backerGameName, this.strikeGameName];
 
     this.currentGame = null;
     this.drillGame = document.getElementById('drillgame');
     this.dynamiteGame = document.getElementById('dynamitegame');
     this.backerGame = document.getElementById('backergame');
-    this.games = [this.drillGame, this.dynamiteGame, this.backerGame];
+    this.strikeGame = document.getElementById('strikegame');
+    this.games = [this.drillGame, this.dynamiteGame, this.backerGame, this.strikeGame];
 
     //These 'views' are injected into the current game
     this.notice = document.createElement('div');
@@ -58,7 +61,8 @@ var IronMineView = function()
     this.drillHUD = document.getElementById('drillhud');
     this.dynamiteHUD = document.getElementById('dynamitehud');
     this.backerHUD = document.getElementById('backerhud');
-    this.HUDs = [this.drillHUD, this.dynamiteHUD, this.backerHUD];
+    this.strikeHUD = document.getElementById('strikehud');
+    this.HUDs = [this.drillHUD, this.dynamiteHUD, this.backerHUD, this.backerHUD];
 
     this.displayGame = function(game)
     {

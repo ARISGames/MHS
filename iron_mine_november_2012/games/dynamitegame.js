@@ -79,7 +79,7 @@ var DynamiteGame = function()
             //trust this
             if(imm.money < moneyLost) imm.money = moneyLost; 
             ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost);
-            imv.displayNotice("You've lost "+moneyLost+" cents!");
+            imv.displayFail("You've lost "+moneyLost+" cents!");
         }
         else
         {

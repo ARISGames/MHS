@@ -15,30 +15,6 @@
             console.log("http://dev.arisgames.org/server/events/send.php?"+"channel="+channel+"&event="+event+"&data="+data);
         }
 
-        function setDynamite(webId,slot)
-        {
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_'+slot+'_CHANGED',true);
-        };
-
-        //This is depreicated
-        function sendStateChangeRequest(webId,instance)
-        {
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_1_CHANGED',document.getElementById("dyna_"+instance+"_1").checked);
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_2_CHANGED',document.getElementById("dyna_"+instance+"_2").checked);
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_3_CHANGED',document.getElementById("dyna_"+instance+"_3").checked);
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_4_CHANGED',document.getElementById("dyna_"+instance+"_4").checked);
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_5_CHANGED',document.getElementById("dyna_"+instance+"_5").checked);
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_SLOT_6_CHANGED',document.getElementById("dyna_"+instance+"_6").checked);
-            /*
-	    sendRequest('private-default-channel',webId+'_DYNAMITE_STATE_CHANGED','{"state":['+document.getElementById("dyna_"+instance+"_1").checked+','+
-                                                                                            document.getElementById("dyna_"+instance+"_2").checked+','+
-                                                                                            document.getElementById("dyna_"+instance+"_3").checked+','+
-                                                                                            document.getElementById("dyna_"+instance+"_4").checked+','+
-                                                                                            document.getElementById("dyna_"+instance+"_5").checked+','+
-                                                                                            document.getElementById("dyna_"+instance+"_6").checked+']}');
-                                                                                            */
-        }
-
     </script>
     <style>
         .game
@@ -112,23 +88,23 @@
         <div class='gametitle'>DYNAMITE</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-            <input id='dyna_1_1' type='button' value='1' onClick="setDynamite(1155,1);"></input>
-            <input id='dyna_1_2' type='button' value='2' onClick="setDynamite(1155,2);"></input>
-            <input id='dyna_1_3' type='button' value='3' onClick="setDynamite(1155,3);"></input>
-            <input id='dyna_1_4' type='button' value='4' onClick="setDynamite(1155,4);"></input>
-            <input id='dyna_1_5' type='button' value='5' onClick="setDynamite(1155,5);"></input>
-            <input id='dyna_1_6' type='button' value='6' onClick="setDynamite(1155,6);"></input>
+            <input id='dyna_1_1' type='button' value='1' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_1_CHANGED',true);"></input>
+            <input id='dyna_1_2' type='button' value='2' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_2_CHANGED',true);"></input>
+            <input id='dyna_1_3' type='button' value='3' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_3_CHANGED',true);"></input>
+            <input id='dyna_1_4' type='button' value='4' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_4_CHANGED',true);"></input>
+            <input id='dyna_1_5' type='button' value='5' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_5_CHANGED',true);"></input>
+            <input id='dyna_1_6' type='button' value='6' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_6_CHANGED',true);"></input>
 	    <input type="button" value="Green Light" onClick="sendRequest('private-default-channel','1155_PLUNGER_READY','x');"></input>
 	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1155_PLUNGER_PRESSED','x');"></input>
         </div>
         <div class='instance'>
 	    <div class='instancetitle'>2</div>
-            <input id='dyna_2_1' type='button' value='1' onClick="setDynamite(1156,1);"></input>
-            <input id='dyna_2_2' type='button' value='2' onClick="setDynamite(1156,2);"></input>
-            <input id='dyna_2_3' type='button' value='3' onClick="setDynamite(1156,3);"></input>
-            <input id='dyna_2_4' type='button' value='4' onClick="setDynamite(1156,4);"></input>
-            <input id='dyna_2_5' type='button' value='5' onClick="setDynamite(1156,5);"></input>
-            <input id='dyna_2_6' type='button' value='6' onClick="setDynamite(1156,6);"></input>
+            <input id='dyna_2_1' type='button' value='1' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_1_CHANGED',true);"></input>
+            <input id='dyna_2_2' type='button' value='2' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_2_CHANGED',true);"></input>
+            <input id='dyna_2_3' type='button' value='3' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_3_CHANGED',true);"></input>
+            <input id='dyna_2_4' type='button' value='4' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_4_CHANGED',true);"></input>
+            <input id='dyna_2_5' type='button' value='5' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_5_CHANGED',true);"></input>
+            <input id='dyna_2_6' type='button' value='6' onClick="sendRequest('private-default-channel','1156_DYNAMITE_SLOT_6_CHANGED',true);"></input>
 	    <input type="button" value="Green Light" onClick="sendRequest('private-default-channel','1156_PLUNGER_READY','x');"></input>
 	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','1156_PLUNGER_PRESSED','x');"></input>
         </div>
@@ -139,10 +115,14 @@
         <div class='gametitle'>BACKMAN</div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
-	    <input type="button" value="Poke Wall" onClick="sendRequest('private-default-channel','1160_WALL_POKED','x');"></input>
+	    <input type="button" value="Poke" onClick="sendRequest('private-default-channel','1160_POKED','x');"></input>
+	    <input type="button" value="Rumble 1" onClick="sendRequest('private-default-channel','1160_RUMBLE','1');"></input>
+	    <input type="button" value="Rumble 2" onClick="sendRequest('private-default-channel','1160_RUMBLE','2');"></input>
+	    <input type="button" value="Rumble 3" onClick="sendRequest('private-default-channel','1160_RUMBLE','3');"></input>
+	    <input type="button" value="Cave" onClick="sendRequest('private-default-channel','1160_CAVE','x');"></input>
         </div>
         <br />
-        This is just a crap shoot. 50% of the time you make money, and 50% of the time you lose money. Good luck.
+        Currently, rumbles make money and caves lose money. That's it for now.
     </div>
 </body>
 </html>

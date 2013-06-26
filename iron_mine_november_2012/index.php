@@ -118,7 +118,6 @@ MHS Iron Mine
     </div>
 
     <div id='strikeintro' class='intro'>
-        Strike...(no images)
         <img class='role' src='assets/strike.png' />
         <img class="right_arrow" src="assets/right_arrow.png" />
     </div>
@@ -180,11 +179,15 @@ MHS Iron Mine
     </div>
 
     <div id='strikegame' class='game'>
-        Strike Game...
         <div id='strikehud' class='hud'></div>
         <div id='strikeactivity' class='activity'>
-            <img id='strike_main_portrait' width="320" height="320" src='assets/spinner.gif' style="display:block;"></img>
-            <div id='strike_joined_portraits'></div>
+            <div id="strike_you_portrait"></div>
+            <div id="strike_interaction">
+                <div id="strike_join_button" class="strike_button">Strike?</div>
+                <div id="strike_dont_button" class="strike_button">Don't?</div>
+                <canvas id="strike_timer" width="140" height="140"></canvas>
+            </div>
+            <div id='strike_other_portraits'>Strikers:<br /></div>
         </div>
         <div id='strikedebug' class='debug'></div>
     </div>

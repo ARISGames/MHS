@@ -20,7 +20,7 @@ var IronMineModel = function()
     STATION_IDS[STATION_TYPE_DRILL] = [1151,1152,1153,1154]; //All webpage/station Id's of type 'drill'
     STATION_IDS[STATION_TYPE_DYNAMITE] = [1155,1156]; //All webpage/station Id's of type 'dynamite'
     STATION_IDS[STATION_TYPE_BACKER] = [1160]; //All webpage/station Id's of type 'backer'
-    STATION_IDS[STATION_TYPE_STRIKE] = [0]; //All webpage/station Id's of type 'strike'
+    STATION_IDS[STATION_TYPE_STRIKE] = [3031]; //All webpage/station Id's of type 'strike'
     this.STATION_IDS = STATION_IDS;
     
     //  Station Id->Category relations (populated with above info)

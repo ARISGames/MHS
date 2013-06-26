@@ -9,13 +9,13 @@ var BackerGame = function()
 
     this.rumbled = function(data)
     {
-        ARIS.setItemCount(imm.ITEM_IDS[0], imm.money+moneyReceived); imv.displayNotice("You've gained "+moneyReceived+" cents!");
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyReceived); imv.displayNotice("You've gained "+moneyReceived+" cents!");
     }
 
     this.caved = function(data)
     {
         if(imm.money < moneyLost) imm.money = moneyLost;
-        ARIS.setItemCount(imm.ITEM_IDS[0], imm.money-moneyLost); 
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost); 
         imv.displayFail("You've lost "+moneyLost+" cents!");
     }
 

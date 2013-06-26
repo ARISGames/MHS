@@ -23,10 +23,10 @@ var ARISJS = function()
         if(this.requestsQueue.length) 
         {
             var req = this.requestsQueue.shift();
-            //window.location = req;
+            window.location = req;
 
             /* DEBUG - uncomment to use in browser without error */
-            //*
+            /*
             this.isCurrentlyCalling();
             if(req == "aris://inventory/get/" + 99999999)
                 this.didUpdateItemQty(99999999,1);

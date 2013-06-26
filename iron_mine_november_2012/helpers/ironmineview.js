@@ -17,7 +17,7 @@ var IronMineView = function()
     this.drillGameName = "driller";
     this.dynamiteGameName = "blaster";
     this.backerGameName = "barman";
-    this.strikeGameName = "barman";
+    this.strikeGameName = "strike";
     this.gameNames = [this.drillGameName, this.dynamiteGameName, this.backerGameName, this.strikeGameName];
 
     this.currentGame = null;

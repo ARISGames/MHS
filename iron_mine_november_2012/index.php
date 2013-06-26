@@ -54,9 +54,11 @@ MHS Iron Mine
                 break;
             case imm.STATION_TYPE_BACKER:
                 game = new BackerGame();
+                ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
                 break;
             case imm.STATION_TYPE_STRIKE:
                 game = new StrikeGame();
+                ARIS.setItemCount(imm.ITEM_ID_STRIKE, 1);
                 break;
             default:
                 alert("This game type doesn't exist...");
@@ -67,7 +69,7 @@ MHS Iron Mine
         //Override this function to handle money updates
         ARIS.didUpdateItemQty = function(updatedItemId, qty)
         {
-            if(updatedItemId == imm.ITEM_IDS[0])
+            if(updatedItemId == imm.ITEM_ID_MONEY)
                 imm.money = qty;
             //Formats money as '$x.xx' for all edge cases
             imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
@@ -184,13 +186,14 @@ MHS Iron Mine
             <div id="strike_you_portrait"></div>
             <div id="strike_interaction">
                 <div id="strike_join_button" class="strike_button">Strike?</div>
-                <div id="strike_dont_button" class="strike_button">Don't?</div>
+                <div id="strike_dont_button" class="strike_button" onclick='ARIS.closeMe();'>Don't?</div>
                 <canvas id="strike_timer" width="140" height="140"></canvas>
             </div>
             <div id='strike_other_portraits'>Strikers:<br /></div>
         </div>
         <div id='strikedebug' class='debug'></div>
     </div>
+
 </div>
 
 <div id='congrats' class='scene' onclick='ARIS.closeMe();'>

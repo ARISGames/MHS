@@ -53,15 +53,14 @@ var StrikeGame = function()
 
     var strikeBeatDetected = function(data)
     {
-        console.log(data);
         var player = JSON.parse(data);
         if(player.timer < timeTilStrike) timeTilStrike = player.timer;
-        if(joinedPlayers[player.id]) { joinedPlayers[player.id].heartbeat = 100; return; }
+        if(joinedPlayers[player.id]) { joinedPlayers[player.id].heartbeat = 100; return; } //they are already a member
+        if(imm.playerId != player.id && !joinedPlayers[imm.playerId]) return; //I'm not yet a member, and the joining member isn't me
 
-        console.log("new player");
         player.heartbeat = 100;
         player.image = new Image();
-        player.image.onload = function() { console.log("loaded im"); player.image.onload = null; player.image.src = player.url; console.log("street");};
+        player.image.onload = function() { player.image.onload = null; player.image.src = player.url; };
         player.image.src = 'assets/spinner.gif';
         player.image.className='strike_other_portrait';
         document.getElementById('strike_other_portraits').appendChild(player.image);
@@ -79,9 +78,9 @@ var StrikeGame = function()
     {
         c.context = c.getContext('2d');
         c.context.strokeStyle = 'black';
+        c.context.lineWidth = 4;
         c.context.beginPath();
         c.context.arc(c.width/2, c.width/2, (c.width/2)-2, 0, 2*Math.PI, false);
-        c.context.lineWidth = 4;
         c.context.stroke();
         c.style.display = "block";
 
@@ -91,12 +90,20 @@ var StrikeGame = function()
     var timerTick = function()
     {
         c.context.clearRect(0,0,c.width,c.height);
-        console.log(timeTilStrike);
-        c.context.arc(c.width/2, c.width/2, (c.width/2)-2, 0, 2*Math.PI*(timeTilStrike/100), false);
+        c.context.beginPath();
+        c.context.arc(c.width/2, c.width/2, (c.width/2)-2, 1.5*Math.PI, 2*Math.PI*(timeTilStrike/100)+1.5*Math.PI, false);
+        c.context.stroke();
         timeTilStrike--;
 
         if(timeTilStrike > 0) 
             setTimeout(timerTick, 200);
+        else
+        {
+            c.context.clearRect(0,0,c.width,c.height);
+            imv.displayFail("The strike has failed!");
+            ARIS.setItemCount(imm.ITEM_ID_STRIKE_FAIL, 1);
+            //ARIS.setItemCount(imm.ITEM_ID_STRIKE_SUCCEED, 1);
+        }
     }
 
     this.events = ['STRIKE_REQUEST_HEARTBEATS','STRIKE_HEARTBEAT','STRIKE_LEFT'];

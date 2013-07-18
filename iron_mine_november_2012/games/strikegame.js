@@ -101,10 +101,11 @@ var StrikeGame = function()
         else
         {
             c.context.clearRect(0,0,c.width,c.height);
-            if(count(joinedPlayers) < numStrikersToWin)
+            if(joinedPlayers.length < numStrikersToWin)
             {
                 imv.displayFail("The strike has failed!");
                 ARIS.setItemCount(imm.ITEM_ID_STRIKE_FAIL, 1);
+                ARIS.exitToTab('inventory');
             }
             else
             {
@@ -116,4 +117,4 @@ var StrikeGame = function()
 
     this.events = ['STRIKE_REQUEST_HEARTBEATS','STRIKE_HEARTBEAT','STRIKE_LEFT'];
     this.callbacks = [strikeBeatRequested,strikeBeatDetected,strikeLeft];
-
+}

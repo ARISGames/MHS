@@ -4,6 +4,7 @@ var StrikeGame = function()
 
     var joinedPlayers = [];
     var timeTilStrike = 100;
+    var numStrikersToWin = 5;
 
     var getInfoForSelf = function()
     {
@@ -11,11 +12,11 @@ var StrikeGame = function()
         i.src = 'assets/spinner.gif';
         i.id = 'strike_you_portrait_image';
         document.getElementById('strike_you_portrait').appendChild(i);
+        i.src = "http://qrcode.kaywa.com/img.php?s=5&d=6116";
         var handlePlayerBackpackReceipt = function(data)
         {
             if(!data || !(imm.playerPicURL = JSON.parse(data).data.backpacks[0].owner.player_pic_url))
                 imm.playerPicURL = "http://arisgames.org/server/gamedata/0/npc.png";
-            i.src = imm.playerPicURL;
 
             document.getElementById("strike_join_button").onclick = joinStrike;
         }
@@ -100,12 +101,19 @@ var StrikeGame = function()
         else
         {
             c.context.clearRect(0,0,c.width,c.height);
-            imv.displayFail("The strike has failed!");
-            ARIS.setItemCount(imm.ITEM_ID_STRIKE_FAIL, 1);
-            //ARIS.setItemCount(imm.ITEM_ID_STRIKE_SUCCEED, 1);
+            if(count(joinedPlayers) < numStrikersToWin)
+            {
+                imv.displayFail("The strike has failed!");
+                ARIS.setItemCount(imm.ITEM_ID_STRIKE_FAIL, 1);
+            }
+            else
+            {
+                imv.displayNotice("The strike has succeeded!");
+                ARIS.setItemCount(imm.ITEM_ID_STRIKE_SUCCEED, 1);
+            }
         }
     }
 
     this.events = ['STRIKE_REQUEST_HEARTBEATS','STRIKE_HEARTBEAT','STRIKE_LEFT'];
     this.callbacks = [strikeBeatRequested,strikeBeatDetected,strikeLeft];
-}
+

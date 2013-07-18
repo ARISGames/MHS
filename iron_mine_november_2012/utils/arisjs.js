@@ -41,65 +41,24 @@ var ARISJS = function()
         this.dequeueRequest();
     }
 
-    this.closeMe = function()
-    {
-        this.enqueueRequest("aris://closeMe");
-    }
-
-    this.prepareMedia = function(mediaId)
-    {
-        this.enqueueRequest("aris://media/prepare/" + mediaId);
-    }
-
-    this.playMedia = function(mediaId)
-    {
-        this.enqueueRequest("aris://media/play/" + mediaId);
-    }
-
-    this.playMediaAndVibrate = function(mediaId)
-    {
-        this.enqueueRequest("aris://media/playAndVibrate/" + mediaId);
-    }
-
-    this.stopMedia = function(mediaId)
-    {
-        this.enqueueRequest("aris://media/stop/" + mediaId);
-    }
-
-    this.setMediaVolume = function(mediaId, volume)
-    {
-        this.enqueueRequest("aris://media/setVolume/" + mediaId + "/" + volume);
-    }
-
-    this.getItemCount = function(itemId)
-    {
-        this.enqueueRequest("aris://inventory/get/" + itemId);
-    }
-
-    this.setItemCount = function(itemId,qty)
-    { 
-        this.enqueueRequest("aris://inventory/set/" + itemId + "/" + qty);
-    }
-
-    this.giveItemCount = function(itemId,qty)
-    {
-        this.enqueueRequest("aris://inventory/give/" + itemId + "/" + qty);
-    }
-
-    this.takeItemCount = function(itemId,qty)
-    {
-        this.enqueueRequest("aris://inventory/take/" + itemId + "/" + qty);
-    }
-
-    this.getPlayerName = function()
-    {
-        this.enqueueRequest("aris://player/name");
-    }
-
-    this.setBumpString = function(bString)
-    {
-        this.enqueueRequest("aris://bump/"+bString);
-    }
+    this.closeMe             = function()                { this.enqueueRequest("aris://closeMe"); }
+    this.exitToTab           = function(tab)             { this.enqueueRequest("aris://exitTo/tab/"+tab); }
+    this.exitToPlaque        = function(plaqueId)        { this.enqueueRequest("aris://exitTo/plaque/"+plaqueId); }
+    this.exitToWebpage       = function(webpageId)       { this.enqueueRequest("aris://exitTo/webpage/"+webpageId); }
+    this.exitToItem          = function(itemId)          { this.enqueueRequest("aris://exitTo/item/"+itemId); }
+    this.exitToCharacter     = function(characterId)     { this.enqueueRequest("aris://exitTo/character/"+characterId); }
+    this.exitToPanoramic     = function(panoramicId)     { this.enqueueRequest("aris://exitTo/panoramic/"+panoramicId); }
+    this.prepareMedia        = function(mediaId)         { this.enqueueRequest("aris://media/prepare/" + mediaId); }
+    this.playMedia           = function(mediaId)         { this.enqueueRequest("aris://media/play/" + mediaId); }
+    this.playMediaAndVibrate = function(mediaId)         { this.enqueueRequest("aris://media/playAndVibrate/" + mediaId); }
+    this.stopMedia           = function(mediaId)         { this.enqueueRequest("aris://media/stop/" + mediaId); }
+    this.setMediaVolume      = function(mediaId, volume) { this.enqueueRequest("aris://media/setVolume/" + mediaId + "/" + volume); }
+    this.getItemCount        = function(itemId)          { this.enqueueRequest("aris://inventory/get/" + itemId); }
+    this.setItemCount        = function(itemId,qty)      { this.enqueueRequest("aris://inventory/set/" + itemId + "/" + qty); }
+    this.giveItemCount       = function(itemId,qty)      { this.enqueueRequest("aris://inventory/give/" + itemId + "/" + qty); }
+    this.takeItemCount       = function(itemId,qty)      { this.enqueueRequest("aris://inventory/take/" + itemId + "/" + qty); }
+    this.getPlayerName       = function()                { this.enqueueRequest("aris://player/name"); }
+    this.setBumpString       = function(bString)         { this.enqueueRequest("aris://bump/"+bString); }
 
     //Call ARIS API directly (USE WITH CAUTION)
     this.callService = function(serviceName, callback, GETparams, POSTparams)

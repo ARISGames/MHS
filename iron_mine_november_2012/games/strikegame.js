@@ -3,6 +3,7 @@ var StrikeGame = function()
     var self = this; //JAVASCRIIIIIIPPPPPTTTTTTT!!!!!!!!
 
     var joinedPlayers = [];
+    var numJoinedPlayers = 0;
     var timeTilStrike = 100;
     var numStrikersToWin = 5;
 
@@ -67,6 +68,7 @@ var StrikeGame = function()
         document.getElementById('strike_other_portraits').appendChild(player.image);
 
         joinedPlayers[player.id] = player;
+        numJoinedPlayers++;
         beatHeart(); //let the joiner know you are here
     }
 
@@ -101,11 +103,10 @@ var StrikeGame = function()
         else
         {
             c.context.clearRect(0,0,c.width,c.height);
-            if(joinedPlayers.length < numStrikersToWin)
+            if(numJoinedPlayers < numStrikersToWin)
             {
                 imv.displayFail("The strike has failed!");
                 ARIS.setItemCount(imm.ITEM_ID_STRIKE_FAIL, 1);
-                ARIS.exitToTab('inventory');
             }
             else
             {

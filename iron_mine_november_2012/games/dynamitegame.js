@@ -9,6 +9,8 @@ var DynamiteGame = function()
     var currentState = STATE_LOAD_DYNAMITE;
 
     var moneyReceived = 100;
+    var minMoneyReceived = 8;
+    var maxMoneyReceived = 100;
     var moneyLost = 200;
 
     var holesFilledFlags = [false,false,false,false,false,false];
@@ -83,8 +85,9 @@ var DynamiteGame = function()
         }
         else
         {
-            ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyReceived);
-            imv.displayNotice("You've gained "+moneyReceived+" cents!");
+            var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
+            ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+            imv.displayNotice("You've gained "+moneyToReceive+" cents!");
         }
 
         //Empty the dynamite

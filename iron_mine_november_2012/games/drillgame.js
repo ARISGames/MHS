@@ -26,6 +26,8 @@ var DrillGame = function()
     var fail = 100;
 
     var moneyReceived = 40;
+    var minMoneyReceived = 3;
+    var maxMoneyReceived = 40;
     var moneyLost = 60;
 
     var drillBit = document.getElementById('drillbit');
@@ -41,7 +43,8 @@ var DrillGame = function()
         }
         else
         {
-            if(lastReceivedLight == 5) { ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyReceived); imv.displayNotice("You've gained "+moneyReceived+" cents!"); }
+            var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
+            if(lastReceivedLight == 5) { ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive); imv.displayNotice("You've gained "+moneyToReceive+" cents!"); }
             else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
             else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost); imv.displayFail("You've lost "+moneyLost+" cents!"); } //<- trust this
             lastReceivedLight = 0;

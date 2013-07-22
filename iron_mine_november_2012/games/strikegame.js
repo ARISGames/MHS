@@ -4,7 +4,7 @@ var StrikeGame = function()
 
     var joinedPlayers = [];
     var numJoinedPlayers = 0;
-    var timeTilStrike = 100;
+    var timeTilStrike = 400;
     var numStrikersToWin = 5;
 
     var getInfoForSelf = function()

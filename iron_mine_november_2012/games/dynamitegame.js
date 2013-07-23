@@ -25,6 +25,25 @@ var DynamiteGame = function()
                          document.getElementById('dynamitehole7')];
     var dynamiteIndicator = document.getElementById('dynamiteindicator');
 
+    if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][0])
+    {
+        document.getElementById('dynamitehole1').style.top = '0px';
+        document.getElementById('dynamitehole2').style.top = '70px';
+        document.getElementById('dynamitehole3').style.top = '20px';
+        document.getElementById('dynamitehole4').style.top = '20px';
+        document.getElementById('dynamitehole5').style.top = '70px';
+        document.getElementById('dynamitehole6').style.top = '0px';
+    }
+    else if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][1])
+    {
+        document.getElementById('dynamitehole1').style.top = '20px';
+        document.getElementById('dynamitehole2').style.top = '0px';
+        document.getElementById('dynamitehole3').style.top = '70px';
+        document.getElementById('dynamitehole4').style.top = '70px';
+        document.getElementById('dynamitehole5').style.top = '0px';
+        document.getElementById('dynamitehole6').style.top = '20px';
+    }
+
     this.updateDynamiteState = function(data)
     {
         holesFilledFlags = JSON.parse(data).state;

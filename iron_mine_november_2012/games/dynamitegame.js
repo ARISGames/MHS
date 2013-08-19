@@ -105,6 +105,7 @@ var DynamiteGame = function()
         else
         {
             var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
+            if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
             ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
             imv.displayNotice("You've gained "+moneyToReceive+" cents!");
         }

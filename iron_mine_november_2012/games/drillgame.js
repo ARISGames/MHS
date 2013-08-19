@@ -44,6 +44,7 @@ var DrillGame = function()
         else
         {
             var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
+            if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
             if(lastReceivedLight == 5) { ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive); imv.displayNotice("You've gained "+moneyToReceive+" cents!"); }
             else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
             else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost); imv.displayFail("You've lost "+moneyLost+" cents!"); } //<- trust this

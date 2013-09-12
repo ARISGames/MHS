@@ -38,11 +38,6 @@ MHS Iron Mine
 
     function begin()
     {
-        window.onerror = function(msg, url, linenumber) 
-        {
-            alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
-            return true;
-        }
         imm = new IronMineModel();
         imv = new IronMineView();
         imm.loadStateFromARIS(); //calls 'initGame' on complete
@@ -50,30 +45,6 @@ MHS Iron Mine
 
     function initGame(type, webId)
     {
-        switch(type)
-        {
-            case imm.STATION_TYPE_DRILL:
-                game = new DrillGame();
-                ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
-                break;
-            case imm.STATION_TYPE_DYNAMITE:
-                game = new DynamiteGame();
-                ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
-                break;
-            case imm.STATION_TYPE_BACKER:
-                game = new BackerGame();
-                ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
-                break;
-            case imm.STATION_TYPE_STRIKE:
-                game = new StrikeGame();
-                ARIS.setItemCount(imm.ITEM_ID_STRIKE, 1);
-                break;
-            default:
-                alert("This game type doesn't exist...");
-                break;
-        }
-        imv.displayGame(type);
-
         //Override this function to handle money updates
         ARIS.didUpdateItemQty = function(updatedItemId, qty)
         {
@@ -91,6 +62,26 @@ MHS Iron Mine
             }
         }
 
+        imm.stationType = type;
+        switch(imm.stationType)
+        {
+            case imm.STATION_TYPE_DRILL:
+                game = new DrillGame();
+                break;
+            case imm.STATION_TYPE_DYNAMITE:
+                game = new DynamiteGame();
+                break;
+            case imm.STATION_TYPE_BACKER:
+                game = new BackerGame();
+                break;
+            case imm.STATION_TYPE_STRIKE:
+                game = new StrikeGame();
+                break;
+            default:
+                alert("This game type doesn't exist...");
+                break;
+        }
+
         pm = new PusherMan('<?php echo Config::pusher_key; ?>', 
             'http://dev.arisgames.org/server/events/<?php echo $private_default_auth; ?>', 
             'http://dev.arisgames.org/server/events/<?php echo $send_url; ?>', 
@@ -98,71 +89,44 @@ MHS Iron Mine
             game.events, 
             game.callbacks);
 
-        imv.setScene(imv.introsScene);
+        imv.displayGame(imm.stationType);
+        game.setup();
     }
 
     window.addEventListener('load', partReady, false);
+    window.onerror = function(msg, url, linenumber) 
+    {
+        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        return true;
+    }
 </script>
 </head>
 
-<body>
+<body class='full_screen'>
 
-<div id='loading' class='scene' style='display:block;'>
-    &nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...
-</div>
+    <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 
-<div id='intros' class='scene' onclick='imv.nextScene();'>
-    <div id='drillintro' class='intro'>
-        <img class='role' src='assets/driller.png' />
-        <img class="right_arrow" src="assets/right_arrow.png" />
-    </div>
-
-    <div id='dynamiteintro' class='intro'>
-        <img class='role' src='assets/blaster.png' />
-        <img class="right_arrow" src="assets/right_arrow.png" />
-    </div>
-
-    <div id='backerintro' class='intro'>
-        Backer...(no images)
-        <img class='role' src='assets/backer.png' />
-        <img class="right_arrow" src="assets/right_arrow.png" />
-    </div>
-
-    <div id='strikeintro' class='intro'>
-        <img class='role' src='assets/strike.png' />
-        <img class="right_arrow" src="assets/right_arrow.png" />
-    </div>
-</div>
-
-<div id='games' class='scene'>
-    <div id='drillgame' class='game'>
-        <div id='drillhud' class='hud'></div>
-        <div id='drillactivity' class='activity'>
-            <img id='drillbit' src='assets/drill.png' />
-            <div id='drillprompts'>
-                <div class='drillprompt' style='top:65px;'>too deep</div>
-                <div class='drillprompt' style='top:165px;'>correct depth</div>
-                <div class='drillprompt' style='top:365px;'>too shallow</div>
-            </div>
-            <div id='drilllights'>
-                <img id='light7' class='drilllight' src='assets/red_btn_off.png' style='top:50px;'/>
-                <img id='light6' class='drilllight' src='assets/yellow_btn_off.png' style='top:100px;'/>
-                <img id='light5' class='drilllight' src='assets/green_btn_off.png' style='top:150px;'/>
-                <img id='light4' class='drilllight' src='assets/yellow_btn_off.png' style='top:200px;'/>
-                <img id='light3' class='drilllight' src='assets/yellow_btn_off.png' style='top:250px;'/>
-                <img id='light2' class='drilllight' src='assets/yellow_btn_off.png' style='top:300px;'/>
-                <img id='light1' class='drilllight' src='assets/yellow_btn_off.png' style='top:350px;'/>
+    <div id='drillgame' class='game drill_bg full_screen'>
+        <div id='drillvid' class='vid'></div>
+        <div id='drillintro' class='intro full_screen'>
+            <img id='drillprompt' src='assets/drillprompt.png' class='prompt'>
+            <img src='assets/anton.png' class='introimage' />
+            <div id='drillintrodialog' class='introdialog'>
             </div>
         </div>
-        <div id='drilloverlayintro' class='overlay' onclick='document.getElementById("drilloverlayintro").style.display = "none";'>
-            <img id='drillalertintro' class='alert' src='assets/use_drill_splash.png' onclick='document.getElementById("drilloverlayintro").style.display = "none";'/>
-            <img id='drillalertarrow' class='alert' src='assets/right_arrow.png' onclick='document.getElementById("drilloverlayintro").style.display = "none";'/>
+        <div id='drillactivity' class='activity full_screen'>
+            <div id='drillimagecontainer'>
+                <img id='drillimage' src='assets/drill_yellow.png' />
+            </div>
         </div>
-        <div id='drilldebug' class='debug'></div>
+        <div id='drillguru' class='guru full_screen'>
+            <img src='assets/anton.png' class='guruimage'>
+            <div id='drilldialog' class='gurudialog'>
+            </div>
+        </div>
     </div>
 
-    <div id='dynamitegame' class='game'>
-        <div id='dynamitehud' class='hud'></div>
+    <div id='dynamitegame' class='game dynamite_bg full_screen'>
         <div id='dynamiteactivity' class='activity'>
             <div id='dynamiteholes' >
                 <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px;  left:0px;' />
@@ -181,16 +145,13 @@ MHS Iron Mine
         <div id='dynamitedebug' class='debug'></div>
     </div>
 
-    <div id='backergame' class='game'>
-        Backer Game...
-        <div id='backerhud' class='hud'></div>
+    <div id='backergame' class='game backer_bg full_screen'>
         <div id='backeractivity' class='activity'>
         </div>
         <div id='backerdebug' class='debug'></div>
     </div>
 
-    <div id='strikegame' class='game'>
-        <div id='strikehud' class='hud'></div>
+    <div id='strikegame' class='game strike_bg full_screen'>
         <div id='strikeactivity' class='activity'>
             <div id="strike_you_portrait"></div>
             <div id="strike_interaction">
@@ -203,9 +164,7 @@ MHS Iron Mine
         <div id='strikedebug' class='debug'></div>
     </div>
 
-</div>
-
-<div id='congrats' class='scene' onclick='ARIS.closeMe();'>
+    <div id='congrats' class='full_screen' onclick='ARIS.closeMe();'>
         <div id='congratsoverlay1' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
             <img id='congratsalert1' class='congratsalert alert' src='assets/level_one_splash.png' onclick='ARIS.closeMe();'/>
         </div>
@@ -215,7 +174,7 @@ MHS Iron Mine
         <div id='congratsoverlay3' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
             <img id='congratsalert3' class='congratsalert alert' src='assets/level_three_splash.png' onclick='ARIS.closeMe();'/>
         </div>
-</div>
+    </div>
 
 </body>
 

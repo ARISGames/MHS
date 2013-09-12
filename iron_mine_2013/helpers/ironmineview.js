@@ -1,37 +1,45 @@
 var IronMineView = function()
 {
-    this.currentScene = null;
-    this.loadingScene = document.getElementById('loading');
-    this.introsScene = document.getElementById('intros');
-    this.gamesScene = document.getElementById('games');
-    this.scenes = [this.loadingScene, this.introsScene, this.gamesScene, null];
+    this.currentGame     = null;
+    this.currentVid      = null;
+    this.currentIntro    = null;
+    this.currentActivity = null;
+    this.currentGuru     = null;
 
-    this.currentIntro = null;
-    this.drillIntro = document.getElementById('drillintro');
-    this.dynamiteIntro = document.getElementById('dynamiteintro');
-    this.backerIntro = document.getElementById('backerintro');
-    this.strikeIntro = document.getElementById('strikeintro');
-    this.intros = [this.drillIntro, this.dynamiteIntro, this.backerIntro, this.strikeIntro];
+    this.drillGame     = document.getElementById('drillgame');
+    this.drillVid      = document.getElementById('drillvid');
+    this.drillIntro    = document.getElementById('drillintro');
+    this.drillActivity = document.getElementById('drillactivity');
+    this.drillGuru     = document.getElementById('drillguru');
 
-    this.currentGameName = "";
-    this.drillGameName = "driller";
-    this.dynamiteGameName = "blaster";
-    this.backerGameName = "barman";
-    this.strikeGameName = "strike";
-    this.gameNames = [this.drillGameName, this.dynamiteGameName, this.backerGameName, this.strikeGameName];
+    this.dynamiteGame     = document.getElementById('dynamitegame');
+    this.dynamiteVid      = document.getElementById('dynamitevid');
+    this.dynamiteIntro    = document.getElementById('dynamiteintro');
+    this.dynamiteActivity = document.getElementById('dynamiteactivity');
+    this.dynamiteGuru     = document.getElementById('dynamiteguru');
 
-    this.currentGame = null;
-    this.drillGame = document.getElementById('drillgame');
-    this.dynamiteGame = document.getElementById('dynamitegame');
-    this.backerGame = document.getElementById('backergame');
-    this.strikeGame = document.getElementById('strikegame');
-    this.games = [this.drillGame, this.dynamiteGame, this.backerGame, this.strikeGame];
+    this.backerGame     = document.getElementById('backergame');
+    this.backerVid      = document.getElementById('backervid');
+    this.backerIntro    = document.getElementById('backerintro');
+    this.backerActivity = document.getElementById('backeractivity');
+    this.backerGuru     = document.getElementById('backerguru');
+
+    this.strikeGame     = document.getElementById('strikegame');
+    this.strikeVid      = document.getElementById('strikevid');
+    this.strikeIntro    = document.getElementById('strikeintro');
+    this.strikeActivity = document.getElementById('strikeactivity');
+    this.strikeGuru     = document.getElementById('strikeguru');
+
+    this.games      = [this.drillGame,     this.dynamiteGame,     this.backerGame,     this.strikeGame];
+    this.vids       = [this.drillVid,      this.dynamiteVid,      this.backerVid,      this.strikeVid];
+    this.intros     = [this.drillIntro,    this.dynamiteIntro,    this.backerIntro,    this.strikeIntro];
+    this.activities = [this.drillActivity, this.dynamiteActivity, this.backerActivity, this.strikeActivity];
+    this.gurus      = [this.drillGuru,     this.dynamiteGuru,     this.backerGuru,     this.strikeGuru];
 
     //These 'views' are injected into the current game
     this.notice = document.createElement('div');
     this.notice.setAttribute('id','notice');
     this.notice.fade = 0; //0-120
-    document.getElementById('games').appendChild(this.notice);
 
     this.fail = document.createElement('div');
     this.fail.setAttribute('id','fail');
@@ -42,41 +50,68 @@ var IronMineView = function()
     this.failFG.setAttribute('id','failFG');
     this.fail.appendChild(this.failBG);
     this.fail.appendChild(this.failFG);
-    document.getElementById('games').appendChild(this.fail);
 
-    this.HUDbg = document.createElement('img');
-    this.HUDbg.setAttribute('src','assets/money_back.png');
-    this.HUDbg.style.width='90px';
-    this.HUDbg.style.position='absolute';
+    this.hud = document.createElement('div');
+    this.hud.setAttribute('id','hud');
     this.haveDisplay = document.createElement('div');
     this.haveDisplay.setAttribute('id','havedisplay');
-    this.haveDisplay.setAttribute('class','display');
     this.haveDisplay.innerHTML = '$0.00';
     this.wantDisplay = document.createElement('div');
     this.wantDisplay.setAttribute('id','wantdisplay');
-    this.wantDisplay.setAttribute('class','display');
     this.wantDisplay.innerHTML = 'GOAL: $0.00';
-
-    this.currentHud = null;
-    this.drillHUD = document.getElementById('drillhud');
-    this.dynamiteHUD = document.getElementById('dynamitehud');
-    this.backerHUD = document.getElementById('backerhud');
-    this.strikeHUD = document.getElementById('strikehud');
-    this.HUDs = [this.drillHUD, this.dynamiteHUD, this.backerHUD, this.backerHUD];
+    this.hud.appendChild(this.haveDisplay);
+    this.hud.appendChild(this.wantDisplay);
 
     this.displayGame = function(game)
     {
-        this.currentIntro = this.intros[game];
-        this.currentIntro.style.display = 'block';
-        this.currentGameName = this.gameNames[game];
-        this.currentGame = this.games[game];
+        document.getElementById('loading').style.display = 'none';
+
+        if(this.currentGame)     this.currentGame.style.display     = 'none';
+        if(this.currentVid)      this.currentVid.style.display      = 'none';
+        if(this.currentIntro)    this.currentIntro.style.display    = 'none';
+        if(this.currentActivity) this.currentActivity.style.display = 'none';
+        if(this.currentGuru)     this.currentGuru.style.display     = 'none';
+
+        this.currentGame     = this.games[game];
+        this.currentVid      = this.vids[game];
+        this.currentIntro    = this.intros[game];
+        this.currentActivity = this.activities[game];
+        this.currentGuru     = this.gurus[game];
+
         this.currentGame.style.display = 'block';
-        this.currentHUD = this.HUDs[game];
-        this.currentHUD.appendChild(this.HUDbg);
-        this.currentHUD.appendChild(this.haveDisplay);
-        this.currentHUD.appendChild(this.wantDisplay);
-        this.failBG.src = "assets/"+this.currentGameName+"gifback.png";
-        this.failFG.src = "assets/"+this.currentGameName+".gif";
+        this.currentActivity.appendChild(this.hud);
+    }
+
+    this.displayVid = function()
+    {
+        if(this.currentVid)      this.currentVid.style.display      = 'block';
+        if(this.currentIntro)    this.currentIntro.style.display    = 'none';
+        if(this.currentActivity) this.currentActivity.style.display = 'none';
+        if(this.currentGuru)     this.currentGuru.style.display     = 'none';
+    }
+
+    this.displayIntro = function()
+    {
+        if(this.currentVid)      this.currentVid.style.display      = 'none';
+        if(this.currentIntro)    this.currentIntro.style.display    = 'block';
+        if(this.currentActivity) this.currentActivity.style.display = 'none';
+        if(this.currentGuru)     this.currentGuru.style.display     = 'none';
+    }
+
+    this.displayActivity = function()
+    {
+        if(this.currentVid)      this.currentVid.style.display      = 'none';
+        if(this.currentIntro)    this.currentIntro.style.display    = 'none';
+        if(this.currentActivity) this.currentActivity.style.display = 'block';
+        if(this.currentGuru)     this.currentGuru.style.display     = 'none';
+    }
+
+    this.displayGuru = function()
+    {
+        if(this.currentVid)      this.currentVid.style.display      = 'none';
+        if(this.currentIntro)    this.currentIntro.style.display    = 'none';
+        if(this.currentActivity) this.currentActivity.style.display = 'none';
+        if(this.currentGuru)     this.currentGuru.style.display     = 'block';
     }
 
     this.displayNotice = function(notice)
@@ -145,19 +180,5 @@ var IronMineView = function()
         this.failFG.style.opacity = '0.0';
         this.fail.style.display = 'none';
     }
-
-    this.setScene = function(scene)
-    {
-        for(var i = 0; i < this.scenes.length-1; i++) this.scenes[i].style.display = 'none';
-        this.currentScene = scene;
-        if(scene != null) scene.style.display = 'block';
-    }
-
-    this.nextScene = function()
-    {
-        for(var i = 0; i < this.scenes.length-1; i++)
-            if(this.scenes[i] == this.currentScene) { this.setScene(this.scenes[i+1]); break; }
-
-        if(this.currentScene == null) this.setScene(this.scenes[0]);
-    }
 }
+

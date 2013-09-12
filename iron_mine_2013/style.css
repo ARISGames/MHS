@@ -10,22 +10,7 @@
     src:url('fonts/Gotham/Gotham-Black.otf');
 }
 
-body
-{
-    -webkit-user-select:none;
-    user-select:none;
-    font-family:archer_font;
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:320px;
-    height:416px;
-    padding:0px;
-    margin:0px;
-    overflow:hidden;
-}
-
-div
+div,span,html,body
 {
     /*
     border:1px solid black;
@@ -34,49 +19,91 @@ div
     margin:0px;
 }
 
-.scene
+body
 {
-    position:relative;
-    display:none;
-    width:100%;
-    height:100%;
-    margin:0px;
-    padding:0px;
-    background-color:#F0F0F0;
-    background-image:url("assets/background.png");
-    background-size:320px 416px;
+    user-select:none;
+    -webkit-user-select:none;
+    font-family:archer_font;
 }
 
-.intro
+.full_screen
 {
-    display:none;
-}
-
-.role
-{
-    display:block;
-    width:276px;
-    margin:0px auto;
-    position:relative;
-    top:20px;
-}
-
-.right_arrow
-{
-    width:42px;
+    width:320px;
+    height:504px;
     position:absolute;
-    bottom:10px;
-    right:10px;
-}
-
-.video
-{
-    display:none;
+    top:0px;
+    left:0px;
+    overflow:hidden;
+    background-size:320px 504px;
 }
 
 .game
 {
     display:none;
+}
+
+.vid
+{
+    display:none;
+}
+
+.intro
+{
+    display:none;
+    background-color:rgba(105,80,15,0.6);
+}
+
+.activity
+{
+    display:none;
+}
+
+.guru
+{
+    display:none;
+}
+
+#hud
+{
+    width:320px;
+    height:110px;
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+
+#havedisplay
+{
+    width:320px;
+    height:90px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    font-size:80px;
+    font-family:gotham_font;
+    color:#DB9D22;
+    text-shadow:5px 5px 10px #000000;
+    text-align:center;
+    vertical-align:middle;
+    /*background-color:rgba(219,157,34,0.5); same yellow as text color, half alpha */
+    background-color:rgba(105,80,15,0.6);
+}
+
+#wantdisplay
+{
+    width:200px;
+    height:20px;
+    position:absolute;
+    top:90px;
+    left:0px;
+    font-size:x-large;
+    font-family:gotham_font;
+    color:#DB9D22;
+}
+
+.drill_bg
+{
+    background-image:url("assets/drill_bg_gray.png");
 }
 
 #fail
@@ -116,51 +143,29 @@ div
     display:none;
 }
 
-.hud
+.prompt
 {
-    width:90px;
-    position:absolute;
-    top:20px;
-    right:20px;
-}
-
-#havedisplay
-{
-    position:absolute;
-    top:0px;
-    left:9px;
-    font-size:xx-large;
-    color:white;
-}
-
-#wantdisplay
-{
-    position:absolute;
-    top:36px;
-    left:10px;
-    font-size:small;
-    color:white;
-}
-
-.display
-{
-
-}
-
-.activity
-{
+    display:block;
     position:absolute;
     top:0px;
     left:0px;
     width:320px;
-    height:416px;
+}
+
+.introimage
+{
+    display:block;
+    position:absolute;
+    top:20px;
+    left:50px;
+    width:320px;
 }
 
 .overlay
 {
     position:absolute;
     width:320px;
-    height:416px;
+    height:504px;
     background-color:rgba(70,70,70,0.8);
     display:none;
 }
@@ -174,82 +179,23 @@ div
 {
 }
 
-#drillalertintro
+#drillimagecontainer
 {
-    display:block;
-    width:290px;
-    position:relative;
-    top:110px;
-}
-
-#drillalertarrow
-{
-    display:block;
-    width:42px;
-    position:relative;
-    top:50px;
-}
-
-#drillbit
-{
-    width:16px;
+    width:306px;
     position:absolute;
-    left:180px;
-    bottom:-347px;
+    top:150px;
+    left:7px;
 }
 
-#drillprompts
+#drillimage
 {
+    display:block;
     position:absolute;
     top:0px;
-    left:10px;
-}
-
-.drillprompt
-{
-    width:110px;
-    position:absolute;
     left:0px;
-    text-align:right;
-    font-size:large;
-    color:white;
+    width:306px;
 }
 
-#drilllights
-{
-    width:60px;
-    position:absolute;
-    top:0px;
-    left:120px;
-}
-
-.drilllight
-{
-    width:57px;
-    position:absolute;
-    left:0px;
-}
-
-#drillmeter
-{
-    position:relative;
-}
-
-#dynamitealertintro
-{
-    display:block;
-    width:290px;
-    position:relative;
-    top:110px;
-}
-
-#dynamitealertarrow
-{
-    display:block;
-    width:42px;
-    position:relative;
-    top:50px;
-}
 #dynamiteholes
 {
     position:absolute;

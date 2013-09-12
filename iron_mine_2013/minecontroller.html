@@ -37,6 +37,18 @@
     <div class='game'>
         <div class='gametitle'>DRILL</div>
         <div class='instance'>
+	    <div class='instancetitle'>0 (debug)</div>
+	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','3545_DRILL_STARTED','x');"></input><br />
+	    <input type="button" value = "Stop Drill" onmouseup="sendRequest('private-default-channel','3545_DRILL_STOPPED','x');"></input><br />
+	    <input type="button" value="Light 1" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','1');"></input><br />
+	    <input type="button" value="Light 2" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','2');"></input><br />
+	    <input type="button" value="Light 3" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','3');"></input><br />
+	    <input type="button" value="Light 4" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','4');"></input><br />
+	    <input type="button" value="Light 5" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','5');"></input><br />
+	    <input type="button" value="Light 6" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','6');"></input><br />
+	    <input type="button" value="Light 7" onmousedown="sendRequest('private-default-channel','3545_DRILL_LIGHT','7');"></input>
+        </div>
+        <div class='instance'>
 	    <div class='instancetitle'>1</div>
 	    <input type="button" value="Start Drill" onmousedown="sendRequest('private-default-channel','1151_DRILL_STARTED','x');"></input><br />
 	    <input type="button" value = "Stop Drill" onmouseup="sendRequest('private-default-channel','1151_DRILL_STOPPED','x');"></input><br />
@@ -87,6 +99,17 @@
     <div class='game'>
         <div class='gametitle'>DYNAMITE</div>
         <div class='instance'>
+	    <div class='instancetitle'>0(debug)</div>
+            <input id='dyna_1_1' type='button' value='1' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_1_CHANGED',true);"></input>
+            <input id='dyna_1_2' type='button' value='2' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_2_CHANGED',true);"></input>
+            <input id='dyna_1_3' type='button' value='3' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_3_CHANGED',true);"></input>
+            <input id='dyna_1_4' type='button' value='4' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_4_CHANGED',true);"></input>
+            <input id='dyna_1_5' type='button' value='5' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_5_CHANGED',true);"></input>
+            <input id='dyna_1_6' type='button' value='6' onClick="sendRequest('private-default-channel','3548_DYNAMITE_SLOT_6_CHANGED',true);"></input>
+	    <input type="button" value="Green Light" onClick="sendRequest('private-default-channel','3548_PLUNGER_READY','x');"></input>
+	    <input type="button" value="Press Plunger" onClick="sendRequest('private-default-channel','3548_PLUNGER_PRESSED','x');"></input>
+        </div>
+        <div class='instance'>
 	    <div class='instancetitle'>1</div>
             <input id='dyna_1_1' type='button' value='1' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_1_CHANGED',true);"></input>
             <input id='dyna_1_2' type='button' value='2' onClick="sendRequest('private-default-channel','1155_DYNAMITE_SLOT_2_CHANGED',true);"></input>
@@ -113,6 +136,14 @@
     </div>
     <div class='game'>
         <div class='gametitle'>BACKMAN</div>
+        <div class='instance'>
+	    <div class='instancetitle'>0(debug)</div>
+	    <input type="button" value="Poke" onClick="sendRequest('private-default-channel','3555_POKED','x');"></input>
+	    <input type="button" value="Rumble 1" onClick="sendRequest('private-default-channel','3555_RUMBLE','1');"></input>
+	    <input type="button" value="Rumble 2" onClick="sendRequest('private-default-channel','3555_RUMBLE','2');"></input>
+	    <input type="button" value="Rumble 3" onClick="sendRequest('private-default-channel','3555_RUMBLE','3');"></input>
+	    <input type="button" value="Cave" onClick="sendRequest('private-default-channel','3555_CAVE','x');"></input>
+        </div>
         <div class='instance'>
 	    <div class='instancetitle'>1</div>
 	    <input type="button" value="Poke" onClick="sendRequest('private-default-channel','1160_POKED','x');"></input>

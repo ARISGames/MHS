@@ -1,5 +1,7 @@
 var IronMineView = function()
 {
+    var self = this;
+
     this.currentGame     = null;
     this.currentVid      = null;
     this.currentIntro    = null;
@@ -43,9 +45,10 @@ var IronMineView = function()
     this.gurutalks  = [this.drillGuruTalk, this.dynamiteGuruTalk, this.backerGuruTalk, this.strikeGuruTalk];
 
     //These 'views' are injected into the current game
-    this.notice = document.createElement('div');
-    this.notice.setAttribute('id','notice');
-    this.notice.fade = 0; //0-120
+    this.moneydelta = document.createElement('div');
+    this.moneydelta.setAttribute('id','moneydelta');
+    this.moneydelta.fade = 0; //0-120
+    this.moneydelta.delta = 0;
 
     this.hud = document.createElement('div');
     this.hud.setAttribute('id','hud');
@@ -57,6 +60,7 @@ var IronMineView = function()
     this.wantDisplay.innerHTML = 'GOAL: $0.00';
     this.hud.appendChild(this.haveDisplay);
     this.hud.appendChild(this.wantDisplay);
+    this.hud.appendChild(this.moneydelta);
 
     this.failHUD    = function() { this.haveDisplay.style.color = "#C42032"; }
     this.neutralHUD = function() { this.haveDisplay.style.color = "#EDB11F"; }
@@ -121,31 +125,49 @@ var IronMineView = function()
         if(this.currentGuru) this.currentGuru.style.display = 'none';
     }
 
-    this.displayNotice = function(notice)
+    this.displayMoneyDelta = function(delta)
     {
+        if(delta == 0) return;
+
         var alreadyTicking = false;
-        this.notice.innerHTML = notice;
-        if(this.notice.fade != 0) alreadyTicking = true;
-        this.notice.fade = 120;
-        this.notice.style.display = 'block';
-        if(!alreadyTicking) tickNotice();
+        
+        if(delta > 0) self.moneydelta.style.color = "#009344";
+        else          self.moneydelta.style.color = "#C42032";
+        self.moneydelta.delta = delta;
+
+        if(delta < 0) delta *= -1;//so we can parse it to text without worrying about - signs
+        self.moneydelta.innerHTML = (self.moneydelta.delta > 0 ? '+$' : '-$')+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
+        if(self.moneydelta.fade != 0) alreadyTicking = true;
+        self.moneydelta.fade = 120;
+        self.moneydelta.style.display = 'block';
+        if(!alreadyTicking) tickmoneydelta();
     }
 
-    var tickNotice = function()
+    var tickmoneydelta = function()
     {
-        this.notice.style.color = 'rgba(255,255,255,'+(this.notice.fade/120)+')';
-        this.notice.fade--;
-        if(this.notice.fade > 0)
-            setTimeout(tickNotice, 10);
+        if(self.moneydelta.delta > 0)
+        {
+            self.moneydelta.style.color = "rgba(0,147,68,"+(self.moneydelta.fade/120)+")";
+            self.moneydelta.style.top = -1/2*(120-self.moneydelta.fade)+'px';
+        }
         else
-            hideNotice();
+        {
+            self.moneydelta.style.color = "rgba(196,32,50,"+(self.moneydelta.fade/120)+")";
+            self.moneydelta.style.top = 1/2*(120-self.moneydelta.fade)+'px';
+        }
+
+        self.moneydelta.fade--;
+        if(self.moneydelta.fade > 0)
+            setTimeout(tickmoneydelta, 10);
+        else
+            hidemoneydelta();
     }
 
-    var hideNotice = function()
+    var hidemoneydelta = function()
     {
-        this.notice.fade = 0;
-        this.notice.style.color = 'rgba(255,255,255,0.0)';
-        this.notice.style.display = 'none';
+        self.moneydelta.fade = 0;
+        self.moneydelta.style.color = 'rgba(255,255,255,0.0)';
+        self.moneydelta.style.display = 'none';
     }
 
 }

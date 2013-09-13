@@ -49,14 +49,19 @@ MHS Iron Mine
         ARIS.didUpdateItemQty = function(updatedItemId, qty)
         {
             if(updatedItemId == imm.ITEM_ID_MONEY)
-                imm.money = qty;
-            //Formats money as '$x.xx' for all edge cases
-            imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
-            if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
             {
-                ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
-                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
-                setTimeout(function(){ARIS.closeMe();},1000);
+                var delta = qty-imm.money;
+                imm.money = qty;
+
+                imv.displayMoneyDelta(delta);
+                //Formats money as '$x.xx' for all edge cases
+                imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
+                if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
+                {
+                    ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
+                    ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
+                    setTimeout(function(){ARIS.closeMe();},1000);
+                }
             }
         }
 

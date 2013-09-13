@@ -146,15 +146,20 @@ body
     width:200px;
 }
 
-#notice
+#moneydelta
 {
-    width:100%;
-    text-align:center;
-    font-size:xx-large;
-    color:rgba(255,255,255,1.0);
-    position:absolute;
-    top:100px;
     display:none;
+    width:320px;
+    height:90px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    font-size:70px;
+    font-family:gotham_font;
+    color:#EDB11F;
+    text-align:center;
+    vertical-align:middle;
+    overflow:visible;
 }
 
 .introprompt

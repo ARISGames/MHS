@@ -43,17 +43,36 @@ var DrillGame = function()
         }
         else
         {
-            var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
-            if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
-            if(lastReceivedLight == greenLight) { ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive); imv.displayNotice("You've gained "+moneyToReceive+" cents!"); }
-            else if(lastReceivedLight < 2) ; //Do nothing / give em a freebie for being so shallow
-            else { if(imm.money < moneyLost) imm.money = moneyLost; ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost); imv.displayFail("You've lost "+moneyLost+" cents!"); } //<- trust this
+            imv.displayGuruWithMessage("I have a moustache!");
+
+            if(lastReceivedLight == greenLight) succeed();
+            else if(lastReceivedLight < 2)      ; //Do nothing / give em a freebie for being so shallow
+            else                                fail();
             lastReceivedLight = 0;
         }
     }
 
+    function succeed()
+    {
+        imv.successHUD();
+        drillImage.src = 'assets/drill_green.png';
+        var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
+        if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
+
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+    }
+
+    function fail()
+    {
+        imv.failHUD();
+        drillImage.src = 'assets/drill_red.png';
+        if(imm.money < moneyLost) imm.money = moneyLost;
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+    }
+
     this.drillStarted = function(data)
     {
+        imv.neutralHUD();
         drillImage.src = 'assets/drill_yellow.png';
         drillOn = true;
         shakeDrill();

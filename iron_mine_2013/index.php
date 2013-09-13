@@ -56,9 +56,7 @@ MHS Iron Mine
             {
                 ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
                 ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
-                document.getElementById('congratsoverlay'+imm.currentLevel).style.display = 'block';
-                document.getElementById('congrats').style.display = 'block';
-                document.getElementById('drillbit').style.display = 'none';
+                setTimeout(function(){ARIS.closeMe();},1000);
             }
         }
 
@@ -109,9 +107,13 @@ MHS Iron Mine
     <div id='drillgame' class='game drill_bg full_screen'>
         <div id='drillvid' class='vid'></div>
         <div id='drillintro' class='intro full_screen'>
-            <img id='drillprompt' src='assets/drillprompt.png' class='prompt'>
+            <img src='assets/drill_prompt.png' class='introprompt' />
             <img src='assets/anton.png' class='introimage' />
-            <div id='drillintrodialog' class='introdialog'>
+            <div class='introdialog'>
+                Hey Kid, I'm Anton Antilla, I came from Finland when I was 17. So you're my new drilling partner huh? Earn $2 for today's 10 hour day by drilling to the right depth. Watch out, the company will fine you money if you mess up and drill too (?) <br />
+            </div>
+            <div class='bottombutton' onclick='imv.displayActivity();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
         <div id='drillactivity' class='activity full_screen'>
@@ -121,28 +123,43 @@ MHS Iron Mine
         </div>
         <div id='drillguru' class='guru full_screen'>
             <img src='assets/anton.png' class='guruimage'>
-            <div id='drilldialog' class='gurudialog'>
+            <div id='drillgurutalk' class='gurutalk'></div>
+            <div class='bottombutton' onclick='imv.hideGuru();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
     </div>
 
-    <div id='dynamitegame' class='game dynamite_bg full_screen'>
+    <div id='dynamitegame' class='game full_screen'> <!-- class will be dynamite_left_bg OR dynamite_right_bg (depending on station). set in javascript -->
+        <div id='dynamitevid' class='vid'></div>
+        <div id='dynamiteintro' class='intro full_screen'>
+            <img src='assets/dynamite_prompt.png' class='introprompt' />
+            <img src='assets/matti.png' class='introimage' />
+            <div class='introdialog'>
+                Hei, miten menee, I'm Matti Pelta, I came from Finland a few years ago. So you're my new blasting partner huh? Earn $2 for today's 10 hour day by blowing up the rock so we can get to the ore. Watch out, the company will fine you money if you mess this up! <br />
+            </div>
+            <div class='bottombutton' onclick='imv.displayActivity();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
+        </div>
         <div id='dynamiteactivity' class='activity'>
             <div id='dynamiteholes' >
-                <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px;  left:0px;' />
-                <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; left:60px;' />
-                <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; left:90px;' />
-                <img id='dynamitehole4' class='dynamitehole' src='assets/dynamite_black.png' style='top:20px; right:90px;' />
-                <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_black.png' style='top:70px; right:60px;' />
-                <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_black.png' style='top:0px;  right:0px;' />
+                <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
+                <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
+                <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
+                <img id='dynamitehole4' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
+                <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
+                <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
             </div>
-            <img id='dynamiteindicator' src='assets/blaster_instruction_load.png' />
+            <img id='dynamiteindicator' src='assets/dynamite_load_instr.png' />
         </div>
-        <div id='dynamiteoverlayintro' class='overlay' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'>
-            <img id='dynamitealertintro' class='alert' src='assets/load_dynamite_splash.png' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'/>
-            <img id='dynamitealertarrow' class='alert' src='assets/right_arrow.png' onclick='document.getElementById("dynamiteoverlayintro").style.display = "none";'/>
+        <div id='dynamiteguru' class='guru full_screen'>
+            <img src='assets/matti.png' class='guruimage'>
+            <div id='dynamitegurutalk' class='gurutalk'></div>
+            <div class='bottombutton' onclick='imv.hideGuru();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow'>
+            </div>
         </div>
-        <div id='dynamitedebug' class='debug'></div>
     </div>
 
     <div id='backergame' class='game backer_bg full_screen'>
@@ -162,18 +179,6 @@ MHS Iron Mine
             <div id='strike_other_portraits'>Strikers:<br /></div>
         </div>
         <div id='strikedebug' class='debug'></div>
-    </div>
-
-    <div id='congrats' class='full_screen' onclick='ARIS.closeMe();'>
-        <div id='congratsoverlay1' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
-            <img id='congratsalert1' class='congratsalert alert' src='assets/level_one_splash.png' onclick='ARIS.closeMe();'/>
-        </div>
-        <div id='congratsoverlay2' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
-            <img id='congratsalert2' class='congratsalert alert' src='assets/level_two_splash.png' onclick='ARIS.closeMe();'/>
-        </div>
-        <div id='congratsoverlay3' class='congratsoverlay overlay' onclick='ARIS.closeMe();'>
-            <img id='congratsalert3' class='congratsalert alert' src='assets/level_three_splash.png' onclick='ARIS.closeMe();'/>
-        </div>
     </div>
 
 </body>

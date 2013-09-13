@@ -50,7 +50,7 @@ body
 .intro
 {
     display:none;
-    background-color:rgba(105,80,15,0.6);
+    background-color:rgba(237,177,31,0.5);
 }
 
 .activity
@@ -81,12 +81,11 @@ body
     left:0px;
     font-size:80px;
     font-family:gotham_font;
-    color:#DB9D22;
+    color:#EDB11F;
     text-shadow:5px 5px 10px #000000;
     text-align:center;
     vertical-align:middle;
-    /*background-color:rgba(219,157,34,0.5); same yellow as text color, half alpha */
-    background-color:rgba(105,80,15,0.6);
+    background-color:rgba(237,177,31,0.5);
 }
 
 #wantdisplay
@@ -98,12 +97,22 @@ body
     left:0px;
     font-size:x-large;
     font-family:gotham_font;
-    color:#DB9D22;
+    color:#EDB11F;
 }
 
 .drill_bg
 {
-    background-image:url("assets/drill_bg_gray.png");
+    background-image:url("assets/drill_bg.png");
+}
+
+.dynamite_left_bg
+{
+    background-image:url("assets/dynamite_left_bg.png");
+}
+
+.dynamite_right_bg
+{
+    background-image:url("assets/dynamite_right_bg.png");
 }
 
 #fail
@@ -143,22 +152,75 @@ body
     display:none;
 }
 
-.prompt
+.introprompt
 {
     display:block;
+    width:320px;
     position:absolute;
     top:0px;
     left:0px;
-    width:320px;
 }
 
 .introimage
 {
     display:block;
+    width:320px;
     position:absolute;
     top:20px;
     left:50px;
+}
+
+.introdialog
+{
+    width:300px;
+    height:100px;
+    position:absolute;
+    left:0px;
+    bottom:44px;
+    padding:10px;
+    overflow:scroll;
+    background-color:rgba(255,255,255,0.9);
+}
+
+.bottombutton
+{
     width:320px;
+    height:44px;
+    position:absolute;
+    left:0px;
+    bottom:0px;
+    border-top:1px solid gray;
+    background-color:rgba(255,255,255,0.9);
+}
+
+.forwardarrow
+{
+    display:block;
+    width:24px;
+    position:absolute;
+    right:10px;
+    bottom:10px;
+}
+
+.guruimage
+{
+    display:block;
+    width:320px;
+    position:absolute;
+    bottom:-100px;
+    left:50px;
+}
+
+.gurutalk
+{
+    width:300px;
+    height:100px;
+    position:absolute;
+    left:0px;
+    bottom:44px;
+    padding:10px;
+    overflow:scroll;
+    background-color:rgba(255,255,255,0.9);
 }
 
 .overlay
@@ -173,10 +235,6 @@ body
 .alert
 {
     margin:0px auto;
-}
-
-#drillactivity
-{
 }
 
 #drillimagecontainer
@@ -206,16 +264,18 @@ body
 
 .dynamitehole
 {
+    display:none;
+    width:30px;
+    height:30px;
     position:absolute;
-    width:71px;
 }
 
 #dynamiteindicator
 {
     display:block;
-    width:300px;
+    width:320px;
     position:absolute;
-    left:10px;
+    left:00px;
     bottom:100px;
 }
 

@@ -105,7 +105,12 @@ MHS Iron Mine
     <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 
     <div id='drillgame' class='game drill_bg full_screen'>
-        <div id='drillvid' class='vid'></div>
+        <div id='drillvid' class='vid'>
+            (video here)
+            <div class='bottombutton' onclick='imv.displayIntro();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
+        </div>
         <div id='drillintro' class='intro full_screen'>
             <img src='assets/drill_prompt.png' class='introprompt' />
             <img src='assets/anton.png' class='introimage' />
@@ -131,7 +136,12 @@ MHS Iron Mine
     </div>
 
     <div id='dynamitegame' class='game full_screen'> <!-- class will be dynamite_left_bg OR dynamite_right_bg (depending on station). set in javascript -->
-        <div id='dynamitevid' class='vid'></div>
+        <div id='dynamitevid' class='vid'>
+            (video here)
+            <div class='bottombutton' onclick='imv.displayIntro();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
+        </div>
         <div id='dynamiteintro' class='intro full_screen'>
             <img src='assets/dynamite_prompt.png' class='introprompt' />
             <img src='assets/matti.png' class='introimage' />
@@ -143,7 +153,7 @@ MHS Iron Mine
             </div>
         </div>
         <div id='dynamiteactivity' class='activity'>
-            <div id='dynamiteholes' >
+            <div id='dynamiteholes'>
                 <img id='dynamitehole1' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
                 <img id='dynamitehole2' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
                 <img id='dynamitehole3' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
@@ -157,15 +167,40 @@ MHS Iron Mine
             <img src='assets/matti.png' class='guruimage'>
             <div id='dynamitegurutalk' class='gurutalk'></div>
             <div class='bottombutton' onclick='imv.hideGuru();'>
-                <img src='assets/forward_arrow.png' class='forwardarrow'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
     </div>
 
     <div id='backergame' class='game backer_bg full_screen'>
-        <div id='backeractivity' class='activity'>
+        <div id='backervid' class='vid'>
+            (video here)
+            <div class='bottombutton' onclick='imv.displayIntro();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
         </div>
-        <div id='backerdebug' class='debug'></div>
+        <div id='backerintro' class='intro full_screen'>
+            <img src='assets/backer_prompt.png' class='introprompt' />
+            <img src='assets/mike.png' class='introimage' />
+            <div class='introdialog'>
+                Pozdravljeni, My name's Mike Zakotnik, I came from Yugoslavia when I was 14 years old. So you're my new partner, huh? We can each earn $2...
+            </div>
+            <div class='bottombutton' onclick='imv.displayActivity();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
+        </div>
+        <div id='backeractivity' class='activity'>
+            <img id='backerrocks' src='assets/backer_rocks_safe.png' />
+            <img id='backerpoleleft'  class='backerpole' src='assets/backer_pole_left.png' />
+            <img id='backerpoleright' class='backerpole' src='assets/backer_pole_right.png' />
+        </div>
+        <div id='backerguru' class='guru full_screen'>
+            <img src='assets/mike.png' class='guruimage'>
+            <div id='backergurutalk' class='gurutalk'></div>
+            <div class='bottombutton' onclick='imv.hideGuru();'>
+                <img src='assets/forward_arrow.png' class='forwardarrow' />
+            </div>
+        </div>
     </div>
 
     <div id='strikegame' class='game strike_bg full_screen'>

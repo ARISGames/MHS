@@ -115,6 +115,11 @@ body
     background-image:url("assets/dynamite_right_bg.png");
 }
 
+.backer_bg
+{
+    background-image:url("assets/backer_bg.png");
+}
+
 #fail
 {
     width:100%;
@@ -207,7 +212,7 @@ body
     display:block;
     width:320px;
     position:absolute;
-    bottom:-100px;
+    top:150px;
     left:50px;
 }
 
@@ -275,8 +280,36 @@ body
     display:block;
     width:320px;
     position:absolute;
-    left:00px;
+    left:0px;
     bottom:100px;
+}
+
+#backerrocks
+{
+    display:block;
+    width:320px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.backerpole
+{
+    display:block;
+    position:absolute;
+    top:150px;
+}
+
+#backerpoleleft
+{
+    left:67px;
+    width:56px;
+}
+
+#backerpoleright
+{
+    left:171px;
+    width:111px;
 }
 
 #strike_you_portrait

@@ -43,8 +43,6 @@ var DrillGame = function()
         }
         else
         {
-            imv.displayGuruWithMessage("I have a moustache!");
-
             if(lastReceivedLight == greenLight) succeed();
             else if(lastReceivedLight < 2)      ; //Do nothing / give em a freebie for being so shallow
             else                                fail();
@@ -54,6 +52,8 @@ var DrillGame = function()
 
     function succeed()
     {
+        imv.displayGuruWithMessage("I have a moustache! Hooray!");
+
         imv.successHUD();
         drillImage.src = 'assets/drill_green.png';
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
@@ -64,13 +64,15 @@ var DrillGame = function()
 
     function fail()
     {
+        imv.displayGuruWithMessage("I have a moustache! BOO!");
+
         imv.failHUD();
         drillImage.src = 'assets/drill_red.png';
         if(imm.money < moneyLost) imm.money = moneyLost;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
     }
 
-    this.drillStarted = function(data)
+    var drillStarted = function(data)
     {
         imv.neutralHUD();
         drillImage.src = 'assets/drill_yellow.png';
@@ -78,18 +80,18 @@ var DrillGame = function()
         shakeDrill();
     }
 
-    this.drillStopped = function(data)
+    var drillStopped = function(data)
     {
         drillOn = false;
     }
 
-    this.drillLit = function(data)
+    var drillLit = function(data)
     {
         lastReceivedLight = parseInt(data);
-        if(lastReceivedLight == 1) self.drillStarted();
+        if(lastReceivedLight == 1) drillStarted();
     }
 
     this.events = [imm.stationId+'_DRILL_STARTED',imm.stationId+'_DRILL_STOPPED',imm.stationId+'_DRILL_LIGHT'];
-    this.callbacks = [this.drillStarted, this.drillStopped, this.drillLit];
+    this.callbacks = [drillStarted, drillStopped, drillLit];
 }
 

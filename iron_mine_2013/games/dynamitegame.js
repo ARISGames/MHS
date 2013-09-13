@@ -179,6 +179,8 @@ var DynamiteGame = function()
 
     function succeed()
     {
+        imv.displayGuruWithMessage("I have a moustache! Hooray!");
+
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
@@ -188,6 +190,8 @@ var DynamiteGame = function()
 
     function fail()
     { 
+        imv.displayGuruWithMessage("I have a moustache! BOO!");
+
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost; 
 

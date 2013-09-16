@@ -300,18 +300,25 @@ body
 
 .backerpole
 {
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.backerpoleimage
+{
     display:block;
     position:absolute;
     top:150px;
 }
 
-#backerpoleleft
+#backerpoleleftimage
 {
     left:67px;
     width:56px;
 }
 
-#backerpoleright
+#backerpolerightimage
 {
     left:171px;
     width:111px;

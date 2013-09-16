@@ -196,8 +196,8 @@ MHS Iron Mine
         </div>
         <div id='backeractivity' class='activity'>
             <img id='backerrocks' src='assets/backer_rocks_safe.png' />
-            <img id='backerpoleleft'  class='backerpole' src='assets/backer_pole_left.png' />
-            <img id='backerpoleright' class='backerpole' src='assets/backer_pole_right.png' />
+            <div id='backerpoleleft'  class='backerpole'> <img id='backerpoleleftimage'  class='backerpoleimage' src='assets/backer_pole_left.png' />  </div>
+            <div id='backerpoleright' class='backerpole'> <img id='backerpolerightimage' class='backerpoleimage' src='assets/backer_pole_right.png' /> </div>
         </div>
         <div id='backerguru' class='guru full_screen'>
             <img src='assets/mike.png' class='guruimage'>

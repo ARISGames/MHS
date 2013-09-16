@@ -2,8 +2,9 @@ var BackerGame = function()
 {
     var self = this;
 
-    var leftpoker = document.getElementById('backerPoleLeft');
-    var rightpoker = document.getElementById('backerPoleRight');
+    var rocks      = document.getElementById('backerrocks');
+    var leftpoker  = document.getElementById('backerpoleleft');
+    var rightpoker = document.getElementById('backerpoleright');
 
     var moneyReceived = 100;
     var minMoneyReceived = 15;
@@ -37,38 +38,57 @@ var BackerGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
     }
 
-    var leftVibeTime;
-    var rightVibeTime;
+    var leftVibeTime  = 0;
+    var rightVibeTime = 0;
     var poked = function(data)
     {
         imv.neutralHUD();
-        if(data == 1) rightVibeTime = 100; vibeLeftPoker();
-        if(data == 2) rightVibeTime = 100; vibeRightPoker();
+        rocks.src = 'assets/backer_rocks_safe.png';
+        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 20; if(!alreadyVibing) vibeLeftPoker();  }
+        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 20; if(!alreadyVibing) vibeRightPoker(); }
     }
 
     function vibeLeftPoker()
     {
-        
+        leftpoker.style.top  = ((Math.random()*10)-5)+'px';
+        leftpoker.style.left = ((Math.random()*10)-5)+'px';
+        leftVibeTime--;
+        if(leftVibeTime > 0) setTimeout(vibeLeftPoker,10); 
+        else
+        {
+            leftpoker.style.top  = '0px';
+            leftpoker.style.left = '0px';
+        }
     }
 
     function vibeRightPoker()
     {
-
+        rightpoker.style.top  = ((Math.random()*10)-5)+'px';
+        rightpoker.style.left = ((Math.random()*10)-5)+'px';
+        rightVibeTime--;
+        if(rightVibeTime > 0) setTimeout(vibeRightPoker,10); 
+        else
+        {
+            rightpoker.style.top  = '0px';
+            rightpoker.style.left = '0px';
+        }
     }
 
     var rumbled = function(data)
     {
-       succeed();
+        rocks.src = 'assets/backer_rocks_danger.png';
+        succeed();
     }
 
     var caved = function(data)
     {
+        rocks.src = 'assets/backer_rocks_danger.png';
         fail();
     }
 
-// http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_POKED
-// http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_RUMBLE&data=1
-// http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_CAVE
+    // http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_POKED
+    // http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_RUMBLE&data=1
+    // http://dev.arisgames.org/server/events/send.php?channel=private-default-channel&event=1160_CAVE
 
     this.events = [imm.stationId+'_POKED',imm.stationId+'_RUMBLE',imm.stationId+'_CAVE'];
     this.callbacks = [poked, rumbled, caved];

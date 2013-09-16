@@ -23,7 +23,7 @@ body
 {
     user-select:none;
     -webkit-user-select:none;
-    font-family:archer_font;
+    font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 
 .full_screen

@@ -61,7 +61,7 @@ var IronMineModel = function()
             if(updatedItemId == bogusEndOfQueueId)
             {
                 if(self.currentLevel < 4)
-                    imv.wantDisplay.innerHTML = 'GOAL: $'+((self.LEVEL_GOALS[self.currentLevel-1]-(self.LEVEL_GOALS[self.currentLevel-1]%100))/100)+'.'+(self.LEVEL_GOALS[self.currentLevel-1]%100 < 10 ? '0' : '')+(self.LEVEL_GOALS[self.currentLevel-1]%100);
+                    imv.wantDisplay.innerHTML = '&nbsp;&nbsp;GOAL: $'+((self.LEVEL_GOALS[self.currentLevel-1]-(self.LEVEL_GOALS[self.currentLevel-1]%100))/100)+'.'+(self.LEVEL_GOALS[self.currentLevel-1]%100 < 10 ? '0' : '')+(self.LEVEL_GOALS[self.currentLevel-1]%100);
                 else
                     self.wantDisplay = "";
                 initGame(self.stationType); //All requests have completed; ARIS state is known. Init games.

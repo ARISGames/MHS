@@ -148,8 +148,8 @@ MHS Iron Mine
             </div>
         </div>
         <div id='dynamiteintro' class='intro full_screen'>
-            <img src='assets/dynamite_prompt.png' class='introprompt' />
-            <img src='assets/matti.png' class='introimage' />
+            <img class='introprompt' src='assets/dynamite_prompt.png' />
+            <img id='dynamiteintroimage' class='introimage' src='assets/matti.png' />
             <div class='introdialog'>
                 Hei, miten menee, I'm Matti Pelta, I came from Finland a few years ago. So you're my new blasting partner huh? Earn $2 for today's 10 hour day by blowing up the rock so we can get to the ore. Watch out, the company will fine you money if you mess this up! <br />
             </div>

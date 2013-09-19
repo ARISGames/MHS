@@ -57,7 +57,7 @@ var IronMineView = function()
     this.haveDisplay.innerHTML = '$0.00';
     this.wantDisplay = document.createElement('div');
     this.wantDisplay.setAttribute('id','wantdisplay');
-    this.wantDisplay.innerHTML = 'GOAL: $0.00';
+    this.wantDisplay.innerHTML = '&nbsp;&nbsp;GOAL: $0.00';
     this.hud.appendChild(this.haveDisplay);
     this.hud.appendChild(this.wantDisplay);
     this.hud.appendChild(this.moneydelta);
@@ -171,12 +171,12 @@ var IronMineView = function()
         if(self.moneydelta.delta > 0)
         {
             self.moneydelta.style.color = "rgba(0,147,68,"+(self.moneydelta.fade/120)+")";
-            self.moneydelta.style.top = -1/2*(120-self.moneydelta.fade)+'px';
+            self.moneydelta.style.top = (200-1/2*(120-self.moneydelta.fade))+'px';
         }
         else
         {
             self.moneydelta.style.color = "rgba(196,32,50,"+(self.moneydelta.fade/120)+")";
-            self.moneydelta.style.top = 1/2*(120-self.moneydelta.fade)+'px';
+            self.moneydelta.style.top = (200+1/2*(120-self.moneydelta.fade))+'px';
         }
 
         self.moneydelta.fade--;

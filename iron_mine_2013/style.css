@@ -84,7 +84,6 @@ body
     color:#EDB11F;
     text-shadow:5px 5px 10px #000000;
     text-align:center;
-    vertical-align:middle;
     background-color:rgba(237,177,31,0.5);
 }
 
@@ -150,15 +149,14 @@ body
 {
     display:none;
     width:320px;
-    height:90px;
+    height:500px;
     position:absolute;
-    top:0px;
+    top:200px;
     left:0px;
     font-size:70px;
     font-family:gotham_font;
     color:#EDB11F;
     text-align:center;
-    vertical-align:middle;
     overflow:visible;
 }
 
@@ -262,6 +260,12 @@ body
     top:0px;
     left:0px;
     width:306px;
+}
+
+#dynamiteintroimage
+{
+    top:30px;
+    left:90px;
 }
 
 #dynamiteholes

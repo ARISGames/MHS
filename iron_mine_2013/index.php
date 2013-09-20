@@ -128,7 +128,8 @@ MHS Iron Mine
         </div>
         <div id='drillactivity' class='activity full_screen'>
             <div id='drillimagecontainer'>
-                <img id='drillimage' src='assets/drill_yellow.png' />
+                <img id='drillbgimage' src="assets/explode.png" />
+                <img id='drillimage' src='assets/drill.png' />
             </div>
             <div id='drillindicatorbanner'>DRILL NOW!</div>
         </div>

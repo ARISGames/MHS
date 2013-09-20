@@ -2,16 +2,8 @@ var DrillGame = function()
 {
     var self = this;
 
-    //Load images
-    var tmpYellowDrillImage = new Image();
-    var tmpRedDrillImage    = new Image();
-    var tmpGreenDrillImage  = new Image();
-    tmpYellowDrillImage.src = 'assets/drill_yellow.png';
-    tmpRedDrillImage.src    = 'assets/drill_red.png';
-    tmpGreenDrillImage.src  = 'assets/drill_green.png';
-    //Won't do anything with these ^, this just brings them into memory
-
-    var drillImage = document.getElementById('drillimage');
+    var drillBGImage = document.getElementById('drillbgimage');
+    var drillImage   = document.getElementById('drillimage');
     var lastReceivedLight = 0;
     var greenLight = 5;
 
@@ -67,8 +59,8 @@ var DrillGame = function()
         successCount++;
         checkGuru();
 
+        drillBGImage.style.display = "block";
         imv.successHUD();
-        drillImage.src = 'assets/drill_green.png';
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
 
@@ -80,8 +72,8 @@ var DrillGame = function()
         failCount++;
         checkGuru();
 
+        drillBGImage.style.display = "block";
         imv.failHUD();
-        drillImage.src = 'assets/drill_red.png';
         if(imm.money < moneyLost) imm.money = moneyLost;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
     }
@@ -98,8 +90,8 @@ var DrillGame = function()
 
     var drillStarted = function(data)
     {
+        drillBGImage.style.display = "none";
         imv.neutralHUD();
-        drillImage.src = 'assets/drill_yellow.png';
         drillOn = true;
         shakeDrill();
     }
@@ -111,6 +103,7 @@ var DrillGame = function()
 
     var drillLit = function(data)
     {
+        drillBGImage.style.display = "none";
         lastReceivedLight = parseInt(data);
         if(lastReceivedLight == 1) drillStarted();
     }

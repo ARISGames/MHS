@@ -47,7 +47,7 @@ var IronMineView = function()
     //These 'views' are injected into the current game
     this.moneydelta = document.createElement('div');
     this.moneydelta.setAttribute('id','moneydelta');
-    this.moneydelta.fade = 0; //0-120
+    this.moneydelta.fade = 0; //0-960
     this.moneydelta.delta = 0;
 
     this.hud = document.createElement('div');
@@ -161,7 +161,7 @@ var IronMineView = function()
         if(delta < 0) delta *= -1;//so we can parse it to text without worrying about - signs
         self.moneydelta.innerHTML = (self.moneydelta.delta > 0 ? '+$' : '-$')+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
         var alreadyTicking = (self.moneydelta.fade != 0);
-        self.moneydelta.fade = 120;
+        self.moneydelta.fade = 960;
         self.moneydelta.style.display = 'block';
         if(!alreadyTicking) tickmoneydelta();
     }
@@ -170,13 +170,13 @@ var IronMineView = function()
     {
         if(self.moneydelta.delta > 0)
         {
-            self.moneydelta.style.color = "rgba(0,147,68,"+(self.moneydelta.fade/120)+")";
-            self.moneydelta.style.top = (200-1/2*(120-self.moneydelta.fade))+'px';
+            self.moneydelta.style.color = "rgba(0,147,68,"+(self.moneydelta.fade/960)+")";
+            self.moneydelta.style.top = (200-1/8*(960-self.moneydelta.fade))+'px';
         }
         else
         {
-            self.moneydelta.style.color = "rgba(196,32,50,"+(self.moneydelta.fade/120)+")";
-            self.moneydelta.style.top = (200+1/2*(120-self.moneydelta.fade))+'px';
+            self.moneydelta.style.color = "rgba(196,32,50,"+(self.moneydelta.fade/960)+")";
+            self.moneydelta.style.top = (200+1/8*(960-self.moneydelta.fade))+'px';
         }
 
         self.moneydelta.fade--;

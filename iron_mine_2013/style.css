@@ -253,6 +253,15 @@ body
     left:7px;
 }
 
+#drillbgimage
+{
+    display:none;
+    position:absolute;
+    top:-80px;
+    left:0px;
+    width:306px;
+}
+
 #drillimage
 {
     display:block;
@@ -272,7 +281,7 @@ body
     position:absolute;
     font-size:50px;
     font-family:gotham_font;
-    color:#EDB11F;
+    color:#009344;
     text-shadow:5px 5px 10px #000000;
     text-align:center;
     left:-20px;

@@ -22,6 +22,18 @@ var DrillGame = function()
     var maxMoneyReceived = 40;
     var moneyLost = 60;
 
+    var successQuips = [
+    "Success!"
+    ];
+    var mixQuips = [
+    "OK!"
+    ];
+    var failQuips = [
+    "Fail!"
+    ];
+    var successCount = 0;
+    var failCount    = 0;
+
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
@@ -52,7 +64,8 @@ var DrillGame = function()
 
     function succeed()
     {
-        imv.displayGuruWithMessage("I have a moustache! Hooray!");
+        successCount++;
+        checkGuru();
 
         imv.successHUD();
         drillImage.src = 'assets/drill_green.png';
@@ -64,12 +77,23 @@ var DrillGame = function()
 
     function fail()
     {
-        imv.displayGuruWithMessage("I have a moustache! BOO!");
+        failCount++;
+        checkGuru();
 
         imv.failHUD();
         drillImage.src = 'assets/drill_red.png';
         if(imm.money < moneyLost) imm.money = moneyLost;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+    }
+
+    function checkGuru()
+    {
+        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        {
+                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
+            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
+            else                       imv.displayGuruWithMessage(mixQuips[0]);
+        }
     }
 
     var drillStarted = function(data)

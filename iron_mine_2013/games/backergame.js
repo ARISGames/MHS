@@ -11,6 +11,18 @@ var BackerGame = function()
     var maxMoneyReceived = 100;
     var moneyLost = 600;
 
+    var successQuips = [
+    "Success!"
+    ];
+    var mixQuips = [
+    "OK!"
+    ];
+    var failQuips = [
+    "Fail!"
+    ];
+    var successCount = 0;
+    var failCount    = 0;
+
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
@@ -20,7 +32,8 @@ var BackerGame = function()
 
     function succeed()
     {
-        imv.displayGuruWithMessage("I have a moustache! Hooray!");
+        successCount++;
+        checkGuru();
 
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
@@ -31,11 +44,22 @@ var BackerGame = function()
 
     function fail()
     {
-        imv.displayGuruWithMessage("I have a moustache! BOO!");
+        failCount++;
+        checkGuru();
 
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+    }
+
+    function checkGuru()
+    {
+        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        {
+                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
+            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
+            else                       imv.displayGuruWithMessage(mixQuips[0]);
+        }
     }
 
     var leftVibeTime  = 0;

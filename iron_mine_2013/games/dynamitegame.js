@@ -24,6 +24,18 @@ var DynamiteGame = function()
     var maxMoneyReceived = 100;
     var moneyLost = 200;
 
+    var successQuips = [
+    "Success!"
+    ];
+    var mixQuips = [
+    "OK!"
+    ];
+    var failQuips = [
+    "Fail!"
+    ];
+    var successCount = 0;
+    var failCount    = 0;
+
     var holesFilledFlags = [false,false,false,false,false,false,false];
     var allHolesFilled   = false;
     var allHolesEmpty    = false;
@@ -179,7 +191,8 @@ var DynamiteGame = function()
 
     function succeed()
     {
-        imv.displayGuruWithMessage("I have a moustache! Hooray!");
+        successCount++;
+        checkGuru();
 
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
@@ -190,12 +203,23 @@ var DynamiteGame = function()
 
     function fail()
     { 
-        imv.displayGuruWithMessage("I have a moustache! BOO!");
+        failCount++;
+        checkGuru();
 
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost; 
 
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+    }
+
+    function checkGuru()
+    {
+        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        {
+                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
+            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
+            else                       imv.displayGuruWithMessage(mixQuips[0]);
+        }
     }
 
     this.events = [imm.stationId+'_DYNAMITE_SLOT_1_CHANGED',imm.stationId+'_DYNAMITE_SLOT_2_CHANGED',imm.stationId+'_DYNAMITE_SLOT_3_CHANGED',imm.stationId+'_DYNAMITE_SLOT_4_CHANGED',imm.stationId+'_DYNAMITE_SLOT_5_CHANGED',imm.stationId+'_DYNAMITE_SLOT_6_CHANGED',imm.stationId+'_PLUNGER_READY',imm.stationId+'_PLUNGER_PRESSED'];

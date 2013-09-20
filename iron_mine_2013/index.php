@@ -133,7 +133,7 @@ MHS Iron Mine
             <div id='drillindicatorbanner'>DRILL NOW!</div>
         </div>
         <div id='drillguru' class='guru full_screen'>
-            <img src='assets/anton.png' class='guruimage'>
+            <img class='guruimage' src='assets/anton.png' />
             <div id='drillgurutalk' class='gurutalk'></div>
             <div class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -171,7 +171,7 @@ MHS Iron Mine
             <img id='dynamiteindicator' src='assets/dynamite_load_instr.png' />
         </div>
         <div id='dynamiteguru' class='guru full_screen'>
-            <img src='assets/matti.png' class='guruimage'>
+            <img class='guruimage' src='assets/matti.png' />
             <div id='dynamitegurutalk' class='gurutalk'></div>
             <div class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -202,7 +202,7 @@ MHS Iron Mine
             <div id='backerpoleright' class='backerpole'> <img id='backerpolerightimage' class='backerpoleimage' src='assets/backer_pole_right.png' /> </div>
         </div>
         <div id='backerguru' class='guru full_screen'>
-            <img src='assets/mike.png' class='guruimage'>
+            <img id='backerguruimage' class='guruimage' src='assets/mike.png' />
             <div id='backergurutalk' class='gurutalk'></div>
             <div class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />

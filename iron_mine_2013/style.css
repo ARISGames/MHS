@@ -322,6 +322,12 @@ body
     bottom:130px;
 }
 
+#backerguruimage
+{
+    top:100px;
+    left:40px;
+}
+
 #backerrocks
 {
     display:block;

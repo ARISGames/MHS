@@ -130,6 +130,7 @@ MHS Iron Mine
             <div id='drillimagecontainer'>
                 <img id='drillimage' src='assets/drill_yellow.png' />
             </div>
+            <div id='drillindicatorbanner'>DRILL NOW!</div>
         </div>
         <div id='drillguru' class='guru full_screen'>
             <img src='assets/anton.png' class='guruimage'>
@@ -166,6 +167,7 @@ MHS Iron Mine
                 <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
                 <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
             </div>
+            <div id='dynamiteindicatorbanner'></div>
             <img id='dynamiteindicator' src='assets/dynamite_load_instr.png' />
         </div>
         <div id='dynamiteguru' class='guru full_screen'>

@@ -262,6 +262,23 @@ body
     width:306px;
 }
 
+#drillindicatorbanner
+{
+    display:block;
+    width:360px;
+    height:60px;
+    -webkit-transform:rotate(16deg);
+    background-color:rgba(237,177,31,0.5);
+    position:absolute;
+    font-size:50px;
+    font-family:gotham_font;
+    color:#EDB11F;
+    text-shadow:5px 5px 10px #000000;
+    text-align:center;
+    left:-20px;
+    bottom:130px;
+}
+
 #dynamiteintroimage
 {
     top:30px;
@@ -291,6 +308,18 @@ body
     position:absolute;
     left:0px;
     bottom:100px;
+}
+
+#dynamiteindicatorbanner
+{
+    display:block;
+    width:360px;
+    height:60px;
+    -webkit-transform:rotate(16deg);
+    background-color:rgba(237,177,31,0.5);
+    position:absolute;
+    left:-20px;
+    bottom:130px;
 }
 
 #backerrocks

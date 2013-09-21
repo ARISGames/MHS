@@ -25,13 +25,13 @@ var DynamiteGame = function()
     var moneyLost = 200;
 
     var successQuips = [
-    "Success!"
+    "Nice, you might be getting the hang of this!"
     ];
     var mixQuips = [
-    "OK!"
+    "50/50 ain't so good chances around here, Kid..."
     ];
     var failQuips = [
-    "Fail!"
+    "Are you trying to lose an eye? Try again."
     ];
     var successCount = 0;
     var failCount    = 0;

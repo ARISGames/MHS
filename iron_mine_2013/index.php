@@ -111,7 +111,9 @@ MHS Iron Mine
 
     <div id='drillgame' class='game drill_bg full_screen'>
         <div id='drillvid' class='vid'>
-            (video here)
+            <video id="player" width="320" height="504" webkit-playsinline>
+                <source src="assets/intro.mp4" type="video/mp4">
+            </video>
             <div class='bottombutton' onclick='imv.displayIntro();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
@@ -144,7 +146,9 @@ MHS Iron Mine
 
     <div id='dynamitegame' class='game full_screen'> <!-- class will be dynamite_left_bg OR dynamite_right_bg (depending on station). set in javascript -->
         <div id='dynamitevid' class='vid'>
-            (video here)
+            <video id="player" width="320" height="504" autoplay webkit-playsinline>
+                <source src="assets/intro.mp4" type="video/mp4">
+            </video>
             <div class='bottombutton' onclick='imv.displayIntro();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
@@ -182,7 +186,9 @@ MHS Iron Mine
 
     <div id='backergame' class='game backer_bg full_screen'>
         <div id='backervid' class='vid'>
-            (video here)
+            <video id="player" width="320" height="504" autoplay webkit-playsinline>
+                <source src="assets/intro.mp4" type="video/mp4">
+            </video>
             <div class='bottombutton' onclick='imv.displayIntro();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>

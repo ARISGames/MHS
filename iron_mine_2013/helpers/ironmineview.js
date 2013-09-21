@@ -89,10 +89,12 @@ var IronMineView = function()
 
     this.displayVid = function()
     {
-        if(this.currentVid)      this.currentVid.style.display      = 'block';
+        if(this.currentVid)    { this.currentVid.style.display      = 'block'; this.currentVid.play(); }
         if(this.currentIntro)    this.currentIntro.style.display    = 'none';
         if(this.currentActivity) this.currentActivity.style.display = 'none';
         if(this.currentGuru)     this.currentGuru.style.display     = 'none';
+
+        
     }
 
     this.displayIntro = function()

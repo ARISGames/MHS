@@ -15,13 +15,13 @@ var DrillGame = function()
     var moneyLost = 60;
 
     var successQuips = [
-    "Success!"
+    "Great job, you'll be a miner yet!"
     ];
     var mixQuips = [
-    "OK!"
+    "You might be cut out for this after all, once you get the hang of it..."
     ];
     var failQuips = [
-    "Fail!"
+    "Are you trying to break your drill?? Try again."
     ];
     var successCount = 0;
     var failCount    = 0;

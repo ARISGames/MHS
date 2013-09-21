@@ -9,16 +9,19 @@ var BackerGame = function()
     var moneyReceived = 100;
     var minMoneyReceived = 15;
     var maxMoneyReceived = 100;
+    var littleMoneyReceived = 10;
+    var littleMinMoneyReceived = 2;
+    var littleMaxMoneyReceived = 10;
     var moneyLost = 600;
 
     var successQuips = [
-    "Success!"
+    "Nice work for the first day on the job!"
     ];
     var mixQuips = [
-    "OK!"
+    "We can't have this kind of inconsistency with these stakes..."
     ];
     var failQuips = [
-    "Fail!"
+    "You're going to bury us all in this rubble if you're not careful!"
     ];
     var successCount = 0;
     var failCount    = 0;
@@ -67,16 +70,23 @@ var BackerGame = function()
     var poked = function(data)
     {
         imv.neutralHUD();
+
+        var moneyToReceive = littleMinMoneyReceived + Math.round(Math.random()*(littleMaxMoneyReceived-littleMinMoneyReceived));
+        if(imm.currentLevel == 1) moneyToReceive = littleMoneyReceived;
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+
         rocks.src = 'assets/backer_rocks_safe.png';
-        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 20; if(!alreadyVibing) vibeLeftPoker();  }
-        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 20; if(!alreadyVibing) vibeRightPoker(); }
+        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 40; if(!alreadyVibing) vibeLeftPoker();  }
+        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 40; if(!alreadyVibing) vibeRightPoker(); }
     }
 
     function vibeLeftPoker()
     {
-        leftpoker.style.top  = ((Math.random()*10)-5)+'px';
-        leftpoker.style.left = ((Math.random()*10)-5)+'px';
         leftVibeTime--;
+        if(leftVibeTime > 20) //going up
+            leftpoker.style.top = (-1*(40-leftVibeTime))+'px';
+        else                 //going down
+            leftpoker.style.top = (-1*     leftVibeTime)+'px';
         if(leftVibeTime > 0) setTimeout(vibeLeftPoker,10); 
         else
         {
@@ -87,9 +97,11 @@ var BackerGame = function()
 
     function vibeRightPoker()
     {
-        rightpoker.style.top  = ((Math.random()*10)-5)+'px';
-        rightpoker.style.left = ((Math.random()*10)-5)+'px';
         rightVibeTime--;
+        if(rightVibeTime > 20) //going up
+            rightpoker.style.top = (-1*(40-rightVibeTime))+'px';
+        else                 //going down
+            rightpoker.style.top = (-1*     rightVibeTime)+'px';
         if(rightVibeTime > 0) setTimeout(vibeRightPoker,10); 
         else
         {

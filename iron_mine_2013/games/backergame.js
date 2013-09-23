@@ -40,8 +40,6 @@ var BackerGame = function()
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
-        if(imm.ITEMS[imm.ITEM_ID_BACKER] > 0) imv.displayIntro();
-        else                                  imv.displayVid();
     }
 
     function succeed()

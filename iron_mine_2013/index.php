@@ -93,7 +93,15 @@ MHS Iron Mine
             game.callbacks);
 
         imv.displayGame(imm.stationType);
+
         game.setup();
+
+        if(
+            imm.ITEMS[imm.ITEM_ID_DRILL]    > 0 ||
+            imm.ITEMS[imm.ITEM_ID_DYNAMITE] > 0 ||
+            imm.ITEMS[imm.ITEM_ID_BACKER]   > 0
+        ) imv.displayIntro();
+        else imv.displayVid();
     }
 
     window.addEventListener('load', partReady, false);

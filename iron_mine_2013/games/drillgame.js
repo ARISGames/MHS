@@ -29,8 +29,6 @@ var DrillGame = function()
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
-        if(imm.ITEMS[imm.ITEM_ID_DRILL] > 0) imv.displayIntro();
-        else                                 imv.displayVid();
     }
 
     var shakeX;

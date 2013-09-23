@@ -128,8 +128,6 @@ var DynamiteGame = function()
         }
 
         ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
-        if(imm.ITEMS[imm.ITEM_ID_DYNAMITE] > 0) imv.displayIntro();
-        else                                    imv.displayVid();
     }
 
     this.updateDynamiteState = function(data)

@@ -208,6 +208,14 @@ MHS Iron Mine
             </div>
         </div>
         <div id='backeractivity' class='activity'>
+            <img id='backerrock1' class='backerrock' src='assets/rock1.png' />
+            <img id='backerrock2' class='backerrock' src='assets/rock2.png' />
+            <img id='backerrock3' class='backerrock' src='assets/rock3.png' />
+            <img id='backerrock4' class='backerrock' src='assets/rock4.png' />
+            <img id='backerrock5' class='backerrock' src='assets/rock5.png' />
+            <img id='backerrock6' class='backerrock' src='assets/rock6.png' />
+            <img id='backerrock7' class='backerrock' src='assets/rock7.png' />
+            <img id='backerrock8' class='backerrock' src='assets/rock8.png' />
             <img id='backerrocks' src='assets/backer_rocks_safe.png' />
             <div id='backerpoleleft'  class='backerpole'> <img id='backerpoleleftimage'  class='backerpoleimage' src='assets/backer_pole_left.png' />  </div>
             <div id='backerpoleright' class='backerpole'> <img id='backerpolerightimage' class='backerpoleimage' src='assets/backer_pole_right.png' /> </div>

@@ -346,6 +346,14 @@ body
     left:40px;
 }
 
+.backerrock
+{
+    display:none;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
 #backerrocks
 {
     display:block;

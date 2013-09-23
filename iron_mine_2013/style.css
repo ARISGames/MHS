@@ -303,6 +303,24 @@ body
     width:320px;
 }
 
+#dynamiteexplosionimg
+{
+    display:block;
+    position:absolute;
+    top:20px;
+    left:0px;
+    width:320px;
+}
+
+#dynamitesticksimg
+{
+    display:block;
+    position:absolute;
+    top:125px;
+    left:75px;
+    width:220px;
+}
+
 #dynamiteholes
 {
     position:absolute;

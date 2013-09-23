@@ -14,7 +14,7 @@ var DynamiteGame = function()
     tmpDynamiteLoadInstr.src  = 'assets/dynamite_load_instr.png';
     tmpDynamiteClearInstr.src = 'assets/dynamite_clear_instr.png';
     tmpDynamiteBlastInstr.src = 'assets/dynamite_blast_instr.png';
-    tmpDynamiteExplosion.src  = 'assets/explosion.png';
+    tmpDynamiteExplosion.src  = 'assets/explode.png';
     tmpDynamiteGreen.src      = 'assets/dynamite_green.png';
     tmpDynamiteRed.src        = 'assets/dynamite_red.png';
     //Won't do anything with these ^, this just brings them into memory

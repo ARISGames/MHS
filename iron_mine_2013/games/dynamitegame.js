@@ -7,11 +7,20 @@ var DynamiteGame = function()
     var tmpDynamiteLoadInstr  = new Image();
     var tmpDynamiteClearInstr = new Image();
     var tmpDynamiteBlastInstr = new Image();
+    var tmpDynamiteExplosion  = new Image();
+    var tmpDynamiteGreen      = new Image();
+    var tmpDynamiteRed        = new Image();
     tmpDynamiteFilledHole.src = 'assets/dynamite_filled_hole.png';
     tmpDynamiteLoadInstr.src  = 'assets/dynamite_load_instr.png';
     tmpDynamiteClearInstr.src = 'assets/dynamite_clear_instr.png';
     tmpDynamiteBlastInstr.src = 'assets/dynamite_blast_instr.png';
+    tmpDynamiteExplosion.src  = 'assets/explosion.png';
+    tmpDynamiteGreen.src      = 'assets/dynamite_green.png';
+    tmpDynamiteRed.src        = 'assets/dynamite_red.png';
     //Won't do anything with these ^, this just brings them into memory
+
+    var dynamiteExplosion    = document.getElementById('dynamiteexplosion');
+    var dynamiteSticksImg    = document.getElementById('dynamitesticksimg')
 
     var STATE_LOAD_DYNAMITE = 0;
     var STATE_RUN = 1;
@@ -144,6 +153,7 @@ var DynamiteGame = function()
 
     var updateDynamiteSlotTrue = function(slot)
     {
+        dynamiteExplosion.style.display = 'none';
         imv.neutralHUD();
         var newHolesFilledFlags = [];
         for(var i = 1; i < holesFilledFlags.length; i++)
@@ -198,6 +208,11 @@ var DynamiteGame = function()
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
 
+        dynamiteSticksImg.src = 'assets/dynamite_green.png';
+        dynamiteExplosion.style.display = 'block';
+        explosionFade = 100;
+        fadeExplosion();
+
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
     }
 
@@ -209,7 +224,17 @@ var DynamiteGame = function()
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost; 
 
+        dynamiteSticksImg.src = 'assets/dynamite_red.png';
+        dynamiteExplosion.style.display = 'block';
+        explosionFade = 100;
+        fadeExplosion();
+
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+    }
+
+    var explosionFade = 100;
+    function fadeExplosion()
+    {
     }
 
     function checkGuru()

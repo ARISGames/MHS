@@ -172,6 +172,10 @@ MHS Iron Mine
                 <img id='dynamitehole5' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
                 <img id='dynamitehole6' class='dynamitehole' src='assets/dynamite_filled_hole.png' />
             </div>
+            <div id='dynamiteexplosion'>
+                <img id='dynamiteexplosionimg'   src='assets/explosion.png' />
+                <img id='dynamitesticksticksimg' src='assets/dynamite_red.png' />
+            </div>
             <div id='dynamiteindicatorbanner'></div>
             <img id='dynamiteindicator' src='assets/dynamite_load_instr.png' />
         </div>

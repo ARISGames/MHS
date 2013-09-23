@@ -63,6 +63,8 @@ var BackerGame = function()
         failCount++;
         checkGuru();
 
+        flingRocks():
+
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost;
 
@@ -162,30 +164,14 @@ var BackerGame = function()
     var flingFade = 0;
     function tickRockFling()
     {
-        rock1.style.top  = (rock1.starty+((rock1.endy-rock1.starty)*(flingFade/100)))+'px';
-        rock1.style.left = (rock1.startx+((rock1.endx-rock1.startx)*(flingFade/100)))+'px';
-        rock1.style.filter = 'alpha(opacity='+flingFade+')';
-        rock2.style.top  = (rock2.starty+((rock2.endy-rock2.starty)*(flingFade/100)))+'px';
-        rock2.style.left = (rock2.startx+((rock2.endx-rock2.startx)*(flingFade/100)))+'px';
-        rock2.style.filter = 'alpha(opacity='+flingFade+')';
-        rock3.style.top  = (rock3.starty+((rock3.endy-rock3.starty)*(flingFade/100)))+'px';
-        rock3.style.left = (rock3.startx+((rock3.endx-rock3.startx)*(flingFade/100)))+'px';
-        rock3.style.filter = 'alpha(opacity='+flingFade+')';
-        rock4.style.top  = (rock4.starty+((rock4.endy-rock4.starty)*(flingFade/100)))+'px';
-        rock4.style.left = (rock4.startx+((rock4.endx-rock4.startx)*(flingFade/100)))+'px';
-        rock4.style.filter = 'alpha(opacity='+flingFade+')';
-        rock5.style.top  = (rock5.starty+((rock5.endy-rock5.starty)*(flingFade/100)))+'px';
-        rock5.style.left = (rock5.startx+((rock5.endx-rock5.startx)*(flingFade/100)))+'px';
-        rock5.style.filter = 'alpha(opacity='+flingFade+')';
-        rock6.style.top  = (rock6.starty+((rock6.endy-rock6.starty)*(flingFade/100)))+'px';
-        rock6.style.left = (rock6.startx+((rock6.endx-rock6.startx)*(flingFade/100)))+'px';
-        rock6.style.filter = 'alpha(opacity='+flingFade+')';
-        rock7.style.top  = (rock7.starty+((rock7.endy-rock7.starty)*(flingFade/100)))+'px';
-        rock7.style.left = (rock7.startx+((rock7.endx-rock7.startx)*(flingFade/100)))+'px';
-        rock7.style.filter = 'alpha(opacity='+flingFade+')';
-        rock8.style.top  = (rock8.starty+((rock8.endy-rock8.starty)*(flingFade/100)))+'px';
-        rock8.style.left = (rock8.startx+((rock8.endx-rock8.startx)*(flingFade/100)))+'px';
-        rock8.style.filter = 'alpha(opacity='+flingFade+')';
+        rock1.style.top  = (rock1.starty+((rock1.endy-rock1.starty)*(flingFade/100)))+'px'; rock1.style.left = (rock1.startx+((rock1.endx-rock1.startx)*(flingFade/100)))+'px'; rock1.style.filter = 'alpha(opacity='+flingFade+')';
+        rock2.style.top  = (rock2.starty+((rock2.endy-rock2.starty)*(flingFade/100)))+'px'; rock2.style.left = (rock2.startx+((rock2.endx-rock2.startx)*(flingFade/100)))+'px'; rock2.style.filter = 'alpha(opacity='+flingFade+')';
+        rock3.style.top  = (rock3.starty+((rock3.endy-rock3.starty)*(flingFade/100)))+'px'; rock3.style.left = (rock3.startx+((rock3.endx-rock3.startx)*(flingFade/100)))+'px'; rock3.style.filter = 'alpha(opacity='+flingFade+')';
+        rock4.style.top  = (rock4.starty+((rock4.endy-rock4.starty)*(flingFade/100)))+'px'; rock4.style.left = (rock4.startx+((rock4.endx-rock4.startx)*(flingFade/100)))+'px'; rock4.style.filter = 'alpha(opacity='+flingFade+')';
+        rock5.style.top  = (rock5.starty+((rock5.endy-rock5.starty)*(flingFade/100)))+'px'; rock5.style.left = (rock5.startx+((rock5.endx-rock5.startx)*(flingFade/100)))+'px'; rock5.style.filter = 'alpha(opacity='+flingFade+')';
+        rock6.style.top  = (rock6.starty+((rock6.endy-rock6.starty)*(flingFade/100)))+'px'; rock6.style.left = (rock6.startx+((rock6.endx-rock6.startx)*(flingFade/100)))+'px'; rock6.style.filter = 'alpha(opacity='+flingFade+')';
+        rock7.style.top  = (rock7.starty+((rock7.endy-rock7.starty)*(flingFade/100)))+'px'; rock7.style.left = (rock7.startx+((rock7.endx-rock7.startx)*(flingFade/100)))+'px'; rock7.style.filter = 'alpha(opacity='+flingFade+')';
+        rock8.style.top  = (rock8.starty+((rock8.endy-rock8.starty)*(flingFade/100)))+'px'; rock8.style.left = (rock8.startx+((rock8.endx-rock8.startx)*(flingFade/100)))+'px'; rock8.style.filter = 'alpha(opacity='+flingFade+')';
 
         flingFade++;
         if(flingFade >= 100) endFlingRocks();

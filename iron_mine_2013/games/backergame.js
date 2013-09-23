@@ -2,9 +2,11 @@ var BackerGame = function()
 {
     var self = this;
 
-    var rocks      = document.getElementById('backerrocks');
-    var leftpoker  = document.getElementById('backerpoleleft');
-    var rightpoker = document.getElementById('backerpoleright');
+    var rocks         = document.getElementById('backerrocks');
+    var leftpoker     = document.getElementById('backerpoleleft');
+    var leftpokerimg  = document.getElementById('backerpoleleftimage');
+    var rightpoker    = document.getElementById('backerpoleright');
+    var rightpokerimg = document.getElementById('backerpolerightimage');
 
     var moneyReceived = 100;
     var minMoneyReceived = 15;
@@ -42,6 +44,8 @@ var BackerGame = function()
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
 
+        leftpokerimg.src  = 'assets/backer_pole_left_green.png';
+        rightpokerimg.src = 'assets/backer_pole_right_green.png';
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
     }
 
@@ -52,6 +56,9 @@ var BackerGame = function()
 
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost;
+
+        leftpokerimg.src  = 'assets/backer_pole_left_red.png';
+        rightpokerimg.src = 'assets/backer_pole_right_red.png';
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
     }
 
@@ -76,17 +83,17 @@ var BackerGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
 
         rocks.src = 'assets/backer_rocks_safe.png';
-        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 40; if(!alreadyVibing) vibeLeftPoker();  }
-        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 40; if(!alreadyVibing) vibeRightPoker(); }
+        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
+        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }
     }
 
     function vibeLeftPoker()
     {
         leftVibeTime--;
-        if(leftVibeTime > 20) //going up
-            leftpoker.style.top = (-1*(40-leftVibeTime))+'px';
+        if(leftVibeTime > 30) //going up
+            leftpoker.style.top = (-2*(60-leftVibeTime))+'px';
         else                 //going down
-            leftpoker.style.top = (-1*     leftVibeTime)+'px';
+            leftpoker.style.top = (-2*     leftVibeTime)+'px';
         if(leftVibeTime > 0) setTimeout(vibeLeftPoker,10); 
         else
         {
@@ -98,10 +105,10 @@ var BackerGame = function()
     function vibeRightPoker()
     {
         rightVibeTime--;
-        if(rightVibeTime > 20) //going up
-            rightpoker.style.top = (-1*(40-rightVibeTime))+'px';
+        if(rightVibeTime > 30) //going up
+            rightpoker.style.top = (-2*(60-rightVibeTime))+'px';
         else                 //going down
-            rightpoker.style.top = (-1*     rightVibeTime)+'px';
+            rightpoker.style.top = (-2*     rightVibeTime)+'px';
         if(rightVibeTime > 0) setTimeout(vibeRightPoker,10); 
         else
         {
@@ -113,12 +120,16 @@ var BackerGame = function()
     var rumbled = function(data)
     {
         rocks.src = 'assets/backer_rocks_danger.png';
+        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
+        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }
         succeed();
     }
 
     var caved = function(data)
     {
         rocks.src = 'assets/backer_rocks_danger.png';
+        if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
+        if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }
         fail();
     }
 

@@ -40,6 +40,7 @@ var BackerGame = function()
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
+        ARIS.setItemCount(imm.ITEM_ID_MIKE, 1);
     }
 
     function succeed()

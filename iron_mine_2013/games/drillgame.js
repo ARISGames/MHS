@@ -29,6 +29,7 @@ var DrillGame = function()
     self.setup = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
+        ARIS.setItemCount(imm.ITEM_ID_ANTON, 1);
     }
 
     var shakeX;

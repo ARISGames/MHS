@@ -128,6 +128,7 @@ var DynamiteGame = function()
         }
 
         ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
+        ARIS.setItemCount(imm.ITEM_ID_MATTI, 1);
     }
 
     this.updateDynamiteState = function(data)

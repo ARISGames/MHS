@@ -28,12 +28,15 @@ var IronMineModel = function()
 
     self.ITEM_ID_MONEY    = 17251;
     self.ITEM_ID_DRILL    = 22435;
+    self.ITEM_ID_ANTON    = 27153;
     self.ITEM_ID_DYNAMITE = 27621;
+    self.ITEM_ID_MATTI    = 27156;
     self.ITEM_ID_BACKER   = 44881;
+    self.ITEM_ID_MIKE     = 27159;
     self.ITEM_ID_STRIKE   = 17251;
     self.ITEM_ID_STRIKE_FAIL    = 17251;
     self.ITEM_ID_STRIKE_SUCCEED = 17251;
-    self.ITEM_IDS = [self.ITEM_ID_MONEY, self.ITEM_ID_DRILL, self.ITEM_ID_DYNAMITE, self.ITEM_ID_BACKER, self.ITEM_ID_STRIKE, self.ITEM_ID_STRIKE_FAIL, self.ITEM_ID_STRIKE_SUCCEED];
+    self.ITEM_IDS = [self.ITEM_ID_MONEY, self.ITEM_ID_DRILL, self.ITEM_ID_ANTON, self.ITEM_ID_DYNAMITE, self.ITEM_ID_MATTI, self.ITEM_ID_BACKER, self.ITEM_ID_MIKE, self.ITEM_ID_STRIKE, self.ITEM_ID_STRIKE_FAIL, self.ITEM_ID_STRIKE_SUCCEED];
 
     self.ITEMS = [];
     for(var i in self.ITEM_IDS) self.ITEMS[self.ITEM_IDS[i]] = 0; //set qty to 0 for all items

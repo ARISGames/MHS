@@ -23,8 +23,8 @@ var IronMineModel = function()
     for(var i in self.STATION_IDS[self.STATION_TYPE_BACKER])   self.STATION_TYPES[self.STATION_IDS[self.STATION_TYPE_BACKER][i]]   = self.STATION_TYPE_BACKER;
     for(var i in self.STATION_IDS[self.STATION_TYPE_STRIKE])   self.STATION_TYPES[self.STATION_IDS[self.STATION_TYPE_STRIKE][i]]   = self.STATION_TYPE_STRIKE;
 
-    self.LEVEL_IDS =   [17247,17248,17249,17250];
-    self.LEVEL_GOALS = [200, 400, 600];
+    self.LEVEL_IDS =   [17247,17248,17250];
+    self.LEVEL_GOALS = [200, 400, 1000];
 
     self.ITEM_ID_MONEY    = 17251;
     self.ITEM_ID_DRILL    = 22435;

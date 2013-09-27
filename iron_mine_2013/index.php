@@ -130,7 +130,7 @@ MHS Iron Mine
             <img src='assets/drill_prompt.png' class='introprompt' />
             <img src='assets/anton.png' class='introimage' />
             <div class='introdialog'>
-                Hey Kid, I'm Anton Antilla, I came from Finland when I was 17. So you're my new drilling partner huh? Earn $2 for today's 10 hour day by drilling to the right depth. Watch out, the company will fine you money if you mess up and drill too (?) <br />
+                Hey Kid, I'm Anton Antilla.  So you're my new drilling partner, huh?  Drill to the right depth to get us our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -165,7 +165,7 @@ MHS Iron Mine
             <img class='introprompt' src='assets/dynamite_prompt.png' />
             <img id='dynamiteintroimage' class='introimage' src='assets/matti.png' />
             <div class='introdialog'>
-                Hei, miten menee, I'm Matti Pelta, I came from Finland a few years ago. So you're my new blasting partner huh? Earn $2 for today's 10 hour day by blowing up the rock so we can get to the ore. Watch out, the company will fine you money if you mess this up! <br />
+                Hei, miten menee, I'm Matti Pelto.  So you're my new blasting partner, huh? Blow up the rock so we can get to the iron ore to earn our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -209,7 +209,7 @@ MHS Iron Mine
             <img src='assets/backer_prompt.png' class='introprompt' />
             <img src='assets/mike.png' class='introimage' />
             <div class='introdialog'>
-                Pozdravljeni, My name's Mike Zakotnik, I came from Yugoslavia when I was 14 years old. So you're my new partner, huh? We can each earn $2...
+                Pozdravljeni, My name's Mike Zakotnik.  So you're my new backman partner, huh? Jab the rock to check for dangerous places to earn our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />

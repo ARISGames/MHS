@@ -14,15 +14,7 @@ var DrillGame = function()
     var maxMoneyReceived = 40;
     var moneyLost = 60;
 
-    var successQuips = [
-    "Great job, you'll be a miner yet!"
-    ];
-    var mixQuips = [
-    "You might be cut out for this after all, once you get the hang of it..."
-    ];
-    var failQuips = [
-    "Are you trying to break your drill?? Try again."
-    ];
+    var lastReceivedMoney = 0;
     var successCount = 0;
     var failCount    = 0;
 
@@ -55,35 +47,63 @@ var DrillGame = function()
 
     function succeed()
     {
-        successCount++;
-        checkGuru();
-
         drillBGImage.style.display = "block";
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
 
+        lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+
+        successCount++;
+        checkGuru(true);
     }
 
     function fail()
     {
-        failCount++;
-        checkGuru();
-
         drillBGImage.style.display = "block";
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+
+        failCount++;
+        checkGuru(false);
     }
 
-    function checkGuru()
+    function checkGuru(success)
     {
-        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        if(imm.currentLevel == 1)
         {
-                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
-            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
-            else                       imv.displayGuruWithMessage(mixQuips[0]);
+            if(success && successCount == 1) 
+                imv.displayGuruWithMessage(
+                    "Nice work, kid.  You drilled to the correct depth. Now we need to do this for ten more hours!"
+                );
+            if(!success && failCount == 1) 
+                imv.displayGuruWithMessage(
+                    "Not quite! Look at the lights and be sure to release on green."
+                );
+        }
+        else if(imm.currentLevel == 2)
+        {
+            if(success && successCount == 1) 
+            {
+                if(lastReceivedMoney < 13)
+                    imv.displayGuruWithMessage(
+                        "Ya done good work there but since there's only a little ore, there's only a little pay."
+                    );
+                else
+                    imv.displayGuruWithMessage(
+                        "AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!"
+                    );
+            }
+            else if(!success && failCount == 1)
+                imv.displayGuruWithMessage(
+                    "Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light."
+                );
+            else if(success && lastReceivedMoney < 13)
+                imv.displayGuruWithMessage(
+                    "You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours."
+                );
         }
     }
 

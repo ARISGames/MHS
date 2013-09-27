@@ -18,22 +18,14 @@ var BackerGame = function()
     var rock8 = document.getElementById('backerrock8');
 
     var moneyReceived = 100;
-    var minMoneyReceived = 15;
+    var minMoneyReceived = 8;
     var maxMoneyReceived = 100;
     var littleMoneyReceived = 10;
     var littleMinMoneyReceived = 2;
     var littleMaxMoneyReceived = 10;
     var moneyLost = 600;
 
-    var successQuips = [
-    "Nice work for the first day on the job!"
-    ];
-    var mixQuips = [
-    "We can't have this kind of inconsistency with these stakes..."
-    ];
-    var failQuips = [
-    "You're going to bury us all in this rubble if you're not careful!"
-    ];
+    var lastReceivedMoney = 0;
     var successCount = 0;
     var failCount    = 0;
 
@@ -45,23 +37,22 @@ var BackerGame = function()
 
     function succeed()
     {
-        successCount++;
-        checkGuru();
-
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
 
         leftpokerimg.src  = 'assets/backer_pole_left_green.png';
         rightpokerimg.src = 'assets/backer_pole_right_green.png';
+
+        lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+
+        successCount++;
+        checkGuru(true);
     }
 
     function fail()
     {
-        failCount++;
-        checkGuru();
-
         flingRocks();
 
         imv.failHUD();
@@ -70,15 +61,45 @@ var BackerGame = function()
         leftpokerimg.src  = 'assets/backer_pole_left_red.png';
         rightpokerimg.src = 'assets/backer_pole_right_red.png';
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+
+        failCount++;
+        checkGuru(false);
     }
 
-    function checkGuru()
+    function checkGuru(success)
     {
-        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        if(imm.currentLevel == 1)
         {
-                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
-            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
-            else                       imv.displayGuruWithMessage(mixQuips[0]);
+            if(success && successCount == 1)
+                imv.displayGuruWithMessage(
+                    "You found a weak spot and got out just in time. Let's try not to die..."
+                );
+            if(!success && failCount == 1)
+                imv.displayGuruWithMessage(
+                    "Are you okay? Looks like you lost your leg in the cave-in. I bet that fake leg was expensive!"
+                );
+        }
+        else if(imm.currentLevel == 2)
+        {
+            if(success && successCount == 1) 
+            {
+                if(lastReceivedMoney < 33)
+                    imv.displayGuruWithMessage(
+                        "Ya done good work there but since there's only a little ore, there's only a little pay."
+                    );
+                else
+                    imv.displayGuruWithMessage(
+                        "AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!"
+                    );
+            }
+            else if(!success && failCount == 1)
+                imv.displayGuruWithMessage(
+                    "Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light."
+                );
+            else if(success && lastReceivedMoney < 33)
+                imv.displayGuruWithMessage(
+                    "You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours."
+                );
         }
     }
 

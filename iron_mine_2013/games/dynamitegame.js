@@ -33,15 +33,7 @@ var DynamiteGame = function()
     var maxMoneyReceived = 100;
     var moneyLost = 200;
 
-    var successQuips = [
-    "Nice, you might be getting the hang of this!"
-    ];
-    var mixQuips = [
-    "50/50 ain't so good chances around here, Kid..."
-    ];
-    var failQuips = [
-    "Are you trying to lose an eye? Try again."
-    ];
+    var lastReceivedMoney = 0;
     var successCount = 0;
     var failCount    = 0;
 
@@ -200,9 +192,6 @@ var DynamiteGame = function()
 
     function succeed()
     {
-        successCount++;
-        checkGuru();
-
         imv.successHUD();
         var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
         if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
@@ -212,14 +201,15 @@ var DynamiteGame = function()
         explosionFade = 100;
         fadeExplosion();
 
+        lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+
+        successCount++;
+        checkGuru(true);
     }
 
     function fail()
     { 
-        failCount++;
-        checkGuru();
-
         imv.failHUD();
         if(imm.money < moneyLost) imm.money = moneyLost; 
 
@@ -229,6 +219,9 @@ var DynamiteGame = function()
         fadeExplosion();
 
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
+
+        failCount++;
+        checkGuru(false);
     }
 
     var explosionFade = 100;
@@ -236,13 +229,40 @@ var DynamiteGame = function()
     {
     }
 
-    function checkGuru()
+    function checkGuru(success)
     {
-        if((failCount+successCount) != 0 && (failCount+successCount)%3 == 0)
+        if(imm.currentLevel == 1)
         {
-                 if(failCount    == 0) imv.displayGuruWithMessage(successQuips[0]);
-            else if(successCount == 0) imv.displayGuruWithMessage(failQuips[0]);
-            else                       imv.displayGuruWithMessage(mixQuips[0]);
+            if(success && successCount == 1) 
+                imv.displayGuruWithMessage(
+                    "Nice work, kid. You cleared the area before the blast. Just hope we don't blow someone up before our ten hour shift is done."
+                );
+            if(!success && failCount == 1)
+                imv.displayGuruWithMessage(
+                    "You blew up Sven. Next time give the guys a chance to clear the area and wait until the light turns green."
+                );
+        }
+        else if(imm.currentLevel == 2)
+        {
+            if(success && successCount == 1) 
+            {
+                if(lastReceivedMoney < 33)
+                    imv.displayGuruWithMessage(
+                        "Ya done good work there but since there's only a little ore, there's only a little pay."
+                    );
+                else
+                    imv.displayGuruWithMessage(
+                        "AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!"
+                    );
+            }
+            else if(!success && failCount == 1)
+                imv.displayGuruWithMessage(
+                    "Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light."
+                );
+            else if(success && lastReceivedMoney < 33)
+                imv.displayGuruWithMessage(
+                    "You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours."
+                );
         }
     }
 

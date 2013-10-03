@@ -94,7 +94,7 @@ var BackerGame = function()
             }
             else if(!success && failCount == 1)
                 imv.displayGuruWithMessage(
-                    "Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light."
+                    "Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!"
                 );
             else if(success && lastReceivedMoney < 33)
                 imv.displayGuruWithMessage(

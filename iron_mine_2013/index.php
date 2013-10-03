@@ -60,7 +60,7 @@ MHS Iron Mine
                 {
                     ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
                     ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
-                    setTimeout(function(){ARIS.closeMe();},1000);
+                    setTimeout(function(){ARIS.exitToTab("QUESTS");},1000);
                 }
             }
         }
@@ -81,7 +81,7 @@ MHS Iron Mine
                 game = new StrikeGame();
                 break;
             default:
-                alert("This game type doesn't exist...");
+                //alert("This game type doesn't exist...");
                 break;
         }
 
@@ -107,7 +107,7 @@ MHS Iron Mine
     window.addEventListener('load', partReady, false);
     window.onerror = function(msg, url, linenumber) 
     {
-        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
         return true;
     }
 </script>
@@ -242,7 +242,7 @@ MHS Iron Mine
             <div id="strike_you_portrait"></div>
             <div id="strike_interaction">
                 <div id="strike_join_button" class="strike_button">Strike?</div>
-                <div id="strike_dont_button" class="strike_button" onclick='ARIS.closeMe();'>Don't?</div>
+                <div id="strike_dont_button" class="strike_button" onclick='ARIS.exitToTab("QUESTS");'>Don't?</div>
                 <canvas id="strike_timer" width="140" height="140"></canvas>
             </div>
             <div id='strike_other_portraits'>Strikers:<br /></div>

@@ -164,6 +164,11 @@ function startActivityButtonClicked()
 function chooseRoleButtonClicked()
 {
     setScene(sceneEnumChooseRole);
+    //AUTO CHOOSE ROLE
+    if(Math.random()>0.5)
+        setRoleButtonClicked(roleEnumHunter);
+    else
+        setRoleButtonClicked(roleEnumClerk);
 }
 
 function changeRoleButtonClicked()

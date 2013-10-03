@@ -101,8 +101,6 @@ var IronMineView = function()
         if(this.currentIntro)    this.currentIntro.style.display    = 'none';
         if(this.currentActivity) this.currentActivity.style.display = 'none';
         if(this.currentGuru)     this.currentGuru.style.display     = 'none';
-
-        
     }
 
     this.displayIntro = function()
@@ -139,6 +137,8 @@ var IronMineView = function()
         self.currentGuru.style.top = (10*(50-self.currentGuru.progress))+'px';
         if(self.currentGuru.progress < 50)
             setTimeout(tickdisplayguru, 10);
+        else
+            setTimeout(function(){self.hideGuru();}, 6000);
     }
 
     this.hideGuru = function()

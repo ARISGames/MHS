@@ -1,0 +1,178 @@
+@font-face
+{
+    font-family:archer_font;
+    src:url('fonts/Archer/Archer-Medium-Pro.otf');
+}
+
+@font-face
+{
+    font-family:gotham_font;
+    src:url('fonts/Gotham/Gotham-Black.otf');
+}
+
+.gotham
+{
+    font-family:gotham_font;
+}
+
+.archer
+{
+    font-family:archer_font;
+}
+
+div
+{
+    /*
+    border-style:solid;
+    border-width:1px;
+    border-color:#FF0000;
+     */
+    padding:0px;
+    font-weight:Bold;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+body
+{
+    -webkit-user-select:none;
+    user-select:none;
+    font-family:Helvetica;
+    font-size:30px;
+    background-color:#FFFFFF;
+    margin:0px;
+    padding:0px;
+}
+
+#screen
+{
+    width:640px; 
+    height:832px;
+    margin:0px; 
+    position:absolute; 
+    top:0px;
+    left:0px;
+    background-image:url("images/core/background.png");
+}
+
+.scene
+{
+    display:none;
+    width:640px;
+    height:832px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.button
+{
+    width:550px;
+    text-align:center;
+    margin:0px auto;
+    padding:15px 0px;
+    border-radius:40px;
+    background-color:#BCB1A6;
+    font-family:gotham_font;
+}
+
+#itemgetpic
+{
+    display:block;
+    margin:30px auto 0px auto;
+}
+
+#itemgetdescription
+{
+    margin:10px auto;
+    text-align:center;
+}
+
+.itemgetbutton
+{
+    display:none;
+}
+
+.itemgetbuttonthatsactuallyanimage
+{
+    display:none;
+    width:90px;
+    height:80px;
+    background-color:transparent;
+}
+
+#intropic
+{
+    display:block;
+    margin:0px auto;
+}
+
+#introchooserolebutton
+{
+    position:relative;
+    bottom:90px;
+}
+
+#chooseroletitle
+{
+    height:120px;
+    margin:80px auto;
+    padding-top:60px;
+    text-align:center;
+    font-size:60px;
+    font-family:gotham_font;
+    color:#C05815;
+    background-color:rgba(0,0,0,0.5);
+}
+
+.roledescription
+{
+    font-size:26px;
+    font-family:gotham_font;
+    color:#BCB1A6;
+}
+
+.roletitle
+{
+    font-size:38px;
+    font-family:gotham_font;
+    color:#C05815;
+}
+
+.chooserolebutton
+{
+    width:220px;
+    height:200px;
+    text-align:center;
+    margin:0px;
+    padding-top:25px;
+    position:absolute;
+    top:300px;
+    font-family:gotham_font;
+    color:#C0581F;
+    border-radius:40px;
+    border:5px solid #BCB1A6;
+}
+
+#chooserolehunterbutton
+{
+    left:60px;
+}
+
+#chooseroleclerkbutton
+{
+    right:60px;
+}
+
+.chooserolepic
+{
+    display:block;
+    margin:0px auto;
+}
+
+#rolegetpic
+{
+    margin:50px auto;
+    display:block;
+}

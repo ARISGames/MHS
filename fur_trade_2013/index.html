@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width; user-scalable=no;"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Trading Post</title>
+<link href="style.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="utils/json2.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript">
+
+var ARIS = {};
+
+var scene = sceneEnumLoading;
+var bogusEndOfStateQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
+var stateGotten = false;
+
+function bodyLoad()
+{
+    window.onerror = function(msg, url, linenumber) 
+    {
+        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        return true;
+    };
+
+    //junk to prevent scrolling
+    document.ontouchmove = function(e){ e.preventDefault(); };
+
+    setScene(sceneEnumLoading);
+    setTimeout(requestState,100);
+}
+
+//Fetches all data it needs
+function requestState()
+{
+    stateGotten = false;
+
+    //Get URL Fields
+    var params = ARIS.parseURLParams(document.URL);
+    gameId      = parseInt(params.gameId);
+    playerId    = parseInt(params.playerId);
+    webPageId   = parseInt(params.webPageId);
+    webPageItem = itemForWebPageId(webPageId);
+    webPageRole = webPageItem.owner;
+
+    //preload images
+    var tempImg1 = new Image(); tempImg1.src = "images/objects/splash/"+webPageItem.imageName;
+    var tempImg2 = new Image(); tempImg2.src = "images/roles/splash/"+webPageRole.imageName;
+
+    //This is called by ARIS, informing this webpage of qty values
+    ARIS.didUpdateItemQty = function(updatedItemId,qty)
+    {
+        //Knows all enqueued requests have finished
+        if(updatedItemId == bogusEndOfStateQueueId)
+            stateReceived();
+
+        //Update local record of qty to sync with ARIS data
+        var o;
+        if     (o = itemForItemId(updatedItemId))                                   setItemQtyInInventory(o.itemEnum, qty);
+        else if(qty > 0 && o = levelForLevelId(updatedItemId) && o >= currentLevel) currentLevel = parseInt(o)+1;//have level 1 badge = at level 2
+        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                      currentRole = o;
+
+        if(hasAllNeededItems() && stateGotten)
+        {
+            ARIS.setItemCount(levelIdForLevel(currentLevel),1);
+            currentLevel++;
+        }
+    }
+
+    //Request sync with ARIS data
+    for(var i in items)    ARIS.getItemCount(items[i].itemId);
+    for(var i in levelIds) ARIS.getItemCount(levelIds[i]);
+    for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
+    ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
+}
+
+//Once all data is retreived, actually initialize game state
+function stateReceived()
+{
+    stateGotten = true;
+    if(!currentRole)
+}
+
+function setScene(newScene)
+{
+    scene = newScene;
+
+    document.getElementById("loading"   ).style.display="none";
+
+    switch(scene)
+    {
+        case sceneEnumLoading:
+            document.getElementById("loading").style.display="block";
+            break;
+    }
+}
+
+window.addEventListener('load', bodyLoad, false);
+</script>
+</head>
+<body>
+<div id="screen">
+
+<!-- Loading State -->
+<div id="loading" class="scene" style="display:block;">
+    loading...
+</div>
+
+</div><!-- body -->
+</body>
+</html>

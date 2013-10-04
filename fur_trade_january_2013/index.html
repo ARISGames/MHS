@@ -164,11 +164,7 @@ function startActivityButtonClicked()
 function chooseRoleButtonClicked()
 {
     setScene(sceneEnumChooseRole);
-    //AUTO CHOOSE ROLE
-    if(Math.random()>0.5)
-        setRoleButtonClicked(roleEnumHunter);
-    else
-        setRoleButtonClicked(roleEnumClerk);
+    getSecretLocation();//sets off chain of events auto choosing role. I know. Bad. Don't worry about it.
 }
 
 function changeRoleButtonClicked()

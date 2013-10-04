@@ -335,3 +335,52 @@ function levelForLevelId(id)
         if(levelIds[i] == id) return i+1; //returns 1 for level 1 (not 0 indexed)
     return 0; //returns 0 for no level
 }
+
+//ARIS ACCESS HACK
+function incrementSecretLocationCount()
+{
+// players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
+// http://arisgames.org/server/json.php/v1.players.dropItem/5252/0/46645/0/0/1
+// {"data":false,"returnCode":0,"returnCodeDescription":null}
+    sendRequest("players.dropItem/5252/0/46645/0/0/1",function(data){});
+}
+
+function decrementSecretLocationCount()
+{
+// players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=337479,qty=1);
+// http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/337479/1
+// {"data":true,"returnCode":0,"returnCodeDescription":null}
+    sendRequest("players.pickupItemFromLocation/5252/0/46645/337479/1",function(data){});
+}
+
+function getSecretLocation()
+{
+// locations.getLocation(gameId=5252,locationId=337479);
+// http://arisgames.org/server/json.php/v1.locations.getLocation/5252/337479
+// {"data":{"location_id":"337479","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
+    sendRequest("locations.getLocation/5252/337479",gotSecretLocation);
+}
+
+function gotSecretLocation(data)
+{
+    //Yes, I know calling those functions directly from here is ridiculous.
+    if(data.item_qty%2 == 0) setRoleButtonClicked(roleEnumHunter);
+    else                     setRoleButtonClicked(roleEnumClerk);
+
+    if(data.item_qty > 1) decrementSecretLocationCount();
+    else                  incrementSecretLocationCount();
+}
+
+function sendRequest(fn, callback)
+{
+    var xmlhttp;
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","http://arisgames.org/server/json.php/v1."+fn,true); 
+    xmlhttp.onreadystatechange = function()
+    {
+        if(xmlhttp.readyState == 4&& xmlhttp.status == 200)
+            callback(JSON.parse(xmlhttp.responseText).data);
+    }
+    xmlhttp.send();
+}
+

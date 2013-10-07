@@ -23,9 +23,7 @@ ARIS.ready = function() { partReady(); };
 
 function begin()
 {
-    test();
-    //loadStateFromARIS();
-    //setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
+    setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
 }
 
 function statReceived()

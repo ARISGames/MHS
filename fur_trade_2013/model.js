@@ -1,8 +1,3 @@
-function test()
-{
-    alert("found");
-}
-
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];

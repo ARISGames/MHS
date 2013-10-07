@@ -34,123 +34,166 @@ body
     background-size:320px 504px;
 }
 
-.scene
+.role
 {
     display:none;
-    width:640px;
-    height:832px;
+}
+
+.vid
+{
+    display:none;
+}
+
+.intro
+{
+    display:none;
+    background-color:rgba(237,177,31,0.5);
+}
+
+.get
+{
+    display:none;
+}
+
+.trade
+{
+    display:none;
+}
+
+.guru
+{
+    display:none;
+}
+
+#hud
+{
+    width:320px;
+    height:110px;
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+
+#havedisplay
+{
+    width:320px;
+    height:90px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    font-size:80px;
+    font-family:gotham_font;
+    color:#EDB11F;
+    text-shadow:5px 5px 10px #000000;
+    text-align:center;
+    background-color:rgba(237,177,31,0.5);
+}
+
+#wantdisplay
+{
+    width:200px;
+    height:20px;
+    position:absolute;
+    top:90px;
+    left:0px;
+    font-size:x-large;
+    font-family:gotham_font;
+    color:#EDB11F;
+}
+
+.clerk_bg
+{
+    background-image:url("assets/drill_bg.png");
+}
+
+.hunter_bg
+{
+    background-image:url("assets/backer_bg.png");
+}
+
+#moneydelta
+{
+    display:none;
+    width:320px;
+    height:500px;
+    position:absolute;
+    top:200px;
+    left:0px;
+    font-size:70px;
+    font-family:gotham_font;
+    color:#EDB11F;
+    text-align:center;
+    overflow:visible;
+}
+
+.introprompt
+{
+    display:block;
+    width:320px;
     position:absolute;
     top:0px;
     left:0px;
 }
 
-.button
-{
-    width:550px;
-    text-align:center;
-    margin:0px auto;
-    padding:15px 0px;
-    border-radius:40px;
-    background-color:#BCB1A6;
-    font-family:gotham_font;
-}
-
-#itemgetpic
+.introimage
 {
     display:block;
-    margin:30px auto 0px auto;
-}
-
-#itemgetdescription
-{
-    margin:10px auto;
-    text-align:center;
-}
-
-.itemgetbutton
-{
-    display:none;
-}
-
-.itemgetbuttonthatsactuallyanimage
-{
-    display:none;
-    width:90px;
-    height:80px;
-    background-color:transparent;
-}
-
-#intropic
-{
-    display:block;
-    margin:0px auto;
-}
-
-#introchooserolebutton
-{
-    position:relative;
-    bottom:90px;
-}
-
-#chooseroletitle
-{
-    height:120px;
-    margin:80px auto;
-    padding-top:60px;
-    text-align:center;
-    font-size:60px;
-    font-family:gotham_font;
-    color:#C05815;
-    background-color:rgba(0,0,0,0.5);
-}
-
-.roledescription
-{
-    font-size:26px;
-    font-family:gotham_font;
-    color:#BCB1A6;
-}
-
-.roletitle
-{
-    font-size:38px;
-    font-family:gotham_font;
-    color:#C05815;
-}
-
-.chooserolebutton
-{
-    width:220px;
-    height:200px;
-    text-align:center;
-    margin:0px;
-    padding-top:25px;
+    width:320px;
     position:absolute;
-    top:300px;
-    font-family:gotham_font;
-    color:#C0581F;
-    border-radius:40px;
-    border:5px solid #BCB1A6;
+    top:20px;
+    left:50px;
 }
 
-#chooserolehunterbutton
+.introdialog
 {
-    left:60px;
+    width:300px;
+    height:100px;
+    position:absolute;
+    left:0px;
+    bottom:44px;
+    padding:10px;
+    overflow:scroll;
+    background-color:rgba(255,255,255,0.9);
 }
 
-#chooseroleclerkbutton
+.bottombutton
 {
-    right:60px;
+    width:320px;
+    height:44px;
+    position:absolute;
+    left:0px;
+    bottom:0px;
+    border-top:1px solid gray;
+    background-color:rgba(255,255,255,0.9);
 }
 
-.chooserolepic
+.forwardarrow
 {
     display:block;
-    margin:0px auto;
+    width:24px;
+    position:absolute;
+    right:10px;
+    bottom:10px;
 }
 
-#rolegetpic
+.guruimage
 {
-    margin:50px auto;
     display:block;
+    width:320px;
+    position:absolute;
+    top:150px;
+    left:50px;
 }
+
+.gurutalk
+{
+    width:300px;
+    height:100px;
+    position:absolute;
+    left:0px;
+    bottom:44px;
+    padding:10px;
+    overflow:scroll;
+    background-color:rgba(255,255,255,0.9);
+}
+

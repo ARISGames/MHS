@@ -1,25 +1,19 @@
-//ENUMS
-var sceneEnumLoading = 0;
-var sceneEnumIntro   = 1;
-var sceneEnums=[sceneEnumLoading,sceneEnumIntro];
-
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
-var itemEnumPelt    = 0;
-var itemEnumGun     = 1;
-var itemEnumBeads   = 2;
-var itemEnumBlanket = 3;
-var itemEnumKettle  = 2;
-var itemEnumBPelt = [itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle];
+var itemEnumPelt     = 0;
+var itemEnumApproval = 1;
+var itemEnumGun      = 2;
+var itemEnumBeads    = 3;
+var itemEnumBlanket  = 4;
+var itemEnumKettle   = 5;
+var itemEnums = [itemEnumPelt, itemEnumApproval, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
-var levelId1 = 17242;
-var levelId2 = 17243;
-var levelId3 = 17244;
-var levelIdMaster = 17245;
-var levelIds=[levelId1,levelId2,levelId3,levelIdMaster];
+var levelId1 = 47022;
+var levelId2 = 47023;
+var levelIds=[levelId1,levelId2];
 
 //TYPE DEFS
 function Role(roleEnum)
@@ -32,12 +26,12 @@ function Role(roleEnum)
     {
         case roleEnumClerk:   
             this.title = "Clerk";   
-            this.roleId = 17240; 
+            this.roleId = 47026; 
             this.imageName = "clerk.png";
             break;
         case roleEnumHunter:  
             this.title = "Hunter";  
-            this.roleId = 17226; 
+            this.roleId = 47027; 
             this.imageName = "hunter.png";
             break;
         default: 
@@ -63,37 +57,44 @@ function Item(itemEnum)
     switch(itemEnum)
     {
         case itemEnumPelt:
-            this.itemId = 19349;
-            this.webPageId = 1367;
+            this.itemId = 47029;
+            this.webPageId = 3718;
             this.owner = roleHunter;
             this.name = "Beaver Pelt";
             this.imageName = "beaverpelt.png";
             break;
+        case itemEnumApproval:
+            this.itemId = 47041;
+            this.webPageId = -1; //no webpage
+            this.owner = roleHunter;
+            this.name = "Approval";
+            this.imageName = "none.png"; //no image
+            break;
         case itemEnumGun:
-            this.itemId = 19350;
-            this.webPageId = 1358;
+            this.itemId = 47030;
+            this.webPageId = 3720;
             this.owner = roleClerk;
             this.name = "Gun";
             this.imageName = "gun.png";
             break;
         case itemEnumBeads:
-            this.itemId = 19348;
-            this.webPageId = 1366;
+            this.itemId = 47035;
+            this.webPageId = 3726;
             this.owner = roleClerk;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
         case itemEnumBlanket:
-            this.itemId = 19351;
-            this.webPageId = 1359;
+            this.itemId = 47032;
+            this.webPageId = 3715;
             this.owner = roleClerk;
             this.name = "Blanket";
             this.imageName = "blanket.png";
             break;
         case itemEnumKettle:
-            this.itemId = 19353;
-            this.webPageId = 1364;
-            this.owner = roleKettle;
+            this.itemId = 47038;
+            this.webPageId = 3723;
+            this.owner = roleClerk;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
@@ -104,12 +105,13 @@ function Item(itemEnum)
 }
 
 //REFERENCES
-var itemPelt    = new Item(itemEnumPelt);
-var itemGun     = new Item(itemEnumGun);
-var itemBeads   = new Item(itemEnumBeads);
-var itemBlanket = new Item(itemEnumBlanket);
-var itemKettle  = new Item(itemEnumKettle);
-var items = [itemPelt, itemGun, itemBeads, itemBlanket, itemKettle];
+var itemPelt     = new Item(itemEnumPelt);
+var itemApproval = new Item(itemEnumApproval);
+var itemGun      = new Item(itemEnumGun);
+var itemBeads    = new Item(itemEnumBeads);
+var itemBlanket  = new Item(itemEnumBlanket);
+var itemKettle   = new Item(itemEnumKettle);
+var items = [itemPelt, itemApproval, itemGun, itemBeads, itemBlanket, itemKettle];
 
 function loadStateFromARIS()
 {
@@ -139,7 +141,6 @@ function loadStateFromARIS()
     for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
     ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
 }
-
 
 function hasItem(itemEnum)
 {

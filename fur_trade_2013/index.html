@@ -23,7 +23,6 @@ ARIS.ready = function() { partReady(); };
 
 function begin()
 {
-    setScene(sceneEnumLoading);
     setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
 }
 
@@ -47,20 +46,6 @@ function stateReceived()
 {
 }
 
-function setScene(newScene)
-{
-    scene = newScene;
-
-    document.getElementById("loading").style.display = "none";
-
-    switch(scene)
-    {
-        case sceneEnumLoading:
-            document.getElementById("loading").style.display = "block";
-            break;
-    }
-}
-
 window.addEventListener('load', partReady, false);
 window.onerror = function(msg, url, linenumber) 
 {
@@ -74,7 +59,7 @@ window.onerror = function(msg, url, linenumber)
 
 <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 
-<div id='clerk' class='role clerk_bg full_screen'>
+<div id='clerkrole' class='role clerk_bg full_screen'>
     <div id='clerkvid' class='vid'>
         <video id="clerkvidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">
@@ -106,7 +91,7 @@ window.onerror = function(msg, url, linenumber)
     </div>
 </div>
 
-<div id='hunter' class='role hunter_bg full_screen'>
+<div id='hunterrole' class='role hunter_bg full_screen'>
     <div id='huntervid' class='vid'>
         <video id="huntervidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">

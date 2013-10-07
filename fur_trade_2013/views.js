@@ -1,56 +1,83 @@
-    currentRoleView     = null;
-    currentVidView      = null;
-    currentVidFileView  = null;
-    currentIntroView    = null;
-    currentGetView      = null;
-    currentTradeView    = null;
-    currentGuruView     = null;
-    currentGuruTalkView = null;
+    var currentRoleView     = null;
+    var currentVidView      = null;
+    var currentVidFileView  = null;
+    var currentIntroView    = null;
+    var currentGetView      = null;
+    var currentTradeView    = null;
+    var currentGuruView     = null;
+    var currentGuruTalkView = null;
 
-    clerkRoleView     = document.getElementById('clerkrole');
-    clerkVidView      = document.getElementById('clerkvid');
-    clerkVidFileView  = document.getElementById('clerkvidfile');
-    clerkIntroView    = document.getElementById('clerkintro');
-    clerkGetView      = document.getElementById('clerkGet');
-    clerkTradeView    = document.getElementById('clerkTrade');
-    clerkGuruView     = document.getElementById('clerkguru');
-    clerkGuruTalkView = document.getElementById('clerkgurutalk');
+    var clerkRoleView;
+    var clerkVidView;
+    var clerkVidFileView;
+    var clerkIntroView;
+    var clerkGetView;
+    var clerkTradeView;
+    var clerkGuruView;
+    var clerkGuruTalkView;
+    var hunterRoleView;
+    var hunterVidView;
+    var hunterVidFileView;
+    var hunterIntroView;
+    var hunterGetView;
+    var hunterTradeView;
+    var hunterGuruView;
+    var hunterGuruTalkView;
+    var roleViews;
+    var vidViews;
+    var vidFileViews;
+    var introViews;
+    var getViews;
+    var tradeViews;
+    var guruViews;
+    var guruTalkViews;
+    function initViews() //need to wait until initialization of dom
+    {
+        clerkRoleView     = document.getElementById('clerkrole');
+        clerkVidView      = document.getElementById('clerkvid');
+        clerkVidFileView  = document.getElementById('clerkvidfile');
+        clerkIntroView    = document.getElementById('clerkintro');
+        clerkGetView      = document.getElementById('clerkget');
+        clerkTradeView    = document.getElementById('clerktrade');
+        clerkGuruView     = document.getElementById('clerkguru');
+        clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
-    hunterRoleView     = document.getElementById('hunterrole');
-    hunterVidView      = document.getElementById('huntervid');
-    hunterVidFileView  = document.getElementById('huntervidfile');
-    hunterIntroView    = document.getElementById('hunterintro');
-    hunterGetView      = document.getElementById('hunterGet');
-    hunterTradeView    = document.getElementById('hunterTrade');
-    hunterGuruView     = document.getElementById('hunterguru');
-    hunterGuruTalkView = document.getElementById('huntergurutalk');
+        hunterRoleView     = document.getElementById('hunterrole');
+        hunterVidView      = document.getElementById('huntervid');
+        hunterVidFileView  = document.getElementById('huntervidfile');
+        hunterIntroView    = document.getElementById('hunterintro');
+        hunterGetView      = document.getElementById('hunterget');
+        hunterTradeView    = document.getElementById('huntertrade');
+        hunterGuruView     = document.getElementById('hunterguru');
+        hunterGuruTalkView = document.getElementById('huntergurutalk');
 
-    roleViews     = [clerkRoleView,     hunterRoleView];
-    vidViews      = [clerkVidView,      hunterVidView];
-    vidFileViews  = [clerkVidFileView,  hunterVidFileView];
-    introViews    = [clerkIntroView,    hunterIntroView];
-    getViews      = [clerkGetView,      hunterGetView];
-    tradeViews    = [clerkTradeView,    hunterTradeView];
-    guruViews     = [clerkGuruView,     hunterGuruView];
-    guruTalkViews = [clerkGuruTalkView, hunterGuruTalkView];
+        roleViews     = [clerkRoleView,     hunterRoleView];
+        vidViews      = [clerkVidView,      hunterVidView];
+        vidFileViews  = [clerkVidFileView,  hunterVidFileView];
+        introViews    = [clerkIntroView,    hunterIntroView];
+        getViews      = [clerkGetView,      hunterGetView];
+        tradeViews    = [clerkTradeView,    hunterTradeView];
+        guruViews     = [clerkGuruView,     hunterGuruView];
+        guruTalkViews = [clerkGuruTalkView, hunterGuruTalkView];
+    }
 
     //These 'views' are injected into the current game
-    var moneydelta = document.createElement('div');
-    moneydelta.setAttribute('id','moneydelta');
-    moneydelta.fade = 0; //0-960
-    moneydelta.delta = 0;
+    var deltaview = document.createElement('div');
+    deltaview.setAttribute('id','deltaview');
+    deltaview.fade = 0; //0-960
+    deltaview.delta = 0;
 
     var hud = document.createElement('div');
     hud.setAttribute('id','hud');
     var haveDisplay = document.createElement('div');
     haveDisplay.setAttribute('id','havedisplay');
-    haveDisplay.innerHTML = '$0.00';
+    haveDisplay.innerHTML = '';
     var wantDisplay = document.createElement('div');
     wantDisplay.setAttribute('id','wantdisplay');
-    wantDisplay.innerHTML = '&nbsp;&nbsp;GOAL: $0.00';
+    wantDisplay.innerHTML = '&nbsp;&nbsp;';
     hud.appendChild(haveDisplay);
     hud.appendChild(wantDisplay);
-    hud.appendChild(moneydelta);
+    hud.appendChild(deltaview);
 
     function failHUD()    { haveDisplay.style.color = "#C42032"; }
     function neutralHUD() { haveDisplay.style.color = "#EDB11F"; }
@@ -103,6 +130,9 @@
 
     function displayGet()
     {
+        if(currentRole.roleEnum == roleEnumClerk)  formatClerkGet();
+        if(currentRole.roleEnum == roleEnumHunter) formatHunterGet();
+
         if(currentVidView)     currentVidView.style.display   = 'none';
         if(currentVidFileView) currentVidFileView.pause();
         if(currentIntroView)   currentIntroView.style.display = 'none';
@@ -113,12 +143,34 @@
 
     function displayTrade()
     {
+        if(currentRole.roleEnum == roleEnumClerk)  formatClerkTrade();
+        if(currentRole.roleEnum == roleEnumHunter) formatHunterTrade();
+
         if(currentVidView)     currentVidView.style.display   = 'none';
         if(currentVidFileView) currentVidFileView.pause();
         if(currentIntroView)   currentIntroView.style.display = 'none';
         if(currentGetView)     currentGetView.style.display   = 'none';
         if(currentTradeView)   currentTradeView.style.display = 'block';
         if(currentGuruView)    currentGuruView.style.display  = 'none';
+    }
+
+    function formatClerkGet()
+    {
+        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+    }
+
+    function formatHunterGet()
+    {
+        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 10";
+    }
+
+    function formatClerkTrade()
+    {
+    }
+
+    function formatHunterTrade()
+    {
     }
 
     function displayGuruWithMessage(message)
@@ -161,43 +213,42 @@
             currentGuruView.style.display = 'none';
     }
 
-    function displayMoneyDelta(delta)
+    function displaydelta(txt, delta)
     {
         if(delta == 0) return;
-
         
-        if(delta > 0) moneydelta.style.color = "#009344";
-        else          moneydelta.style.color = "#C42032";
-        moneydelta.delta = delta;
+        if(delta > 0) deltaview.style.color = "#009344";
+        else          deltaview.style.color = "#C42032";
+        deltaview.delta = delta;
 
         if(delta < 0) delta *= -1;//so we can parse it to text without worrying about - signs
-        moneydelta.innerHTML = (moneydelta.delta > 0 ? '+$' : '-$')+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
-        var alreadyTicking = (moneydelta.fade != 0);
-        moneydelta.fade = 960;
-        moneydelta.style.display = 'block';
-        if(!alreadyTicking) tickmoneydelta();
+        deltaview.innerHTML = delta+" "+txt;
+        var alreadyTicking = (deltaview.fade != 0);
+        deltaview.fade = 960;
+        deltaview.style.display = 'block';
+        if(!alreadyTicking) tickdelta();
     }
 
-    function tickmoneydelta()
+    function tickdelta()
     {
-        if(moneydelta.delta > 0)
+        if(deltaview.delta > 0)
         {
-            moneydelta.style.color = "rgba(0,147,68,"+(moneydelta.fade/960)+")";
-            moneydelta.style.top = (200-1/8*(960-moneydelta.fade))+'px';
+            deltaview.style.color = "rgba(0,147,68,"+(deltaview.fade/960)+")";
+            deltaview.style.top = (200-1/8*(960-deltaview.fade))+'px';
         }
         else
         {
-            moneydelta.style.color = "rgba(196,32,50,"+(moneydelta.fade/960)+")";
-            moneydelta.style.top = (200+1/8*(960-moneydelta.fade))+'px';
+            deltaview.style.color = "rgba(196,32,50,"+(deltaview.fade/960)+")";
+            deltaview.style.top = (200+1/8*(960-deltaview.fade))+'px';
         }
 
-        moneydelta.fade--;
-        if(moneydelta.fade > 0)
-            setTimeout(tickmoneydelta, 10);
+        deltaview.fade--;
+        if(deltaview.fade > 0)
+            setTimeout(tickdelta, 10);
         else
         {
-            moneydelta.style.color = 'rgba(255,255,255,0.0)';
-            moneydelta.style.display = 'none';
+            deltaview.style.color = 'rgba(255,255,255,0.0)';
+            deltaview.style.display = 'none';
         }
     }
 

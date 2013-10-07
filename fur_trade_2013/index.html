@@ -23,27 +23,87 @@ ARIS.ready = function() { partReady(); };
 
 function begin()
 {
+    initViews();
     setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
 }
 
-function statReceived()
+var firstTime = false;
+function stateReceived()
 {
-    //Re-override "didUpdateItemQty" to handle in-game updates rather than state getting updates.
+    ARIS.didUpdateItemQty = function(updatedItemId,qty) {};//silence updates while we get things ready
+    if(!currentRole) { firstTime = true; getNextRole(); }
+    else roleWasSet();
+}
+
+function roleWasSet()//role was dynamically assigned- proceed
+{
+    //Handle in-game updates
     ARIS.didUpdateItemQty = function(updatedItemId,qty)
     {
+        //Handle visuals based on role and level
+        if(currentRole.roleEnum == roleEnumClerk)
+        {
+            switch(currentLevel)
+            {
+                case 1:
+                    if(updatedItemId == itemPelt.itemId)
+                    {
+                        haveDisplay.innerHTML = "Pelts: "+qty;
+                        if(qty != itemPelt.qty)
+                        {
+                            if(Math.abs(qty-itemPelt.qty) == 1) displaydelta(qty-itemPelt.qty, "pelt");
+                            else displaydelta(qty-itemPelt.qty, "pelts");
+                        }
+                    }
+                    break;
+                case 2:
+                    break;
+            }
+        }
+        else if(currentRole.roleEnum == roleEnumHunter)
+        {
+            switch(currentLevel)
+            {
+                case 1:
+                    if(updatedItemId == itemPelt.itemId)
+                    {
+                        haveDisplay.innerHTML = "Pelts: "+qty;
+                        if(qty != itemPelt.qty)
+                        {
+                            if(Math.abs(qty-itemPelt.qty) == 1) displaydelta(qty-itemPelt.qty, "pelt");
+                            else displaydelta(qty-itemPelt.qty, "pelts");
+                        }
+                    }
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
         if(o = itemForItemId(updatedItemId))
             setItemQtyInInventory(o.itemEnum, qty);
+
         if(hasAllNeededItems())
         {
             ARIS.setItemCount(levelIdForLevel(currentLevel),1);
             currentLevel++;
         }
     }
-}
 
-//Once all data is retreived, actually initialize game state
-function stateReceived()
-{
+    displayRole(currentRole.roleEnum);
+    if(firstTime) displayVid();
+    else
+    {
+        switch(currentLevel)
+        {
+            case 1:
+                displayGet();
+                break;
+            case 2:
+                displayTrade();
+                break;
+        }
+    }
 }
 
 window.addEventListener('load', partReady, false);
@@ -74,11 +134,12 @@ window.onerror = function(msg, url, linenumber)
         <div class='introdialog'>
             I'm x. We're running low in inventory for our store. Trade these beaver pelts to the shippers from Europe to get more supplies. Blah blah blah (NOT FINAL TEXT).
         </div>
-        <div class='bottombutton' onclick='ARIS.exitToScannerWithPrompt("Scan a clerk item behind the fur trade counter!");'>
+        <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='clerkget' class='get full_screen'>
+        
     </div>
     <div id='clerktrade' class='trade full_screen'>
     </div>
@@ -106,7 +167,7 @@ window.onerror = function(msg, url, linenumber)
         <div class='introdialog'>
             I'm x. We hear that the Euro's are opening a store where they will give us some cool stuff for useless beaver pelts! Would you help us get some beaver pelts? Blah blah blah (NOT FINAL TEXT).
         </div>
-        <div class='bottombutton' onclick='ARIS.exitToScannerWithPrompt("Scan a beaver pelt to hunt and collect it!");'>
+        <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>

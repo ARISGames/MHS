@@ -139,7 +139,7 @@ function loadStateFromARIS()
     for(var i in items)    ARIS.getItemCount(items[i].itemId);
     for(var i in levelIds) ARIS.getItemCount(levelIds[i]);
     for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
-    ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
+    ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
 }
 
 function hasItem(itemEnum)
@@ -210,15 +210,16 @@ function setRole(roleEnum)
 {
     switch(roleEnum)
     {
-        case roleEnumHunter:
-            ARIS.setItemCount(roles[roleEnumClerk].roleId,0);
-            ARIS.setItemCount(roles[roleEnumHunter].roleId,1);
-            currentRole = roles[roleEnumHunter];
-            break;
         case roleEnumClerk:
-            ARIS.setItemCount(roles[roleEnumHunter].roleId,0);
-            ARIS.setItemCount(roles[roleEnumClerk].roleId,1);
-            currentRole = roles[roleEnumClerk];
+            ARIS.setItemCount(roleHunter.roleId,0);
+            ARIS.setItemCount(roleClerk.roleId,1);
+            ARIS.setItemCount(itemPelt.itemId,10); //clerk also gets 10 beaver pelts
+            currentRole = roleClerk;
+            break;
+        case roleEnumHunter:
+            ARIS.setItemCount(roleClerk.roleId,0);
+            ARIS.setItemCount(roleHunter.roleId,1);
+            currentRole = roleHunter;
             break;
     }
 }
@@ -266,6 +267,11 @@ function levelIdForLevel(i)
 }
 
 //ARIS ACCESS HACK
+function getNextRole()
+{
+    getSecretLocation();
+}
+
 function incrementSecretLocationCount()
 {
     // players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
@@ -293,11 +299,13 @@ function getSecretLocation()
 function gotSecretLocation(data)
 {
     //Yes, I know calling those functions directly from here is ridiculous.
-    if(data.item_qty%2 == 0) setRoleButtonClicked(roleEnumHunter);
-    else                     setRoleButtonClicked(roleEnumClerk);
+    if(data.item_qty%2 == 0) setRole(roleEnumHunter);
+    else                     setRole(roleEnumClerk);
 
     if(data.item_qty > 1) decrementSecretLocationCount();
     else                  incrementSecretLocationCount();
+
+    roleWasSet();
 }
 
 function sendRequest(fn, callback)

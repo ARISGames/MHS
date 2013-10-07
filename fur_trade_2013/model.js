@@ -129,9 +129,9 @@ function loadStateFromARIS()
             stateReceived();
 
         var o;
-        if     (o = itemForItemId(updatedItemId))                                    setItemQtyInInventory(o.itemEnum, qty);
-        else if(qty > 0 && o = levelForLevelId(updatedItemId)) && o >= currentLevel) parseInt(o)+1;//have level 1 badge = at level 2
-        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                       currentRole = o;
+        if     (o = itemForItemId(updatedItemId))                                     setItemQtyInInventory(o.itemEnum, qty);
+        else if(qty > 0 && (o = levelForLevelId(updatedItemId)) && o >= currentLevel) currentLevel = o+1;
+        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                        currentRole = o;
     };
 
     var params = ARIS.parseURLParams(document.URL);
@@ -146,7 +146,6 @@ function loadStateFromARIS()
     for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
     ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
 }
-/*
 
 function hasItem(itemEnum)
 {
@@ -262,7 +261,7 @@ function roleForRoleId(id)
 function levelForLevelId(id)
 {
     for(var i in levelIds)
-        if(levelIds[i] == id) return i+1; //returns 1 for level 1 (not 0 indexed)
+        if(levelIds[i] == id) return parseInt(i)+1; //returns 1 for level 1 (not 0 indexed)
     return 0; //returns 0 for no level
 }
 function levelIdForLevel(i)
@@ -319,4 +318,3 @@ function sendRequest(fn, callback)
     xmlhttp.send();
 }
 
-*/

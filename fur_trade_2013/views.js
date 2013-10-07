@@ -64,7 +64,7 @@
     //These 'views' are injected into the current game
     var deltaview = document.createElement('div');
     deltaview.setAttribute('id','deltaview');
-    deltaview.fade = 0; //0-960
+    deltaview.fade = 0; //0-500
     deltaview.delta = 0;
 
     var hud = document.createElement('div');
@@ -104,8 +104,6 @@
         currentGuruTalkView = guruTalkViews[role];
 
         currentRoleView.style.display = 'block';
-        currentGetView.appendChild(hud);
-        currentTradeView.appendChild(hud);
     }
 
     function displayVid()
@@ -130,6 +128,8 @@
 
     function displayGet()
     {
+        currentGetView.appendChild(hud);
+
         if(currentRole.roleEnum == roleEnumClerk)  formatClerkGet();
         if(currentRole.roleEnum == roleEnumHunter) formatHunterGet();
 
@@ -143,6 +143,8 @@
 
     function displayTrade()
     {
+        currentTradeView.appendChild(hud);
+
         if(currentRole.roleEnum == roleEnumClerk)  formatClerkTrade();
         if(currentRole.roleEnum == roleEnumHunter) formatHunterTrade();
 
@@ -157,6 +159,9 @@
     function formatClerkGet()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+webPageItem.peltCost;
+        document.getElementById("sellerdialog").innerHTML = "Well wouldja look at dat der! I've got some extra <b>"+webPageItem.name+"s</b>, and looks like you might have some extra beaver pelts! Lemme take <b>"+webPageItem.peltCost+" pelts</b> off your hands and back to Europe, and I'll give you a brand new <b>"+webPageItem.name+"</b>!";
+        document.getElementById("sellerbuttontext").innerHTML = "Buy "+webPageItem.name;
     }
 
     function formatHunterGet()
@@ -215,16 +220,14 @@
 
     function displaydelta(txt, delta)
     {
-        if(delta == 0) return;
-        
         if(delta > 0) deltaview.style.color = "#009344";
         else          deltaview.style.color = "#C42032";
         deltaview.delta = delta;
 
-        if(delta < 0) delta *= -1;//so we can parse it to text without worrying about - signs
-        deltaview.innerHTML = delta+" "+txt;
+        if(delta > 0) deltaview.innerHTML = "+"+delta+" "+txt;
+        else          deltaview.innerHTML = delta+" "+txt; //'-' auto added
         var alreadyTicking = (deltaview.fade != 0);
-        deltaview.fade = 960;
+        deltaview.fade = 500;
         deltaview.style.display = 'block';
         if(!alreadyTicking) tickdelta();
     }
@@ -233,13 +236,13 @@
     {
         if(deltaview.delta > 0)
         {
-            deltaview.style.color = "rgba(0,147,68,"+(deltaview.fade/960)+")";
-            deltaview.style.top = (200-1/8*(960-deltaview.fade))+'px';
+            deltaview.style.color = "rgba(0,147,68,"+(deltaview.fade/500)+")";
+            deltaview.style.top = (200-1/4*(500-deltaview.fade))+'px';
         }
         else
         {
-            deltaview.style.color = "rgba(196,32,50,"+(deltaview.fade/960)+")";
-            deltaview.style.top = (200+1/8*(960-deltaview.fade))+'px';
+            deltaview.style.color = "rgba(196,32,50,"+(deltaview.fade/500)+")";
+            deltaview.style.top = (200+1/4*(500-deltaview.fade))+'px';
         }
 
         deltaview.fade--;

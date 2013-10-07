@@ -32,10 +32,10 @@ function stateReceived()
 {
     ARIS.didUpdateItemQty = function(updatedItemId,qty) {};//silence updates while we get things ready
     if(!currentRole) { firstTime = true; getNextRole(); }
-    else roleWasSet();
+    else roleWasLocallySet();
 }
 
-function roleWasSet()//role was dynamically assigned- proceed
+function roleWasLocallySet()//role was dynamically assigned- proceed
 {
     //Handle in-game updates
     ARIS.didUpdateItemQty = function(updatedItemId,qty)
@@ -46,15 +46,6 @@ function roleWasSet()//role was dynamically assigned- proceed
             switch(currentLevel)
             {
                 case 1:
-                    if(updatedItemId == itemPelt.itemId)
-                    {
-                        haveDisplay.innerHTML = "Pelts: "+qty;
-                        if(qty != itemPelt.qty)
-                        {
-                            if(Math.abs(qty-itemPelt.qty) == 1) displaydelta(qty-itemPelt.qty, "pelt");
-                            else displaydelta(qty-itemPelt.qty, "pelts");
-                        }
-                    }
                     break;
                 case 2:
                     break;
@@ -65,15 +56,6 @@ function roleWasSet()//role was dynamically assigned- proceed
             switch(currentLevel)
             {
                 case 1:
-                    if(updatedItemId == itemPelt.itemId)
-                    {
-                        haveDisplay.innerHTML = "Pelts: "+qty;
-                        if(qty != itemPelt.qty)
-                        {
-                            if(Math.abs(qty-itemPelt.qty) == 1) displaydelta(qty-itemPelt.qty, "pelt");
-                            else displaydelta(qty-itemPelt.qty, "pelts");
-                        }
-                    }
                     break;
                 case 2:
                     break;
@@ -91,7 +73,8 @@ function roleWasSet()//role was dynamically assigned- proceed
     }
 
     displayRole(currentRole.roleEnum);
-    if(firstTime) displayVid();
+    if(firstTime)
+        displayVid();
     else
     {
         switch(currentLevel)
@@ -104,6 +87,40 @@ function roleWasSet()//role was dynamically assigned- proceed
                 break;
         }
     }
+}
+
+function vidComplete()
+{
+    if(firstTime) setRole(currentRole.roleEnum); //communicates role to ARIS
+    displayIntro();
+}
+function clerkBuyConfirmed()
+{
+    if(itemPelt.qty < webPageItem.peltCost)
+    {
+        document.getElementById('sellerdialog').innerHTML = "Hey, what're you trying to do? Swindle me?! You've only got <b>"+itemPelt.qty+" pelts</b>! I said I'd trade for <b>"+webPageItem.peltCost+" pelts</b>! Get outa here, ya cheat!";
+    }
+    else
+    {
+        document.getElementById('sellerdialog').innerHTML = "Thanks!";
+        
+        displaydelta(itemPelt.name,-1*webPageItem.peltCost);
+        setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty-webPageItem.peltCost);
+        ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
+        setItemQtyInInventory(webPageItem.itemEnum, webPageItem.qty+1);
+        ARIS.setItemCount(webPageItem.itemId,webPageItem.qty);
+        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+    }
+    document.getElementById('buybutton').style.display = 'none';
+    document.getElementById('sellerdialog').style.bottom = '0px';
+}
+function hunterHarvestConfirmed()
+{
+    displaydelta(itemPelt.name,1);
+    setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty+1);
+    ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
+    haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+    document.getElementById('harvestbutton').style.display = 'none';
 }
 
 window.addEventListener('load', partReady, false);
@@ -124,13 +141,13 @@ window.onerror = function(msg, url, linenumber)
         <video id="clerkvidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">
         </video>
-        <div class='bottombutton' onclick='displayIntro();'>
+        <div class='bottombutton' onclick='vidComplete();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='clerkintro' class='intro full_screen'>
         <img src='assets/clerk_prompt.png' class='introprompt' />
-        <img src='assets/clerk.png' class='introimage' />
+        <img src='assets/john.png' class='introimage' />
         <div class='introdialog'>
             I'm x. We're running low in inventory for our store. Trade these beaver pelts to the shippers from Europe to get more supplies. Blah blah blah (NOT FINAL TEXT).
         </div>
@@ -139,12 +156,19 @@ window.onerror = function(msg, url, linenumber)
         </div>
     </div>
     <div id='clerkget' class='get full_screen'>
-        
+        <img src='assets/pelt.png' id='clerkitemget' />
+        <img src='assets/seller.png' class='introimage' /><!-- not actually an introimage, but should use same-ish dimensions -->
+        <div id='sellerdialog' class='introdialog'>
+            This here item's a doozy yup sure is der.
+        </div>
+        <div id='buybutton' class='bottombutton' onclick='clerkBuyConfirmed();'>
+            <div id="sellerbuttontext" class="bottombuttontext">Buy </div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
     </div>
     <div id='clerktrade' class='trade full_screen'>
     </div>
     <div id='clerkguru' class='guru full_screen'>
-        <img class='guruimage' src='assets/anton.png' />
+        <img class='guruimage' src='assets/john.png' />
         <div id='clerkgurutalk' class='gurutalk'></div>
         <div class='bottombutton' onclick='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -157,13 +181,13 @@ window.onerror = function(msg, url, linenumber)
         <video id="huntervidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">
         </video>
-        <div class='bottombutton' onclick='displayIntro();'>
+        <div class='bottombutton' onclick='vidComplete();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='hunterintro' class='intro full_screen'>
         <img src='assets/hunter_prompt.png' class='introprompt' />
-        <img src='assets/hunter.png' class='introimage' />
+        <img src='assets/natam.png' class='introimage' />
         <div class='introdialog'>
             I'm x. We hear that the Euro's are opening a store where they will give us some cool stuff for useless beaver pelts! Would you help us get some beaver pelts? Blah blah blah (NOT FINAL TEXT).
         </div>
@@ -172,11 +196,15 @@ window.onerror = function(msg, url, linenumber)
         </div>
     </div>
     <div id='hunterget' class='get full_screen'>
+        <img src='assets/seller.png' class='introimage' /><!-- not actually an introimage, but should use same-ish dimensions -->
+        <div id='harvestbutton' class='bottombutton' onclick='hunterHarvestConfirmed();'>
+            <div class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
     </div>
     <div id='huntertrade' class='trade full_screen'>
     </div>
     <div id='hunterguru' class='guru full_screen'>
-        <img class='guruimage' src='assets/anton.png' />
+        <img class='guruimage' src='assets/natam.png' />
         <div id='huntergurutalk' class='gurutalk'></div>
         <div class='bottombutton' onclick='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />

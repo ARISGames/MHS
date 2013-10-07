@@ -52,6 +52,8 @@ function Item(itemEnum)
     this.owner = null;
     this.name = "";
     this.imageName = "";
+    this.peltCost = 0;
+    this.approvalWorth = 0;
     this.qty = 0; //This is the only 'would-be-non-static' variable of this object...
 
     switch(itemEnum)
@@ -74,6 +76,8 @@ function Item(itemEnum)
             this.itemId = 47030;
             this.webPageId = 3720;
             this.owner = roleClerk;
+            this.peltCost = 4;
+            this.approvalWorth = 8;
             this.name = "Gun";
             this.imageName = "gun.png";
             break;
@@ -81,6 +85,8 @@ function Item(itemEnum)
             this.itemId = 47035;
             this.webPageId = 3726;
             this.owner = roleClerk;
+            this.peltCost = 1;
+            this.approvalWorth = 1;
             this.name = "Beads";
             this.imageName = "beads.png";
             break;
@@ -88,6 +94,8 @@ function Item(itemEnum)
             this.itemId = 47032;
             this.webPageId = 3715;
             this.owner = roleClerk;
+            this.peltCost = 2;
+            this.approvalWorth = 5;
             this.name = "Blanket";
             this.imageName = "blanket.png";
             break;
@@ -95,6 +103,8 @@ function Item(itemEnum)
             this.itemId = 47038;
             this.webPageId = 3723;
             this.owner = roleClerk;
+            this.peltCost = 3;
+            this.approvalWorth = 2;
             this.name = "Kettle";
             this.imageName = "kettle.png";
             break;
@@ -222,6 +232,8 @@ function setRole(roleEnum)
             currentRole = roleHunter;
             break;
     }
+
+    incrementSecretLocationCount(); //because a role was assigned, tell global state to next assign other role
 }
 
 //GAME DATA
@@ -298,14 +310,11 @@ function getSecretLocation()
 
 function gotSecretLocation(data)
 {
-    //Yes, I know calling those functions directly from here is ridiculous.
-    if(data.item_qty%2 == 0) setRole(roleEnumHunter);
-    else                     setRole(roleEnumClerk);
+    //Only set role client side- if they abort before the video we want them to be assigned again
+    if(data.item_qty%2 == 0) currentRole = roleHunter;
+    else                     currentRole = roleClerk;
 
-    if(data.item_qty > 1) decrementSecretLocationCount();
-    else                  incrementSecretLocationCount();
-
-    roleWasSet();
+    roleWasLocallySet();
 }
 
 function sendRequest(fn, callback)

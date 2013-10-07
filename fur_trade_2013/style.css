@@ -47,7 +47,7 @@ body
 .intro
 {
     display:none;
-    background-color:rgba(237,177,31,0.5);
+    background-color:rgba(245,129,36,0.5);
 }
 
 .get
@@ -77,16 +77,17 @@ body
 #havedisplay
 {
     width:320px;
-    height:90px;
+    height:80px;
+    padding-top:10px; /*remember to alter height in conjunction with this*/
     position:absolute;
     top:0px;
     left:0px;
-    font-size:80px;
+    font-size:65px;
     font-family:gotham_font;
-    color:#EDB11F;
+    color:#F58124;
     text-shadow:5px 5px 10px #000000;
     text-align:center;
-    background-color:rgba(237,177,31,0.5);
+    background-color:rgba(245,129,36,0.5);
 }
 
 #wantdisplay
@@ -98,20 +99,20 @@ body
     left:0px;
     font-size:x-large;
     font-family:gotham_font;
-    color:#EDB11F;
+    color:#F58124;
 }
 
 .clerk_bg
 {
-    background-image:url("assets/drill_bg.png");
+    background-image:url("assets/clerk_bg.png");
 }
 
 .hunter_bg
 {
-    background-image:url("assets/backer_bg.png");
+    background-image:url("assets/hunter_bg.png");
 }
 
-#moneydelta
+#deltaview
 {
     display:none;
     width:320px;
@@ -119,9 +120,9 @@ body
     position:absolute;
     top:200px;
     left:0px;
-    font-size:70px;
+    font-size:40px;
     font-family:gotham_font;
-    color:#EDB11F;
+    color:#F58124;
     text-align:center;
     overflow:visible;
 }
@@ -167,6 +168,14 @@ body
     background-color:rgba(255,255,255,0.9);
 }
 
+.bottombuttontext
+{
+    position:absolute;
+    right:40px;
+    top:5px;
+    font-size:25px;
+}
+
 .forwardarrow
 {
     display:block;
@@ -195,5 +204,15 @@ body
     padding:10px;
     overflow:scroll;
     background-color:rgba(255,255,255,0.9);
+}
+
+#clerkitemget
+{
+    display:block;
+    position:absolute;
+    top:125px;
+    left:10px;
+    width:100px;
+    height:100px;
 }
 

@@ -7,10 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<title>
-MHS Iron Mine
-</title>
-<link href="style.css" rel="stylesheet" type="text/css""style.css"></style>
+<title>Iron Mine</title>
+<link href="style.css" rel="stylesheet" type="text/css"></link>
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="helpers/pusherman.js">    </script>
 <script type="text/javascript" src="helpers/ironminemodel.js"></script>
@@ -107,9 +105,9 @@ MHS Iron Mine
     window.addEventListener('load', partReady, false);
     window.onerror = function(msg, url, linenumber) 
     {
-        //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
         return true;
-    }
+    };
 </script>
 </head>
 

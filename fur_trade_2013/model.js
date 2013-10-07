@@ -1,33 +1,18 @@
 //ENUMS
-var sceneEnumLoading    = 0;
-var sceneEnumItemGet    = 1;
-var sceneEnumIntro      = 2;
-var sceneEnumChooseRole = 3;
-var sceneEnumRoleGet    = 4;
-var sceneEnumSuccess    = 5;
-var sceneEnums=[sceneEnumLoading,sceneEnumItemGet,sceneEnumIntro,sceneEnumChooseRole,sceneEnumRoleGet,sceneEnumSuccess];
+var sceneEnumLoading = 0;
+var sceneEnumIntro   = 1;
+var sceneEnums=[sceneEnumLoading,sceneEnumIntro];
 
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
-var itemEnumFisher    = 0;
-var itemEnumRaccoon   = 1;
-var itemEnumMarten    = 2;
-var itemEnumMink      = 3;
-var itemEnumMuskrat   = 4;
-var itemEnumWolf      = 5;
-var itemEnumOtter     = 6;
-var itemEnumRedFox    = 7;
-var itemEnumHempTwine = 8;
-var itemEnumBeads     = 9;
-var itemEnumScissors  = 10;
-var itemEnumKettle    = 11;
-var itemEnumAxeHead   = 12;
-var itemEnumIronHoe   = 13;
-var itemEnumBeaver    = 14;
-var itemEnumFabric    = 15;
-var itemEnums = [itemEnumFisher,itemEnumRaccoon,itemEnumMarten,itemEnumMink,itemEnumMuskrat,itemEnumWolf,itemEnumOtter,itemEnumRedFox,itemEnumHempTwine,itemEnumBeads,itemEnumScissors,itemEnumKettle,itemEnumAxeHead,itemEnumIronHoe,itemEnumBeaver, itemEnumFabric];
+var itemEnumPelt    = 0;
+var itemEnumGun     = 1;
+var itemEnumBeads   = 2;
+var itemEnumBlanket = 3;
+var itemEnumKettle  = 2;
+var itemEnumBPelt = [itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 17242;
@@ -77,117 +62,40 @@ function Item(itemEnum)
 
     switch(itemEnum)
     {
-        case itemEnumFisher:
+        case itemEnumPelt:
             this.itemId = 19349;
             this.webPageId = 1367;
-            this.owner = roleHunter;
-            this.name = "Fisher Pelt";
-            this.imageName = "fisherpelt.png";
-            break;
-        case itemEnumRaccoon:
-            this.itemId = 19350;
-            this.webPageId = 1358;
-            this.owner = roleHunter;
-            this.name = "Raccoon Pelt";
-            this.imageName = "raccoonpelt.png";
-            break;
-        case itemEnumMarten:
-            this.itemId = 19348;
-            this.webPageId = 1366;
-            this.owner = roleHunter;
-            this.name = "Marten Pelt";
-            this.imageName = "martenpelt.png";
-            break;
-        case itemEnumMink:
-            this.itemId = 19351;
-            this.webPageId = 1359;
-            this.owner = roleHunter;
-            this.name = "Mink Pelt";
-            this.imageName = "minkpelt.png";
-            break;
-        case itemEnumMuskrat:
-            this.itemId = 19353;
-            this.webPageId = 1364;
-            this.owner = roleHunter;
-            this.name = "Muskrat Pelt";
-            this.imageName = "muskratpelt.png";
-            break;
-        case itemEnumWolf:
-            this.itemId = 19354;
-            this.webPageId = 1369;
-            this.owner = roleHunter;
-            this.name = "Wolf Pelt";
-            this.imageName = "wolfpelt.png";
-            break;
-        case itemEnumOtter:
-            this.itemId = 19355;
-            this.webPageId = 1365;
-            this.owner = roleHunter;
-            this.name = "Otter Pelt";
-            this.imageName = "otterpelt.png";
-            break;
-        case itemEnumRedFox:
-            this.itemId = 19356;
-            this.webPageId = 1360;
-            this.owner = roleHunter;
-            this.name = "Red Fox Pelt";
-            this.imageName = "redfoxpelt.png";
-            break;
-        case itemEnumHempTwine:
-            this.itemId = 19357;
-            this.webPageId = 1356;
-            this.owner = roleClerk;
-            this.name = "Hemp Twine";
-            this.imageName = "hemptwine.png";
-            break;
-        case itemEnumBeads:
-            this.itemId = 19358;
-            this.webPageId = 1361;
-            this.owner = roleClerk;
-            this.name = "Beads";
-            this.imageName = "beads.png";
-            break;
-        case itemEnumScissors:
-            this.itemId = 19359;
-            this.webPageId = 1362;
-            this.owner = roleClerk;
-            this.name = "Scissors";
-            this.imageName = "scissors.png";
-            break;
-        case itemEnumKettle:
-            this.itemId = 19360;
-            this.webPageId = 1357;
-            this.owner = roleClerk;
-            this.name = "Kettle";
-            this.imageName = "kettle.png";
-            break;
-        case itemEnumAxeHead:
-            this.itemId = 19361;
-            this.webPageId = 1368;
-            this.owner = roleClerk;
-            this.name = "Axe Head";
-            this.imageName = "axehead.png";
-            break;
-        case itemEnumIronHoe:
-            this.itemId = 19352;
-            this.webPageId = 1363;
-            this.owner = roleClerk;
-            this.name = "Iron Hoe";
-            this.imageName = "ironhoe.png";
-            break;
-        case itemEnumBeaver:
-            this.itemId = 19432;
-            this.webPageId = 1371;
             this.owner = roleHunter;
             this.name = "Beaver Pelt";
             this.imageName = "beaverpelt.png";
             break;
-        case itemEnumFabric:
-            this.itemId = 19433;
-            this.webPageId = 1372;
+        case itemEnumGun:
+            this.itemId = 19350;
+            this.webPageId = 1358;
+            this.owner = roleClerk;
+            this.name = "Gun";
+            this.imageName = "gun.png";
+            break;
+        case itemEnumBeads:
+            this.itemId = 19348;
+            this.webPageId = 1366;
+            this.owner = roleClerk;
+            this.name = "Beads";
+            this.imageName = "beads.png";
+            break;
+        case itemEnumBlanket:
+            this.itemId = 19351;
+            this.webPageId = 1359;
             this.owner = roleClerk;
             this.name = "Blanket";
-            this.imageName = "fabric.png";
+            this.imageName = "blanket.png";
+            break;
+        case itemEnumKettle:
+            this.itemId = 19353;
+            this.webPageId = 1364;
+            this.owner = roleKettle;
+            this.name = "Kettle";
+            this.imageName = "kettle.png";
             break;
         default:
             return null;
@@ -196,25 +104,42 @@ function Item(itemEnum)
 }
 
 //REFERENCES
-var itemFisher    = new Item(itemEnumFisher);
-var itemRaccoon   = new Item(itemEnumRaccoon);
-var itemMarten    = new Item(itemEnumMarten);
-var itemMink      = new Item(itemEnumMink);
-var itemMuskrat   = new Item(itemEnumMuskrat);
-var itemWolf      = new Item(itemEnumWolf);
-var itemOtter     = new Item(itemEnumOtter);
-var itemRedFox    = new Item(itemEnumRedFox);
-var itemHempTwine = new Item(itemEnumHempTwine);
-var itemBeads     = new Item(itemEnumBeads);
-var itemScissors  = new Item(itemEnumScissors);
-var itemKettle    = new Item(itemEnumKettle);
-var itemAxeHead   = new Item(itemEnumAxeHead);
-var itemIronHoe   = new Item(itemEnumIronHoe);
-var itemAxeHead   = new Item(itemEnumAxeHead);
-var itemIronHoe   = new Item(itemEnumIronHoe);
-var itemBeaver    = new Item(itemEnumBeaver);
-var itemFabric    = new Item(itemEnumFabric);
-var items = [itemFisher,itemRaccoon,itemMarten,itemMink,itemMuskrat,itemWolf,itemOtter,itemRedFox,itemHempTwine,itemBeads,itemScissors,itemKettle,itemAxeHead,itemIronHoe, itemBeaver, itemFabric];
+var itemPelt    = new Item(itemEnumPelt);
+var itemGun     = new Item(itemEnumGun);
+var itemBeads   = new Item(itemEnumBeads);
+var itemBlanket = new Item(itemEnumBlanket);
+var itemKettle  = new Item(itemEnumKettle);
+var items = [itemPelt, itemGun, itemBeads, itemBlanket, itemKettle];
+
+function loadStateFromARIS()
+{
+    var bogusEndOfQueueId = 99999999; //Used to flag the end of the queue
+
+    //Override to handle ARIS responses
+    ARIS.didUpdateItemQty = function(updatedItemId, qty)
+    {
+        if(updatedItemId == bogusEndOfQueueId)
+            stateReceived();
+
+        var o;
+        if     (o = itemForItemId(updatedItemId))                                   setItemQtyInInventory(o.itemEnum, qty);
+        else if(qty > 0 && o = levelForLevelId(updatedItemId) && o >= currentLevel) currentLevel = parseInt(o)+1;//have level 1 badge = at level 2
+        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                      currentRole = o;
+    }
+
+    var params = ARIS.parseURLParams(document.URL);
+    gameId    = parseInt(params.gameId);
+    playerId  = parseInt(params.playerId);
+    webPageId = parseInt(params.webPageId);
+    webPageItem = itemForWebPageId(webPageId);
+    webPageRole = webPageItem.owner;
+
+    for(var i in items)    ARIS.getItemCount(items[i].itemId);
+    for(var i in levelIds) ARIS.getItemCount(levelIds[i]);
+    for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
+    ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
+}
+
 
 function hasItem(itemEnum)
 {
@@ -270,13 +195,11 @@ function hasAllNeededItems()
         case roleEnumHunter:
             if     (currentLevel == 1 && hunterItems.qty >= 3)  return true;
             else if(currentLevel == 2 && clerkItems.qty  >= 3)  return true;
-            else if(currentLevel == 3 && clerkItems.qty  >= 10) return true;
             return false;
             break;
         case roleEnumClerk:
             if     (currentLevel == 1 && clerkItems.qty  >= 3)  return true;
             else if(currentLevel == 2 && hunterItems.qty >= 3)  return true;
-            else if(currentLevel == 3 && hunterItems.qty >= 10) return true;
             return false;
             break;
     }
@@ -344,25 +267,25 @@ function levelIdForLevel(i)
 //ARIS ACCESS HACK
 function incrementSecretLocationCount()
 {
-// players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
-// http://arisgames.org/server/json.php/v1.players.dropItem/5252/0/46645/0/0/1
-// {"data":false,"returnCode":0,"returnCodeDescription":null}
+    // players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
+    // http://arisgames.org/server/json.php/v1.players.dropItem/5252/0/46645/0/0/1
+    // {"data":false,"returnCode":0,"returnCodeDescription":null}
     sendRequest("players.dropItem/5252/0/46645/0/0/1",function(data){});
 }
 
 function decrementSecretLocationCount()
 {
-// players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=337479,qty=1);
-// http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/337479/1
-// {"data":true,"returnCode":0,"returnCodeDescription":null}
+    // players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=337479,qty=1);
+    // http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/337479/1
+    // {"data":true,"returnCode":0,"returnCodeDescription":null}
     sendRequest("players.pickupItemFromLocation/5252/0/46645/337479/1",function(data){});
 }
 
 function getSecretLocation()
 {
-// locations.getLocation(gameId=5252,locationId=337479);
-// http://arisgames.org/server/json.php/v1.locations.getLocation/5252/337479
-// {"data":{"location_id":"337479","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
+    // locations.getLocation(gameId=5252,locationId=337479);
+    // http://arisgames.org/server/json.php/v1.locations.getLocation/5252/337479
+    // {"data":{"location_id":"337479","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
     sendRequest("locations.getLocation/5252/337479",gotSecretLocation);
 }
 

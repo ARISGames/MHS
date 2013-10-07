@@ -1,112 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="no-cache" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="viewport" content="width=device-width; user-scalable=no;"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0 maximum-scale=1.0 user-scalable=no;"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Trading Post</title>
 <link href="style.css" rel="stylesheet" type="text/css"></link>
 <script type="text/javascript" src="utils/json2.js"></script>
 <script type="text/javascript" src="model.js"></script>
+<script type="text/javascript" src="views.js"></script>
 <script type="text/javascript">
 
 var ARIS = {};
-
-var scene = sceneEnumLoading;
-var bogusEndOfStateQueueId = 99999999; //Enqueue into getQtyOfItem- when it returns '0', you'll know everything preceding it has finished
-var stateGotten = false;
-
-function bodyLoad()
+var readyCount = 2;
+function partReady()
 {
-    window.onerror = function(msg, url, linenumber) 
-    {
-        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
-        return true;
-    };
+    readyCount--;
+    if(readyCount == 0) begin();
+}
+ARIS.ready = function() { partReady(); };
 
-    //junk to prevent scrolling
-    document.ontouchmove = function(e){ e.preventDefault(); };
-
+function begin()
+{
     setScene(sceneEnumLoading);
-    setTimeout(requestState,100);
+    setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
 }
 
-//Fetches all data it needs
-function requestState()
+function statReceived()
 {
-    stateGotten = false;
-
-    //Get URL Fields
-    var params = ARIS.parseURLParams(document.URL);
-    gameId      = parseInt(params.gameId);
-    playerId    = parseInt(params.playerId);
-    webPageId   = parseInt(params.webPageId);
-    webPageItem = itemForWebPageId(webPageId);
-    webPageRole = webPageItem.owner;
-
-    //preload images
-    var tempImg1 = new Image(); tempImg1.src = "images/objects/splash/"+webPageItem.imageName;
-    var tempImg2 = new Image(); tempImg2.src = "images/roles/splash/"+webPageRole.imageName;
-
-    //This is called by ARIS, informing this webpage of qty values
+    //Re-override "didUpdateItemQty" to handle in-game updates rather than state getting updates.
     ARIS.didUpdateItemQty = function(updatedItemId,qty)
     {
-        //Knows all enqueued requests have finished
-        if(updatedItemId == bogusEndOfStateQueueId)
-            stateReceived();
-
-        //Update local record of qty to sync with ARIS data
-        var o;
-        if     (o = itemForItemId(updatedItemId))                                   setItemQtyInInventory(o.itemEnum, qty);
-        else if(qty > 0 && o = levelForLevelId(updatedItemId) && o >= currentLevel) currentLevel = parseInt(o)+1;//have level 1 badge = at level 2
-        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                      currentRole = o;
-
-        if(hasAllNeededItems() && stateGotten)
+        if(o = itemForItemId(updatedItemId))
+            setItemQtyInInventory(o.itemEnum, qty);
+        if(hasAllNeededItems())
         {
             ARIS.setItemCount(levelIdForLevel(currentLevel),1);
             currentLevel++;
         }
     }
-
-    //Request sync with ARIS data
-    for(var i in items)    ARIS.getItemCount(items[i].itemId);
-    for(var i in levelIds) ARIS.getItemCount(levelIds[i]);
-    for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
-    ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
 }
 
 //Once all data is retreived, actually initialize game state
 function stateReceived()
 {
-    stateGotten = true;
-    if(!currentRole)
 }
 
 function setScene(newScene)
 {
     scene = newScene;
 
-    document.getElementById("loading"   ).style.display="none";
+    document.getElementById("loading").style.display = "none";
 
     switch(scene)
     {
         case sceneEnumLoading:
-            document.getElementById("loading").style.display="block";
+            document.getElementById("loading").style.display = "block";
             break;
     }
 }
 
-window.addEventListener('load', bodyLoad, false);
+window.addEventListener('load', partReady, false);
+window.onerror = function(msg, url, linenumber) 
+{
+    alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+    return true;
+};
 </script>
 </head>
-<body>
-<div id="screen">
 
-<!-- Loading State -->
-<div id="loading" class="scene" style="display:block;">
-    loading...
+<body class='full_screen'>
+
+<div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
+
+<div id='clerk' class='role clerk_bg full_screen'>
+    <div id='clerkvid' class='vid'>
+        <video id="clerkvidfile" width="320" height="504" webkit-playsinline>
+            <source src="assets/intro.mp4" type="video/mp4">
+        </video>
+        <div class='bottombutton' onclick='displayIntro();'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+    <div id='clerkintro' class='intro full_screen'>
+        <img src='assets/clerk_prompt.png' class='introprompt' />
+        <img src='assets/clerk.png' class='introimage' />
+        <div class='introdialog'>
+            I'm x. We're running low in inventory for our store. Trade these beaver pelts to the shippers from Europe to get more supplies. Blah blah blah (NOT FINAL TEXT).
+        </div>
+        <div class='bottombutton' onclick='ARIS.exitToScannerWithPrompt("Scan a clerk item behind the fur trade counter!");'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+    <div id='clerkget' class='get full_screen'>
+    </div>
+    <div id='clerktrade' class='trade full_screen'>
+    </div>
+    <div id='clerkguru' class='guru full_screen'>
+        <img class='guruimage' src='assets/anton.png' />
+        <div id='clerkgurutalk' class='gurutalk'></div>
+        <div class='bottombutton' onclick='hideGuru();'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
 </div>
 
-</div><!-- body -->
+<div id='hunter' class='role hunter_bg full_screen'>
+    <div id='huntervid' class='vid'>
+        <video id="huntervidfile" width="320" height="504" webkit-playsinline>
+            <source src="assets/intro.mp4" type="video/mp4">
+        </video>
+        <div class='bottombutton' onclick='displayIntro();'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+    <div id='hunterintro' class='intro full_screen'>
+        <img src='assets/hunter_prompt.png' class='introprompt' />
+        <img src='assets/hunter.png' class='introimage' />
+        <div class='introdialog'>
+            I'm x. We hear that the Euro's are opening a store where they will give us some cool stuff for useless beaver pelts! Would you help us get some beaver pelts? Blah blah blah (NOT FINAL TEXT).
+        </div>
+        <div class='bottombutton' onclick='ARIS.exitToScannerWithPrompt("Scan a beaver pelt to hunt and collect it!");'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+    <div id='hunterget' class='get full_screen'>
+    </div>
+    <div id='huntertrade' class='trade full_screen'>
+    </div>
+    <div id='hunterguru' class='guru full_screen'>
+        <img class='guruimage' src='assets/anton.png' />
+        <div id='huntergurutalk' class='gurutalk'></div>
+        <div class='bottombutton' onclick='hideGuru();'>
+            <img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

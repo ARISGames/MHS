@@ -1,3 +1,8 @@
+function test()
+{
+    alert("found");
+}
+
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
@@ -124,10 +129,10 @@ function loadStateFromARIS()
             stateReceived();
 
         var o;
-        if     (o = itemForItemId(updatedItemId))                                   setItemQtyInInventory(o.itemEnum, qty);
-        else if(qty > 0 && o = levelForLevelId(updatedItemId) && o >= currentLevel) currentLevel = parseInt(o)+1;//have level 1 badge = at level 2
-        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                      currentRole = o;
-    }
+        if     (o = itemForItemId(updatedItemId))                                    setItemQtyInInventory(o.itemEnum, qty);
+        else if(qty > 0 && o = levelForLevelId(updatedItemId)) && o >= currentLevel) parseInt(o)+1;//have level 1 badge = at level 2
+        else if(qty > 0 && (o = roleForRoleId(updatedItemId)))                       currentRole = o;
+    };
 
     var params = ARIS.parseURLParams(document.URL);
     gameId    = parseInt(params.gameId);
@@ -141,6 +146,7 @@ function loadStateFromARIS()
     for(var i in roles)    ARIS.getItemCount(roles[i].roleId);
     ARIS.getItemCount(bogusEndOfStateQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
 }
+/*
 
 function hasItem(itemEnum)
 {
@@ -313,3 +319,4 @@ function sendRequest(fn, callback)
     xmlhttp.send();
 }
 
+*/

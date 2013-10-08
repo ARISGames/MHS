@@ -110,6 +110,14 @@ function clerkBuyConfirmed()
         setItemQtyInInventory(webPageItem.itemEnum, webPageItem.qty+1);
         ARIS.setItemCount(webPageItem.itemId,webPageItem.qty);
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+
+        if(currentLevel == 1 && itemPelt.qty == 0)
+        {
+            ARIS.setItemCount(levelIdForLevel(1), 1);
+            currentLevel = 2;
+            displayGuruWithMessage("Good work! Now that we have supplies for the store, we should try to <b>find someone looking to trade</b>!");
+            document.getElementById("clerkgurubutton").onclick = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+        }
     }
     document.getElementById('buybutton').style.display = 'none';
     document.getElementById('sellerdialog').style.bottom = '0px';
@@ -121,6 +129,14 @@ function hunterHarvestConfirmed()
     ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
     haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
     document.getElementById('harvestbutton').style.display = 'none';
+ 
+    if(currentLevel == 1 && itemPelt.qty == 10)
+    {
+        ARIS.setItemCount(levelIdForLevel(1), 1);
+        currentLevel = 2;
+        displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
+        document.getElementById("huntergurubutton").onclick = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+    }
 }
 
 window.addEventListener('load', partReady, false);
@@ -170,7 +186,7 @@ window.onerror = function(msg, url, linenumber)
     <div id='clerkguru' class='guru full_screen'>
         <img class='guruimage' src='assets/john.png' />
         <div id='clerkgurutalk' class='gurutalk'></div>
-        <div class='bottombutton' onclick='hideGuru();'>
+        <div id="clerkgurubutton" class='bottombutton' onclick='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -206,7 +222,7 @@ window.onerror = function(msg, url, linenumber)
     <div id='hunterguru' class='guru full_screen'>
         <img class='guruimage' src='assets/natam.png' />
         <div id='huntergurutalk' class='gurutalk'></div>
-        <div class='bottombutton' onclick='hideGuru();'>
+        <div id='huntergurubutton' class='bottombutton' onclick='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>

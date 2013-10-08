@@ -92,7 +92,6 @@
         if(currentIntroView) currentIntroView.style.display = 'none';
         if(currentGetView)   currentGetView.style.display   = 'none';
         if(currentTradeView) currentTradeView.style.display = 'none';
-        if(currentGuruView)  currentGuruView.style.display  = 'none';
 
         currentRoleView     = roleViews[role];
         currentVidView      = vidViews[role];
@@ -113,7 +112,6 @@
         if(currentIntroView)   currentIntroView.style.display = 'none';
         if(currentGetView)     currentGetView.style.display   = 'none';
         if(currentTradeView)   currentTradeView.style.display = 'none';
-        if(currentGuruView)    currentGuruView.style.display  = 'none';
     }
 
     function displayIntro()
@@ -123,7 +121,6 @@
         if(currentIntroView)   currentIntroView.style.display = 'block';
         if(currentGetView)     currentGetView.style.display   = 'none';
         if(currentTradeView)   currentTradeView.style.display = 'none';
-        if(currentGuruView)    currentGuruView.style.display  = 'none';
     }
 
     function displayGet()
@@ -138,7 +135,6 @@
         if(currentIntroView)   currentIntroView.style.display = 'none';
         if(currentGetView)     currentGetView.style.display   = 'block';
         if(currentTradeView)   currentTradeView.style.display = 'none';
-        if(currentGuruView)    currentGuruView.style.display  = 'none';
     }
 
     function displayTrade()
@@ -153,22 +149,36 @@
         if(currentIntroView)   currentIntroView.style.display = 'none';
         if(currentGetView)     currentGetView.style.display   = 'none';
         if(currentTradeView)   currentTradeView.style.display = 'block';
-        if(currentGuruView)    currentGuruView.style.display  = 'none';
     }
 
     function formatClerkGet()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+webPageItem.peltCost;
         document.getElementById("clerkitemget").src = "assets/"+webPageItem.imageName;
-        document.getElementById("sellerdialog").innerHTML = "I've got some <b>"+webPageItem.name+"s</b> here... I'd be willing to part with one for the price of <b>"+webPageItem.peltCost+" pelts</b>. Whad'ya say, kid?";
-        document.getElementById("sellerbuttontext").innerHTML = "Buy "+webPageItem.name;
+        if(webPageItem.itemEnum != itemEnumPelt)
+        {
+            wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+webPageItem.peltCost;
+            document.getElementById("sellerdialog").innerHTML = "I've got some <b>"+webPageItem.name+"s</b> here... I'd be willing to part with one for the price of <b>"+webPageItem.peltCost+" pelts</b>. Whad'ya say, kid?";
+            document.getElementById("sellerbuttontext").innerHTML = "Buy "+webPageItem.name;
+        }
+        else
+        {
+            document.getElementById("sellerdialog").innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> if you want to fill your store with some of my European wares...";
+            document.getElementById('buybutton').style.display = 'none';
+            document.getElementById('sellerdialog').style.bottom = '0px';
+        }
     }
 
     function formatHunterGet()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;You Need:10 pelts";
+        wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
+        if(webPageItem.itemEnum != itemEnumPelt)
+        {
+            document.getElementById('peltget').src = "assets/"+webPageItem.imageName;
+            document.getElementById('harvestbutton').style.display = 'none';
+            displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
+        }
     }
 
     function formatClerkTrade()
@@ -195,8 +205,6 @@
         currentGuruView.style.top = (10*(50-currentGuruView.progress))+'px';
         if(currentGuruView.progress < 50)
             setTimeout(tickdisplayguru, 10);
-        else
-            setTimeout(function(){hideGuru();}, 6000);
     }
 
     function hideGuru()

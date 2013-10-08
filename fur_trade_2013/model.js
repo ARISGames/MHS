@@ -2,13 +2,14 @@ var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
-var itemEnumPelt     = 0;
-var itemEnumApproval = 1;
-var itemEnumTrap     = 2;
-var itemEnumBeads    = 3;
-var itemEnumFabric   = 4;
-var itemEnumKettle   = 5;
-var itemEnums = [itemEnumPelt, itemEnumApproval, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
+var itemEnumNull     = 0;
+var itemEnumPelt     = 1;
+var itemEnumApproval = 2;
+var itemEnumTrap     = 3;
+var itemEnumBeads    = 4;
+var itemEnumFabric   = 5;
+var itemEnumKettle   = 6;
+var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumApproval, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -58,6 +59,9 @@ function Item(itemEnum)
 
     switch(itemEnum)
     {
+        case itemEnumNull:
+            this.webPageId = 3731;
+            break;
         case itemEnumPelt:
             this.itemId = 47029;
             this.webPageId = 3718;
@@ -115,13 +119,14 @@ function Item(itemEnum)
 }
 
 //REFERENCES
+var itemNull     = new Item(itemEnumNull);
 var itemPelt     = new Item(itemEnumPelt);
 var itemApproval = new Item(itemEnumApproval);
-var itemTrap      = new Item(itemEnumTrap);
+var itemTrap     = new Item(itemEnumTrap);
 var itemBeads    = new Item(itemEnumBeads);
 var itemFabric   = new Item(itemEnumFabric);
 var itemKettle   = new Item(itemEnumKettle);
-var items = [itemPelt, itemApproval, itemTrap, itemBeads, itemFabric, itemKettle];
+var items = [itemNull, itemPelt, itemApproval, itemTrap, itemBeads, itemFabric, itemKettle];
 
 function loadStateFromARIS()
 {

@@ -226,6 +226,79 @@ body
     width:300px;
 }
 
+#clerktradechoose
+{
+    position:absolute;
+    top:125px;
+    left:20px;
+    font-size:50px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#clerktradeitem
+{
+    display:block;
+    position:absolute;
+    top:100px;
+    left:185px;
+    width:100px;
+}
+
+#clerktradepool
+{
+    position:absolute;
+    top:200px;
+    left:10px;
+    width:300px;
+    height:300px;
+    overflow:scroll;
+}
+
+.tradecell
+{
+    position:relative;
+    width:296px;
+    height:100px;
+    border:2px solid black;
+    margin-bottom:10px;
+    background-color:rgba(245,129,36,0.5);
+}
+
+.tradecellimg
+{
+    display:block;
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:80px;
+    height:80px;
+}
+
+.tradecelltitle
+{
+    position:absolute;
+    top:10px;
+    left:100px;
+    width:220px;
+    font-size:30px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+.tradecellqty
+{
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    font-size:20px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
 #huntertradeinc
 {
     position:absolute;

@@ -112,6 +112,13 @@ function hunterHarvestConfirmed()
     }
 }
 
+var selectedItem = null;
+function clerkTradeItemSelected(item)
+{
+    selectedItem = item;
+    document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;
+}
+
 var fursToTrade = 0;
 function hunterIncrement()
 {
@@ -173,6 +180,8 @@ window.onerror = function(msg, url, linenumber)
         </div>
     </div>
     <div id='clerktrade' class='trade full_screen'>
+        <div id="clerktradechoose">Trade:</div><img src='assets/pelt.png' id='clerktradeitem' />
+        <div id="clerktradepool"></div>
     </div>
     <div id='clerkguru' class='guru full_screen'>
         <img class='guruimage' src='assets/john.png' />

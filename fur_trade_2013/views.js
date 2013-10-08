@@ -181,12 +181,37 @@
         }
     }
 
+    function getTradeCell(item)
+    {
+        var cell = document.createElement('div');
+        cell.setAttribute('class','tradecell');
+        var img = document.createElement('img');
+        img.setAttribute('class','tradecellimg');
+        img.src = 'assets/'+item.imageName;
+        var title = document.createElement('div');
+        title.setAttribute('class','tradecelltitle');
+        title.innerHTML = item.name;
+        var qty = document.createElement('div');
+        qty.setAttribute('class','tradecellqty');
+        qty.innerHTML = "qty owned:"+item.qty;
+        cell.appendChild(img);
+        cell.appendChild(title);
+        cell.appendChild(qty);
+        cell.onclick = function() { clerkTradeItemSelected(item); };
+
+        return cell;
+    }
     function formatClerkTrade()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
+    
+        if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));
+        if(itemBeads.qty  > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
+        if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
+        if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
     }
 
     function formatHunterTrade()

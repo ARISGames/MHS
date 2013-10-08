@@ -160,14 +160,15 @@
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+webPageItem.peltCost;
-        document.getElementById("sellerdialog").innerHTML = "Well wouldja look at dat der! I've got some extra <b>"+webPageItem.name+"s</b>, and looks like you might have some extra beaver pelts! Lemme take <b>"+webPageItem.peltCost+" pelts</b> off your hands and back to Europe, and I'll give you a brand new <b>"+webPageItem.name+"</b>!";
+        document.getElementById("clerkitemget").src = "assets/"+webPageItem.imageName;
+        document.getElementById("sellerdialog").innerHTML = "I've got some <b>"+webPageItem.name+"s</b> here... I'd be willing to part with one for the price of <b>"+webPageItem.peltCost+" pelts</b>. Whad'ya say, kid?";
         document.getElementById("sellerbuttontext").innerHTML = "Buy "+webPageItem.name;
     }
 
     function formatHunterGet()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 10";
+        wantDisplay.innerHTML = "&nbsp;&nbsp;You Need:10 pelts";
     }
 
     function formatClerkTrade()

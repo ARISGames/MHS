@@ -4,11 +4,11 @@ var roleEnums=[roleEnumClerk,roleEnumHunter];
 
 var itemEnumPelt     = 0;
 var itemEnumApproval = 1;
-var itemEnumGun      = 2;
+var itemEnumTrap     = 2;
 var itemEnumBeads    = 3;
-var itemEnumBlanket  = 4;
+var itemEnumFabric   = 4;
 var itemEnumKettle   = 5;
-var itemEnums = [itemEnumPelt, itemEnumApproval, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle];
+var itemEnums = [itemEnumPelt, itemEnumApproval, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -63,7 +63,7 @@ function Item(itemEnum)
             this.webPageId = 3718;
             this.owner = roleHunter;
             this.name = "Beaver Pelt";
-            this.imageName = "beaverpelt.png";
+            this.imageName = "pelt.png";
             break;
         case itemEnumApproval:
             this.itemId = 47041;
@@ -72,13 +72,13 @@ function Item(itemEnum)
             this.name = "Approval";
             this.imageName = "none.png"; //no image
             break;
-        case itemEnumGun:
+        case itemEnumTrap:
             this.itemId = 47030;
             this.webPageId = 3720;
             this.owner = roleClerk;
             this.peltCost = 4;
             this.approvalWorth = 8;
-            this.name = "Gun";
+            this.name = "Trap";
             this.imageName = "gun.png";
             break;
         case itemEnumBeads:
@@ -87,17 +87,17 @@ function Item(itemEnum)
             this.owner = roleClerk;
             this.peltCost = 1;
             this.approvalWorth = 1;
-            this.name = "Beads";
+            this.name = "Bead";
             this.imageName = "beads.png";
             break;
-        case itemEnumBlanket:
+        case itemEnumFabric:
             this.itemId = 47032;
             this.webPageId = 3715;
             this.owner = roleClerk;
             this.peltCost = 2;
             this.approvalWorth = 5;
-            this.name = "Blanket";
-            this.imageName = "blanket.png";
+            this.name = "Fabric";
+            this.imageName = "fabric.png";
             break;
         case itemEnumKettle:
             this.itemId = 47038;
@@ -117,11 +117,11 @@ function Item(itemEnum)
 //REFERENCES
 var itemPelt     = new Item(itemEnumPelt);
 var itemApproval = new Item(itemEnumApproval);
-var itemGun      = new Item(itemEnumGun);
+var itemTrap      = new Item(itemEnumTrap);
 var itemBeads    = new Item(itemEnumBeads);
-var itemBlanket  = new Item(itemEnumBlanket);
+var itemFabric   = new Item(itemEnumFabric);
 var itemKettle   = new Item(itemEnumKettle);
-var items = [itemPelt, itemApproval, itemGun, itemBeads, itemBlanket, itemKettle];
+var items = [itemPelt, itemApproval, itemTrap, itemBeads, itemFabric, itemKettle];
 
 function loadStateFromARIS()
 {
@@ -294,18 +294,18 @@ function incrementSecretLocationCount()
 
 function decrementSecretLocationCount()
 {
-    // players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=337479,qty=1);
-    // http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/337479/1
+    // players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=339410,qty=1);
+    // http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/339410/1
     // {"data":true,"returnCode":0,"returnCodeDescription":null}
-    sendRequest("players.pickupItemFromLocation/5252/0/46645/337479/1",function(data){});
+    sendRequest("players.pickupItemFromLocation/5252/0/46645/339410/1",function(data){});
 }
 
 function getSecretLocation()
 {
-    // locations.getLocation(gameId=5252,locationId=337479);
-    // http://arisgames.org/server/json.php/v1.locations.getLocation/5252/337479
-    // {"data":{"location_id":"337479","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
-    sendRequest("locations.getLocation/5252/337479",gotSecretLocation);
+    // locations.getLocation(gameId=5252,locationId=339410);
+    // http://arisgames.org/server/json.php/v1.locations.getLocation/5252/339410
+    // {"data":{"location_id":"339410","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
+    sendRequest("locations.getLocation/5252/339410",gotSecretLocation);
 }
 
 function gotSecretLocation(data)

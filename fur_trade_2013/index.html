@@ -98,7 +98,7 @@ function clerkBuyConfirmed()
 {
     if(itemPelt.qty < webPageItem.peltCost)
     {
-        document.getElementById('sellerdialog').innerHTML = "Hey, what're you trying to do? Swindle me?! You've only got <b>"+itemPelt.qty+" pelts</b>! I said I'd trade for <b>"+webPageItem.peltCost+" pelts</b>! Get outa here, ya cheat!";
+        document.getElementById('sellerdialog').innerHTML = "What?! You only have <b>"+itemPelt.qty+" pelts</b>! I said I'd trade for <b>"+webPageItem.peltCost+" pelts</b>! Get outa here, ya cheat!";
     }
     else
     {
@@ -149,7 +149,7 @@ window.onerror = function(msg, url, linenumber)
         <img src='assets/clerk_prompt.png' class='introprompt' />
         <img src='assets/john.png' class='introimage' />
         <div class='introdialog'>
-            I'm x. We're running low in inventory for our store. Trade these beaver pelts to the shippers from Europe to get more supplies. Blah blah blah (NOT FINAL TEXT).
+            Hey! Take these <b>10 Beaver Pelts</b> and find some <b>items</b> so we can stock our store! We're running low!
         </div>
         <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -189,14 +189,14 @@ window.onerror = function(msg, url, linenumber)
         <img src='assets/hunter_prompt.png' class='introprompt' />
         <img src='assets/natam.png' class='introimage' />
         <div class='introdialog'>
-            I'm x. We hear that the Euro's are opening a store where they will give us some cool stuff for useless beaver pelts! Would you help us get some beaver pelts? Blah blah blah (NOT FINAL TEXT).
+            Hey! The Europeans are in town, and they're trading <b>cool stuff</b> for <b>beaver pelts</b>! Help us gather <b>10 beaver pelts</b>!
         </div>
         <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='hunterget' class='get full_screen'>
-        <img src='assets/seller.png' class='introimage' /><!-- not actually an introimage, but should use same-ish dimensions -->
+        <img src='assets/pelt.png' id='peltget' />
         <div id='harvestbutton' class='bottombutton' onclick='hunterHarvestConfirmed();'>
             <div class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>

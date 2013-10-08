@@ -92,7 +92,7 @@ body
 
 #wantdisplay
 {
-    width:200px;
+    width:320px;
     height:20px;
     position:absolute;
     top:90px;
@@ -100,6 +100,7 @@ body
     font-size:x-large;
     font-family:gotham_font;
     color:#F58124;
+    text-shadow:2px 2px 4px #000000;
 }
 
 .clerk_bg
@@ -214,5 +215,14 @@ body
     left:10px;
     width:100px;
     height:100px;
+}
+
+#peltget
+{
+    display:block;
+    position:absolute;
+    top:125px;
+    left:10px;
+    width:300px;
 }
 

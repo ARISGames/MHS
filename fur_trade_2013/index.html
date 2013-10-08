@@ -40,36 +40,19 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
     //Handle in-game updates
     ARIS.didUpdateItemQty = function(updatedItemId,qty)
     {
-        //Handle visuals based on role and level
-        if(currentRole.roleEnum == roleEnumClerk)
+        //Really, we only care about real-time changes in level 2
+        if(currentLevel == 2)
         {
-            switch(currentLevel)
+            if(currentRole.roleEnum == roleEnumClerk)
             {
-                case 1:
-                    break;
-                case 2:
-                    break;
             }
-        }
-        else if(currentRole.roleEnum == roleEnumHunter)
-        {
-            switch(currentLevel)
+            else if(currentRole.roleEnum == roleEnumHunter)
             {
-                case 1:
-                    break;
-                case 2:
-                    break;
             }
         }
 
         if(o = itemForItemId(updatedItemId))
             setItemQtyInInventory(o.itemEnum, qty);
-
-        if(hasAllNeededItems())
-        {
-            ARIS.setItemCount(levelIdForLevel(currentLevel),1);
-            currentLevel++;
-        }
     }
 
     displayRole(currentRole.roleEnum);

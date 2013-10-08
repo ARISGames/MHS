@@ -200,27 +200,6 @@ function qtyOfItemFromOwner(roleEnum)
     }
     return qty;
 }
-function hasAllNeededItems()
-{
-    if(!currentRole) return;
-
-    var hunterItems = qtyOfItemFromOwner(roleEnumHunter);
-    var clerkItems  = qtyOfItemFromOwner(roleEnumClerk);
-    switch(currentRole.roleEnum)
-    {
-        case roleEnumHunter:
-            if     (currentLevel == 1 && hunterItems.qty >= 3)  return true;
-            else if(currentLevel == 2 && clerkItems.qty  >= 3)  return true;
-            return false;
-            break;
-        case roleEnumClerk:
-            if     (currentLevel == 1 && clerkItems.qty  >= 3)  return true;
-            else if(currentLevel == 2 && hunterItems.qty >= 3)  return true;
-            return false;
-            break;
-    }
-    return false;
-}
 function setRole(roleEnum)
 {
     switch(roleEnum)

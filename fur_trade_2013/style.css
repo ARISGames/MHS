@@ -226,3 +226,47 @@ body
     width:300px;
 }
 
+#huntertradeinc
+{
+    position:absolute;
+    top:126px;
+    left:180px;
+    font-size:60px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#huntertradecounter
+{
+    position:absolute;
+    top:180px;
+    left:20px;
+    font-size:50px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#huntertradedec
+{
+    position:absolute;
+    top:210px;
+    left:187px;
+    font-size:60px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#huntertradehave
+{
+    position:absolute;
+    top:300px;
+    left:20px;
+    font-size:50px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+

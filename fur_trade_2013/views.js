@@ -183,10 +183,19 @@
 
     function formatClerkTrade()
     {
+        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+
+        displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
     }
 
     function formatHunterTrade()
     {
+        haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
+        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+
+        document.getElementById('huntertradehave').innerHTML = "Have: "+itemPelt.qty;
+        displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
     }
 
     function displayGuruWithMessage(message)

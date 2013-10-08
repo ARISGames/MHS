@@ -3,13 +3,13 @@ var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
 var itemEnumNull     = 0;
-var itemEnumPelt     = 1;
-var itemEnumApproval = 2;
+var itemEnumApproval = 1;
+var itemEnumPelt     = 2;
 var itemEnumTrap     = 3;
 var itemEnumBeads    = 4;
 var itemEnumFabric   = 5;
 var itemEnumKettle   = 6;
-var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumApproval, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
+var itemEnums = [itemEnumNull, itemEnumApproval, itemEnumPelt, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -62,19 +62,17 @@ function Item(itemEnum)
         case itemEnumNull:
             this.webPageId = 3731;
             break;
+        case itemEnumApproval:
+            this.itemId = 47041;
+            this.approvalWorth = 1;
+            break;
         case itemEnumPelt:
             this.itemId = 47029;
             this.webPageId = 3718;
             this.owner = roleHunter;
+            this.peltCost = 1;
             this.name = "Beaver Pelt";
             this.imageName = "pelt.png";
-            break;
-        case itemEnumApproval:
-            this.itemId = 47041;
-            this.webPageId = -1; //no webpage
-            this.owner = roleHunter;
-            this.name = "Approval";
-            this.imageName = "none.png"; //no image
             break;
         case itemEnumTrap:
             this.itemId = 47030;
@@ -120,13 +118,13 @@ function Item(itemEnum)
 
 //REFERENCES
 var itemNull     = new Item(itemEnumNull);
-var itemPelt     = new Item(itemEnumPelt);
 var itemApproval = new Item(itemEnumApproval);
+var itemPelt     = new Item(itemEnumPelt);
 var itemTrap     = new Item(itemEnumTrap);
 var itemBeads    = new Item(itemEnumBeads);
 var itemFabric   = new Item(itemEnumFabric);
 var itemKettle   = new Item(itemEnumKettle);
-var items = [itemNull, itemPelt, itemApproval, itemTrap, itemBeads, itemFabric, itemKettle];
+var items = [itemNull, itemApproval, itemPelt, itemTrap, itemBeads, itemFabric, itemKettle];
 
 function loadStateFromARIS()
 {

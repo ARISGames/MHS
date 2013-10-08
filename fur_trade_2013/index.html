@@ -56,20 +56,10 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
     }
 
     displayRole(currentRole.roleEnum);
-    if(firstTime)
-        displayVid();
-    else
-    {
-        switch(currentLevel)
-        {
-            case 1:
-                displayGet();
-                break;
-            case 2:
-                displayTrade();
-                break;
-        }
-    }
+
+    if(firstTime)                                 displayVid();
+    else if(webPageItem.itemEnum == itemEnumNull) displayTrade();
+    else                                          displayGet();
 }
 
 function vidComplete()
@@ -119,6 +109,24 @@ function hunterHarvestConfirmed()
         currentLevel = 2;
         displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
         document.getElementById("huntergurubutton").onclick = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+    }
+}
+
+var fursToTrade = 0;
+function hunterIncrement()
+{
+    if(fursToTrade+1 <= itemPelt.qty)
+    {
+        fursToTrade++;
+        document.getElementById('huntertradecounter').innerHTML = "Trade:"+fursToTrade;
+    }
+}
+function hunterDecrement()
+{
+    if(fursToTrade-1 >= 0)
+    {
+        fursToTrade--;
+        document.getElementById('huntertradecounter').innerHTML = "Trade:"+fursToTrade;
     }
 }
 
@@ -201,6 +209,11 @@ window.onerror = function(msg, url, linenumber)
         </div>
     </div>
     <div id='huntertrade' class='trade full_screen'>
+        <img src='assets/pelt.png' id='peltget' />
+        <div id="huntertradeinc" onclick='hunterIncrement();'>+</div>
+        <div id='huntertradecounter'>Trade:0</div>
+        <div id="huntertradedec" onclick='hunterDecrement();'>-</div>
+        <div id="huntertradehave">Have: 0</div>
     </div>
     <div id='hunterguru' class='guru full_screen'>
         <img class='guruimage' src='assets/natam.png' />

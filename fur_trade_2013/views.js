@@ -197,7 +197,7 @@
         cell.appendChild(img);
         cell.appendChild(title);
         cell.appendChild(qty);
-        cell.onclick = function() { clerkTradeItemSelected(item); };
+        cell.ontouchstart = function() { clerkTradeItemSelected(item); };
 
         return cell;
     }

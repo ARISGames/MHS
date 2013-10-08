@@ -89,7 +89,7 @@ function clerkBuyConfirmed()
             ARIS.setItemCount(levelIdForLevel(1), 1);
             currentLevel = 2;
             displayGuruWithMessage("Good work! Now that we have supplies for the store, we should try to <b>find someone looking to trade</b>!");
-            document.getElementById("clerkgurubutton").onclick = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+            document.getElementById("clerkgurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
         }
     }
     document.getElementById('buybutton').style.display = 'none';
@@ -108,7 +108,7 @@ function hunterHarvestConfirmed()
         ARIS.setItemCount(levelIdForLevel(1), 1);
         currentLevel = 2;
         displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
-        document.getElementById("huntergurubutton").onclick = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+        document.getElementById("huntergurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
     }
 }
 
@@ -155,7 +155,7 @@ window.onerror = function(msg, url, linenumber)
         <video id="clerkvidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">
         </video>
-        <div class='bottombutton' onclick='vidComplete();'>
+        <div class='bottombutton' ontouchstart='vidComplete();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -165,7 +165,7 @@ window.onerror = function(msg, url, linenumber)
         <div class='introdialog'>
             Hey! Take these <b>10 Beaver Pelts</b> and find some <b>items</b> so we can stock our store! We're running low!
         </div>
-        <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!");'>
+        <div class='bottombutton' ontouchstart='ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -175,7 +175,7 @@ window.onerror = function(msg, url, linenumber)
         <div id='sellerdialog' class='introdialog'>
             This here item's a doozy yup sure is der.
         </div>
-        <div id='buybutton' class='bottombutton' onclick='clerkBuyConfirmed();'>
+        <div id='buybutton' class='bottombutton' ontouchstart='clerkBuyConfirmed();'>
             <div id="sellerbuttontext" class="bottombuttontext">Buy </div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -186,7 +186,7 @@ window.onerror = function(msg, url, linenumber)
     <div id='clerkguru' class='guru full_screen'>
         <img class='guruimage' src='assets/john.png' />
         <div id='clerkgurutalk' class='gurutalk'></div>
-        <div id="clerkgurubutton" class='bottombutton' onclick='hideGuru();'>
+        <div id="clerkgurubutton" class='bottombutton' ontouchstart='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -197,7 +197,7 @@ window.onerror = function(msg, url, linenumber)
         <video id="huntervidfile" width="320" height="504" webkit-playsinline>
             <source src="assets/intro.mp4" type="video/mp4">
         </video>
-        <div class='bottombutton' onclick='vidComplete();'>
+        <div class='bottombutton' ontouchstart='vidComplete();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -207,27 +207,27 @@ window.onerror = function(msg, url, linenumber)
         <div class='introdialog'>
             Hey! The Europeans are in town, and they're trading <b>cool stuff</b> for <b>beaver pelts</b>! Help us gather <b>10 beaver pelts</b>!
         </div>
-        <div class='bottombutton' onclick='ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!");'>
+        <div class='bottombutton' ontouchstart='ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='hunterget' class='get full_screen'>
         <img src='assets/pelt.png' id='peltget' />
-        <div id='harvestbutton' class='bottombutton' onclick='hunterHarvestConfirmed();'>
+        <div id='harvestbutton' class='bottombutton' ontouchstart='hunterHarvestConfirmed();'>
             <div class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='huntertrade' class='trade full_screen'>
         <img src='assets/pelt.png' id='peltget' />
-        <div id="huntertradeinc" onclick='hunterIncrement();'>+</div>
+        <div id="huntertradeinc" ontouchstart='hunterIncrement();'>+</div>
         <div id='huntertradecounter'>Trade:0</div>
-        <div id="huntertradedec" onclick='hunterDecrement();'>-</div>
+        <div id="huntertradedec" ontouchstart='hunterDecrement();'>-</div>
         <div id="huntertradehave">Have: 0</div>
     </div>
     <div id='hunterguru' class='guru full_screen'>
         <img class='guruimage' src='assets/natam.png' />
         <div id='huntergurutalk' class='gurutalk'></div>
-        <div id='huntergurubutton' class='bottombutton' onclick='hideGuru();'>
+        <div id='huntergurubutton' class='bottombutton' ontouchstart='hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>

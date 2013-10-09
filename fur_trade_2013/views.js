@@ -141,8 +141,16 @@
     {
         currentTradeView.appendChild(hud);
 
-        if(currentRole.roleEnum == roleEnumClerk)  formatClerkTrade();
-        if(currentRole.roleEnum == roleEnumHunter) formatHunterTrade();
+        if(currentRole.roleEnum == roleEnumClerk)
+        {
+            formatClerkTrade();
+            displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
+        }
+        if(currentRole.roleEnum == roleEnumHunter)
+        {
+            formatHunterTrade();
+            displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+        }
 
         if(currentVidView)     currentVidView.style.display   = 'none';
         if(currentVidFileView) currentVidFileView.pause();
@@ -205,13 +213,13 @@
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
-
-        displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
     
+        document.getElementById('clerktradepool').innerHTML = "";
         if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));
         if(itemBeads.qty  > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
         if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
         if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
+        ARIS.setBumpString('{"clerk":0}');
     }
 
     function formatHunterTrade()
@@ -219,8 +227,9 @@
         haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
         wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
+        document.getElementById('huntertradecounter').innerHTML = "Trade:0";
         document.getElementById('huntertradehave').innerHTML = "Have: "+itemPelt.qty;
-        displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+        ARIS.setBumpString('{"hunter":0}');
     }
 
     function displayGuruWithMessage(message)

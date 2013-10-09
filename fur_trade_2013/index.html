@@ -44,15 +44,15 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
 {
     ARIS.bumpDetected = function(bumpString)
     {
-        var data = JSON.parse(bumpString);
+        var data = bumpString;
         if(data.hunter)
         {
             if(currentRole.roleEnum == roleEnumHunter)
-                displayGuru("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
+                displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
             else
             {
                 var item;
-                switch(data.hunter)
+                switch(data.clerk)
                 {
                     case itemEnumTrap:   item = itemTrap;   break;
                     case itemEnumBeads:  item = itemBeads;  break;
@@ -64,13 +64,47 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                 ARIS.setItemCount(item.itemId,item.qty);
                 setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty-fursToTrade);
                 ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
+                setItemQtyInInventory(itemApproval.itemEnum, itemApproval.qty+item.approvalWorth);
+                ARIS.setItemCount(itemApproval.itemId,itemApproval.qty);
+                fursToTrade = 0;
+                formatHunterTrade();
+
+                if(itemApproval.qty >= 20)
+                {
+                    ARIS.setItemCount(levelIdForLevel(2), 1);
+                    currentLevel = 3;
+                    document.getElementById("huntergurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+                    displayGuruWithMessage("Thanks for your help!");
+                }
             }
         }
         else if(data.clerk)
         {
             if(currentRole.roleEnum == roleEnumHunter)
-                displayGuru("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
+                displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
+            else
+            {
+                setItemQtyInInventory(selectedItem.itemEnum, selectedItem.qty-1);
+                ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
+                setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty+data.hunter);
+                ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
+                selectedItem = null;
+                formatClerkTrade();
 
+                if(itemPelt.qty >= 20)
+                {
+                    ARIS.setItemCount(levelIdForLevel(2), 1);
+                    currentLevel = 3;
+                    document.getElementById("clerkgurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+                    displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>20</b>!");
+                }
+                else if(selectedItem.peltCost >= data.clerk)
+                    displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
+                else if(selectedItem.peltCost+1 == data.clerk)
+                    displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
+                else if(selectedItem.peltCost < data.clerk)
+                    displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
+            }
         }
     }
 

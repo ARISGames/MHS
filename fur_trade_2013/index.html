@@ -98,11 +98,11 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                     document.getElementById("clerkgurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
                     displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>20</b>!");
                 }
-                else if(selectedItem.peltCost >= data.clerk)
+                else if(selectedItem.peltCost >= data.hunter)
                     displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-                else if(selectedItem.peltCost+1 == data.clerk)
+                else if(selectedItem.peltCost+1 == data.hunter)
                     displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-                else if(selectedItem.peltCost < data.clerk)
+                else if(selectedItem.peltCost < data.hunter)
                     displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
 
                 selectedItem = null;

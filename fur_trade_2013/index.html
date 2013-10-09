@@ -45,9 +45,10 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
     ARIS.bumpDetected = function(bumpString)
     {
         var data = bumpString;
-        if(data.hunter)
+        //var data = JSON.parse(bumpString);
+        if(data.clerk)
         {
-            if(currentRole.roleEnum == roleEnumHunter)
+            if(currentRole.roleEnum == roleEnumClerk)
                 displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
             else
             {
@@ -66,8 +67,6 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                 ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
                 setItemQtyInInventory(itemApproval.itemEnum, itemApproval.qty+item.approvalWorth);
                 ARIS.setItemCount(itemApproval.itemId,itemApproval.qty);
-                fursToTrade = 0;
-                formatHunterTrade();
 
                 if(itemApproval.qty >= 20)
                 {
@@ -76,9 +75,12 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                     document.getElementById("huntergurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
                     displayGuruWithMessage("Thanks for your help!");
                 }
+
+                fursToTrade = 0;
+                formatHunterTrade();
             }
         }
-        else if(data.clerk)
+        else if(data.hunter)
         {
             if(currentRole.roleEnum == roleEnumHunter)
                 displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
@@ -88,8 +90,6 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                 ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
                 setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty+data.hunter);
                 ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-                selectedItem = null;
-                formatClerkTrade();
 
                 if(itemPelt.qty >= 20)
                 {
@@ -104,6 +104,9 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
                     displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
                 else if(selectedItem.peltCost < data.clerk)
                     displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
+
+                selectedItem = null;
+                formatClerkTrade();
             }
         }
     }

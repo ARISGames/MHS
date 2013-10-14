@@ -136,7 +136,7 @@ var FurTradeModel = function()
     self.webPageItem = null;
     self.webPageOwner = null;
 
-    self.currentLevel = 1;
+    self.currentLevel = 0;
     self.currentRole = null;
 
     self.loadStateFromARIS = function(callback)
@@ -159,7 +159,7 @@ var FurTradeModel = function()
         self.gameId    = parseInt(params.gameId);
         self.playerId  = parseInt(params.playerId);
         self.webPageId = parseInt(params.webPageId);
-        self.webPageItem = itemForWebPageId(webPageId);
+        self.webPageItem = self.itemForWebPageId(self.webPageId);
         self.webPageRole = self.webPageItem.owner;
 
         for(var i in items)    ARIS.getItemCount(items[i].itemId);
@@ -200,7 +200,7 @@ var FurTradeModel = function()
 
     //ARIS ACCESS HACK
     var requestRoleCallback; //pseudo global state to hold callback
-    self.requestNewRole(callback)
+    self.requestNewRole = function(callback)
     {
         requestRoleCallback = callback;
         getSecretLocation();
@@ -210,36 +210,32 @@ var FurTradeModel = function()
         // players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
         // http://arisgames.org/server/json.php/v1.players.dropItem/5252/0/46645/0/0/1
         // {"data":false,"returnCode":0,"returnCodeDescription":null}
-        sendRequest("players.dropItem/5252/0/46645/0/0/1",function(data){});
+        self.sendRequest("players.dropItem/5252/0/46645/0/0/1",function(data){});
     }
     var decrementSecretLocationCount = function()
     {
         // players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=339410,qty=1);
         // http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/339410/1
         // {"data":true,"returnCode":0,"returnCodeDescription":null}
-        sendRequest("players.pickupItemFromLocation/5252/0/46645/339410/1",function(data){});
+        self.sendRequest("players.pickupItemFromLocation/5252/0/46645/339410/1",function(data){});
     }
     var getSecretLocation = function()
     {
         // locations.getLocation(gameId=5252,locationId=339410);
         // http://arisgames.org/server/json.php/v1.locations.getLocation/5252/339410
         // {"data":{"location_id":"339410","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
-        sendRequest("locations.getLocation/5252/339410",gotSecretLocation);
+        self.sendRequest("locations.getLocation/5252/339410",gotSecretLocation);
     }
     var gotSecretLocation = function(data)
     {
         if(data.item_qty%2 == 0)
         {
-            currentRole = roleClerk;
-            ARIS.setItemCount(roleClerk.roleId, 1);
-            ARIS.setItemCount(roleHunter.roleId, 0);
+            self.currentRole = roleClerk;
             decrementSecretLocationCount();
         }
         else
         {
-            currentRole = roleHunter;
-            ARIS.setItemCount(roleClerk.roleId, 0);
-            ARIS.setItemCount(roleHunter.roleId, 1);
+            self.currentRole = roleHunter;
             incrementSecretLocationCount();
         }
 

@@ -59,7 +59,7 @@ var FurTradeViews = function()
         document.getElementById('vidfile').play();
     }
 
-    self.displayRole(roleEnum)
+    self.displayRole = function(role)
     {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('vid').style.display     = 'none';
@@ -70,24 +70,23 @@ var FurTradeViews = function()
         if(self.currentGetView)   self.currentGetView.style.display   = 'none';
         if(self.currentTradeView) self.currentTradeView.style.display = 'none';
 
-        switch(roleEnum)
+        if(role == roleHunter)
         {
-            case roleEnumHunter:
-                self.currentRoleView     = self.hunterRoleView;
-                self.currentIntroView    = self.hunterIntroView;
-                self.currentGetView      = self.hunterGetView;
-                self.currentTradeView    = self.hunterTradeView;
-                self.currentGuruView     = self.hunterGuruView;
-                self.currentGuruTalkView = self.hunterGuruTalkView;
-                break;
-            case roleEnumClerk:
-                self.currentRoleView     = self.clerkRoleView;
-                self.currentIntroView    = self.clerkIntroView;
-                self.currentGetView      = self.clerkGetView;
-                self.currentTradeView    = self.clerkTradeView;
-                self.currentGuruView     = self.clerkGuruView;
-                self.currentGuruTalkView = self.clerkGuruTalkView;
-                break;
+            self.currentRoleView     = self.hunterRoleView;
+            self.currentIntroView    = self.hunterIntroView;
+            self.currentGetView      = self.hunterGetView;
+            self.currentTradeView    = self.hunterTradeView;
+            self.currentGuruView     = self.hunterGuruView;
+            self.currentGuruTalkView = self.hunterGuruTalkView;
+        }
+        else if(role == roleClerk)
+        {
+            self.currentRoleView     = self.clerkRoleView;
+            self.currentIntroView    = self.clerkIntroView;
+            self.currentGetView      = self.clerkGetView;
+            self.currentTradeView    = self.clerkTradeView;
+            self.currentGuruView     = self.clerkGuruView;
+            self.currentGuruTalkView = self.clerkGuruTalkView;
         }
 
         self.currentRoleView.style.display = 'block';
@@ -118,7 +117,7 @@ var FurTradeViews = function()
         if(self.currentTradeView)   self.currentTradeView.style.display = 'block';
     }
 
-    self.displayGuruWithMessage(message)
+    self.displayGuruWithMessage = function(message)
     {
         self.currentGuruView.style.display = 'block';
         self.currentGuruTalkView.innerHTML = message;
@@ -156,7 +155,7 @@ var FurTradeViews = function()
             self.currentGuruView.style.display = 'none';
     }
 
-    self.displaydelta(txt, delta)
+    self.displaydelta = function(txt, delta)
     {
         if(delta > 0) deltaview.style.color = "#009344";
         else          deltaview.style.color = "#C42032";

@@ -10,16 +10,18 @@
 <script type="text/javascript" src="utils/json2.js"></script>
 <script type="text/javascript" src="model.js"></script>
 <script type="text/javascript" src="views.js"></script>
+<script type="text/javascript" src="clerkgame.js"></script>
+<script type="text/javascript" src="huntergame.js"></script>
 <script type="text/javascript">
+
+var ftm;
+var ftv;
+var game;
 
 var ARIS = {};
 var readyCount = 2;
 function partReady() { readyCount--; if(readyCount == 0) begin(); }
 ARIS.ready = function() { partReady(); };
-
-var ftm;
-var ftv;
-var game;
 
 function begin()
 {
@@ -32,11 +34,10 @@ function stateReceived()
 {
     ARIS.didUpdateItemQty = function(updatedItemId,qty) //simplify item updates after initial state received
     {
-        if(o = itemForItemId(updatedItemId))
-            setItemQtyInInventory(o.itemEnum, qty);
+        if(o = ftm.itemForItemId(updatedItemId)) o.qty = qty;
     }
 
-    if(!currentRole) ftv.displayVid();
+    if(!ftm.currentRole) ftv.displayVid();
     else roleReceived();
 }
 
@@ -48,11 +49,10 @@ function vidComplete()
 
 function roleReceived()
 {
-    if(currentRole == roleClerk)
-        game = new ClerkGame();
-    if(currentRole == roleHunter)
-        game = new HunterGame();
-    ftm.displayRole(currentRole.roleEnum);
+    if(ftm.currentRole == roleClerk)  game = new ClerkGame();
+    if(ftm.currentRole == roleHunter) game = new HunterGame();
+    ftv.displayRole(ftm.currentRole);
+    game.init();
 }
 
 window.addEventListener('load', partReady, false);

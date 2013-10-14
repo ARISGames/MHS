@@ -8,6 +8,29 @@ var HunterGame = function()
     var hunterTradeCounter = document.getElementById('huntertradecounter');
     var hunterTradeHave = document.getElementById('huntertradehave');
 
+    self.init = function()
+    {
+        if(ftm.currentLevel == 0)
+        {
+            ARIS.setItemCount(roleClerk.roleId, 0);
+            ARIS.setItemCount(roleHunter.roleId, 1);
+            ftv.displayIntro();
+        }
+        else
+        {
+            if(ftm.webPageItem == itemNull)
+            {
+                formatHunterTrade();
+                ftv.displayTrade();
+            }
+            else
+            {
+                formatHunterGet();
+                ftv.displayGet();
+            }
+        }
+    }
+
     function formatHunterGet()
     {
         haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;

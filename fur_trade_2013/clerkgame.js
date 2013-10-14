@@ -7,6 +7,30 @@ var ClerkGame = function()
     var buyButton        = document.getElementById('buybutton');
     var buyButtonText    = document.getElementById("sellerbuttontext");
     var clerkGuruButton  = document.getElementById("clerkgurubutton");
+    
+    self.init = function()
+    {
+        if(ftm.currentLevel == 0)
+        {
+            ftv.displayIntro();
+            ARIS.setItemCount(itemPelt.itemId,10);
+            ARIS.setItemCount(roleClerk.roleId, 1);
+            ARIS.setItemCount(roleHunter.roleId, 0);
+        }
+        else
+        {
+            if(ftm.webPageItem == itemNull)
+            {
+                formatClerkTrade();
+                ftv.displayTrade();
+            }
+            else
+            {
+                formatClerkGet();
+                ftv.displayGet();
+            }
+        }
+    }
 
     function formatClerkGet()
     {

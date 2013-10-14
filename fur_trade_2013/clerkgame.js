@@ -71,9 +71,14 @@ var ClerkGame = function()
         return cell;
     }
 
+    var formattedClerkTrade = false;
     function formatClerkTrade()
     {
-        ftv.displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
+        if(!formattedClerkTrade)
+        {
+            ftv.displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
+            formattedClerkTrade = true;
+        }
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";

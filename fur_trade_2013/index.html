@@ -81,7 +81,7 @@ window.onerror = function(msg, url, linenumber)
 <div id='clerkrole' class='role clerk_bg full_screen'>
     <div id='clerkintro' class='intro full_screen'>
         <img src='assets/clerk_prompt.png' class='introprompt' />
-        <img src='assets/john.png' class='introimage' />
+        <img id='clerkintroimage' class='introimage' src='assets/john.png' />
         <div class='introdialog'>
             Hey! Take these <b>10 Beaver Pelts</b> and find some <b>items</b> so we can stock our store! We're running low!
         </div>
@@ -91,7 +91,7 @@ window.onerror = function(msg, url, linenumber)
     </div>
     <div id='clerkget' class='get full_screen'>
         <img src='assets/pelt.png' id='clerkitemget' />
-        <img src='assets/seller.png' class='introimage' /><!-- not actually an introimage, but should use same-ish dimensions -->
+        <img id='sellerimage' src='assets/seller.png' />
         <div id='sellerdialog' class='introdialog'>
             This here item's a doozy yup sure is der.
         </div>
@@ -104,7 +104,7 @@ window.onerror = function(msg, url, linenumber)
         <div id="clerktradepool"></div>
     </div>
     <div id='clerkguru' class='guru full_screen'>
-        <img class='guruimage' src='assets/john.png' />
+        <img id='clerkguruimage' class='guruimage' src='assets/john.png' />
         <div id='clerkgurutalk' class='gurutalk'></div>
         <div id="clerkgurubutton" class='bottombutton' ontouchstart='ftv.hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -115,7 +115,7 @@ window.onerror = function(msg, url, linenumber)
 <div id='hunterrole' class='role hunter_bg full_screen'>
     <div id='hunterintro' class='intro full_screen'>
         <img src='assets/hunter_prompt.png' class='introprompt' />
-        <img src='assets/natam.png' class='introimage' />
+        <img id='hunterintroimage' class='introimage' src='assets/natam.png' />
         <div class='introdialog'>
             Hey! The Europeans are in town, and they're trading <b>cool stuff</b> for <b>beaver pelts</b>! Help us gather <b>10 beaver pelts</b>!
         </div>
@@ -137,7 +137,7 @@ window.onerror = function(msg, url, linenumber)
         <div id="huntertradehave">Have: 0</div>
     </div>
     <div id='hunterguru' class='guru full_screen'>
-        <img class='guruimage' src='assets/natam.png' />
+        <img id='hunterguruimage' class='guruimage' src='assets/natam.png' />
         <div id='huntergurutalk' class='gurutalk'></div>
         <div id='huntergurubutton' class='bottombutton' ontouchstart='ftv.hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />

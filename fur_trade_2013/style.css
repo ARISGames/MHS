@@ -63,6 +63,7 @@ body
 .guru
 {
     display:none;
+    overflow:visible;
 }
 
 #hud
@@ -146,6 +147,26 @@ body
     left:50px;
 }
 
+#clerkintroimage
+{
+    width:400px;
+    left:0px;
+}
+
+#hunterintroimage
+{
+    top:-80px;
+}
+
+#sellerimage
+{
+    display:block;
+    width:320px;
+    position:absolute;
+    top:80px;
+    left:50px;
+}
+
 .introdialog
 {
     width:300px;
@@ -193,6 +214,17 @@ body
     position:absolute;
     top:50px;
     left:50px;
+}
+
+#clerkguruimage
+{
+    width:400px;
+    top:20px;
+}
+
+#hunterguruimage
+{
+    top:-80px;
 }
 
 .gurutalk

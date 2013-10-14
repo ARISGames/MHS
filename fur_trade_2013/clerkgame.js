@@ -66,10 +66,11 @@ var ClerkGame = function()
         cell.appendChild(img);
         cell.appendChild(title);
         cell.appendChild(qty);
-        cell.ontouchstart = function() { clerkTradeItemSelected(item); };
+        cell.ontouchstart = function() { self.clerkTradeItemSelected(item); };
 
         return cell;
     }
+
     function formatClerkTrade()
     {
         ftv.displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");

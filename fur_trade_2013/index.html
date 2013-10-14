@@ -14,20 +14,20 @@
 
 var ARIS = {};
 var readyCount = 2;
-function partReady()
-{
-    readyCount--;
-    if(readyCount == 0) begin();
-}
+function partReady() { readyCount--; if(readyCount == 0) begin(); }
 ARIS.ready = function() { partReady(); };
+
+var ftm;
+var ftv;
+var game;
 
 function begin()
 {
-    initViews();
-    setTimeout(loadStateFromARIS,100);//calls "stateReceived()" when done
+    ftv = new FurTradeViews();
+    ftm = new FurTradeModel();
+    ftm.loadStateFromARIS(stateReceived);
 }
 
-var firstTime = false;
 function stateReceived()
 {
     ARIS.didUpdateItemQty = function(updatedItemId,qty) //simplify item updates after initial state received
@@ -35,165 +35,24 @@ function stateReceived()
         if(o = itemForItemId(updatedItemId))
             setItemQtyInInventory(o.itemEnum, qty);
     }
-    //Handle bump detections
-    if(!currentRole) { firstTime = true; getNextRole(); }
-    else roleWasLocallySet();
-}
 
-function roleWasLocallySet()//role was dynamically assigned- proceed
-{
-    ARIS.bumpDetected = function(bumpString)
-    {
-        var data = bumpString;
-        //var data = JSON.parse(bumpString);
-        if(data.clerk)
-        {
-            if(currentRole.roleEnum == roleEnumClerk)
-                displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
-            else
-            {
-                var item;
-                switch(data.clerk)
-                {
-                    case itemEnumTrap:   item = itemTrap;   break;
-                    case itemEnumBeads:  item = itemBeads;  break;
-                    case itemEnumFabric: item = itemFabric; break;
-                    case itemEnumKettle: item = itemKettle; break;
-                }
-
-                setItemQtyInInventory(item.itemEnum, item.qty+1);
-                ARIS.setItemCount(item.itemId,item.qty);
-                setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty-fursToTrade);
-                ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-                setItemQtyInInventory(itemApproval.itemEnum, itemApproval.qty+item.approvalWorth);
-                ARIS.setItemCount(itemApproval.itemId,itemApproval.qty);
-
-                if(itemApproval.qty >= 20)
-                {
-                    ARIS.setItemCount(levelIdForLevel(2), 1);
-                    currentLevel = 3;
-                    document.getElementById("huntergurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
-                    displayGuruWithMessage("Thanks for your help!");
-                }
-
-                fursToTrade = 0;
-                formatHunterTrade();
-            }
-        }
-        else if(data.hunter)
-        {
-            if(currentRole.roleEnum == roleEnumHunter)
-                displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
-            else
-            {
-                setItemQtyInInventory(selectedItem.itemEnum, selectedItem.qty-1);
-                ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
-                setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty+data.hunter);
-                ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-
-                if(itemPelt.qty >= 20)
-                {
-                    ARIS.setItemCount(levelIdForLevel(2), 1);
-                    currentLevel = 3;
-                    document.getElementById("clerkgurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
-                    displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>20</b>!");
-                }
-                else if(selectedItem.peltCost >= data.hunter)
-                    displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-                else if(selectedItem.peltCost+1 == data.hunter)
-                    displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-                else if(selectedItem.peltCost < data.hunter)
-                    displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
-
-                selectedItem = null;
-                formatClerkTrade();
-            }
-        }
-    }
-
-    displayRole(currentRole.roleEnum);
-
-    if(firstTime)                                 displayVid();
-    else if(webPageItem.itemEnum == itemEnumNull) displayTrade();
-    else                                          displayGet();
+    if(!currentRole) ftv.displayVid();
+    else roleReceived();
 }
 
 function vidComplete()
 {
-    if(firstTime) setRole(currentRole.roleEnum); //communicates role to ARIS
-    displayIntro();
-}
-function clerkBuyConfirmed()
-{
-    if(itemPelt.qty < webPageItem.peltCost)
-    {
-        document.getElementById('sellerdialog').innerHTML = "What?! You only have <b>"+itemPelt.qty+" pelts</b>! I said I'd trade for <b>"+webPageItem.peltCost+" pelts</b>! Get outa here, ya cheat!";
-    }
-    else
-    {
-        document.getElementById('sellerdialog').innerHTML = "Thanks!";
-        
-        displaydelta(itemPelt.name,-1*webPageItem.peltCost);
-        setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty-webPageItem.peltCost);
-        ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-        setItemQtyInInventory(webPageItem.itemEnum, webPageItem.qty+1);
-        ARIS.setItemCount(webPageItem.itemId,webPageItem.qty);
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-
-        if(currentLevel == 1 && itemPelt.qty == 0)
-        {
-            ARIS.setItemCount(levelIdForLevel(1), 1);
-            currentLevel = 2;
-            displayGuruWithMessage("Good work! Now that we have supplies for the store, we should try to <b>find someone looking to trade</b>!");
-            document.getElementById("clerkgurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
-        }
-    }
-    document.getElementById('buybutton').style.display = 'none';
-    document.getElementById('sellerdialog').style.bottom = '0px';
-}
-function hunterHarvestConfirmed()
-{
-    displaydelta(itemPelt.name,1);
-    setItemQtyInInventory(itemPelt.itemEnum, itemPelt.qty+1);
-    ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-    haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-    document.getElementById('harvestbutton').style.display = 'none';
- 
-    if(currentLevel == 1 && itemPelt.qty == 10)
-    {
-        ARIS.setItemCount(levelIdForLevel(1), 1);
-        currentLevel = 2;
-        displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
-        document.getElementById("huntergurubutton").ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
-    }
+    ftv.displayLoading();
+    ftm.requestNewRole(roleReceived);
 }
 
-var selectedItem = null;
-function clerkTradeItemSelected(item)
+function roleReceived()
 {
-    selectedItem = item;
-    document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;
-    ARIS.setBumpString('{"clerk":'+item.itemEnum+'}');
-}
-
-var fursToTrade = 0;
-function hunterIncrement()
-{
-    if(fursToTrade+1 <= itemPelt.qty)
-    {
-        fursToTrade++;
-        document.getElementById('huntertradecounter').innerHTML = "Trade:"+fursToTrade;
-        ARIS.setBumpString('{"hunter":'+fursToTrade+'}');
-    }
-}
-function hunterDecrement()
-{
-    if(fursToTrade-1 >= 0)
-    {
-        fursToTrade--;
-        document.getElementById('huntertradecounter').innerHTML = "Trade:"+fursToTrade;
-        ARIS.setBumpString('{"hunter":'+fursToTrade+'}');
-    }
+    if(currentRole == roleClerk)
+        game = new ClerkGame();
+    if(currentRole == roleHunter)
+        game = new HunterGame();
+    ftm.displayRole(currentRole.roleEnum);
 }
 
 window.addEventListener('load', partReady, false);
@@ -209,16 +68,17 @@ window.onerror = function(msg, url, linenumber)
 
 <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 
-<div id='clerkrole' class='role clerk_bg full_screen'>
-    <div id='clerkvid' class='vid'>
-        <video id="clerkvidfile" width="320" height="504" webkit-playsinline>
-            <source src="assets/intro.mp4" type="video/mp4">
-        </video>
-        <img src='assets/quest_fur.png' class='full_screen'/>
-        <div class='bottombutton' ontouchstart='vidComplete();'>
-            <img src='assets/forward_arrow.png' class='forwardarrow' />
-        </div>
+<div id='vid' class='full_screen'>
+    <video id="vidfile" width="320" height="504" webkit-playsinline>
+        <source src="assets/intro.mp4" type="video/mp4">
+    </video>
+    <img src='assets/quest_fur.png' class='full_screen'/>
+    <div class='bottombutton' ontouchstart='vidComplete();'>
+        <img src='assets/forward_arrow.png' class='forwardarrow' />
     </div>
+</div>
+
+<div id='clerkrole' class='role clerk_bg full_screen'>
     <div id='clerkintro' class='intro full_screen'>
         <img src='assets/clerk_prompt.png' class='introprompt' />
         <img src='assets/john.png' class='introimage' />
@@ -253,15 +113,6 @@ window.onerror = function(msg, url, linenumber)
 </div>
 
 <div id='hunterrole' class='role hunter_bg full_screen'>
-    <div id='huntervid' class='vid'>
-        <video id="huntervidfile" width="320" height="504" webkit-playsinline>
-            <source src="assets/intro.mp4" type="video/mp4">
-        </video>
-        <img src='assets/quest_fur.png' class='full_screen'/>
-        <div class='bottombutton' ontouchstart='vidComplete();'>
-            <img src='assets/forward_arrow.png' class='forwardarrow' />
-        </div>
-    </div>
     <div id='hunterintro' class='intro full_screen'>
         <img src='assets/hunter_prompt.png' class='introprompt' />
         <img src='assets/natam.png' class='introimage' />
@@ -296,3 +147,4 @@ window.onerror = function(msg, url, linenumber)
 
 </body>
 </html>
+

@@ -1,65 +1,27 @@
-    var currentRoleView     = null;
-    var currentVidView      = null;
-    var currentVidFileView  = null;
-    var currentIntroView    = null;
-    var currentGetView      = null;
-    var currentTradeView    = null;
-    var currentGuruView     = null;
-    var currentGuruTalkView = null;
+var FurTradeViews = function()
+{
+    var self = this;
 
-    var clerkRoleView;
-    var clerkVidView;
-    var clerkVidFileView;
-    var clerkIntroView;
-    var clerkGetView;
-    var clerkTradeView;
-    var clerkGuruView;
-    var clerkGuruTalkView;
-    var hunterRoleView;
-    var hunterVidView;
-    var hunterVidFileView;
-    var hunterIntroView;
-    var hunterGetView;
-    var hunterTradeView;
-    var hunterGuruView;
-    var hunterGuruTalkView;
-    var roleViews;
-    var vidViews;
-    var vidFileViews;
-    var introViews;
-    var getViews;
-    var tradeViews;
-    var guruViews;
-    var guruTalkViews;
-    function initViews() //need to wait until initialization of dom
-    {
-        clerkRoleView     = document.getElementById('clerkrole');
-        clerkVidView      = document.getElementById('clerkvid');
-        clerkVidFileView  = document.getElementById('clerkvidfile');
-        clerkIntroView    = document.getElementById('clerkintro');
-        clerkGetView      = document.getElementById('clerkget');
-        clerkTradeView    = document.getElementById('clerktrade');
-        clerkGuruView     = document.getElementById('clerkguru');
-        clerkGuruTalkView = document.getElementById('clerkgurutalk');
+    self.currentRoleView     = null;
+    self.currentIntroView    = null;
+    self.currentGetView      = null;
+    self.currentTradeView    = null;
+    self.currentGuruView     = null;
+    self.currentGuruTalkView = null;
 
-        hunterRoleView     = document.getElementById('hunterrole');
-        hunterVidView      = document.getElementById('huntervid');
-        hunterVidFileView  = document.getElementById('huntervidfile');
-        hunterIntroView    = document.getElementById('hunterintro');
-        hunterGetView      = document.getElementById('hunterget');
-        hunterTradeView    = document.getElementById('huntertrade');
-        hunterGuruView     = document.getElementById('hunterguru');
-        hunterGuruTalkView = document.getElementById('huntergurutalk');
+    self.clerkRoleView     = document.getElementById('clerkrole');
+    self.clerkIntroView    = document.getElementById('clerkintro');
+    self.clerkGetView      = document.getElementById('clerkget');
+    self.clerkTradeView    = document.getElementById('clerktrade');
+    self.clerkGuruView     = document.getElementById('clerkguru'); self.clerkGuruView.progress = 50;
+    self.clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
-        roleViews     = [clerkRoleView,     hunterRoleView];
-        vidViews      = [clerkVidView,      hunterVidView];
-        vidFileViews  = [clerkVidFileView,  hunterVidFileView];
-        introViews    = [clerkIntroView,    hunterIntroView];
-        getViews      = [clerkGetView,      hunterGetView];
-        tradeViews    = [clerkTradeView,    hunterTradeView];
-        guruViews     = [clerkGuruView,     hunterGuruView];
-        guruTalkViews = [clerkGuruTalkView, hunterGuruTalkView];
-    }
+    self.hunterRoleView     = document.getElementById('hunterrole');
+    self.hunterIntroView    = document.getElementById('hunterintro');
+    self.hunterGetView      = document.getElementById('hunterget');
+    self.hunterTradeView    = document.getElementById('huntertrade');
+    self.hunterGuruView     = document.getElementById('hunterguru'); self.hunterGuruView.progress = 50;
+    self.hunterGuruTalkView = document.getElementById('huntergurutalk');
 
     //These 'views' are injected into the current game
     var deltaview = document.createElement('div');
@@ -69,208 +31,132 @@
 
     var hud = document.createElement('div');
     hud.setAttribute('id','hud');
-    var haveDisplay = document.createElement('div');
-    haveDisplay.setAttribute('id','havedisplay');
-    haveDisplay.innerHTML = '';
-    var wantDisplay = document.createElement('div');
-    wantDisplay.setAttribute('id','wantdisplay');
-    wantDisplay.innerHTML = '&nbsp;&nbsp;';
-    hud.appendChild(haveDisplay);
-    hud.appendChild(wantDisplay);
+    self.haveDisplay = document.createElement('div');
+    self.haveDisplay.setAttribute('id','havedisplay');
+    self.haveDisplay.innerHTML = '';
+    self.wantDisplay = document.createElement('div');
+    self.wantDisplay.setAttribute('id','wantdisplay');
+    self.wantDisplay.innerHTML = '&nbsp;&nbsp;';
+    hud.appendChild(self.haveDisplay);
+    hud.appendChild(self.wantDisplay);
     hud.appendChild(deltaview);
 
-    function failHUD()    { haveDisplay.style.color = "#C42032"; }
-    function neutralHUD() { haveDisplay.style.color = "#EDB11F"; }
-    function successHUD() { haveDisplay.style.color = "#009344"; }
+    self.failHUD = function()    { self.haveDisplay.style.color = "#C42032"; }
+    self.neutralHUD = function() { self.haveDisplay.style.color = "#EDB11F"; }
+    self.successHUD = function() { self.haveDisplay.style.color = "#009344"; }
 
-    function displayRole(role)
+    self.displayLoading = function()
+    {
+        document.getElementById('vidfile').pause();
+        document.getElementById('vid').style.display     = 'none';
+        document.getElementById('loading').style.display = 'block';
+    }
+
+    self.displayVid = function()
     {
         document.getElementById('loading').style.display = 'none';
-
-        if(currentRoleView)  currentRoleView.style.display  = 'none';
-        if(currentVidView)   currentVidView.style.display   = 'none';
-        if(currentIntroView) currentIntroView.style.display = 'none';
-        if(currentGetView)   currentGetView.style.display   = 'none';
-        if(currentTradeView) currentTradeView.style.display = 'none';
-
-        currentRoleView     = roleViews[role];
-        currentVidView      = vidViews[role];
-        currentVidFileView  = vidFileViews[role];
-        currentIntroView    = introViews[role];
-        currentGetView      = getViews[role];
-        currentTradeView    = tradeViews[role];
-        currentGuruView     = guruViews[role]; currentGuruView.progress = 50;
-        currentGuruTalkView = guruTalkViews[role];
-
-        currentRoleView.style.display = 'block';
+        document.getElementById('vid').style.display     = 'block';
+        document.getElementById('vidfile').play();
     }
 
-    function displayVid()
+    self.displayRole(roleEnum)
     {
-        if(currentVidView)     currentVidView.style.display   = 'block';
-        if(currentVidFileView) currentVidFileView.play();
-        if(currentIntroView)   currentIntroView.style.display = 'none';
-        if(currentGetView)     currentGetView.style.display   = 'none';
-        if(currentTradeView)   currentTradeView.style.display = 'none';
-    }
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('vid').style.display     = 'none';
+        document.getElementById('vidfile').pause();
 
-    function displayIntro()
-    {
-        if(currentVidView)     currentVidView.style.display   = 'none';
-        if(currentVidFileView) currentVidFileView.pause();
-        if(currentIntroView)   currentIntroView.style.display = 'block';
-        if(currentGetView)     currentGetView.style.display   = 'none';
-        if(currentTradeView)   currentTradeView.style.display = 'none';
-    }
+        if(self.currentRoleView)  self.currentRoleView.style.display  = 'none';
+        if(self.currentIntroView) self.currentIntroView.style.display = 'none';
+        if(self.currentGetView)   self.currentGetView.style.display   = 'none';
+        if(self.currentTradeView) self.currentTradeView.style.display = 'none';
 
-    function displayGet()
-    {
-        currentGetView.appendChild(hud);
-
-        if(currentRole.roleEnum == roleEnumClerk)  formatClerkGet();
-        if(currentRole.roleEnum == roleEnumHunter) formatHunterGet();
-
-        if(currentVidView)     currentVidView.style.display   = 'none';
-        if(currentVidFileView) currentVidFileView.pause();
-        if(currentIntroView)   currentIntroView.style.display = 'none';
-        if(currentGetView)     currentGetView.style.display   = 'block';
-        if(currentTradeView)   currentTradeView.style.display = 'none';
-    }
-
-    function displayTrade()
-    {
-        currentTradeView.appendChild(hud);
-
-        if(currentRole.roleEnum == roleEnumClerk)
+        switch(roleEnum)
         {
-            formatClerkTrade();
-            displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
-        }
-        if(currentRole.roleEnum == roleEnumHunter)
-        {
-            formatHunterTrade();
-            displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+            case roleEnumHunter:
+                self.currentRoleView     = self.hunterRoleView;
+                self.currentIntroView    = self.hunterIntroView;
+                self.currentGetView      = self.hunterGetView;
+                self.currentTradeView    = self.hunterTradeView;
+                self.currentGuruView     = self.hunterGuruView;
+                self.currentGuruTalkView = self.hunterGuruTalkView;
+                break;
+            case roleEnumClerk:
+                self.currentRoleView     = self.clerkRoleView;
+                self.currentIntroView    = self.clerkIntroView;
+                self.currentGetView      = self.clerkGetView;
+                self.currentTradeView    = self.clerkTradeView;
+                self.currentGuruView     = self.clerkGuruView;
+                self.currentGuruTalkView = self.clerkGuruTalkView;
+                break;
         }
 
-        if(currentVidView)     currentVidView.style.display   = 'none';
-        if(currentVidFileView) currentVidFileView.pause();
-        if(currentIntroView)   currentIntroView.style.display = 'none';
-        if(currentGetView)     currentGetView.style.display   = 'none';
-        if(currentTradeView)   currentTradeView.style.display = 'block';
+        self.currentRoleView.style.display = 'block';
     }
 
-    function formatClerkGet()
+    self.displayIntro = function()
     {
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        document.getElementById("clerkitemget").src = "assets/"+webPageItem.imageName;
-        if(webPageItem.itemEnum != itemEnumPelt)
-        {
-            wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+webPageItem.peltCost;
-            document.getElementById("sellerdialog").innerHTML = "I've got some <b>"+webPageItem.name+"s</b> here... I'd be willing to part with one for the price of <b>"+webPageItem.peltCost+" pelts</b>. Whad'ya say, kid?";
-            document.getElementById("sellerbuttontext").innerHTML = "Buy "+webPageItem.name;
-        }
-        else
-        {
-            document.getElementById("sellerdialog").innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> if you want to fill your store with some of my European wares...";
-            document.getElementById('buybutton').style.display = 'none';
-            document.getElementById('sellerdialog').style.bottom = '0px';
-        }
+        if(self.currentIntroView)   self.currentIntroView.style.display = 'block';
+        if(self.currentGetView)     self.currentGetView.style.display   = 'none';
+        if(self.currentTradeView)   self.currentTradeView.style.display = 'none';
     }
 
-    function formatHunterGet()
+    self.displayGet = function()
     {
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
-        if(webPageItem.itemEnum != itemEnumPelt)
-        {
-            document.getElementById('peltget').src = "assets/"+webPageItem.imageName;
-            document.getElementById('harvestbutton').style.display = 'none';
-            displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
-        }
+        self.currentGetView.appendChild(hud);
+
+        if(self.currentIntroView)   self.currentIntroView.style.display = 'none';
+        if(self.currentGetView)     self.currentGetView.style.display   = 'block';
+        if(self.currentTradeView)   self.currentTradeView.style.display = 'none';
     }
 
-    function getTradeCell(item)
+    self.displayTrade = function()
     {
-        var cell = document.createElement('div');
-        cell.setAttribute('class','tradecell');
-        var img = document.createElement('img');
-        img.setAttribute('class','tradecellimg');
-        img.src = 'assets/'+item.imageName;
-        var title = document.createElement('div');
-        title.setAttribute('class','tradecelltitle');
-        title.innerHTML = item.name;
-        var qty = document.createElement('div');
-        qty.setAttribute('class','tradecellqty');
-        qty.innerHTML = "qty owned:"+item.qty;
-        cell.appendChild(img);
-        cell.appendChild(title);
-        cell.appendChild(qty);
-        cell.ontouchstart = function() { clerkTradeItemSelected(item); };
+        self.currentTradeView.appendChild(hud);
 
-        return cell;
-    }
-    function formatClerkTrade()
-    {
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
-    
-        document.getElementById('clerktradepool').innerHTML = "";
-        if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));
-        if(itemBeads.qty  > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
-        if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
-        if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
-        ARIS.setBumpString('{"clerk":0}');
+        if(self.currentIntroView)   self.currentIntroView.style.display = 'none';
+        if(self.currentGetView)     self.currentGetView.style.display   = 'none';
+        if(self.currentTradeView)   self.currentTradeView.style.display = 'block';
     }
 
-    function formatHunterTrade()
+    self.displayGuruWithMessage(message)
     {
-        haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+        self.currentGuruView.style.display = 'block';
+        self.currentGuruTalkView.innerHTML = message;
 
-        document.getElementById('huntertradecounter').innerHTML = "Trade:0";
-        document.getElementById('huntertradehave').innerHTML = "Have: "+itemPelt.qty;
-        ARIS.setBumpString('{"hunter":0}');
-    }
-
-    function displayGuruWithMessage(message)
-    {
-        currentGuruView.style.display = 'block';
-        currentGuruTalkView.innerHTML = message;
-
-        var alreadyTicking = (currentGuruView.progress != 50);
-        currentGuruView.progress = 0;
+        var alreadyTicking = (self.currentGuruView.progress != 50);
+        self.currentGuruView.progress = 0;
         if(!alreadyTicking) tickdisplayguru();
     }
 
-    function tickdisplayguru()
+    self.tickdisplayguru = function()
     {
-        currentGuruView.progress++;
-        currentGuruView.style.top = (10*(50-currentGuruView.progress))+'px';
-        if(currentGuruView.progress < 50)
+        self.currentGuruView.progress++;
+        self.currentGuruView.style.top = (10*(50-self.currentGuruView.progress))+'px';
+        if(self.currentGuruView.progress < 50)
             setTimeout(tickdisplayguru, 10);
     }
 
-    function hideGuru()
+    self.hideGuru = function()
     {
-        if(currentGuruView)
+        if(self.currentGuruView)
         {
-            var alreadyTicking = (currentGuruView.progress != 50);
-            currentGuruView.progress = 0;
+            var alreadyTicking = (self.currentGuruView.progress != 50);
+            self.currentGuruView.progress = 0;
             if(!alreadyTicking) tickhideguru();
         }
     }
-    
-    function tickhideguru()
+
+    self.tickhideguru = function()
     {
-        currentGuruView.progress++;
-        currentGuruView.style.top = (10*currentGuruView.progress)+'px';
-        if(currentGuruView.progress < 50)
+        self.currentGuruView.progress++;
+        self.currentGuruView.style.top = (10*self.currentGuruView.progress)+'px';
+        if(self.currentGuruView.progress < 50)
             setTimeout(tickhideguru,10);
         else
-            currentGuruView.style.display = 'none';
+            self.currentGuruView.style.display = 'none';
     }
 
-    function displaydelta(txt, delta)
+    self.displaydelta(txt, delta)
     {
         if(delta > 0) deltaview.style.color = "#009344";
         else          deltaview.style.color = "#C42032";
@@ -284,7 +170,7 @@
         if(!alreadyTicking) tickdelta();
     }
 
-    function tickdelta()
+    self.tickdelta = function()
     {
         if(deltaview.delta > 0)
         {
@@ -306,4 +192,5 @@
             deltaview.style.display = 'none';
         }
     }
+}
 

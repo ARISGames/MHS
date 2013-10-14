@@ -95,7 +95,7 @@ window.onerror = function(msg, url, linenumber)
         <div id='sellerdialog' class='introdialog'>
             This here item's a doozy yup sure is der.
         </div>
-        <div id='buybutton' class='bottombutton' ontouchstart='clerkBuyConfirmed();'>
+        <div id='buybutton' class='bottombutton' ontouchstart='game.clerkBuyConfirmed();'>
             <div id="sellerbuttontext" class="bottombuttontext">Buy </div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -106,7 +106,7 @@ window.onerror = function(msg, url, linenumber)
     <div id='clerkguru' class='guru full_screen'>
         <img class='guruimage' src='assets/john.png' />
         <div id='clerkgurutalk' class='gurutalk'></div>
-        <div id="clerkgurubutton" class='bottombutton' ontouchstart='hideGuru();'>
+        <div id="clerkgurubutton" class='bottombutton' ontouchstart='ftv.hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
@@ -125,21 +125,21 @@ window.onerror = function(msg, url, linenumber)
     </div>
     <div id='hunterget' class='get full_screen'>
         <img src='assets/pelt.png' id='peltget' />
-        <div id='harvestbutton' class='bottombutton' ontouchstart='hunterHarvestConfirmed();'>
+        <div id='harvestbutton' class='bottombutton' ontouchstart='game.hunterHarvestConfirmed();'>
             <div class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='huntertrade' class='trade full_screen'>
         <img src='assets/pelt.png' id='peltget' />
-        <div id="huntertradeinc" ontouchstart='hunterIncrement();'>+</div>
+        <div id="huntertradeinc" ontouchstart='game.hunterIncrement();'>+</div>
         <div id='huntertradecounter'>Trade:0</div>
-        <div id="huntertradedec" ontouchstart='hunterDecrement();'>-</div>
+        <div id="huntertradedec" ontouchstart='game.hunterDecrement();'>-</div>
         <div id="huntertradehave">Have: 0</div>
     </div>
     <div id='hunterguru' class='guru full_screen'>
         <img class='guruimage' src='assets/natam.png' />
         <div id='huntergurutalk' class='gurutalk'></div>
-        <div id='huntergurubutton' class='bottombutton' ontouchstart='hideGuru();'>
+        <div id='huntergurubutton' class='bottombutton' ontouchstart='ftv.hideGuru();'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>

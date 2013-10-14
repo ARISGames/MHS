@@ -136,7 +136,7 @@ var FurTradeModel = function()
     self.webPageItem = null;
     self.webPageOwner = null;
 
-    self.currentLevel = 0;
+    self.currentLevel = 1;
     self.currentRole = null;
 
     self.loadStateFromARIS = function(callback)
@@ -228,6 +228,7 @@ var FurTradeModel = function()
     }
     var gotSecretLocation = function(data)
     {
+        self.currentLevel = 0; //newly assigned role, so override current level
         if(data.item_qty%2 == 0)
         {
             self.currentRole = roleClerk;

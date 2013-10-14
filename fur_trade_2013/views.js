@@ -127,7 +127,7 @@ var FurTradeViews = function()
         if(!alreadyTicking) tickdisplayguru();
     }
 
-    self.tickdisplayguru = function()
+    var tickdisplayguru = function()
     {
         self.currentGuruView.progress++;
         self.currentGuruView.style.top = (10*(50-self.currentGuruView.progress))+'px';
@@ -145,7 +145,7 @@ var FurTradeViews = function()
         }
     }
 
-    self.tickhideguru = function()
+    var tickhideguru = function()
     {
         self.currentGuruView.progress++;
         self.currentGuruView.style.top = (10*self.currentGuruView.progress)+'px';
@@ -169,7 +169,7 @@ var FurTradeViews = function()
         if(!alreadyTicking) tickdelta();
     }
 
-    self.tickdelta = function()
+    var tickdelta = function()
     {
         if(deltaview.delta > 0)
         {

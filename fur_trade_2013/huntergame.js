@@ -33,22 +33,22 @@ var HunterGame = function()
 
     function formatHunterGet()
     {
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
-        if(webPageItem.itemEnum != itemEnumPelt)
+        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
+        if(ftm.webPageItem.itemEnum != itemEnumPelt)
         {
-            peltGet.src = "assets/"+webPageItem.imageName;
+            peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButton.style.display = 'none';
-            displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
+            ftv.displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
         }
     }
 
     function formatHunterTrade()
     {
-        displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+        ftv.displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
 
-        haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
-        wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+        ftv.haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         hunterTradeCounter.innerHTML = "Trade:0";
         hunterTradeHave.innerHTML = "Have: "+itemPelt.qty;
@@ -56,27 +56,27 @@ var HunterGame = function()
     }
 
 
-    function hunterHarvestConfirmed()
+    self.hunterHarvestConfirmed = function()
     {
         itemPelt.qty++;
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
-        displaydelta(itemPelt.name,1);
+        ftv.displaydelta(itemPelt.name,1);
 
-        haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         harvestButton.style.display = 'none';
      
-        if(currentLevel == 1 && itemPelt.qty == 10)
+        if(ftm.currentLevel == 1 && itemPelt.qty == 10)
         {
-            ARIS.setItemCount(levelIdForLevel(1), 1);
-            currentLevel = 2;
-            displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
-            hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
+            ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
+            ftm.currentLevel = 2;
+            ftv.displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
+            hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
         }
     }
 
     var fursToTrade = 0;
-    function hunterIncrement()
+    self.hunterIncrement = function()
     {
         if(fursToTrade+1 <= itemPelt.qty)
         {
@@ -85,7 +85,7 @@ var HunterGame = function()
             ARIS.setBumpString('{"hunter":'+fursToTrade+'}');
         }
     }
-    function hunterDecrement()
+    self.hunterDecrement = function()
     {
         if(fursToTrade-1 >= 0)
         {
@@ -119,10 +119,10 @@ var HunterGame = function()
 
             if(itemApproval.qty >= 20)
             {
-                ARIS.setItemCount(levelIdForLevel(2), 1);
-                currentLevel = 3;
-                hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); hideGuru(); };
-                displayGuruWithMessage("Thanks for your help!");
+                ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
+                ftm.currentLevel = 3;
+                hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
+                ftv.displayGuruWithMessage("Thanks for your help!");
             }
 
             fursToTrade = 0;
@@ -130,7 +130,7 @@ var HunterGame = function()
         }
         else if(data.hunter)
         {
-            displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
+            ftv.displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
         }
     }
 

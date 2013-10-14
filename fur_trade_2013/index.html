@@ -49,7 +49,7 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
         if(data.clerk)
         {
             if(currentRole.roleEnum == roleEnumClerk)
-                displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
+                displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
             else
             {
                 var item;
@@ -83,7 +83,7 @@ function roleWasLocallySet()//role was dynamically assigned- proceed
         else if(data.hunter)
         {
             if(currentRole.roleEnum == roleEnumHunter)
-                displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
+                displayGuruWithMessage("You should find a <b>clerk</b> to trade with! There's no point in trading pelts for pelts!");
             else
             {
                 setItemQtyInInventory(selectedItem.itemEnum, selectedItem.qty-1);

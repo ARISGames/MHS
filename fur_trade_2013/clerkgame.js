@@ -46,7 +46,7 @@ var ClerkGame = function()
         {
             sellerDialog.innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> if you want to fill your store with some of my European wares...";
             buyButtonText.innerHTML = "Leave ";
-            buyButton.ontouchstart = function() { ARIS.exitToScanner(); };
+            buyButton.ontouchstart = function() { ARIS.exitToScanner(""); };
         }
     }
 
@@ -120,7 +120,7 @@ var ClerkGame = function()
             }
         }
         buyButtonText.innerHTML = "Leave ";
-        buyButton.ontouchstart = function() { ARIS.exitToScanner(); };
+        buyButton.ontouchstart = function() { ARIS.exitToScanner(""); };
     }
 
     var selectedItem = null;

@@ -4,6 +4,7 @@ var HunterGame = function()
 
     var peltGet = document.getElementById('peltget');
     var harvestButton = document.getElementById('harvestbutton');
+    var harvestButtonText = document.getElementById('harvestbuttontext');
     var hunterGuruButton = document.getElementById("huntergurubutton");
     var hunterTradeCounter = document.getElementById('huntertradecounter');
     var hunterTradeHave = document.getElementById('huntertradehave');
@@ -41,8 +42,8 @@ var HunterGame = function()
         if(ftm.webPageItem.itemEnum != itemEnumPelt)
         {
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
-            harvestButton.innerHTML = "Leave ";
-            harvestButton.ontouchstart = function() { ARIS.exitToScanner(); };
+            harvestButtonText.innerHTML = "Leave ";
+            harvestButton.ontouchstart = function() { ARIS.exitToScanner(""); };
             ftv.displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
         }
     }
@@ -73,8 +74,8 @@ var HunterGame = function()
         ftv.displaydelta(itemPelt.name,1);
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        harvestButton.innerHTML = "Leave ";
-        harvestButton.ontouchstart = function() { ARIS.exitToScanner(); };
+        harvestButtonText.innerHTML = "Leave ";
+        harvestButton.ontouchstart = function() { ARIS.exitToScanner(""); };
      
         if(ftm.currentLevel == 1 && itemPelt.qty == 10)
         {

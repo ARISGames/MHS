@@ -45,8 +45,8 @@ var ClerkGame = function()
         else
         {
             sellerDialog.innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> if you want to fill your store with some of my European wares...";
-            buyButton.style.display = 'none';
-            sellerDialog.style.bottom = '0px';
+            buyButtonText.innerHTML = "Leave ";
+            buyButton.ontouchstart = function() { ARIS.exitToScanner(); };
         }
     }
 
@@ -81,7 +81,7 @@ var ClerkGame = function()
         }
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 15";
 
         document.getElementById('clerktradepool').innerHTML = "";
         if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));
@@ -119,8 +119,8 @@ var ClerkGame = function()
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
             }
         }
-        buyButton.style.display = 'none';
-        sellerDialog.style.bottom = '0px';
+        buyButtonText.innerHTML = "Leave ";
+        buyButton.ontouchstart = function() { ARIS.exitToScanner(); };
     }
 
     var selectedItem = null;
@@ -140,19 +140,21 @@ var ClerkGame = function()
         }
         else if(data.hunter)
         {
+            if(!selectedItem) selectedItem = itemNull;
             selectedItem.qty -= 1;
             itemPelt.qty     += data.hunter;
 
             ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
             ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
-            if(itemPelt.qty >= 20)
+            if(itemPelt.qty >= 15)
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
                 ftm.currentLevel = 3;
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
-                ftv.displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>20</b>!");
+                ftv.displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>15</b>!");
             }
+            else if(itemTrap.qty+itemFabric.qty+itemBeads.qty+itemKettle.qty == 0)   ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
             else if(selectedItem.peltCost+1 == data.hunter) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
             else if(selectedItem.peltCost < data.hunter)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");

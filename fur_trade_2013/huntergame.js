@@ -34,11 +34,15 @@ var HunterGame = function()
     function formatHunterGet()
     {
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
+
+        if(ftm.currentLevel < 2) ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
+        else ftv.wantDisplay.style.display = 'hidden';
+
         if(ftm.webPageItem.itemEnum != itemEnumPelt)
         {
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
-            harvestButton.style.display = 'none';
+            harvestButton.innerHTML = "Leave ";
+            harvestButton.ontouchstart = function() { ARIS.exitToScanner(); };
             ftv.displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
         }
     }
@@ -53,7 +57,7 @@ var HunterGame = function()
         }
 
         ftv.haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 15";
 
         hunterTradeCounter.innerHTML = "Trade:0";
         hunterTradeHave.innerHTML = "Have: "+itemPelt.qty;
@@ -69,7 +73,8 @@ var HunterGame = function()
         ftv.displaydelta(itemPelt.name,1);
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        harvestButton.style.display = 'none';
+        harvestButton.innerHTML = "Leave ";
+        harvestButton.ontouchstart = function() { ARIS.exitToScanner(); };
      
         if(ftm.currentLevel == 1 && itemPelt.qty == 10)
         {
@@ -122,13 +127,18 @@ var HunterGame = function()
             ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
             ARIS.setItemCount(itemApproval.itemId,itemApproval.qty);
 
-            if(itemApproval.qty >= 20)
+            if(itemApproval.qty >= 15)
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
                 ftm.currentLevel = 3;
                 hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
                 ftv.displayGuruWithMessage("Thanks for your help!");
             }
+            else if(itemPelt.qty == 0) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>! (+"+item.approvalWorth+" likes)");
+            else if(item == itemTrap) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty... (+"+item.approvalWorth+" likes)");
+            else if(item == itemBeads) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>crafters</b> had their eyes on those... (+"+item.approvalWorth+" likes)");
+            else if(item == itemFabric) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this! (+"+item.approvalWorth+" likes)");
+            else if(item == itemKettle) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time for our cooks! (+"+item.approvalWorth+" likes)");
 
             fursToTrade = 0;
             formatHunterTrade();

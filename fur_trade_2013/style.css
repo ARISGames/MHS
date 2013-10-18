@@ -121,6 +121,7 @@ body
 
 #deltaview
 {
+    pointer-events:none;
     display:none;
     width:320px;
     height:500px;
@@ -214,6 +215,7 @@ body
 
 .guruimage
 {
+    pointer-events:none;
     display:block;
     width:320px;
     position:absolute;

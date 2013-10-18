@@ -39,13 +39,13 @@ var ClerkGame = function()
         if(ftm.webPageItem != itemPelt)
         {
             ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+ftm.webPageItem.peltCost;
-            sellerDialog.innerHTML = "I've got some <b>"+ftm.webPageItem.name+"s</b> here... I'd be willing to part with one for the price of <b>"+ftm.webPageItem.peltCost+" pelts</b>. Whad'ya say, kid?";
+            sellerDialog.innerHTML = "I've got a <b>"+ftm.webPageItem.name+"</b> in stock... I'd be willing to part with it for the price of <b>"+ftm.webPageItem.peltCost+" pelts</b>. Whad'ya say?";
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }
         else
         {
-            sellerDialog.innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> if you want to fill your store with some of my European wares...";
-            buyButtonText.innerHTML = "Leave ";
+            sellerDialog.innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> to stock the post with European goods...";
+            buyButtonText.innerHTML = "Continue ";
             buyButton.ontouchstart = function() { ARIS.exitToScanner(""); };
         }
     }
@@ -76,7 +76,7 @@ var ClerkGame = function()
     {
         if(!formattedClerkTrade)
         {
-            ftv.displayGuruWithMessage("Find a <b>hunter partner</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade! ");
+            ftv.displayGuruWithMessage("Find a <b>trapper</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
             formattedClerkTrade = true;
         }
 
@@ -95,11 +95,11 @@ var ClerkGame = function()
     {
         if(itemPelt.qty < ftm.webPageItem.peltCost)
         {
-            sellerDialog.innerHTML = "What?! You only have <b>"+itemPelt.qty+" pelts</b>! I said I'd trade for <b>"+ftm.webPageItem.peltCost+" pelts</b>! Get outa here, ya cheat!";
+            sellerDialog.innerHTML = "Hmmm... this costs more <b>pelts</b> than you currently have. <b>Try another item.<b/>";
         }
         else
         {
-            sellerDialog.innerHTML = "Thanks!";
+            sellerDialog.innerHTML = "Excellent, young scholar.";
             
             ftm.webPageItem.qty += 1;
             itemPelt.qty        -= ftm.webPageItem.peltCost;
@@ -115,11 +115,11 @@ var ClerkGame = function()
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
                 ftm.currentLevel = 2;
-                ftv.displayGuruWithMessage("Good work! Now that we have supplies for the store, we should try to <b>find someone looking to trade</b>!");
+                ftv.displayGuruWithMessage("Good work! Now that the post is stocked, we should <b>find a local trapper</b> to trade our stock for <b>pelts</b>!");
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
             }
         }
-        buyButtonText.innerHTML = "Leave ";
+        buyButtonText.innerHTML = "Continue ";
         buyButton.ontouchstart = function() { ARIS.exitToScanner(""); };
     }
 
@@ -136,7 +136,7 @@ var ClerkGame = function()
         var data = bumpString;
         if(data.clerk)
         {
-            ftv.displayGuruWithMessage("You should find a <b>hunter</b> to trade with! We want <b>pelts</b>, not more junk!");
+            ftv.displayGuruWithMessage("You should find a <b>trapper</b> to trade with! We want <b>pelts</b>, not more stuff from Europe!");
         }
         else if(data.hunter)
         {
@@ -152,7 +152,7 @@ var ClerkGame = function()
                 ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
                 ftm.currentLevel = 3;
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
-                ftv.displayGuruWithMessage("Congrats! You've taken <b>10 pelts</b> worth of items, and successfully traded them up for <b>15</b>!");
+                ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");
             }
             else if(itemTrap.qty+itemFabric.qty+itemBeads.qty+itemKettle.qty == 0)   ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");

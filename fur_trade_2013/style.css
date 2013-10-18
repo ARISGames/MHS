@@ -114,6 +114,11 @@ body
     background-image:url("assets/hunter_bg.png");
 }
 
+.seller_bg
+{
+    background-image:url("assets/seller_bg.png");
+}
+
 #deltaview
 {
     display:none;

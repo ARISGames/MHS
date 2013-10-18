@@ -44,7 +44,7 @@ var HunterGame = function()
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
             harvestButton.ontouchstart = function() { ARIS.exitToScanner(""); };
-            ftv.displayGuruWithMessage("Hey! Get out from behind the clerk's counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
+            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
         }
     }
 
@@ -81,7 +81,7 @@ var HunterGame = function()
         {
             ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
             ftm.currentLevel = 2;
-            ftv.displayGuruWithMessage("Excellent! Now that we have beaver pelts to trade, we should <b>find a clerk</b>!");
+            ftv.displayGuruWithMessage("10 beaver pelts should be enough for us to trade... Let's <b>find a clerk</b>- someone gathering items from Minnesota!");
             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
         }
     }
@@ -133,7 +133,7 @@ var HunterGame = function()
                 ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
                 ftm.currentLevel = 3;
                 hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
-                ftv.displayGuruWithMessage("Thanks for your help!");
+                ftv.displayGuruWithMessage("Level 2 complete! Nice work for a new trapper!");
             }
             else if(itemPelt.qty == 0) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>! (+"+item.approvalWorth+" likes)");
             else if(item == itemTrap) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty... (+"+item.approvalWorth+" likes)");

@@ -7,6 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Trading Post</title>
 <link href="style.css" rel="stylesheet" type="text/css"></link>
+
+<script type="text/javascript">
+    var ARIS = {};//Get ARIS variable existant ASAP just to keep things simple
+</script>
+
 <script type="text/javascript" src="utils/json2.js"></script>
 <script type="text/javascript" src="model.js"></script>
 <script type="text/javascript" src="views.js"></script>
@@ -18,10 +23,10 @@ var ftm;
 var ftv;
 var game;
 
-var ARIS = {};
 var readyCount = 2;
 function partReady() { readyCount--; if(readyCount == 0) begin(); }
 ARIS.ready = function() { partReady(); };
+
 
 function begin()
 {

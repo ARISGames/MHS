@@ -91,15 +91,8 @@
             game.callbacks);
 
         imv.displayGame(imm.stationType);
-
         game.setup();
-
-        if(
-            imm.ITEMS[imm.ITEM_ID_DRILL]    > 0 ||
-            imm.ITEMS[imm.ITEM_ID_DYNAMITE] > 0 ||
-            imm.ITEMS[imm.ITEM_ID_BACKER]   > 0
-        ) imv.displayIntro();
-        else imv.displayVid();
+        imv.displayIntro();
     }
 
     window.addEventListener('load', partReady, false);
@@ -120,7 +113,7 @@
             <video id="drillvidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='imv.displayIntro();'>
+            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -155,7 +148,7 @@
             <video id="dynamitevidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='imv.displayIntro();'>
+            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -199,7 +192,7 @@
             <video id="backervidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='imv.displayIntro();'>
+            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>

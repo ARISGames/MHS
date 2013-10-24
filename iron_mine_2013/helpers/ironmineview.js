@@ -2,53 +2,59 @@ var IronMineView = function()
 {
     var self = this;
 
-    this.currentGame     = null;
-    this.currentVid      = null;
-    this.currentVidFile  = null;
-    this.currentIntro    = null;
-    this.currentActivity = null;
-    this.currentGuru     = null;
-    this.currentGuruTalk = null;
+    this.currentGame      = null;
+    this.currentVid       = null;
+    this.currentVidFile   = null;
+    this.currentIntro     = null;
+    this.currentIntroTalk = null;
+    this.currentActivity  = null;
+    this.currentGuru      = null;
+    this.currentGuruTalk  = null;
 
-    this.drillGame     = document.getElementById('drillgame');
-    this.drillVid      = document.getElementById('drillvid');
-    this.drillVidFile  = document.getElementById('drillvidfile');
-    this.drillIntro    = document.getElementById('drillintro');
-    this.drillActivity = document.getElementById('drillactivity');
-    this.drillGuru     = document.getElementById('drillguru');
-    this.drillGuruTalk = document.getElementById('drillgurutalk');
+    this.drillGame      = document.getElementById('drillgame');
+    this.drillVid       = document.getElementById('drillvid');
+    this.drillVidFile   = document.getElementById('drillvidfile');
+    this.drillIntro     = document.getElementById('drillintro');
+    this.drillIntroTalk = document.getElementById('drillintrotalk');
+    this.drillActivity  = document.getElementById('drillactivity');
+    this.drillGuru      = document.getElementById('drillguru');
+    this.drillGuruTalk  = document.getElementById('drillgurutalk');
 
-    this.dynamiteGame     = document.getElementById('dynamitegame');
-    this.dynamiteVid      = document.getElementById('dynamitevid');
-    this.dynamiteVidFile  = document.getElementById('dynamitevidfile');
-    this.dynamiteIntro    = document.getElementById('dynamiteintro');
-    this.dynamiteActivity = document.getElementById('dynamiteactivity');
-    this.dynamiteGuru     = document.getElementById('dynamiteguru');
-    this.dynamiteGuruTalk = document.getElementById('dynamitegurutalk');
+    this.dynamiteGame      = document.getElementById('dynamitegame');
+    this.dynamiteVid       = document.getElementById('dynamitevid');
+    this.dynamiteVidFile   = document.getElementById('dynamitevidfile');
+    this.dynamiteIntro     = document.getElementById('dynamiteintro');
+    this.dynamiteIntroTalk = document.getElementById('dynamiteintrotalk');
+    this.dynamiteActivity  = document.getElementById('dynamiteactivity');
+    this.dynamiteGuru      = document.getElementById('dynamiteguru');
+    this.dynamiteGuruTalk  = document.getElementById('dynamitegurutalk');
+ 
+    this.backerGame      = document.getElementById('backergame');
+    this.backerVid       = document.getElementById('backervid');
+    this.backerVidFile   = document.getElementById('backervidfile');
+    this.backerIntro     = document.getElementById('backerintro');
+    this.backerIntroTalk = document.getElementById('backerintrotalk');
+    this.backerActivity  = document.getElementById('backeractivity');
+    this.backerGuru      = document.getElementById('backerguru');
+    this.backerGuruTalk  = document.getElementById('backergurutalk');
 
-    this.backerGame     = document.getElementById('backergame');
-    this.backerVid      = document.getElementById('backervid');
-    this.backerVidFile  = document.getElementById('backervidfile');
-    this.backerIntro    = document.getElementById('backerintro');
-    this.backerActivity = document.getElementById('backeractivity');
-    this.backerGuru     = document.getElementById('backerguru');
-    this.backerGuruTalk = document.getElementById('backergurutalk');
+    this.strikeGame      = document.getElementById('strikegame');
+    this.strikeVid       = document.getElementById('strikevid');
+    this.strikeVidFile   = document.getElementById('strikevidfile');
+    this.strikeIntro     = document.getElementById('strikeintro');
+    this.strikeIntroTalk = document.getElementById('strikeintrotalk');
+    this.strikeActivity  = document.getElementById('strikeactivity');
+    this.strikeGuru      = document.getElementById('strikeguru');
+    this.strikeGuruTalk  = document.getElementById('strikegurutalk');
 
-    this.strikeGame     = document.getElementById('strikegame');
-    this.strikeVid      = document.getElementById('strikevid');
-    this.strikeVidFile  = document.getElementById('strikevidfile');
-    this.strikeIntro    = document.getElementById('strikeintro');
-    this.strikeActivity = document.getElementById('strikeactivity');
-    this.strikeGuru     = document.getElementById('strikeguru');
-    this.strikeGuruTalk = document.getElementById('strikegurutalk');
-
-    this.games      = [this.drillGame,     this.dynamiteGame,     this.backerGame,     this.strikeGame];
-    this.vids       = [this.drillVid,      this.dynamiteVid,      this.backerVid,      this.strikeVid];
-    this.vidfiles   = [this.drillVidFile,  this.dynamiteVidFile,  this.backerVidFile,  this.strikeVidFile];
-    this.intros     = [this.drillIntro,    this.dynamiteIntro,    this.backerIntro,    this.strikeIntro];
-    this.activities = [this.drillActivity, this.dynamiteActivity, this.backerActivity, this.strikeActivity];
-    this.gurus      = [this.drillGuru,     this.dynamiteGuru,     this.backerGuru,     this.strikeGuru];
-    this.gurutalks  = [this.drillGuruTalk, this.dynamiteGuruTalk, this.backerGuruTalk, this.strikeGuruTalk];
+    this.games      = [this.drillGame,      this.dynamiteGame,      this.backerGame,      this.strikeGame];
+    this.vids       = [this.drillVid,       this.dynamiteVid,       this.backerVid,       this.strikeVid];
+    this.vidfiles   = [this.drillVidFile,   this.dynamiteVidFile,   this.backerVidFile,   this.strikeVidFile];
+    this.intros     = [this.drillIntro,     this.dynamiteIntro,     this.backerIntro,     this.strikeIntro];
+    this.introtalks = [this.drillIntroTalk, this.dynamiteIntroTalk, this.backerIntroTalk, this.strikeIntroTalk];
+    this.activities = [this.drillActivity,  this.dynamiteActivity,  this.backerActivity,  this.strikeActivity];
+    this.gurus      = [this.drillGuru,      this.dynamiteGuru,      this.backerGuru,      this.strikeGuru];
+    this.gurutalks  = [this.drillGuruTalk,  this.dynamiteGuruTalk,  this.backerGuruTalk,  this.strikeGuruTalk];
 
     //These 'views' are injected into the current game
     this.moneydelta = document.createElement('div');
@@ -82,13 +88,14 @@ var IronMineView = function()
         if(this.currentActivity) this.currentActivity.style.display = 'none';
         if(this.currentGuru)     this.currentGuru.style.display     = 'none';
 
-        this.currentGame     = this.games[game];
-        this.currentVid      = this.vids[game];
-        this.currentVidFile  = this.vidfiles[game];
-        this.currentIntro    = this.intros[game];
-        this.currentActivity = this.activities[game];
-        this.currentGuru     = this.gurus[game]; this.currentGuru.progress = 50;
-        this.currentGuruTalk = this.gurutalks[game];
+        this.currentGame      = this.games[game];
+        this.currentVid       = this.vids[game];
+        this.currentVidFile   = this.vidfiles[game];
+        this.currentIntro     = this.intros[game];
+        this.currentIntroTalk = this.introTalks[game];
+        this.currentActivity  = this.activities[game];
+        this.currentGuru      = this.gurus[game]; this.currentGuru.progress = 50;
+        this.currentGuruTalk  = this.gurutalks[game];
 
         this.currentGame.style.display = 'block';
         this.currentActivity.appendChild(this.hud);

@@ -33,6 +33,11 @@ var BackerGame = function()
     {
         ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
         ARIS.setItemCount(imm.ITEM_ID_MIKE, 1);
+
+        if(imm.currentLevel == 1)
+            imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>. Looks like you're new to the mine. You should be sure to <b>check out each station</b>. You can start here, with the <b>backer pole</b>- all you gotta do is <b>jab the rock</b> to check for stability! Unfortunately, not much you can do in the case of a <b>cave in</b>...<br />";
+        if(imm.currentLevel == 2)
+            imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
     }
 
     function succeed()

@@ -120,8 +120,8 @@
         <div id='drillintro' class='intro full_screen'>
             <img src='assets/drill_prompt.png' class='introprompt' />
             <img src='assets/anton.png' class='introimage' />
-            <div class='introdialog'>
-                Hey Kid, I'm Anton Antilla.  So you're my new drilling partner, huh?  Drill to the right depth to get us our day's wage.<br />
+            <div id='drillintrodialog' class='introdialog'>
+                Hey Kid, I'm Anton Antilla. So you're my new drilling partner, huh? Drill to the right depth to get us our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -155,8 +155,8 @@
         <div id='dynamiteintro' class='intro full_screen'>
             <img class='introprompt' src='assets/dynamite_prompt.png' />
             <img id='dynamiteintroimage' class='introimage' src='assets/matti.png' />
-            <div class='introdialog'>
-                Hei, miten menee, I'm Matti Pelto.  So you're my new blasting partner, huh? Blow up the rock so we can get to the iron ore to earn our day's wage.<br />
+            <div id='dynamiteintrodialog' class='introdialog'>
+                Hei, miten menee, I'm Matti Pelto. So you're my new blasting partner, huh? Blow up the rock so we can get to the iron ore to earn our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -199,8 +199,8 @@
         <div id='backerintro' class='intro full_screen'>
             <img src='assets/backer_prompt.png' class='introprompt' />
             <img src='assets/mike.png' class='introimage' />
-            <div class='introdialog'>
-                Pozdravljeni, My name's Mike Zakotnik.  So you're my new backman partner, huh? Jab the rock to check for dangerous places to earn our day's wage.<br />
+            <div id='backerintrodialog' class='introdialog'>
+                Pozdravljeni, My name's Mike Zakotnik. So you're my new backman partner, huh? Jab the rock to check for dangerous places to earn our day's wage.<br />
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />

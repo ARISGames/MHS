@@ -119,7 +119,6 @@ var DynamiteGame = function()
             dynamiteHoles[6].style.left = '270px';
         }
 
-        ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
         ARIS.setItemCount(imm.ITEM_ID_MATTI, 1);
 
         if(imm.currentLevel == 1)
@@ -208,6 +207,7 @@ var DynamiteGame = function()
 
         lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
 
         successCount++;
         checkGuru(true);

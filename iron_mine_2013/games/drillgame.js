@@ -20,7 +20,6 @@ var DrillGame = function()
 
     self.setup = function()
     {
-        ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
         ARIS.setItemCount(imm.ITEM_ID_ANTON, 1);
 
         if(imm.currentLevel == 1)
@@ -59,6 +58,7 @@ var DrillGame = function()
 
         lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
 
         successCount++;
         checkGuru(true);

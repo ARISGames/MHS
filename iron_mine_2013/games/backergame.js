@@ -31,7 +31,6 @@ var BackerGame = function()
 
     self.setup = function()
     {
-        ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
         ARIS.setItemCount(imm.ITEM_ID_MIKE, 1);
 
         if(imm.currentLevel == 1)
@@ -51,6 +50,7 @@ var BackerGame = function()
 
         lastReceivedMoney = moneyToReceive;
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
 
         successCount++;
         checkGuru(true);

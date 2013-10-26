@@ -20,7 +20,7 @@ var DynamiteGame = function()
     //Won't do anything with these ^, this just brings them into memory
 
     var dynamiteExplosion    = document.getElementById('dynamiteexplosion');
-    var dynamiteSticksImg    = document.getElementById('dynamitesticksimg')
+    var dynamiteSticksImg    = document.getElementById('dynamitesticksimg');
 
     var STATE_LOAD_DYNAMITE = 0;
     var STATE_RUN = 1;
@@ -28,12 +28,10 @@ var DynamiteGame = function()
     var states = [STATE_LOAD_DYNAMITE, STATE_RUN, STATE_PRESS_PLUNGER];
     var currentState = STATE_LOAD_DYNAMITE;
 
-    var moneyReceived = 100;
-    var minMoneyReceived = 8;
-    var maxMoneyReceived = 100;
+    var minOreReceived = 1;
+    var maxOreReceived = 10;
     var moneyLost = 200;
 
-    var lastReceivedMoney = 0;
     var successCount = 0;
     var failCount    = 0;
 
@@ -205,16 +203,16 @@ var DynamiteGame = function()
     function succeed()
     {
         imv.successHUD();
-        var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
-        if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
+        var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
 
         dynamiteSticksImg.src = 'assets/dynamite_green.png';
         dynamiteExplosion.style.display = 'block';
         explosionFade = 100;
         fadeExplosion();
 
-        lastReceivedMoney = moneyToReceive;
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        imv.displayMoneyDelta(oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
         ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
 
         successCount++;
@@ -231,6 +229,7 @@ var DynamiteGame = function()
         explosionFade = 100;
         fadeExplosion();
 
+        imv.displayMoneyDelta(-1*moneyLost);
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
 
         failCount++;
@@ -247,35 +246,21 @@ var DynamiteGame = function()
         if(imm.currentLevel == 1)
         {
             if(success && successCount == 1) 
-                imv.displayGuruWithMessage(
-                    "Nice work, kid. You cleared the area before the blast. Just hope we don't blow someone up before our ten hour shift is done."
-                );
+                imv.displayGuruWithMessage("Nice work, kid. You cleared the area before the blast. Just hope we don't blow someone up before our ten hour shift is done.");
             if(!success && failCount == 1)
-                imv.displayGuruWithMessage(
-                    "You blew up Sven. Next time give the guys a chance to clear the area and wait until the light turns green."
-                );
+                imv.displayGuruWithMessage("You blew up Sven. Next time give the guys a chance to clear the area and wait until the light turns green.");
         }
         else if(imm.currentLevel == 2)
         {
             if(success && successCount == 1) 
             {
-                if(lastReceivedMoney < 33)
-                    imv.displayGuruWithMessage(
-                        "Ya done good work there but since there's only a little ore, there's only a little pay."
-                    );
-                else
-                    imv.displayGuruWithMessage(
-                        "AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!"
-                    );
+                imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
+                imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
             }
             else if(!success && failCount == 1)
-                imv.displayGuruWithMessage(
-                    "Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light."
-                );
-            else if(success && lastReceivedMoney < 33)
-                imv.displayGuruWithMessage(
-                    "You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours."
-                );
+                imv.displayGuruWithMessage"Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light.");
+            else if(success)
+                imv.displayGuruWithMessage"You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
         }
     }
 

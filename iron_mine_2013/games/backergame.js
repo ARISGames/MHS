@@ -17,15 +17,12 @@ var BackerGame = function()
     var rock7 = document.getElementById('backerrock7');
     var rock8 = document.getElementById('backerrock8');
 
-    var moneyReceived = 100;
-    var minMoneyReceived = 8;
-    var maxMoneyReceived = 100;
-    var littleMoneyReceived = 10;
-    var littleMinMoneyReceived = 2;
-    var littleMaxMoneyReceived = 10;
+    var minOreReceived = 2;
+    var maxOreReceived = 10;
+    var littleMinOreReceived = 0;
+    var littleMaxOreReceived = 1;
     var moneyLost = 600;
 
-    var lastReceivedMoney = 0;
     var successCount = 0;
     var failCount    = 0;
 
@@ -49,14 +46,15 @@ var BackerGame = function()
     function succeed()
     {
         imv.successHUD();
-        var moneyToReceive = minMoneyReceived + Math.round(Math.random()*(maxMoneyReceived-minMoneyReceived));
-        if(imm.currentLevel == 1) moneyToReceive = moneyReceived;
+        var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
 
         leftpokerimg.src  = 'assets/backer_pole_left_green.png';
         rightpokerimg.src = 'assets/backer_pole_right_green.png';
 
-        lastReceivedMoney = moneyToReceive;
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        imv.displayMoneyDelta(oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
+
         ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
 
         successCount++;
@@ -72,6 +70,7 @@ var BackerGame = function()
 
         leftpokerimg.src  = 'assets/backer_pole_left_red.png';
         rightpokerimg.src = 'assets/backer_pole_right_red.png';
+        imv.displayMoneyDelta(-1*moneyLost);
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
 
         failCount++;
@@ -89,11 +88,13 @@ var BackerGame = function()
         {
             if(success && successCount == 1) 
             {
-                if(lastReceivedMoney < 33) imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
-                else                       imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
+                imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
+                imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
             }
-            else if(!success && failCount         == 1) imv.displayGuruWithMessage("Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!");
-            else if( success && lastReceivedMoney < 33) imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
+            else if(!success && failCount == 1)
+                imv.displayGuruWithMessage("Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!");
+            else if(success)
+                imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
         }
     }
 
@@ -103,9 +104,11 @@ var BackerGame = function()
     {
         imv.neutralHUD();
 
-        var moneyToReceive = littleMinMoneyReceived + Math.round(Math.random()*(littleMaxMoneyReceived-littleMinMoneyReceived));
-        if(imm.currentLevel == 1) moneyToReceive = littleMoneyReceived;
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+moneyToReceive);
+        var oreToReceive = littleMinOreReceived + Math.round(Math.random()*(littleMaxOreReceived-littleMinOreReceived));
+
+        imv.displayMoneyDelta(oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
+        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
 
         rocks.src = 'assets/backer_rocks_safe.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }

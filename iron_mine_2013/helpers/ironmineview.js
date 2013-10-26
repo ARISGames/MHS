@@ -62,7 +62,7 @@ var IronMineView = function()
     this.vidfiles     = [this.drillVidFile,     this.dynamiteVidFile,     this.backerVidFile,     this.strikeVidFile];
     this.intros       = [this.drillIntro,       this.dynamiteIntro,       this.backerIntro,       this.strikeIntro];
     this.introTalks   = [this.drillIntroTalk,   this.dynamiteIntroTalk,   this.backerIntroTalk,   this.strikeIntroTalk];
-    this.introButtons = [this.drillIntroButton, this.dynamiteIntroButton, this.backerIntroButton, this.strikeIntroButton,
+    this.introButtons = [this.drillIntroButton, this.dynamiteIntroButton, this.backerIntroButton, this.strikeIntroButton];
     this.activities   = [this.drillActivity,    this.dynamiteActivity,    this.backerActivity,    this.strikeActivity];
     this.gurus        = [this.drillGuru,        this.dynamiteGuru,        this.backerGuru,        this.strikeGuru];
     this.gurutalks    = [this.drillGuruTalk,    this.dynamiteGuruTalk,    this.backerGuruTalk,    this.strikeGuruTalk];
@@ -71,7 +71,7 @@ var IronMineView = function()
     //These 'views' are injected into the current game
     this.moneydelta = document.createElement('div');
     this.moneydelta.setAttribute('id','moneydelta');
-    this.moneydelta.fade = 0; //0-960
+    this.moneydelta.fade  = 0; //0-960
     this.moneydelta.delta = 0;
 
     this.hud = document.createElement('div');
@@ -112,6 +112,7 @@ var IronMineView = function()
         this.currentGuruButton  = this.gurubuttons[game];
 
         this.currentGame.style.display = 'block';
+        if(imm.currentLevel == 1) this.wantDisplay.style.display = 'none';
         this.currentActivity.appendChild(this.hud);
     }
 
@@ -158,8 +159,6 @@ var IronMineView = function()
         self.currentGuru.style.top = (10*(50-self.currentGuru.progress))+'px';
         if(self.currentGuru.progress < 50)
             setTimeout(tickdisplayguru, 10);
-        else
-            setTimeout(function(){self.hideGuru();}, 6000);
     }
 
     this.hideGuru = function()
@@ -184,15 +183,19 @@ var IronMineView = function()
 
     this.displayMoneyDelta = function(delta)
     {
-        if(delta == 0) return;
-
-        
-        if(delta > 0) self.moneydelta.style.color = "#009344";
-        else          self.moneydelta.style.color = "#C42032";
         self.moneydelta.delta = delta;
+        if(delta >= 0) //ore
+        {
+            self.moneydelta.innerHTML = '+'+delta+' ore';
+            self.moneydelta.style.color = "#009344";
+        }
+        else if(delta < 0)//money
+        {
+            delta *= -1; //bring it back to positive just for text parsing
+            self.moneydelta.innerHTML = '-$'+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
+            self.moneydelta.style.color = "#C42032";
+        }
 
-        if(delta < 0) delta *= -1;//so we can parse it to text without worrying about - signs
-        self.moneydelta.innerHTML = (self.moneydelta.delta > 0 ? '+$' : '-$')+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
         var alreadyTicking = (self.moneydelta.fade != 0);
         self.moneydelta.fade = 960;
         self.moneydelta.style.display = 'block';
@@ -201,7 +204,7 @@ var IronMineView = function()
 
     var tickmoneydelta = function()
     {
-        if(self.moneydelta.delta > 0)
+        if(self.moneydelta.delta >= 0)
         {
             self.moneydelta.style.color = "rgba(0,147,68,"+(self.moneydelta.fade/960)+")";
             self.moneydelta.style.top = (200-1/8*(960-self.moneydelta.fade))+'px';

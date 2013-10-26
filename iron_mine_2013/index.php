@@ -11,7 +11,7 @@
 <link href="style.css" rel="stylesheet" type="text/css"></link>
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="helpers/pusherman.js">    </script>
-<script type="text/javascript" src="helpers/ironminemodel.js?1"></script>
+<script type="text/javascript" src="helpers/ironminemodel.js"></script>
 <script type="text/javascript" src="helpers/ironmineview.js"> </script>
 <script type="text/javascript" src="games/drillgame.js">      </script>
 <script type="text/javascript" src="games/dynamitegame.js">   </script>
@@ -48,18 +48,35 @@
         {
             if(updatedItemId == imm.ITEM_ID_MONEY)
             {
-                var delta = qty-imm.money;
                 imm.money = qty;
-
-                imv.displayMoneyDelta(delta);
                 //Formats money as '$x.xx' for all edge cases
-                imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
-                if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
+                if(imm.currentLevel == 2)
                 {
-                    ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
-                    ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
-                    setTimeout(function(){ARIS.exitToTab("QUESTS");},1000);
+                    imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
+
+                    if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
+                    {
+                        ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
+                        ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
+                        setTimeout(function(){ARIS.exitToTab("QUESTS");},1000);
+                    }
                 }
+            }
+            else if(updatedItemId == imm.ITEM_ID_ORE)
+            {
+                imm.ore = qty;
+                if(imm.currentLevel == 1) imv.haveDisplay.innerHTML = 'Ore:'+qty;
+            }
+            else if(qty > 0 && updatedItemId == imm.ITEM_ID_DRILL)    imm.drill    = true;
+            else if(qty > 0 && updatedItemId == imm.ITEM_ID_DYNAMITE) imm.dynamite = true;
+            else if(qty > 0 && updatedItemId == imm.ITEM_ID_BACKER)   imm.backer   = true;
+
+            if(imm.currentLevel == 1 && imm.drill && imm.dynamite && imm.backer)
+            {
+                ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
+                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
+                imv.displayGuruWithMessage("Alright! Now that you're aquainted with the roles in the mine, we can really <b>put you to work</b>. Come back tomorrow and we can start paying you for how much <b>ore you find</b>.");
+                imv.currentGuruButton.onclick = function(){ARIS.exitToTab("QUESTS");};
             }
         }
 
@@ -122,7 +139,7 @@
             <img src='assets/anton.png' class='introimage' />
             <div id='drillintrotalk' class='introtalk'>
             </div>
-            <div class='bottombutton' onclick='imv.displayActivity();'>
+            <div id='drillintrobutton' class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -156,7 +173,7 @@
             <img id='dynamiteintroimage' class='introimage' src='assets/matti.png' />
             <div id='dynamiteintrotalk' class='introtalk'>
             </div>
-            <div class='bottombutton' onclick='imv.displayActivity();'>
+            <div id='dynamiteintrobutton' class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -199,7 +216,7 @@
             <img src='assets/mike.png' class='introimage' />
             <div id='backerintrotalk' class='introtalk'>
             </div>
-            <div class='bottombutton' onclick='imv.displayActivity();'>
+            <div id='backerintrobutton' class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>

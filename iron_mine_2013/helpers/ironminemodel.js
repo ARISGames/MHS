@@ -38,9 +38,6 @@ var IronMineModel = function()
     self.ITEM_ID_STRIKE_SUCCEED = 17251;
     self.ITEM_IDS = [self.ITEM_ID_MONEY, self.ITEM_ID_DRILL, self.ITEM_ID_ANTON, self.ITEM_ID_DYNAMITE, self.ITEM_ID_MATTI, self.ITEM_ID_BACKER, self.ITEM_ID_MIKE, self.ITEM_ID_STRIKE, self.ITEM_ID_STRIKE_FAIL, self.ITEM_ID_STRIKE_SUCCEED];
 
-    self.ITEMS = [];
-    for(var i in self.ITEM_IDS) self.ITEMS[self.ITEM_IDS[i]] = 0; //set qty to 0 for all items
-    
     //From URL
     self.gameId;
     self.playerId;
@@ -53,6 +50,9 @@ var IronMineModel = function()
     //Personal
     self.currentLevel = 1;
     self.money = 0;
+    self.drill    = true;
+    self.dynamite = true;
+    self.backer   = true;
     
     self.loadStateFromARIS = function()
     {
@@ -70,20 +70,20 @@ var IronMineModel = function()
                 initGame(self.stationType); //All requests have completed; ARIS state is known. Init games.
             }
 
-            for(var i in self.LEVEL_IDS)
-                if(qty > 0 && updatedItemId == self.LEVEL_IDS[i] && i+1 >= self.currentLevel) self.currentLevel = parseInt(i)+2;
-            for(var i in self.ITEM_IDS)
+            if(qty > 0)
             {
-                if(qty > 0 && updatedItemId == self.ITEM_IDS[i])
+                for(var i in self.LEVEL_IDS)
+                    if updatedItemId == self.LEVEL_IDS[i] && i+1 >= self.currentLevel) self.currentLevel = parseInt(i)+2;
+                switch(updatedItemId)
                 {
-                    self.ITEMS[updatedItemId] = qty;
-                    if(updatedItemId == self.ITEM_ID_MONEY)
-                    {
+                    case self.ITEM_ID_MONEY:
                         self.money = qty;
                         //Formats money as '$x.xx' for all edge cases //trust me //I think...
                         imv.haveDisplay.innerHTML = '$'+((self.money-(self.money%100))/100)+'.'+(self.money%100 < 10 ? '0' : '')+(self.money%100);
-                    }
-                }
+                        break;
+                    case self.ITEM_ID_DRILL:    self.drill    = true; break;
+                    case self.ITEM_ID_DYNAMITE: self.dynamite = true; break;
+                    case self.ITEM_ID_BACKER:   self.backer   = true; break;
             }
         }
     

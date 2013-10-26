@@ -23,7 +23,15 @@ var DrillGame = function()
         ARIS.setItemCount(imm.ITEM_ID_ANTON, 1);
 
         if(imm.currentLevel == 1)
-            imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Anton Antilla</b>. Looks like you're new to the mine. You should be sure to <b>check out each station</b>. You can start here, with the <b>drill</b>- all you gotta do is <b>drill to the correct depth</b>. Easy, right?";
+        {
+            if(!imm.drill)
+                imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Anton Antilla</b>- Looks like you're new to the mine. <b>Start here</b> with the <b>drill</b>- all you gotta do is <b>drill to the correct depth</b>. Easy, right?";
+            else        
+            {
+                imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
+                imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Anton Antilla</b>- Good work on the drill! If you haven't already, you should check out the <b>dynamite<b/> or the <b>backer</b> stations to get a feel for <b>all the jobs in the mine</b>.";
+            }
+        }
         if(imm.currentLevel == 2)
             imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
     }

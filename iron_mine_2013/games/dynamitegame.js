@@ -122,7 +122,15 @@ var DynamiteGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MATTI, 1);
 
         if(imm.currentLevel == 1)
-            imv.currentIntroTalk.innerHTML = "Hei, miten menee, I'm <b>Matti Pelto</b>. Looks like you're new to the mine. You should be sure to <b>check out each station</b>. You can start here, with the <b>dynamite</b>- fill the slots, step back, push the plunger, repeat. Got it?<br />";
+        {
+            if(!imm.dynamite)
+                imv.currentIntroTalk.innerHTML = "Hei, miten menee, I'm <b>Matti Pelto</b>- Looks like you're new to the mine. Give the <b>dynamite</b> a try- fill the slots, step back, push the plunger, repeat. Got it?<br />";
+            else        
+            {
+                imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
+                imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Matti Pelto</b>- Good work on the dynamite! If you haven't already, you should check out the <b>drills<b/> or the <b>backer</b> stations to get a feel for <b>all the jobs in the mine</b>.";
+            }
+        }
         if(imm.currentLevel == 2)
             imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
     }

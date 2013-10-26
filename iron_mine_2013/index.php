@@ -11,7 +11,7 @@
 <link href="style.css" rel="stylesheet" type="text/css"></link>
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="helpers/pusherman.js">    </script>
-<script type="text/javascript" src="helpers/ironminemodel.js"></script>
+<script type="text/javascript" src="helpers/ironminemodel.js?1"></script>
 <script type="text/javascript" src="helpers/ironmineview.js"> </script>
 <script type="text/javascript" src="games/drillgame.js">      </script>
 <script type="text/javascript" src="games/dynamitegame.js">   </script>
@@ -120,8 +120,7 @@
         <div id='drillintro' class='intro full_screen'>
             <img src='assets/drill_prompt.png' class='introprompt' />
             <img src='assets/anton.png' class='introimage' />
-            <div id='drillintrodialog' class='introdialog'>
-                Hey Kid, I'm Anton Antilla. So you're my new drilling partner, huh? Drill to the right depth to get us our day's wage.<br />
+            <div id='drillintrotalk' class='introtalk'>
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -137,7 +136,7 @@
         <div id='drillguru' class='guru full_screen'>
             <img class='guruimage' src='assets/anton.png' />
             <div id='drillgurutalk' class='gurutalk'></div>
-            <div class='bottombutton' onclick='imv.hideGuru();'>
+            <div id='drillgurubutton' class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -155,8 +154,7 @@
         <div id='dynamiteintro' class='intro full_screen'>
             <img class='introprompt' src='assets/dynamite_prompt.png' />
             <img id='dynamiteintroimage' class='introimage' src='assets/matti.png' />
-            <div id='dynamiteintrodialog' class='introdialog'>
-                Hei, miten menee, I'm Matti Pelto. So you're my new blasting partner, huh? Blow up the rock so we can get to the iron ore to earn our day's wage.<br />
+            <div id='dynamiteintrotalk' class='introtalk'>
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -181,7 +179,7 @@
         <div id='dynamiteguru' class='guru full_screen'>
             <img class='guruimage' src='assets/matti.png' />
             <div id='dynamitegurutalk' class='gurutalk'></div>
-            <div class='bottombutton' onclick='imv.hideGuru();'>
+            <div id='dynamitegurubutton' class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -199,8 +197,7 @@
         <div id='backerintro' class='intro full_screen'>
             <img src='assets/backer_prompt.png' class='introprompt' />
             <img src='assets/mike.png' class='introimage' />
-            <div id='backerintrodialog' class='introdialog'>
-                Pozdravljeni, My name's Mike Zakotnik. So you're my new backman partner, huh? Jab the rock to check for dangerous places to earn our day's wage.<br />
+            <div id='backerintrotalk' class='introtalk'>
             </div>
             <div class='bottombutton' onclick='imv.displayActivity();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -222,7 +219,7 @@
         <div id='backerguru' class='guru full_screen'>
             <img id='backerguruimage' class='guruimage' src='assets/mike.png' />
             <div id='backergurutalk' class='gurutalk'></div>
-            <div class='bottombutton' onclick='imv.hideGuru();'>
+            <div id='backergurubutton' class='bottombutton' onclick='imv.hideGuru();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>

@@ -34,9 +34,16 @@ var BackerGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MIKE, 1);
 
         if(imm.currentLevel == 1)
-            imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>. Looks like you're new to the mine. You should be sure to <b>check out each station</b>. You can start here, with the <b>backer pole</b>- all you gotta do is <b>jab the rock</b> to check for stability! Unfortunately, not much you can do in the case of a <b>cave in</b>...<br />";
-        if(imm.currentLevel == 2)
-            imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
+        {
+            if(!imm.backer)
+                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Looks like you're new to the mine. Grab a <b>backer pole</b>, <b>jab the ceiling<b/>, and <b>hope for the best</b>. Good luck!";
+            else
+            {
+                imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
+                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Good work <b>checking for cave-ins</b>! If you haven't already, you should check out the <b>drills</b> or the <b>dynamite</b> to get a feel for <b>all the jobs in the mine</b>.";
+            }
+        }
+        if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
     }
 
     function succeed()
@@ -75,36 +82,18 @@ var BackerGame = function()
     {
         if(imm.currentLevel == 1)
         {
-            if(success && successCount == 1)
-                imv.displayGuruWithMessage(
-                    "You found a weak spot and got out just in time. Let's try not to die..."
-                );
-            if(!success && failCount == 1)
-                imv.displayGuruWithMessage(
-                    "Are you okay? Looks like you lost your leg in the cave-in. I bet that fake leg was expensive!"
-                );
+            if( success && successCount == 1) imv.displayGuruWithMessage("You found a weak spot and got out just in time. Let's try not to die...");
+            if(!success && failCount    == 1) imv.displayGuruWithMessage("Are you okay? Looks like you lost your leg in the cave-in. I bet that fake leg was expensive!");
         }
         else if(imm.currentLevel == 2)
         {
             if(success && successCount == 1) 
             {
-                if(lastReceivedMoney < 33)
-                    imv.displayGuruWithMessage(
-                        "Ya done good work there but since there's only a little ore, there's only a little pay."
-                    );
-                else
-                    imv.displayGuruWithMessage(
-                        "AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!"
-                    );
+                if(lastReceivedMoney < 33) imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
+                else                       imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
             }
-            else if(!success && failCount == 1)
-                imv.displayGuruWithMessage(
-                    "Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!"
-                );
-            else if(success && lastReceivedMoney < 33)
-                imv.displayGuruWithMessage(
-                    "You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours."
-                );
+            else if(!success && failCount         == 1) imv.displayGuruWithMessage("Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!");
+            else if( success && lastReceivedMoney < 33) imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
         }
     }
 

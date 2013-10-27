@@ -65,7 +65,7 @@
             else if(updatedItemId == imm.ITEM_ID_ORE)
             {
                 imm.ore = qty;
-                if(imm.currentLevel == 1) imv.haveDisplay.innerHTML = 'Ore:'+qty;
+                if(imm.currentLevel == 1) imv.haveDisplay.innerHTML = 'Ore:'+imm.ore;
             }
             else if(qty > 0 && updatedItemId == imm.ITEM_ID_DRILL)    imm.drill    = true;
             else if(qty > 0 && updatedItemId == imm.ITEM_ID_DYNAMITE) imm.dynamite = true;

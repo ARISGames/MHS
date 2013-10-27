@@ -17,9 +17,9 @@ var BackerGame = function()
     var rock7 = document.getElementById('backerrock7');
     var rock8 = document.getElementById('backerrock8');
 
-    var minOreReceived = 2;
+    var minOreReceived = 3;
     var maxOreReceived = 10;
-    var littleMinOreReceived = 0;
+    var littleMinOreReceived = 1;
     var littleMaxOreReceived = 1;
     var moneyLost = 600;
 
@@ -33,11 +33,11 @@ var BackerGame = function()
         if(imm.currentLevel == 1)
         {
             if(!imm.backer)
-                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Looks like you're new to the mine. Grab a <b>backer pole</b>, <b>jab the ceiling<b/>, and <b>hope for the best</b>. Good luck!";
+                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Looks like you're new to the mine. <b>Grab a backer pole, jab the ceiling, and hope for the best</b>. Good luck!";
             else
             {
                 imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
-                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Good work <b>checking for cave-ins</b>! If you haven't already, you should check out the <b>drills</b> or the <b>dynamite</b> to get a feel for <b>all the jobs in the mine</b>.";
+                imv.currentIntroTalk.innerHTML = "Good work <b>checking for cave-ins</b>! If you haven't already, you should <b>check out the drills or the dynamite</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
         if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
@@ -54,8 +54,6 @@ var BackerGame = function()
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
-
-        ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
 
         successCount++;
         checkGuru(true);
@@ -81,8 +79,16 @@ var BackerGame = function()
     {
         if(imm.currentLevel == 1)
         {
-            if( success && successCount == 1) imv.displayGuruWithMessage("You found a weak spot and got out just in time. Let's try not to die...");
-            if(!success && failCount    == 1) imv.displayGuruWithMessage("Are you okay? Looks like you lost your leg in the cave-in. I bet that fake leg was expensive!");
+            if(success && successCount == 1)
+                imv.displayGuruWithMessage("Great! You've <b>caused a safe cave-in</b>! See if you can <b>do that again</b>, so we can safely <b>gather more ore</b>.");
+            if(success && successCount == 2)
+            {
+                imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
+                imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>backer</b>, be sure to <b>check out the blaster and the drill</b>.");
+                ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
+            }
+            if(!success && failCount == 1)
+                imv.displayGuruWithMessage("Looks like you lost your leg in the cave-in... <b>I bet that fake leg was expensive</b>! Unfortunately, there's <b>not much you can do to prevent an unsafe cave-in</b>. Just gotta hope for the best!");
         }
         else if(imm.currentLevel == 2)
         {

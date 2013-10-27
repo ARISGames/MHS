@@ -28,7 +28,7 @@ var DynamiteGame = function()
     var states = [STATE_LOAD_DYNAMITE, STATE_RUN, STATE_PRESS_PLUNGER];
     var currentState = STATE_LOAD_DYNAMITE;
 
-    var minOreReceived = 1;
+    var minOreReceived = 3;
     var maxOreReceived = 10;
     var moneyLost = 200;
 
@@ -39,13 +39,13 @@ var DynamiteGame = function()
     var allHolesFilled   = false;
     var allHolesEmpty    = false;
     var dynamiteHoles = [document.createElement('img'),//<- hole '0' doesn't exist
-                         document.getElementById('dynamitehole1'),
-                         document.getElementById('dynamitehole2'),
-                         document.getElementById('dynamitehole3'),
-                         document.getElementById('dynamitehole4'),
-                         document.getElementById('dynamitehole5'),
-                         document.getElementById('dynamitehole6'),
-                         document.getElementById('dynamitehole7')];
+        document.getElementById('dynamitehole1'),
+        document.getElementById('dynamitehole2'),
+        document.getElementById('dynamitehole3'),
+        document.getElementById('dynamitehole4'),
+        document.getElementById('dynamitehole5'),
+        document.getElementById('dynamitehole6'),
+        document.getElementById('dynamitehole7')];
     var dynamiteIndicator = document.getElementById('dynamiteindicator');
 
     self.setup = function()
@@ -53,68 +53,32 @@ var DynamiteGame = function()
         if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][0])//debug
         {
             imv.dynamiteGame.className += " dynamite_left_bg";
-
-            dynamiteHoles[1].style.top  = '97px';
-            dynamiteHoles[1].style.left = '5px';
-
-            dynamiteHoles[2].style.top  = '53px';
-            dynamiteHoles[2].style.left = '50px';
-
-            dynamiteHoles[3].style.top  = '113px';
-            dynamiteHoles[3].style.left = '96px';
-
-            dynamiteHoles[4].style.top  = '94px';
-            dynamiteHoles[4].style.left = '180px';
-
-            dynamiteHoles[5].style.top  = '53px';
-            dynamiteHoles[5].style.left = '220px';
-
-            dynamiteHoles[6].style.top  = '111px';
-            dynamiteHoles[6].style.left = '270px';
+            dynamiteHoles[1].style.top  = '97px';  dynamiteHoles[1].style.left = '5px';
+            dynamiteHoles[2].style.top  = '53px';  dynamiteHoles[2].style.left = '50px';
+            dynamiteHoles[3].style.top  = '113px'; dynamiteHoles[3].style.left = '96px';
+            dynamiteHoles[4].style.top  = '94px';  dynamiteHoles[4].style.left = '180px';
+            dynamiteHoles[5].style.top  = '53px';  dynamiteHoles[5].style.left = '220px';
+            dynamiteHoles[6].style.top  = '111px'; dynamiteHoles[6].style.left = '270px';
         }
         else if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][1])
         {
             imv.dynamiteGame.className += " dynamite_right_bg";
-
-            dynamiteHoles[1].style.top  = '52px';
-            dynamiteHoles[1].style.left = '20px';
-
-            dynamiteHoles[2].style.top  = '116px';
-            dynamiteHoles[2].style.left = '67px';
-
-            dynamiteHoles[3].style.top  = '51px';
-            dynamiteHoles[3].style.left = '96px';
-
-            dynamiteHoles[4].style.top  = '60px';
-            dynamiteHoles[4].style.left = '188px';
-
-            dynamiteHoles[5].style.top  = '133px';
-            dynamiteHoles[5].style.left = '225px';
-
-            dynamiteHoles[6].style.top  = '63px';
-            dynamiteHoles[6].style.left = '265px';
+            dynamiteHoles[1].style.top  = '52px';  dynamiteHoles[1].style.left = '20px';
+            dynamiteHoles[2].style.top  = '116px'; dynamiteHoles[2].style.left = '67px';
+            dynamiteHoles[3].style.top  = '51px';  dynamiteHoles[3].style.left = '96px';
+            dynamiteHoles[4].style.top  = '60px';  dynamiteHoles[4].style.left = '188px';
+            dynamiteHoles[5].style.top  = '133px'; dynamiteHoles[5].style.left = '225px';
+            dynamiteHoles[6].style.top  = '63px';  dynamiteHoles[6].style.left = '265px';
         }
         else if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][2])
         {
             imv.dynamiteGame.className += " dynamite_left_bg";
-
-            dynamiteHoles[1].style.top  = '97px';
-            dynamiteHoles[1].style.left = '5px';
-
-            dynamiteHoles[2].style.top  = '53px';
-            dynamiteHoles[2].style.left = '50px';
-
-            dynamiteHoles[3].style.top  = '113px';
-            dynamiteHoles[3].style.left = '96px';
-
-            dynamiteHoles[4].style.top  = '94px';
-            dynamiteHoles[4].style.left = '180px';
-
-            dynamiteHoles[5].style.top  = '53px';
-            dynamiteHoles[5].style.left = '220px';
-
-            dynamiteHoles[6].style.top  = '111px';
-            dynamiteHoles[6].style.left = '270px';
+            dynamiteHoles[1].style.top  = '97px';  dynamiteHoles[1].style.left = '5px';
+            dynamiteHoles[2].style.top  = '53px';  dynamiteHoles[2].style.left = '50px';
+            dynamiteHoles[3].style.top  = '113px'; dynamiteHoles[3].style.left = '96px';
+            dynamiteHoles[4].style.top  = '94px';  dynamiteHoles[4].style.left = '180px';
+            dynamiteHoles[5].style.top  = '53px';  dynamiteHoles[5].style.left = '220px';
+            dynamiteHoles[6].style.top  = '111px'; dynamiteHoles[6].style.left = '270px';
         }
 
         ARIS.setItemCount(imm.ITEM_ID_MATTI, 1);
@@ -122,11 +86,11 @@ var DynamiteGame = function()
         if(imm.currentLevel == 1)
         {
             if(!imm.dynamite)
-                imv.currentIntroTalk.innerHTML = "Hei, miten menee, I'm <b>Matti Pelto</b>- Looks like you're new to the mine. Give the <b>dynamite</b> a try- fill the slots, step back, push the plunger, repeat. Got it?<br />";
+                imv.currentIntroTalk.innerHTML = "Hei, miten menee, I'm <b>Matti Pelto</b>- Looks like you're new to the mine. <b>Give the dynamite a try</b>- fill the slots, wait for the all-clear, push the plunger, repeat. Got it?<br />";
             else        
             {
                 imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
-                imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Matti Pelto</b>- Good work on the dynamite! If you haven't already, you should check out the <b>drills<b/> or the <b>backer</b> stations to get a feel for <b>all the jobs in the mine</b>.";
+                imv.currentIntroTalk.innerHTML = "Good work on the dynamite! If you haven't already, you should <b>check out the drills or the backer stations</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
         if(imm.currentLevel == 2)
@@ -207,13 +171,10 @@ var DynamiteGame = function()
 
         dynamiteSticksImg.src = 'assets/dynamite_green.png';
         dynamiteExplosion.style.display = 'block';
-        explosionFade = 100;
-        fadeExplosion();
 
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
-        ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
 
         successCount++;
         checkGuru(true);
@@ -226,8 +187,6 @@ var DynamiteGame = function()
 
         dynamiteSticksImg.src = 'assets/dynamite_red.png';
         dynamiteExplosion.style.display = 'block';
-        explosionFade = 100;
-        fadeExplosion();
 
         imv.displayMoneyDelta(-1*moneyLost);
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
@@ -236,19 +195,20 @@ var DynamiteGame = function()
         checkGuru(false);
     }
 
-    var explosionFade = 100;
-    function fadeExplosion()
-    {
-    }
-
     function checkGuru(success)
     {
         if(imm.currentLevel == 1)
         {
             if(success && successCount == 1) 
-                imv.displayGuruWithMessage("Nice work, kid. You cleared the area before the blast. Just hope we don't blow someone up before our ten hour shift is done.");
-            if(!success && failCount == 1)
-                imv.displayGuruWithMessage("You blew up Sven. Next time give the guys a chance to clear the area and wait until the light turns green.");
+                imv.displayGuruWithMessage("Nice work, kid. Give it one more blast to <b>collect some more ore</b>- then consider yourself a qualified blaster.");
+            else if(success && successCount == 2)
+            {
+                imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
+                imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>dynamite</b>, be sure to <b>check out the drill and the backer</b>.");
+                ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
+            }
+            else if(!success && failCount == 1)
+                imv.displayGuruWithMessage("You blew up Sven. <b>Medical bills are expensive...</b> Next time give the guys a chance to clear the area and <b>wait until the light turns green</b>.");
         }
         else if(imm.currentLevel == 2)
         {
@@ -258,9 +218,9 @@ var DynamiteGame = function()
                 imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
             }
             else if(!success && failCount == 1)
-                imv.displayGuruWithMessage"Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light.");
+                imv.displayGuruWithMessage("Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light.");
             else if(success)
-                imv.displayGuruWithMessage"You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
+                imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
         }
     }
 

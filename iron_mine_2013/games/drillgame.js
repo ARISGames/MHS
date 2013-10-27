@@ -27,7 +27,7 @@ var DrillGame = function()
             else        
             {
                 imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
-                imv.currentIntroTalk.innerHTML = "Hey Kid, I'm <b>Anton Antilla</b>- Good work on the drill! If you haven't already, you should <b>check out the dynamite or the backer stations</b> to get a feel for <b>all the jobs in the mine</b>.";
+                imv.currentIntroTalk.innerHTML = "Good work on the <b>drill</b>! If you haven't already, you should <b>check out the dynamite or the backer stations</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
         if(imm.currentLevel == 2)

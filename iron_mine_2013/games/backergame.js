@@ -40,7 +40,8 @@ var BackerGame = function()
                 imv.currentIntroTalk.innerHTML = "Good work <b>checking for cave-ins</b>! If you haven't already, you should <b>check out the drills or the dynamite</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
-        if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
+        else if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "Ah, so you've chosen the <b>backer</b>! Clearing the mine for cave-ins is important in collecting <b>a LOT of ore</b>, but there are often <b>expensive, unavoidable risks</b>. Good luck, my friend!";
+        else imv.currentIntroTalk.innerHTML = "So, you're <b>backer</b> for more, eh? (haha!) Good luck, my friend!";
     }
 
     function succeed()
@@ -53,10 +54,10 @@ var BackerGame = function()
 
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
+        if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
 
         successCount++;
-        checkGuru(true);
+        checkGuru(true, oreToReceive);
     }
 
     function fail()
@@ -72,10 +73,10 @@ var BackerGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
 
         failCount++;
-        checkGuru(false);
+        checkGuru(false, -1*moneyLost);
     }
 
-    function checkGuru(success)
+    function checkGuru(success, amount)
     {
         if(imm.currentLevel == 1)
         {
@@ -94,13 +95,11 @@ var BackerGame = function()
         {
             if(success && successCount == 1) 
             {
-                imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
-                imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
+                var moneyMade = amount*imm.oreWorth;
+                imv.displayGuruWithMessage("Clearing that area allowed us to successfully mine <b>"+amount+" ore</b>. At <b>$0."+imm.oreWorth+" per ore</b>, that's <b>$"+((moneyMade-(moneyMade%100))/100)+'.'+(moneyMade%100 < 10 ? '0' : '')+(moneyMade%100)+"</b>. Keep it up!");
             }
             else if(!success && failCount == 1)
-                imv.displayGuruWithMessage("Look kid, I know it's really just a luck of the draw, but you've gotta be more careful!");
-            else if(success)
-                imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
+                imv.displayGuruWithMessage("We're reponsible for making way for the biggest payloads, but <b>unsafe cave-ins are inevitable</b>. Injuries <b>aren't cheap</b>... You'll never make your day's wage if you keep <b>setting yourself back</b> like this...");
         }
     }
 
@@ -114,7 +113,7 @@ var BackerGame = function()
 
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
+        if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
 
         rocks.src = 'assets/backer_rocks_safe.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }

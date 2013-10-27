@@ -49,9 +49,9 @@
             if(updatedItemId == imm.ITEM_ID_MONEY)
             {
                 imm.money = qty;
-                //Formats money as '$x.xx' for all edge cases
-                if(imm.currentLevel == 2)
+                if(imm.currentLevel != 1)
                 {
+                    //Formats money as '$x.xx' for all edge cases
                     imv.haveDisplay.innerHTML = '$'+((imm.money-(imm.money%100))/100)+'.'+(imm.money%100 < 10 ? '0' : '')+(imm.money%100);
 
                     if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])

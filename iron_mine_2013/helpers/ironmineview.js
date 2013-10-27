@@ -112,7 +112,7 @@ var IronMineView = function()
         this.currentGuruButton  = this.gurubuttons[game];
 
         this.currentGame.style.display = 'block';
-        if(imm.currentLevel == 1) this.wantDisplay.style.display = 'none';
+        if(imm.currentLevel != 2) this.wantDisplay.style.display = 'none';
         this.currentActivity.appendChild(this.hud);
     }
 

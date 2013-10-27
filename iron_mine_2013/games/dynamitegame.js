@@ -93,8 +93,9 @@ var DynamiteGame = function()
                 imv.currentIntroTalk.innerHTML = "Good work on the dynamite! If you haven't already, you should <b>check out the drills or the backer stations</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
-        if(imm.currentLevel == 2)
-            imv.currentIntroTalk.innerHTML = "You can never know <b>how much ore</b> you'll get. Good luck!<br />";
+        else if(imm.currentLevel == 2)
+            imv.currentIntroTalk.innerHTML = "I see you've enjoyed <b>blasting for ore</b>. It has some <b>pretty big payouts</b>, but one worker goofin' off could blast too soon and <b>BOOM!</b>- we're left with the <b>medical bills</b>...";
+        else imv.currentIntroTalk.innerHTML = "Here to <b>blast</b> for more ore? Well, don't let me get in your way!";
     }
 
     this.updateDynamiteState = function(data)
@@ -174,10 +175,10 @@ var DynamiteGame = function()
 
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
-        ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
+        if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
 
         successCount++;
-        checkGuru(true);
+        checkGuru(true, oreToReceive);
     }
 
     function fail()
@@ -192,10 +193,10 @@ var DynamiteGame = function()
         ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money-moneyLost);
 
         failCount++;
-        checkGuru(false);
+        checkGuru(false, -1*moneyLost);
     }
 
-    function checkGuru(success)
+    function checkGuru(success, amount)
     {
         if(imm.currentLevel == 1)
         {
@@ -214,13 +215,11 @@ var DynamiteGame = function()
         {
             if(success && successCount == 1) 
             {
-                imv.displayGuruWithMessage("Ya done good work there but since there's only a little ore, there's only a little pay.");
-                imv.displayGuruWithMessage("AHA! That's what I'm talkin' about! There's a lotta ore here, that means PAY DAY!");
+                var moneyMade = amount*imm.oreWorth;
+                imv.displayGuruWithMessage("That blast netted us <b>"+amount+" ore</b>! At <b>$0."+imm.oreWorth+" per ore</b>, that's <b>$"+((moneyMade-(moneyMade%100))/100)+'.'+(moneyMade%100 < 10 ? '0' : '')+(moneyMade%100)+"</b>. Keep it up!");
             }
             else if(!success && failCount == 1)
-                imv.displayGuruWithMessage("Kid, you're gonna hurt yourself that way! Make sure you look for the GREEN light.");
-            else if(success)
-                imv.displayGuruWithMessage("You know what they say... no ore, no pay. The company only pays for the ore we find, no matter if it kills us for 10 hours.");
+                imv.displayGuruWithMessage("Careful! First Sven, and now his cousin?! You can't afford to keep <b>paying these medical expenses</b>! You'll never make your day's wage if you keep <b>setting yourself back</b> like this...");
         }
     }
 

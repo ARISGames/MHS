@@ -40,6 +40,7 @@ var ClerkGame = function()
                         if(itemPelt.qty >= 15)
                         {
                             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
+                            ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
                             ftm.currentLevel = 3;
                             clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
                             ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");

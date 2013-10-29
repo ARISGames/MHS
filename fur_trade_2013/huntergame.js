@@ -37,24 +37,23 @@ var HunterGame = function()
 
                         item.qty         += 1;
                         itemPelt.qty     -= fursToTrade;
-                        itemApproval.qty += item.approvalWorth;
 
                         ARIS.setItemCount(item.itemId,        item.qty);
                         ARIS.setItemCount(itemPelt.itemId,    itemPelt.qty);
-                        ARIS.setItemCount(itemApproval.itemId,itemApproval.qty);
 
-                        if(itemApproval.qty >= 15)
+                        if(ftm.qtyNonPeltItems() >= 4)
                         {
                             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
+                            ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
                             ftm.currentLevel = 3;
                             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
                             ftv.displayGuruWithMessage("Level 2 complete! Nice work for a new trapper!");
                         }
-                        else if(itemPelt.qty == 0)  ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>! (+"+item.approvalWorth+" likes)");
-                        else if(item == itemTrap)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty... (+"+item.approvalWorth+" likes)");
-                        else if(item == itemBeads)  ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>crafters</b> had their eyes on those... (+"+item.approvalWorth+" likes)");
-                        else if(item == itemFabric) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this! (+"+item.approvalWorth+" likes)");
-                        else if(item == itemKettle) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time for our cooks! (+"+item.approvalWorth+" likes)");
+                        else if(itemPelt.qty == 0)  ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>!");
+                        else if(item == itemTrap)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty...");
+                        else if(item == itemBeads)  ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>crafters</b> had their eyes on those...");
+                        else if(item == itemFabric) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this!");
+                        else if(item == itemKettle) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time for our cooks!");
 
                         fursToTrade = 0;
                         formatHunterTrade();
@@ -101,8 +100,8 @@ var HunterGame = function()
             formattedHunterTrade = true;
         }
 
-        ftv.haveDisplay.innerHTML = "Likes: "+itemApproval.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 15";
+        ftv.haveDisplay.innerHTML = "Items: "+ftm.qtyNonPeltItems();
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 4";
 
         hunterTradeCounter.innerHTML = "Trade:0";
         hunterTradeHave.innerHTML = "Have: "+itemPelt.qty;

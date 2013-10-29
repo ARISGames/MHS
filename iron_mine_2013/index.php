@@ -57,7 +57,8 @@
                     if(imm.money >= imm.LEVEL_GOALS[imm.currentLevel-1])
                     {
                         ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
-                        ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
+                        ARIS.setItemCount(imm.LEVEL_IDS[1],1);
+                        ARIS.setItemCount(imm.LEVEL_IDS[0],0);
                         setTimeout(function(){ARIS.exitToTab("QUESTS");},1000);
                     }
                 }
@@ -74,7 +75,7 @@
             if(imm.currentLevel == 1 && imm.drill && imm.dynamite && imm.backer)
             {
                 ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
-                ARIS.setItemCount(imm.LEVEL_IDS[imm.currentLevel-1],1);
+                ARIS.setItemCount(imm.LEVEL_IDS[0],1);
                 imv.displayGuruWithMessage("Alright! Now that you're aquainted with the roles in the mine, we can really <b>put you to work</b>. Come back tomorrow and we can start paying you for how much <b>ore you find</b>.");
                 imv.currentGuruButton.onclick = function(){ARIS.exitToTab("QUESTS");};
             }

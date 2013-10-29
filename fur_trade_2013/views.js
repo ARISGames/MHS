@@ -6,6 +6,7 @@ var FurTradeViews = function()
     self.currentIntroView    = null;
     self.currentGetView      = null;
     self.currentTradeView    = null;
+    self.currentTradeBtnView = null;
     self.currentGuruView     = null;
     self.currentGuruTalkView = null;
 
@@ -13,6 +14,7 @@ var FurTradeViews = function()
     self.clerkIntroView    = document.getElementById('clerkintro');
     self.clerkGetView      = document.getElementById('clerkget');
     self.clerkTradeView    = document.getElementById('clerktrade');
+    self.clerkTradeBtnView = document.getElementById('clerktradebutton');
     self.clerkGuruView     = document.getElementById('clerkguru'); self.clerkGuruView.progress = 50;
     self.clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
@@ -20,6 +22,7 @@ var FurTradeViews = function()
     self.hunterIntroView    = document.getElementById('hunterintro');
     self.hunterGetView      = document.getElementById('hunterget');
     self.hunterTradeView    = document.getElementById('huntertrade');
+    self.hunterTradeBtnView = document.getElementById('huntertradebutton');
     self.hunterGuruView     = document.getElementById('hunterguru'); self.hunterGuruView.progress = 50;
     self.hunterGuruTalkView = document.getElementById('huntergurutalk');
 
@@ -76,6 +79,7 @@ var FurTradeViews = function()
             self.currentIntroView    = self.hunterIntroView;
             self.currentGetView      = self.hunterGetView;
             self.currentTradeView    = self.hunterTradeView;
+            self.currentTradeBtnView = self.hunterTradeBtnView;
             self.currentGuruView     = self.hunterGuruView;
             self.currentGuruTalkView = self.hunterGuruTalkView;
         }
@@ -85,6 +89,7 @@ var FurTradeViews = function()
             self.currentIntroView    = self.clerkIntroView;
             self.currentGetView      = self.clerkGetView;
             self.currentTradeView    = self.clerkTradeView;
+            self.currentTradeBtnView = self.clerkTradeBtnView;
             self.currentGuruView     = self.clerkGuruView;
             self.currentGuruTalkView = self.clerkGuruTalkView;
         }
@@ -112,9 +117,10 @@ var FurTradeViews = function()
     {
         self.currentTradeView.appendChild(hud);
 
-        if(self.currentIntroView)   self.currentIntroView.style.display = 'none';
-        if(self.currentGetView)     self.currentGetView.style.display   = 'none';
-        if(self.currentTradeView)   self.currentTradeView.style.display = 'block';
+        if(self.currentIntroView)    self.currentIntroView.style.display    = 'none';
+        if(self.currentGetView)      self.currentGetView.style.display      = 'none';
+        if(self.currentTradeBtnView) self.currentTradeBtnView.style.display = 'none';
+        if(self.currentTradeView)    self.currentTradeView.style.display    = 'block';
     }
 
     self.displayGuruWithMessage = function(message)

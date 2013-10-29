@@ -7,7 +7,7 @@ var ClerkGame = function()
     var buyButton        = document.getElementById('buybutton');
     var buyButtonText    = document.getElementById("sellerbuttontext");
     var clerkGuruButton  = document.getElementById("clerkgurubutton");
-    
+
     self.init = function()
     {
         if(ftm.currentLevel == 0)
@@ -45,7 +45,11 @@ var ClerkGame = function()
                             clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
                             ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");
                         }
-                        else if(itemTrap.qty+itemFabric.qty+itemBeads.qty+itemKettle.qty == 0)   ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+                        else if(ftm.qtyNonPeltItems() == 0)
+                        {
+                            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+                            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
+                        }
                         else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
                         else if(selectedItem.peltCost+1 == data.hunter) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
                         else if(selectedItem.peltCost < data.hunter)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
@@ -123,6 +127,8 @@ var ClerkGame = function()
         if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
         if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
         ARIS.setBumpString('{"clerk":0}');
+
+        if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
     }
 
     self.clerkBuyConfirmed = function()
@@ -134,7 +140,7 @@ var ClerkGame = function()
         else
         {
             sellerDialog.innerHTML = "Excellent, young scholar.";
-            
+
             ftm.webPageItem.qty += 1;//500;
             itemPelt.qty        -= ftm.webPageItem.peltCost;
 

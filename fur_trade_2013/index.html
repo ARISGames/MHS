@@ -107,6 +107,9 @@ window.onerror = function(msg, url, linenumber)
     <div id='clerktrade' class='trade full_screen'>
         <div id="clerktradechoose">Trade:</div><img src='assets/pelt.png' id='clerktradeitem' />
         <div id="clerktradepool"></div>
+        <div id='clerktradebutton' class='bottombutton' ontouchstart='ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!");'>
+            <div id='clerktradebuttontext' class="bottombuttontext">Collect More Items</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
     </div>
     <div id='clerkguru' class='guru full_screen'>
         <img id='clerkguruimage' class='guruimage' src='assets/john.png' />
@@ -140,6 +143,9 @@ window.onerror = function(msg, url, linenumber)
         <div id='huntertradecounter'>Trade:0</div>
         <div id="huntertradedec" ontouchstart='game.hunterDecrement();'>-</div>
         <div id="huntertradehave">Have: 0</div>
+        <div id='huntertradebutton' class='bottombutton' ontouchstart='ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!");'>
+            <div id='huntertradebuttontext' class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
     </div>
     <div id='hunterguru' class='guru full_screen'>
         <img id='hunterguruimage' class='guruimage' src='assets/natam.png' />

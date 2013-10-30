@@ -13,7 +13,7 @@ var ClerkGame = function()
         if(ftm.currentLevel == 0)
         {
             ftv.displayIntro();
-            ARIS.setItemCount(itemPelt.itemId,10);
+            ARIS.setItemCount(itemPelt.itemId,15);
             ARIS.setItemCount(roleClerk.roleId, 1);
             ARIS.setItemCount(roleHunter.roleId, 0);
         }
@@ -37,7 +37,7 @@ var ClerkGame = function()
                         ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
                         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
-                        if(itemPelt.qty >= 15)
+                        if(itemPelt.qty >= 20)
                         {
                             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
                             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
@@ -47,7 +47,7 @@ var ClerkGame = function()
                         }
                         else if(ftm.qtyNonPeltItems() == 0)
                         {
-                            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+                            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
                             clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
                         }
                         else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
@@ -119,7 +119,7 @@ var ClerkGame = function()
         }
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 15";
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         document.getElementById('clerktradepool').innerHTML = "";
         if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));

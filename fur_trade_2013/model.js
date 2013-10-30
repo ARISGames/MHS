@@ -2,13 +2,17 @@ var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
 var roleEnums=[roleEnumClerk,roleEnumHunter];
 
-var itemEnumNull     = 0;
-var itemEnumPelt     = 1;
-var itemEnumTrap     = 2;
-var itemEnumBeads    = 3;
-var itemEnumFabric   = 4;
-var itemEnumKettle   = 5;
-var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumTrap, itemEnumBeads, itemEnumFabric, itemEnumKettle];
+var itemEnumNull      = 0;
+var itemEnumPelt      = 1;
+var itemEnumGun       = 2;
+var itemEnumBeads     = 3;
+var itemEnumFabric    = 4;
+var itemEnumKettle    = 5;
+var itemEnumGunpowder = 6;
+var itemEnumBullets   = 7;
+var itemEnumAxeHead   = 8;
+var itemEnumPlume     = 9;
+var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumFabric, itemEnumKettle, itemEnumGunpowder, itemEnumBullets, itemEnumAxeHead, itemEnumPlume];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -65,19 +69,19 @@ var Item = function(itemEnum)
             self.name = "Beaver Pelt";
             self.imageName = "pelt.png";
             break;
-        case itemEnumTrap:
+        case itemEnumGun:
             self.itemId = 47030;
             self.webPageId = 3720;
             self.owner = roleClerk;
-            self.peltCost = 4;
-            self.name = "Trap";
+            self.peltCost = 10;
+            self.name = "Gun";
             self.imageName = "gun.png";
             break;
         case itemEnumBeads:
             self.itemId = 47035;
             self.webPageId = 3726;
             self.owner = roleClerk;
-            self.peltCost = 1;
+            self.peltCost = 2;
             self.name = "Bead";
             self.imageName = "beads.png";
             break;
@@ -85,7 +89,7 @@ var Item = function(itemEnum)
             self.itemId = 47032;
             self.webPageId = 3715;
             self.owner = roleClerk;
-            self.peltCost = 2;
+            self.peltCost = 6;
             self.name = "Fabric";
             self.imageName = "fabric.png";
             break;
@@ -93,8 +97,40 @@ var Item = function(itemEnum)
             self.itemId = 47038;
             self.webPageId = 3723;
             self.owner = roleClerk;
-            self.peltCost = 3;
+            self.peltCost = 5;
             self.name = "Kettle";
+            self.imageName = "kettle.png";
+            break;
+        case itemEnumGunpowder
+            self.itemId = 49584;
+            self.webPageId = 3974;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Gun Powder";
+            self.imageName = "kettle.png";
+            break;
+        case itemEnumBullets
+            self.itemId = 49586;
+            self.webPageId = 3975;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Bullets";
+            self.imageName = "kettle.png";
+            break;
+        case itemEnumAxeHead
+            self.itemId = 49587;
+            self.webPageId = 3977;
+            self.owner = roleClerk;
+            self.peltCost = 2;
+            self.name = "Axe Head";
+            self.imageName = "kettle.png";
+            break;
+        case itemEnumPlume
+            self.itemId = 49589;
+            self.webPageId = 3978;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Plume";
             self.imageName = "kettle.png";
             break;
         default:
@@ -109,11 +145,11 @@ var roles = [roleClerk, roleHunter];
 
 var itemNull     = new Item(itemEnumNull);
 var itemPelt     = new Item(itemEnumPelt);
-var itemTrap     = new Item(itemEnumTrap);
+var itemGun      = new Item(itemEnumGun);
 var itemBeads    = new Item(itemEnumBeads);
 var itemFabric   = new Item(itemEnumFabric);
 var itemKettle   = new Item(itemEnumKettle);
-var items = [itemNull, itemPelt, itemTrap, itemBeads, itemFabric, itemKettle];
+var items = [itemNull, itemPelt, itemGun, itemBeads, itemFabric, itemKettle];
 
 var FurTradeModel = function()
 {

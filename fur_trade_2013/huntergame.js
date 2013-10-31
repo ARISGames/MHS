@@ -29,14 +29,14 @@ var HunterGame = function()
                         var item;
                         switch(data.clerk)
                         {
-                            case itemEnumGun:   item = itemGun;   break;
-                            case itemEnumBeads:  item = itemBeads;  break;
-                            case itemEnumFabric: item = itemFabric; break;
-                            case itemEnumKettle: item = itemKettle; break;
+                            case itemEnumGun:       item = itemGun;       break;
+                            case itemEnumBeads:     item = itemBeads;     break;
+                            case itemEnumFabric:    item = itemFabric;    break;
+                            case itemEnumKettle:    item = itemKettle;    break;
                             case itemEnumGunpowder: item = itemGunpowder; break;
-                            case itemEnumBullets: item = itemBullets; break;
-                            case itemEnumAxeHead: item = itemAxeHead; break;
-                            case itemEnumPlume: item = itemPlume; break;
+                            case itemEnumBullets:   item = itemBullets;   break;
+                            case itemEnumAxeHead:   item = itemAxeHead;   break;
+                            case itemEnumPlume:     item = itemPlume;     break;
                         }
 
                         item.qty         += 1;

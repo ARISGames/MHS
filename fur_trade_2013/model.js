@@ -101,7 +101,7 @@ var Item = function(itemEnum)
             self.name = "Kettle";
             self.imageName = "kettle.jpg";
             break;
-        case itemEnumGunpowder
+        case itemEnumGunpowder:
             self.itemId = 49584;
             self.webPageId = 3974;
             self.owner = roleClerk;
@@ -109,15 +109,15 @@ var Item = function(itemEnum)
             self.name = "Gun Powder";
             self.imageName = "gunpowder.png";
             break;
-        case itemEnumBullets
+        case itemEnumBullets:
             self.itemId = 49586;
             self.webPageId = 3975;
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Bullets";
-            self.imageName = "kettle.png";
+            self.imageName = "";
             break;
-        case itemEnumAxeHead
+        case itemEnumAxeHead:
             self.itemId = 49587;
             self.webPageId = 3977;
             self.owner = roleClerk;
@@ -125,7 +125,7 @@ var Item = function(itemEnum)
             self.name = "Axe Head";
             self.imageName = "axehead.jpg";
             break;
-        case itemEnumPlume
+        case itemEnumPlume:
             self.itemId = 49589;
             self.webPageId = 3978;
             self.owner = roleClerk;
@@ -149,7 +149,11 @@ var itemGun      = new Item(itemEnumGun);
 var itemBeads    = new Item(itemEnumBeads);
 var itemFabric   = new Item(itemEnumFabric);
 var itemKettle   = new Item(itemEnumKettle);
-var items = [itemNull, itemPelt, itemGun, itemBeads, itemFabric, itemKettle];
+var itemGunpowder = new Item(itemEnumGunpowder);
+var itemBullets   = new Item(itemEnumBullets);
+var itemAxeHead   = new Item(itemEnumAxeHead);
+var itemPlume     = new Item(itemEnumPlume);
+var items = [itemNull, itemPelt, itemGun, itemBeads, itemFabric, itemKettle, itemGunpowder, itemBullets, itemAxeHead, itemPlume];
 
 var FurTradeModel = function()
 {

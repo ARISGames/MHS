@@ -83,7 +83,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Bead";
-            self.imageName = "beads.png";
+            self.imageName = "beads.jpg";
             break;
         case itemEnumFabric:
             self.itemId = 47032;
@@ -91,7 +91,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 6;
             self.name = "Fabric";
-            self.imageName = "fabric.png";
+            self.imageName = "blanket.jpg";
             break;
         case itemEnumKettle:
             self.itemId = 47038;
@@ -99,7 +99,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 5;
             self.name = "Kettle";
-            self.imageName = "kettle.png";
+            self.imageName = "kettle.jpg";
             break;
         case itemEnumGunpowder
             self.itemId = 49584;
@@ -107,7 +107,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Gun Powder";
-            self.imageName = "kettle.png";
+            self.imageName = "gunpowder.png";
             break;
         case itemEnumBullets
             self.itemId = 49586;
@@ -123,7 +123,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Axe Head";
-            self.imageName = "kettle.png";
+            self.imageName = "axehead.jpg";
             break;
         case itemEnumPlume
             self.itemId = 49589;
@@ -131,7 +131,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Plume";
-            self.imageName = "kettle.png";
+            self.imageName = "plume.jpg";
             break;
         default:
             return null;

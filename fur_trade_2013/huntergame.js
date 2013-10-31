@@ -29,7 +29,7 @@ var HunterGame = function()
                         var item;
                         switch(data.clerk)
                         {
-                            case itemEnumTrap:   item = itemTrap;   break;
+                            case itemEnumGun:   item = itemGun;   break;
                             case itemEnumBeads:  item = itemBeads;  break;
                             case itemEnumFabric: item = itemFabric; break;
                             case itemEnumKettle: item = itemKettle; break;
@@ -50,7 +50,7 @@ var HunterGame = function()
                             ftv.displayGuruWithMessage("Level 2 complete! Nice work for a new trapper!");
                         }
                         else if(itemPelt.qty == 0){ ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>!"); hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); }; }
-                        else if(item == itemTrap)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty...");
+                        else if(item == itemGun)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty...");
                         else if(item == itemBeads)  ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>crafters</b> had their eyes on those...");
                         else if(item == itemFabric) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this!");
                         else if(item == itemKettle) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time for our cooks!");

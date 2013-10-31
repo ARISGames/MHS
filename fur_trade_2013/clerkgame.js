@@ -122,7 +122,7 @@ var ClerkGame = function()
         ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         document.getElementById('clerktradepool').innerHTML = "";
-        if(itemTrap.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemTrap));
+        if(itemGun.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
         if(itemBeads.qty  > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
         if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
         if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));

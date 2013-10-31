@@ -122,10 +122,14 @@ var ClerkGame = function()
         ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         document.getElementById('clerktradepool').innerHTML = "";
-        if(itemGun.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
-        if(itemBeads.qty  > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
-        if(itemFabric.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
-        if(itemKettle.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
+        if(itemGun.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
+        if(itemBeads.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
+        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
+        if(itemKettle.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
+        if(itemGunpowder.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGunpowder));
+        if(itemBullets.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBullets));
+        if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
+        if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
         ARIS.setBumpString('{"clerk":0}');
 
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';

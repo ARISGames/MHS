@@ -75,7 +75,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 10;
             self.name = "Gun";
-            self.imageName = "gun.png";
+            self.imageName = "gun.jpg";
             break;
         case itemEnumBeads:
             self.itemId = 47035;
@@ -107,7 +107,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Gun Powder";
-            self.imageName = "gunpowder.png";
+            self.imageName = "gunpowder.jpg";
             break;
         case itemEnumBullets:
             self.itemId = 49586;
@@ -115,7 +115,7 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Bullets";
-            self.imageName = "";
+            self.imageName = "bullets.jpg";
             break;
         case itemEnumAxeHead:
             self.itemId = 49587;

@@ -143,7 +143,10 @@ var ClerkGame = function()
         }
         else
         {
-            sellerDialog.innerHTML = "Excellent, young scholar.";
+            if(ftm.curentLevel == 1)
+                sellerDialog.innerHTML = "Thanks! Look around and <b>spend your "+itemPelt.qty-ftm.webPageItem.peltCost+" remaining beaver pelts</b> on <b>more items for the store</b>- I'll take care of selling the pelts for cash.";
+            else
+                sellerDialog.innerHTML = "Thanks! I'll take care of selling the pelts for cash.";
 
             ftm.webPageItem.qty += 1;//500;
             itemPelt.qty        -= ftm.webPageItem.peltCost;

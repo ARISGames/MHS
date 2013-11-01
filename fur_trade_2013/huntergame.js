@@ -94,7 +94,7 @@ var HunterGame = function()
         {
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
-            harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!"); };
+            harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
             ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
         }
     }
@@ -128,7 +128,7 @@ var HunterGame = function()
 
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         harvestButtonText.innerHTML = "Leave ";
-        harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver pelt to hunt and collect it!"); };
+        harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
      
         if(ftm.currentLevel == 1 && itemPelt.qty == 10)
         {

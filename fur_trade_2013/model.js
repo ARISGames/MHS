@@ -6,13 +6,13 @@ var itemEnumNull      = 0;
 var itemEnumPelt      = 1;
 var itemEnumGun       = 2;
 var itemEnumBeads     = 3;
-var itemEnumFabric    = 4;
+var itemEnumBlanket   = 4;
 var itemEnumKettle    = 5;
 var itemEnumGunpowder = 6;
-var itemEnumBullets   = 7;
+var itemEnumMBalls    = 7;
 var itemEnumAxeHead   = 8;
 var itemEnumPlume     = 9;
-var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumFabric, itemEnumKettle, itemEnumGunpowder, itemEnumBullets, itemEnumAxeHead, itemEnumPlume];
+var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -85,12 +85,12 @@ var Item = function(itemEnum)
             self.name = "Bead";
             self.imageName = "beads.jpg";
             break;
-        case itemEnumFabric:
+        case itemEnumBlanket:
             self.itemId = 47032;
             self.webPageId = 3715;
             self.owner = roleClerk;
             self.peltCost = 6;
-            self.name = "Fabric";
+            self.name = "Blanket";
             self.imageName = "blanket.jpg";
             break;
         case itemEnumKettle:
@@ -106,15 +106,15 @@ var Item = function(itemEnum)
             self.webPageId = 3974;
             self.owner = roleClerk;
             self.peltCost = 1;
-            self.name = "Gun Powder";
+            self.name = "Gunpowder";
             self.imageName = "gunpowder.jpg";
             break;
-        case itemEnumBullets:
+        case itemEnumMBalls:
             self.itemId = 49586;
             self.webPageId = 3975;
             self.owner = roleClerk;
             self.peltCost = 1;
-            self.name = "Bullets";
+            self.name = "Musket Balls";
             self.imageName = "bullets.jpg";
             break;
         case itemEnumAxeHead:
@@ -143,17 +143,17 @@ var roleClerk  = new Role(roleEnumClerk);
 var roleHunter = new Role(roleEnumHunter);
 var roles = [roleClerk, roleHunter];
 
-var itemNull     = new Item(itemEnumNull);
-var itemPelt     = new Item(itemEnumPelt);
-var itemGun      = new Item(itemEnumGun);
-var itemBeads    = new Item(itemEnumBeads);
-var itemFabric   = new Item(itemEnumFabric);
-var itemKettle   = new Item(itemEnumKettle);
+var itemNull      = new Item(itemEnumNull);
+var itemPelt      = new Item(itemEnumPelt);
+var itemGun       = new Item(itemEnumGun);
+var itemBeads     = new Item(itemEnumBeads);
+var itemBlanket   = new Item(itemEnumBlanket);
+var itemKettle    = new Item(itemEnumKettle);
 var itemGunpowder = new Item(itemEnumGunpowder);
-var itemBullets   = new Item(itemEnumBullets);
+var itemMBalls    = new Item(itemEnumMBalls);
 var itemAxeHead   = new Item(itemEnumAxeHead);
 var itemPlume     = new Item(itemEnumPlume);
-var items = [itemNull, itemPelt, itemGun, itemBeads, itemFabric, itemKettle, itemGunpowder, itemBullets, itemAxeHead, itemPlume];
+var items = [itemNull, itemPelt, itemGun, itemBeads, itemBlanket, itemKettle, itemGunpowder, itemMBalls, itemAxeHead, itemPlume];
 
 var FurTradeModel = function()
 {

@@ -124,10 +124,10 @@ var ClerkGame = function()
         document.getElementById('clerktradepool').innerHTML = "";
         if(itemGun.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
         if(itemBeads.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
-        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
+        if(itemBlanket.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBlanket));
         if(itemKettle.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
         if(itemGunpowder.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGunpowder));
-        if(itemBullets.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBullets));
+        if(itemMBalls.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemMBalls));
         if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
         if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
         ARIS.setBumpString('{"clerk":0}');

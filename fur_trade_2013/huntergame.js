@@ -31,10 +31,10 @@ var HunterGame = function()
                         {
                             case itemEnumGun:       item = itemGun;       break;
                             case itemEnumBeads:     item = itemBeads;     break;
-                            case itemEnumFabric:    item = itemFabric;    break;
+                            case itemEnumBlanket:   item = itemBlanket;   break;
                             case itemEnumKettle:    item = itemKettle;    break;
                             case itemEnumGunpowder: item = itemGunpowder; break;
-                            case itemEnumBullets:   item = itemBullets;   break;
+                            case itemEnumMBalls:    item = itemMBalls;    break;
                             case itemEnumAxeHead:   item = itemAxeHead;   break;
                             case itemEnumPlume:     item = itemPlume;     break;
                         }
@@ -56,10 +56,10 @@ var HunterGame = function()
                         else if(itemPelt.qty == 0)   { ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>! You <b>won't be able to trade</b> until you <b>go hunt some more</b>!"); hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); }; }
                         else if(item == itemGun)       ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>trappers</b> really appreciate it! Our old traps were getting a bit rusty...");
                         else if(item == itemBeads)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! Our <b>crafters</b> had their eyes on those...");
-                        else if(item == itemFabric)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this!");
+                        else if(item == itemBlanket)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! We'll be able to find plenty of uses for this!");
                         else if(item == itemKettle)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time for our cooks!");
                         else if(item == itemGunpowder) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
-                        else if(item == itemBullets)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
+                        else if(item == itemMBalls)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
                         else if(item == itemAxeHead)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
                         else if(item == itemPlume)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will make my hat look great!");
 
@@ -95,7 +95,7 @@ var HunterGame = function()
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
             harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
-            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>collecting 10 Beaver Pelts</b>, not robbing a shop!");
+            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b> (look for tiles on the ground), not robbing a shop!");
         }
     }
 

@@ -14,9 +14,9 @@ var itemEnumAxeHead   = 8;
 var itemEnumPlume     = 9;
 var itemEnumHoe       = 10;
 var itemEnumFabric    = 11;
-var itemEnumStake     = 12;
+var itemEnumSpear     = 12;
 var itemEnumKnife     = 13;
-var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume, itemEnumHoe, itemEnumFabric, itemEnumStake, itemEnumKnife];
+var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume, itemEnumHoe, itemEnumFabric, itemEnumSpear, itemEnumKnife];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -153,13 +153,13 @@ var Item = function(itemEnum)
             self.name = "Fabric";
             self.imageName = "fabric.jpg";
             break;
-        case itemEnumStake:
+        case itemEnumSpear:
             self.itemId = 50187;
             self.webPageId = 4001;
             self.owner = roleClerk;
             self.peltCost = 1;
-            self.name = "Stake";
-            self.imageName = "stake.jpg";
+            self.name = "Muskrat Spear";
+            self.imageName = "spear.jpg";
             break;
         case itemEnumKnife:
             self.itemId = 50188;
@@ -191,9 +191,9 @@ var itemAxeHead   = new Item(itemEnumAxeHead);
 var itemPlume     = new Item(itemEnumPlume);
 var itemHoe       = new Item(itemEnumHoe);
 var itemFabric    = new Item(itemEnumFabric);
-var itemStake     = new Item(itemEnumStake);
+var itemSpear     = new Item(itemEnumSpear);
 var itemKnife     = new Item(itemEnumKnife);
-var items = [itemNull, itemPelt, itemGun, itemBeads, itemBlanket, itemKettle, itemGunpowder, itemMBalls, itemAxeHead, itemPlume, itemHoe, itemFabric, itemStake, itemKnife];
+var items = [itemNull, itemPelt, itemGun, itemBeads, itemBlanket, itemKettle, itemGunpowder, itemMBalls, itemAxeHead, itemPlume, itemHoe, itemFabric, itemSpear, itemKnife];
 
 var FurTradeModel = function()
 {

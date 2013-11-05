@@ -132,7 +132,7 @@ var ClerkGame = function()
         if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
         if(itemHoe.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemHoe));
         if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
-        if(itemStake.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemStake));
+        if(itemSpear.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemSpear));
         if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
         ARIS.setBumpString('{"clerk":0}');
 

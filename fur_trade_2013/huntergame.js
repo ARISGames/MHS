@@ -37,6 +37,10 @@ var HunterGame = function()
                             case itemEnumMBalls:    item = itemMBalls;    break;
                             case itemEnumAxeHead:   item = itemAxeHead;   break;
                             case itemEnumPlume:     item = itemPlume;     break;
+                            case itemEnumHoe:       item = itemHoe;       break;
+                            case itemEnumFabric:    item = itemFabric;    break;
+                            case itemEnumStake:     item = itemStake;     break;
+                            case itemEnumKnife:     item = itemKnife;     break;
                         }
 
                         item.qty         += 1;
@@ -62,6 +66,10 @@ var HunterGame = function()
                         else if(item == itemMBalls)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
                         else if(item == itemAxeHead)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
                         else if(item == itemPlume)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will make my hat look great!");
+                        else if(item == itemHoe)       ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
+                        else if(item == itemFabric)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
+                        else if(item == itemStake)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
+                        else if(item == itemKnife)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! This will save tons of time!");
 
                         fursToTrade = 0;
                         formatHunterTrade();

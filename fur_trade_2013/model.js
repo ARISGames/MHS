@@ -12,7 +12,11 @@ var itemEnumGunpowder = 6;
 var itemEnumMBalls    = 7;
 var itemEnumAxeHead   = 8;
 var itemEnumPlume     = 9;
-var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume];
+var itemEnumHoe       = 10;
+var itemEnumFabric    = 11;
+var itemEnumStake     = 12;
+var itemEnumKnife     = 13;
+var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume, itemEnumHoe, itemEnumFabric, itemEnumStake, itemEnumKnife];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
 var levelId1 = 47022;
@@ -133,6 +137,38 @@ var Item = function(itemEnum)
             self.name = "Plume";
             self.imageName = "plume.jpg";
             break;
+        case itemEnumHoe:
+            self.itemId = 50181;
+            self.webPageId = 3997;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Hoe";
+            self.imageName = "hoe.jpg";
+            break;
+        case itemEnumFabric:
+            self.itemId = 50184;
+            self.webPageId = 3999;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Fabric";
+            self.imageName = "fabric.jpg";
+            break;
+        case itemEnumStake:
+            self.itemId = 50187;
+            self.webPageId = 4001;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Stake";
+            self.imageName = "stake.jpg";
+            break;
+        case itemEnumKnife:
+            self.itemId = 50188;
+            self.webPageId = 4002;
+            self.owner = roleClerk;
+            self.peltCost = 1;
+            self.name = "Knife";
+            self.imageName = "knife.jpg";
+            break;
         default:
             return null;
             break; //<- lol
@@ -153,7 +189,11 @@ var itemGunpowder = new Item(itemEnumGunpowder);
 var itemMBalls    = new Item(itemEnumMBalls);
 var itemAxeHead   = new Item(itemEnumAxeHead);
 var itemPlume     = new Item(itemEnumPlume);
-var items = [itemNull, itemPelt, itemGun, itemBeads, itemBlanket, itemKettle, itemGunpowder, itemMBalls, itemAxeHead, itemPlume];
+var itemHoe       = new Item(itemEnumHoe);
+var itemFabric    = new Item(itemEnumFabric);
+var itemStake     = new Item(itemEnumStake);
+var itemKnife     = new Item(itemEnumKnife);
+var items = [itemNull, itemPelt, itemGun, itemBeads, itemBlanket, itemKettle, itemGunpowder, itemMBalls, itemAxeHead, itemPlume, itemHoe, itemFabric, itemStake, itemKnife];
 
 var FurTradeModel = function()
 {

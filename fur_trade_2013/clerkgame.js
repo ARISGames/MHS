@@ -130,6 +130,10 @@ var ClerkGame = function()
         if(itemMBalls.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemMBalls));
         if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
         if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
+        if(itemHoe.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemHoe));
+        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
+        if(itemStake.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemStake));
+        if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
         ARIS.setBumpString('{"clerk":0}');
 
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';

@@ -85,7 +85,7 @@ var Item = function(itemEnum)
             self.itemId = 47035;
             self.webPageId = 3726;
             self.owner = roleClerk;
-            self.peltCost = 2;
+            self.peltCost = 3;
             self.name = "Bead";
             self.imageName = "beads.jpg";
             break;
@@ -93,7 +93,7 @@ var Item = function(itemEnum)
             self.itemId = 47032;
             self.webPageId = 3715;
             self.owner = roleClerk;
-            self.peltCost = 6;
+            self.peltCost = 4;
             self.name = "Blanket";
             self.imageName = "blanket.jpg";
             break;
@@ -141,7 +141,7 @@ var Item = function(itemEnum)
             self.itemId = 50181;
             self.webPageId = 3997;
             self.owner = roleClerk;
-            self.peltCost = 1;
+            self.peltCost = 2;
             self.name = "Hoe";
             self.imageName = "hoe.jpg";
             break;
@@ -149,7 +149,7 @@ var Item = function(itemEnum)
             self.itemId = 50184;
             self.webPageId = 3999;
             self.owner = roleClerk;
-            self.peltCost = 1;
+            self.peltCost = 3;
             self.name = "Fabric";
             self.imageName = "fabric.jpg";
             break;

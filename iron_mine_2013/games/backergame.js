@@ -23,7 +23,7 @@ var BackerGame = function()
     var littleMaxOreReceived = 1;
     var moneyLost = 600;
 
-    var successCount = 0;
+    var successCount = 1;
     var failCount    = 0;
 
     self.setup = function()

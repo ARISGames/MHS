@@ -32,7 +32,7 @@ var DynamiteGame = function()
     var maxOreReceived = 10;
     var moneyLost = 200;
 
-    var successCount = 0;
+    var successCount = 1;
     var failCount    = 0;
 
     var holesFilledFlags = [false,false,false,false,false,false,false];

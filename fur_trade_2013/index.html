@@ -13,6 +13,8 @@
 </script>
 
 <script type="text/javascript" src="utils/json2.js"></script>
+<script type="text/javascript" src="pusherman.js"></script>
+<script type="text/javascript" src="eventhandler.js"></script>
 <script type="text/javascript" src="model.js"></script>
 <script type="text/javascript" src="views.js"></script>
 <script type="text/javascript" src="clerkgame.js"></script>
@@ -21,17 +23,18 @@
 
 var ftm;
 var ftv;
+var eh;
 var game;
 
 var readyCount = 2;
 function partReady() { readyCount--; if(readyCount == 0) begin(); }
 ARIS.ready = function() { partReady(); };
 
-
 function begin()
 {
     ftv = new FurTradeViews();
     ftm = new FurTradeModel();
+    eh = new EventHandler();
     ftm.loadStateFromARIS(stateReceived);
 }
 
@@ -104,6 +107,11 @@ window.onerror = function(msg, url, linenumber)
             <div id="sellerbuttontext" class="bottombuttontext">Buy </div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
+    <div id='clerklounge' class='lounge full_screen'>
+        <div id='clerkloungebutton' class='bottombutton' ontouchstart='ARIS.exitToScanner("Test!");'>
+            <div id='clerkloungebuttontext' class="bottombuttontext">Lounge About</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
     <div id='clerktrade' class='trade full_screen'>
         <div id="clerktradechoose">Trade:</div><img src='assets/pelt.png' id='clerktradeitem' />
         <div id="clerktradepool"></div>
@@ -135,6 +143,11 @@ window.onerror = function(msg, url, linenumber)
         <img src='assets/pelt.png' id='peltget' />
         <div id='harvestbutton' class='bottombutton' ontouchstart='game.hunterHarvestConfirmed();'>
             <div id='harvestbuttontext' class="bottombuttontext">Harvest Beaver Pelts</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+        </div>
+    </div>
+    <div id='hunterlerklounge' class='lounge full_screen'>
+        <div id='hunterlerkloungebutton' class='bottombutton' ontouchstart='ARIS.exitToScanner("Test!");'>
+            <div id='hunterlerkloungebuttontext' class="bottombuttontext">Lounge About</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
     </div>
     <div id='huntertrade' class='trade full_screen'>

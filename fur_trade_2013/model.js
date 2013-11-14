@@ -200,7 +200,7 @@ var FurTradeModel = function()
     var self = this;
 
     self.gameId = 0; 
-    self.playerId = 0;
+    self.player = {};
     self.webPageId = 0;
     self.webPageItem = null;
     self.webPageOwner = null;
@@ -224,9 +224,16 @@ var FurTradeModel = function()
             else if(qty > 0 && (o = self.roleForRoleId(updatedItemId)))                             self.currentRole = o;
         };
 
+        ARIS.didReceivePlayer = function(player)
+        {
+            self.player = player;
+            if(self.currentRole == roleClerk) self.player.role = "clerk";
+            if(self.currentRole == roleHunter) self.player.role = "clerk";
+        }
+
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId    = parseInt(params.gameId);
-        self.playerId  = parseInt(params.playerId);
+        self.gameId = parseInt(params.gameId);
+        self.player.playerId = parseInt(params.playerId);
         self.webPageId = parseInt(params.webPageId);
         self.webPageItem = self.itemForWebPageId(self.webPageId);
         self.webPageRole = self.webPageItem.owner;

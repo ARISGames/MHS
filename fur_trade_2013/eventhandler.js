@@ -14,7 +14,7 @@ var EventHandler = function()
         return JSON.stringify({"player":player,"receiverId":receiverId,"inventory":inventory,"offer":offer});
     }
 
-    self.sendNewPlayer function(player)
+    self.sendNewPlayer = function(player)
     {
         pm.sendData("NEW_PLAYER",requestString(player,"","",""));
     }
@@ -23,7 +23,7 @@ var EventHandler = function()
         self.sendIdentification(ftm.player);
     }
 
-    self.sendPlayerLeft function(player)
+    self.sendPlayerLeft = function(player)
     {
         pm.sendData("PLAYER_LEFT",requestString(player,"","",""));
     }
@@ -33,7 +33,7 @@ var EventHandler = function()
         if(i != -1) self.visiblePlayers.splice(i,1);
     }
 
-    self.sendIdentification function(player)
+    self.sendIdentification = function(player)
     {
         pm.sendData("IDENTIFICATION",requestString(player,"","",""));
     }
@@ -44,35 +44,35 @@ var EventHandler = function()
         else        self.visiblePlayers[i] = request.player;
     }
 
-    self.sendTradeRequest function(player, receiverId)
+    self.sendTradeRequest = function(player, receiverId)
     {
         pm.sendData("TRADE_REQUEST",requestString(player,receiverId,"",""));
     }
-    self.tradeRequestReceived function(request)
+    self.tradeRequestReceived = function(request)
     {
     }
 
-    self.sendTradeAccept function(player, receiverId, inventory)
+    self.sendTradeAccept = function(player, receiverId, inventory)
     {
         pm.sendData("TRADE_ACCEPT",requestString(player,receiverId,inventory,""));//also include inventory
     }
-    self.tradeAcceptReceived function(request)
+    self.tradeAcceptReceived = function(request)
     {
     }
 
-    self.sendAlterOffer function(player, receiverId, offer)
+    self.sendAlterOffer = function(player, receiverId, offer)
     {
         pm.sendData("ALTER_OFFER",requestString(player,receiverId,"",offer));
     }
-    self.alterOfferReceived function(request)
+    self.alterOfferReceived = function(request)
     {
     }
 
-    self.sendTradeReady function(player, receiverId, inventory, offer)
+    self.sendTradeReady = function(player, receiverId, inventory, offer)
     {
         pm.sendData("TRADE_READY",requestString(player,receiverId,inventory,offer));//also include inventory, offer
     }
-    self.tradeReadyReceived function(request)
+    self.tradeReadyReceived = function(request)
     {
     }
 

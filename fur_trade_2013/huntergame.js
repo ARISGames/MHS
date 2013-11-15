@@ -47,7 +47,7 @@ var HunterGame = function()
                 eh.register();
 
                 formatHunterLounge();
-                ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are clerks, and need help getting to <b>level 2</b>). They will show up on this list- then <b>select them to trade</b>!");
+                ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are <b>clerks</b> who need help getting to <b>level 2</b>). Touch a clerk on the list to <b>open a trade</b>!");
                 ftv.displayLounge();
             }
             else //if on harvest page
@@ -76,7 +76,45 @@ var HunterGame = function()
 
     function formatHunterLounge()
     {
+        document.getElementById('hunterloungepool').innerHTML = "";
+        for(var i in eh.visiblePlayers)
+            document.getElementById('hunterloungepool').appendChild(getLoungeCell(eh.visiblePlayers[i]));
+        if(eh.visiblePlayers.length == 0)
+            document.getElementById('hunterloungepool').appendChild(getLoungeCell(null));
+    }
 
+    function getLoungeCell(player)
+    {
+        if(player)
+        {
+            var cell = document.createElement('div');
+            cell.setAttribute('class','loungecell');
+            var img = document.createElement('img');
+            img.setAttribute('class','loungecellimg');
+            img.src = player.url;
+            var title = document.createElement('div');
+            title.setAttribute('class','loungecelltitle');
+            title.innerHTML = player.displayname;
+            cell.appendChild(img);
+            cell.appendChild(title);
+            cell.ontouchstart = function() { loungeCellSelected(player); };
+        }
+        else //null cell
+        {
+            var cell = document.createElement('div');
+            cell.setAttribute('class','loungecell');
+            var title = document.createElement('div');
+            title.setAttribute('class','loungecellnulltitle');
+            title.innerHTML = "(Waiting for <b>clerk</b> to open shop...)";
+            cell.appendChild(title);
+        }
+
+        return cell;
+    }
+
+    var loungeCellSelected = function(player)
+    {
+        
     }
 
     function formatHunterTrade()

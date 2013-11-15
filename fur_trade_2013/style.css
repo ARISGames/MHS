@@ -341,6 +341,62 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
+#hunterloungepool
+{
+    position:absolute;
+    top:200px;
+    left:10px;
+    width:300px;
+    height:300px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.loungecell
+{
+    position:relative;
+    width:296px;
+    height:100px;
+    border:2px solid black;
+    margin-bottom:10px;
+    background-color:rgba(245,129,36,0.5);
+}
+
+.loungecellimg
+{
+    display:block;
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:80px;
+    height:80px;
+}
+
+.loungecelltitle
+{
+    position:absolute;
+    top:10px;
+    left:100px;
+    width:220px;
+    font-size:30px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+.loungecellnulltitle
+{
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:276px;
+    font-size:25px;
+    font-family:gotham_font;
+    text-align:center;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
 #huntertradeinc
 {
     position:absolute;

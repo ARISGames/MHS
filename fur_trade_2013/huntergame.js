@@ -27,6 +27,17 @@ var HunterGame = function()
         {
             if(ftm.webPageItem == itemNull) //if on trade page
             {
+                eh.identificationReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    var i = eh.playerPositionInVisiblePlayers(data.player);
+                    if(i == -1) eh.visiblePlayers.push(data.player);
+                    else        eh.visiblePlayers[i] = data.player;
+
+                    formatHunterLounge();
+                }
                 eh.tradeRequestReceived = function(request)
                 {
                     //should never get this
@@ -45,6 +56,8 @@ var HunterGame = function()
                 }
 
                 eh.register();
+                eh.sendNewPlayer(ftm.player);
+                eh.sendIdentification(ftm.player);
 
                 formatHunterLounge();
                 ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are <b>clerks</b> who need help getting to <b>level 2</b>). Touch a clerk on the list to <b>open a trade</b>!");
@@ -77,7 +90,7 @@ var HunterGame = function()
     function formatHunterLounge()
     {
         document.getElementById('hunterloungepool').innerHTML = "";
-        for(var i in eh.visiblePlayers)
+        for(var i = 0; i < eh.visiblePlayers.length; i++)
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(eh.visiblePlayers[i]));
         if(eh.visiblePlayers.length == 0)
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(null));
@@ -91,7 +104,7 @@ var HunterGame = function()
             cell.setAttribute('class','loungecell');
             var img = document.createElement('img');
             img.setAttribute('class','loungecellimg');
-            img.src = player.url;
+            img.src = player.photoURL;
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
             title.innerHTML = player.displayname;

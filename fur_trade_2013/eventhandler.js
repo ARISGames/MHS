@@ -3,10 +3,10 @@ var EventHandler = function()
     var self = this;
 
     self.visiblePlayers = [];
-    function playerPositionInVisiblePlayers(player)
+    self.playerPositionInVisiblePlayers = function(player)
     {
-        for(var i in self.visiblePlayers)
-            if(self.visiblePlayers[i].playerId == player.playerId) return i;
+        for(var i = 0; i < self.visiblePlayers.length; i++)
+            if(self.visiblePlayers[i] && self.visiblePlayers[i].playerId == player.playerId) return i;
         return -1;
     }
     var requestString = function(player, receiverId, inventory, offer)
@@ -20,7 +20,11 @@ var EventHandler = function()
     }
     self.newPlayerReceived = function(request)
     {
-        self.sendIdentification(ftm.player);
+        var data = JSON.parse(request);
+        console.log("NEW_PLAYER");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
+        setTimeout(function(){self.sendIdentification(ftm.player);},200); //give the new player a second
     }
 
     self.sendPlayerLeft = function(player)
@@ -29,7 +33,11 @@ var EventHandler = function()
     }
     self.playerLeftReceived = function(request)
     {
-        var i = playerPositionInVisiblePlayers(request.player);
+        var data = JSON.parse(request);
+        console.log("PLAYER_LEFT");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
+        var i = self.playerPositionInVisiblePlayers(data.player);
         if(i != -1) self.visiblePlayers.splice(i,1);
     }
 
@@ -39,9 +47,13 @@ var EventHandler = function()
     }
     self.identificationReceived = function(request)
     {
-        var i = playerPositionInVisiblePlayers(request.player);
-        if(i != -1) self.visiblePlayers.push(request.player);
-        else        self.visiblePlayers[i] = request.player;
+        var data = JSON.parse(request);
+        console.log("IDENTIFICATION");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
+        var i = self.playerPositionInVisiblePlayers(data.player);
+        if(i != -1) self.visiblePlayers.push(data.player);
+        else        self.visiblePlayers[i] = data.player;
     }
 
     self.sendTradeRequest = function(player, receiverId)
@@ -50,6 +62,10 @@ var EventHandler = function()
     }
     self.tradeRequestReceived = function(request)
     {
+        var data = JSON.parse(request);
+        console.log("TRADE_REQUEST");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
     }
 
     self.sendTradeAccept = function(player, receiverId, inventory)
@@ -58,6 +74,10 @@ var EventHandler = function()
     }
     self.tradeAcceptReceived = function(request)
     {
+        var data = JSON.parse(request);
+        console.log("TRADE_ACCEPT");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
     }
 
     self.sendAlterOffer = function(player, receiverId, offer)
@@ -66,6 +86,10 @@ var EventHandler = function()
     }
     self.alterOfferReceived = function(request)
     {
+        var data = JSON.parse(request);
+        console.log("ALTER_OFFER");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
     }
 
     self.sendTradeReady = function(player, receiverId, inventory, offer)
@@ -74,6 +98,10 @@ var EventHandler = function()
     }
     self.tradeReadyReceived = function(request)
     {
+        var data = JSON.parse(request);
+        console.log("TRADE_READY");
+        console.log(data);
+        if(data.player.playerId == ftm.player.playerId) return;
     }
 
     self.register = function()

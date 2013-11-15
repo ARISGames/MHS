@@ -134,7 +134,7 @@ var ClerkGame = function()
         if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
         if(itemSpear.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemSpear));
         if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
-        ARIS.setBumpString('{"clerk":0}');
+        //ARIS.setBumpString('{"clerk":0}');
 
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
     }
@@ -179,7 +179,7 @@ var ClerkGame = function()
     {
         selectedItem = item;
         document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;
-        ARIS.setBumpString('{"clerk":'+item.itemEnum+'}');
+        //ARIS.setBumpString('{"clerk":'+item.itemEnum+'}');
     }
 
 }

@@ -46,9 +46,9 @@ var HunterGame = function()
 
                 eh.register();
 
-                formatHunterTrade();
-                ftv.displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
-                ftv.displayTrade();
+                formatHunterLounge();
+                ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are clerks, and need help getting to <b>level 2</b>). They will show up on this list- then <b>select them to trade</b>!");
+                ftv.displayLounge();
             }
             else //if on harvest page
             {
@@ -72,6 +72,11 @@ var HunterGame = function()
             harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
             ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b> (look for tiles on the ground), not robbing a shop!");
         }
+    }
+
+    function formatHunterLounge()
+    {
+
     }
 
     function formatHunterTrade()

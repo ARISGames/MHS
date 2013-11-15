@@ -226,9 +226,12 @@ var FurTradeModel = function()
 
         ARIS.didReceivePlayer = function(player)
         {
+            //alert(player.playerId);
+            //alert(player.username);
+            //alert(player.displayname);
             self.player = player;
             if(self.currentRole == roleClerk) self.player.role = "clerk";
-            if(self.currentRole == roleHunter) self.player.role = "clerk";
+            if(self.currentRole == roleHunter) self.player.role = "hunter";
         }
 
         var params = ARIS.parseURLParams(document.URL);
@@ -238,6 +241,7 @@ var FurTradeModel = function()
         self.webPageItem = self.itemForWebPageId(self.webPageId);
         self.webPageRole = self.webPageItem.owner;
 
+        ARIS.getPlayer();
         for(var i in items)    ARIS.getItemCount(items[i].itemId);
         for(var i in levelIds) ARIS.getItemCount(levelIds[i]);
         for(var i in roles)    ARIS.getItemCount(roles[i].roleId);

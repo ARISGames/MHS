@@ -46,7 +46,6 @@ var HunterGame = function()
 
                 eh.register();
 
-
                 formatHunterTrade();
                 ftv.displayGuruWithMessage("Find a <b>clerk partner</b> looking to trade! Then, use the <b>+</b> and <b>-</b> buttons to select your furs. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
                 ftv.displayTrade();

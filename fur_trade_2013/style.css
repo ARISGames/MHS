@@ -267,80 +267,6 @@ body
     width:300px;
 }
 
-#clerktradechoose
-{
-    position:absolute;
-    top:125px;
-    left:20px;
-    font-size:50px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
-#clerktradeitem
-{
-    display:block;
-    position:absolute;
-    top:100px;
-    left:185px;
-    width:100px;
-}
-
-#clerktradepool
-{
-    position:absolute;
-    top:200px;
-    left:10px;
-    width:300px;
-    height:300px;
-    overflow-y:scroll;
-    overflow-x:hidden;
-}
-
-.tradecell
-{
-    position:relative;
-    width:296px;
-    height:100px;
-    border:2px solid black;
-    margin-bottom:10px;
-    background-color:rgba(245,129,36,0.5);
-}
-
-.tradecellimg
-{
-    display:block;
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:80px;
-    height:80px;
-}
-
-.tradecelltitle
-{
-    position:absolute;
-    top:10px;
-    left:100px;
-    width:220px;
-    font-size:30px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
-.tradecellqty
-{
-    position:absolute;
-    bottom:10px;
-    right:10px;
-    font-size:20px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
 #hunterloungepool
 {
     position:absolute;
@@ -397,47 +323,76 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
-#huntertradeinc
+.tradeclient
 {
     position:absolute;
-    top:126px;
-    left:180px;
-    font-size:60px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    top:0px;
+    left:0px;
+    width:320px;
+    height:100px;
 }
 
-#huntertradecounter
+.tradeclientimg
 {
     position:absolute;
-    top:180px;
-    left:20px;
-    font-size:50px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    top:10px;
+    left:10px;
+    width:80px;
+    height:80px;
 }
 
-#huntertradedec
+.tradeclientname
 {
     position:absolute;
-    top:210px;
-    left:187px;
-    font-size:60px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    top:10px;
+    left:100px;
+    height:30px;
+    font-size:30px;
 }
 
-#huntertradehave
+.tradeclientpool
 {
     position:absolute;
-    top:300px;
-    left:20px;
-    font-size:50px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    top:50px;
+    left:100px;
+    height:40px;
+    width:210px;
+}
+
+.tradeclientoffer
+{
+    position:absolute;
+    left:0px;
+    top:100px;
+    width:320px;
+    height:100px;
+}
+
+.tradeclientoffertitle
+{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:320px;
+    height:20px;
+    font-size:20px;
+    text-align:center;
+}
+
+.tradeclientoffercontent
+{
+    position:absolute;
+    top:20px;
+    left:0px;
+    width:320px;
+    height:80px;
+}
+
+.tradeoffer
+{
+    position:absolute;
+    top:200;
+    left:0px;
+    width:320px;
 }
 

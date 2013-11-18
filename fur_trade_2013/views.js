@@ -5,27 +5,27 @@ var FurTradeViews = function()
     self.currentRoleView     = null;
     self.currentIntroView    = null;
     self.currentGetView      = null;
+    self.currentLoungeView   = null;
     self.currentTradeView    = null;
     self.currentTradeBtnView = null;
-    self.currentLoungeView   = null;
     self.currentGuruView     = null;
     self.currentGuruTalkView = null;
 
     self.clerkRoleView     = document.getElementById('clerkrole');
     self.clerkIntroView    = document.getElementById('clerkintro');
     self.clerkGetView      = document.getElementById('clerkget');
+    self.clerkLoungeView   = document.getElementById('clerklounge');
     self.clerkTradeView    = document.getElementById('clerktrade');
     self.clerkTradeBtnView = document.getElementById('clerktradebutton');
-    self.clerkLoungeView   = document.getElementById('clerklounge');
     self.clerkGuruView     = document.getElementById('clerkguru'); self.clerkGuruView.progress = 50;
     self.clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
     self.hunterRoleView     = document.getElementById('hunterrole');
     self.hunterIntroView    = document.getElementById('hunterintro');
     self.hunterGetView      = document.getElementById('hunterget');
+    self.hunterLoungeView   = document.getElementById('hunterlounge');
     self.hunterTradeView    = document.getElementById('huntertrade');
     self.hunterTradeBtnView = document.getElementById('huntertradebutton');
-    self.hunterLoungeView   = document.getElementById('hunterlounge');
     self.hunterGuruView     = document.getElementById('hunterguru'); self.hunterGuruView.progress = 50;
     self.hunterGuruTalkView = document.getElementById('huntergurutalk');
 
@@ -74,17 +74,17 @@ var FurTradeViews = function()
         if(self.currentRoleView)   self.currentRoleView.style.display  = 'none';
         if(self.currentIntroView)  self.currentIntroView.style.display = 'none';
         if(self.currentGetView)    self.currentGetView.style.display   = 'none';
-        if(self.currentTradeView)  self.currentTradeView.style.display = 'none';
         if(self.currentLoungeView) self.currentLoungeView.style.display = 'none';
+        if(self.currentTradeView)  self.currentTradeView.style.display = 'none';
 
         if(role == roleHunter)
         {
             self.currentRoleView      = self.hunterRoleView;
             self.currentIntroView     = self.hunterIntroView;
             self.currentGetView       = self.hunterGetView;
+            self.currentLoungeView    = self.hunterLoungeView;
             self.currentTradeView     = self.hunterTradeView;
             self.currentTradeBtnView  = self.hunterTradeBtnView;
-            self.currentLoungeView    = self.hunterLoungeView;
             self.currentGuruView      = self.hunterGuruView;
             self.currentGuruTalkView  = self.hunterGuruTalkView;
         }
@@ -93,9 +93,9 @@ var FurTradeViews = function()
             self.currentRoleView      = self.clerkRoleView;
             self.currentIntroView     = self.clerkIntroView;
             self.currentGetView       = self.clerkGetView;
+            self.currentLoungeView    = self.clerkLoungeView;
             self.currentTradeView     = self.clerkTradeView;
             self.currentTradeBtnView  = self.clerkTradeBtnView;
-            self.currentLoungeView    = self.clerkLoungeView;
             self.currentGuruView      = self.clerkGuruView;
             self.currentGuruTalkView  = self.clerkGuruTalkView;
         }
@@ -107,8 +107,8 @@ var FurTradeViews = function()
     {
         if(self.currentIntroView)    self.currentIntroView.style.display  = 'block';
         if(self.currentGetView)      self.currentGetView.style.display    = 'none';
-        if(self.currentTradeView)    self.currentTradeView.style.display  = 'none';
         if(self.currentLoungeView)   self.currentLoungeView.style.display = 'none';
+        if(self.currentTradeView)    self.currentTradeView.style.display  = 'none';
     }
 
     self.displayGet = function()
@@ -117,19 +117,8 @@ var FurTradeViews = function()
 
         if(self.currentIntroView)    self.currentIntroView.style.display  = 'none';
         if(self.currentGetView)      self.currentGetView.style.display    = 'block';
-        if(self.currentTradeView)    self.currentTradeView.style.display  = 'none';
         if(self.currentLoungeView)   self.currentLoungeView.style.display = 'none';
-    }
-
-    self.displayTrade = function()
-    {
-        self.currentTradeView.appendChild(hud);
-
-        if(self.currentIntroView)     self.currentIntroView.style.display     = 'none';
-        if(self.currentGetView)       self.currentGetView.style.display       = 'none';
-        if(self.currentTradeView)     self.currentTradeView.style.display     = 'block';
-        if(self.currentTradeBtnView)  self.currentTradeBtnView.style.display  = 'none';
-        if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'none';
+        if(self.currentTradeView)    self.currentTradeView.style.display  = 'none';
     }
 
     self.displayLounge = function()
@@ -138,9 +127,20 @@ var FurTradeViews = function()
 
         if(self.currentIntroView)     self.currentIntroView.style.display    = 'none';
         if(self.currentGetView)       self.currentGetView.style.display      = 'none';
+        if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'block';
         if(self.currentTradeView)     self.currentTradeView.style.display    = 'none';
         if(self.currentTradeBtnView)  self.currentTradeBtnView.style.display = 'none';
-        if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'block';
+    }
+
+    self.displayTrade = function()
+    {
+        self.currentTradeView.appendChild(hud);
+
+        if(self.currentIntroView)     self.currentIntroView.style.display     = 'none';
+        if(self.currentGetView)       self.currentGetView.style.display       = 'none';
+        if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'none';
+        if(self.currentTradeView)     self.currentTradeView.style.display     = 'block';
+        if(self.currentTradeBtnView)  self.currentTradeBtnView.style.display  = 'none';
     }
 
     self.displayGuruWithMessage = function(message)

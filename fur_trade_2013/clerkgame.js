@@ -207,12 +207,11 @@ var ClerkGame = function()
         buyButton.ontouchstart = function() { ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!"); };
     }
 
-    var selectedItem = null;
     var clerkTradeItemSelected = function(item)
     {
-        selectedItem = item;
-        document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;
+        itemOffering = item.itemId;
+        document.getElementById('clerktradeofferimg').src = 'assets/'+item.imageName;
+        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, itemOffering);
     }
-
 }
 

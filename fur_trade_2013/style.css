@@ -396,6 +396,15 @@ body
     width:320px;
 }
 
+#clerktradeofferimg
+{
+    position:absolute;
+    top:0px;
+    left:115px;
+    width:90px;
+    height:90px;
+}
+
 #clerktradepool
 {
     position:absolute;

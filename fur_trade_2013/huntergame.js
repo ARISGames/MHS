@@ -34,8 +34,6 @@ var HunterGame = function()
                     if(data.player.playerId == ftm.player.playerId) return;
                     if(data.player.role == "TRAPPER") return;
 
-                    alert('recvd');
-
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
@@ -48,25 +46,24 @@ var HunterGame = function()
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                     if(connectedPlayerId) return;
 
-                    connectedPlayerId = request.player.playerId;
-                    connectedPlayerInventory = request.inventory;
-
-                    console.log(connectedPlayerId);
-                    console.log(connectedPlayerTotalQty);
-                    console.log(inv);
+                    connectedPlayerId = data.player.playerId;
+                    connectedPlayerInventory = data.inventory;
 
                     formatHunterTrade();
                 }
                 eh.alterOfferReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                 }
                 eh.tradeReadyReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                 }
 
                 eh.register();
@@ -141,7 +138,7 @@ var HunterGame = function()
 
     var loungeCellSelected = function(player)
     {
-        
+        eh.sendTradeRequest(ftm.player, player.playerId, itemPelt.qty);
     }
 
     function formatHunterTrade()

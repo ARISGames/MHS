@@ -34,27 +34,22 @@ var ClerkGame = function()
                     if(data.player.playerId == ftm.player.playerId) return;
                     if(data.player.role == "CLERK") return;
 
-                    alert('recvd');
-
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
                 }
                 eh.tradeRequestReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                     if(connectedPlayerId) return;
 
-                    connectedPlayerId = request.player.playerId;
-                    connectedPlayerTotalQty = request.inventory;
+                    connectedPlayerId = data.player.playerId;
+                    connectedPlayerTotalQty = data.inventory;
                     var inv = [];
-                    for(var i = 0; i < ftm.items.length; i++)
-                        if(ftm.items[i].qty > 0) inv.push({"itemId":ftm.items[i].itemId,"qty":ftm.items[i].qty});
+                    //for(var i = 0; i < items.length; i++)
+                        //if(items[i].qty > 0) inv.push({"itemId":items[i].itemId,"qty":items[i].qty});
                     eh.sendTradeAccept(ftm.player, connectedPlayerId, inv);
-
-                    console.log(connectedPlayerId);
-                    console.log(connectedPlayerTotalQty);
-                    console.log(inv);
 
                     formatClerkTrade();
                 }
@@ -64,11 +59,13 @@ var ClerkGame = function()
                 }
                 eh.alterOfferReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                 }
                 eh.tradeReadyReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
                 }
 
                 eh.register();
@@ -116,8 +113,8 @@ var ClerkGame = function()
         ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         document.getElementById('clerktradepool').innerHTML = "";
-        for(var i = 0; i < ftm.items.length; i++)
-            if(ftm.items[i].qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(ftm.items[i]));
+        //for(var i = 0; i < items.length; i++)
+            //if(items[i].qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(items[i]));
 
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
     }

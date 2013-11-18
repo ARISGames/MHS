@@ -62,7 +62,7 @@ var EventHandler = function()
 
     self.sendTradeAccept = function(player, receiverId, inventory)
     {
-        pm.sendData("TRADE_ACCEPT",requestString(player,receiverId,inventory,""));//also include inventory
+        pm.sendData("TRADE_ACCEPT",requestString(player,receiverId,inventory,""));
     }
     self.tradeAcceptReceived = function(request)
     {

@@ -8,6 +8,11 @@ var ClerkGame = function()
     var buyButtonText    = document.getElementById("sellerbuttontext");
     var clerkGuruButton  = document.getElementById("clerkgurubutton");
 
+    //trade vars
+    var itemOffering = -1;
+    var connectedPlayerId = 0;
+    var connectedPlayerOfferQty = 0;
+
     self.init = function()
     {
         if(ftm.currentLevel == 0)
@@ -17,52 +22,49 @@ var ClerkGame = function()
             ARIS.setItemCount(roleClerk.roleId, 1);
             ARIS.setItemCount(roleHunter.roleId, 0);
         }
-        else
+        else //Not first time
         {
-            if(ftm.webPageItem == itemNull)
+            if(ftm.webPageItem == itemNull) //if on trade page
             {
-                ARIS.bumpDetected = function(bumpString)
+                eh.identificationReceived = function(request)
                 {
-                    var data = bumpString;
-                    if(data.clerk)
-                    {
-                        ftv.displayGuruWithMessage("You should find a <b>trapper</b> to trade with! We want <b>pelts</b>, not more stuff from Europe!");
-                    }
-                    else if(data.hunter)
-                    {
-                        if(!selectedItem) selectedItem = itemNull;
-                        selectedItem.qty -= 1;
-                        itemPelt.qty     += data.hunter;
+                    var data = JSON.parse(request);
+                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    var i = eh.playerPositionInVisiblePlayers(data.player);
+                    if(i == -1) eh.visiblePlayers.push(data.player);
+                    else        eh.visiblePlayers[i] = data.player;
 
-                        ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
-                        ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
-
-                        if(itemPelt.qty >= 20)
-                        {
-                            ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
-                            ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
-                            ftm.currentLevel = 3;
-                            clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
-                            ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");
-                        }
-                        else if(ftm.qtyNonPeltItems() == 0)
-                        {
-                            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
-                            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
-                        }
-                        else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-                        else if(selectedItem.peltCost+1 == data.hunter) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-                        else if(selectedItem.peltCost < data.hunter)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
-
-                        selectedItem = null;
-                        formatClerkTrade();
-                    }
+                    formatHunterLounge();
+                }
+                eh.tradeRequestReceived = function(request)
+                {
+                    //should never get this
+                }
+                eh.tradeAcceptReceived = function(request)
+                {
+                    if(request.receiverId != ftm.player.playerId) return;
+                }
+                eh.alterOfferReceived = function(request)
+                {
+                    if(request.receiverId != ftm.player.playerId) return;
+                }
+                eh.tradeReadyReceived = function(request)
+                {
+                    if(request.receiverId != ftm.player.playerId) return;
                 }
 
-                formatClerkTrade();
-                ftv.displayTrade();
+                eh.register();
+                eh.sendNewPlayer(ftm.player);
+                eh.sendIdentification(ftm.player);
+
+
+
+                formatClerkLounge();
+                ftv.displayGuruWithMessage("Find a <b>trapper</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+                ftv.displayLounge();
             }
-            else
+            else //if on harvest page
             {
                 formatClerkGet();
                 ftv.displayGet();
@@ -88,6 +90,33 @@ var ClerkGame = function()
         }
     }
 
+    function formatClerkLounge()
+    {
+        
+    }
+
+    function formatClerkTrade()
+    {
+        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
+        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+
+        document.getElementById('clerktradepool').innerHTML = "";
+        if(itemGun.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
+        if(itemBeads.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
+        if(itemBlanket.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBlanket));
+        if(itemKettle.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
+        if(itemGunpowder.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGunpowder));
+        if(itemMBalls.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemMBalls));
+        if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
+        if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
+        if(itemHoe.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemHoe));
+        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
+        if(itemSpear.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemSpear));
+        if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
+
+        if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
+    }
+
     function getTradeCell(item)
     {
         var cell = document.createElement('div');
@@ -109,34 +138,33 @@ var ClerkGame = function()
         return cell;
     }
 
-    var formattedClerkTrade = false;
-    function formatClerkTrade()
+    function confirmTrade()
     {
-        if(!formattedClerkTrade)
+        if(!selectedItem) selectedItem = itemNull;
+        selectedItem.qty -= 1;
+        itemPelt.qty     += data.hunter;
+
+        ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
+        ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
+
+        if(itemPelt.qty >= 20)
         {
-            ftv.displayGuruWithMessage("Find a <b>trapper</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
-            formattedClerkTrade = true;
+            ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
+            ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
+            ftm.currentLevel = 3;
+            clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
+            ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");
         }
+        else if(ftm.qtyNonPeltItems() == 0)
+        {
+            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
+        }
+        else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
+        else if(selectedItem.peltCost+1 == data.hunter) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
+        else if(selectedItem.peltCost < data.hunter)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
 
-        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
-
-        document.getElementById('clerktradepool').innerHTML = "";
-        if(itemGun.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
-        if(itemBeads.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
-        if(itemBlanket.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBlanket));
-        if(itemKettle.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
-        if(itemGunpowder.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGunpowder));
-        if(itemMBalls.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemMBalls));
-        if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
-        if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
-        if(itemHoe.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemHoe));
-        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
-        if(itemSpear.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemSpear));
-        if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
-        //ARIS.setBumpString('{"clerk":0}');
-
-        if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
+        selectedItem = null;
     }
 
     self.clerkBuyConfirmed = function()
@@ -179,7 +207,6 @@ var ClerkGame = function()
     {
         selectedItem = item;
         document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;
-        //ARIS.setBumpString('{"clerk":'+item.itemEnum+'}');
     }
 
 }

@@ -13,7 +13,6 @@ var HunterGame = function()
     var fursOffering = 0;
     var connectedPlayerId = 0;
     var connectedPlayerOfferId = -1;
-    var connectedPlayerOfferQty = 0;
 
     self.init = function()
     {

@@ -113,6 +113,12 @@ var ClerkGame = function()
         ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
         ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
 
+        document.getElementById('clerktradeclientpoolimg').src = 'assets/'+itemPelt.imageName;
+        document.getElementById('clerktradeclientpoolqty').innerHTML = "x"+connectedPlayerTotalQty;
+
+        document.getElementById('clerktradeclientofferimg').src = 'assets/'+itemPelt.imageName;
+        document.getElementById('clerktradeclientofferqty').innerHTML = "x"+connectedPlayerOfferQty;
+
         document.getElementById('clerktradepool').innerHTML = "";
         var offset = 10;
         for(var i = 0; i < items.length; i++)

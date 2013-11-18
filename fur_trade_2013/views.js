@@ -158,8 +158,6 @@ var FurTradeViews = function()
 
     self.displayLounge = function()
     {
-        self.currentLoungeView.appendChild(hud);
-
         if(self.currentIntroView)     self.currentIntroView.style.display    = 'none';
         if(self.currentGetView)       self.currentGetView.style.display      = 'none';
         if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'block';
@@ -169,8 +167,6 @@ var FurTradeViews = function()
 
     self.displayTrade = function()
     {
-        self.currentTradeView.appendChild(hud);
-
         if(self.currentIntroView)     self.currentIntroView.style.display     = 'none';
         if(self.currentGetView)       self.currentGetView.style.display       = 'none';
         if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'none';

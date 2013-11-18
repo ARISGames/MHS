@@ -10,7 +10,7 @@ var ClerkGame = function()
 
     //trade vars
     var itemOffering = -1;
-    var connectedPlayerId = 0;
+    var connectedPlayer = null;
     var connectedPlayerTotalQty = 0;
     var connectedPlayerOfferQty = 0;
 
@@ -42,16 +42,17 @@ var ClerkGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(connectedPlayerId) return;
+                    if(connectedPlayer) return;
 
-                    connectedPlayerId = data.player.playerId;
+                    connectedPlayer = data.player;
                     connectedPlayerTotalQty = data.inventory;
                     var inv = [];
-                    //for(var i = 0; i < items.length; i++)
-                        //if(items[i].qty > 0) inv.push({"itemId":items[i].itemId,"qty":items[i].qty});
-                    eh.sendTradeAccept(ftm.player, connectedPlayerId, inv);
+                    for(var i = 0; i < items.length; i++)
+                        if(items[i].qty > 0) inv.push(items[i].itemId);
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId, inv);
 
                     formatClerkTrade();
+                    ftv.displayTrade();
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
@@ -109,13 +110,21 @@ var ClerkGame = function()
 
     function formatClerkTrade()
     {
-        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
+        ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
+        ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
 
         document.getElementById('clerktradepool').innerHTML = "";
-        //for(var i = 0; i < items.length; i++)
-            //if(items[i].qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(items[i]));
-
+        var offset = 10;
+        for(var i = 0; i < items.length; i++)
+        {
+            if(items[i].qty > 0)
+            {
+                var itemCell = getTradeCell(items[i]);
+                itemCell.style.left = offset+"px";
+                offset+=90;
+                document.getElementById('clerktradepool').appendChild(itemCell);
+            }
+        }
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
     }
 
@@ -126,16 +135,12 @@ var ClerkGame = function()
         var img = document.createElement('img');
         img.setAttribute('class','tradecellimg');
         img.src = 'assets/'+item.imageName;
-        var title = document.createElement('div');
-        title.setAttribute('class','tradecelltitle');
-        title.innerHTML = item.name;
-        var qty = document.createElement('div');
-        qty.setAttribute('class','tradecellqty');
-        qty.innerHTML = "qty owned:"+item.qty;
+        var label = document.createElement('div');
+        label.setAttribute('class','tradecelllabel');
+        label.innerHTML = item.name+" x"+item.qty;
         cell.appendChild(img);
-        cell.appendChild(title);
-        cell.appendChild(qty);
-        cell.ontouchstart = function() { self.clerkTradeItemSelected(item); };
+        cell.appendChild(label);
+        cell.ontouchstart = function() { clerkTradeItemSelected(item); };
 
         return cell;
     }
@@ -190,8 +195,6 @@ var ClerkGame = function()
 
             ftv.displaydelta(itemPelt.name,-1*ftm.webPageItem.peltCost);
 
-            ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
-
             if(ftm.currentLevel == 1 && itemPelt.qty == 0)
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
@@ -205,7 +208,7 @@ var ClerkGame = function()
     }
 
     var selectedItem = null;
-    self.clerkTradeItemSelected = function(item)
+    var clerkTradeItemSelected = function(item)
     {
         selectedItem = item;
         document.getElementById('clerktradeitem').src = 'assets/'+item.imageName;

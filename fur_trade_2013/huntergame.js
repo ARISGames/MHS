@@ -11,7 +11,7 @@ var HunterGame = function()
 
     //trade vars
     var fursOffering = 0;
-    var connectedPlayerId = 0;
+    var connectedPlayer = null;
     var connectedPlayerInventory = [];
     var connectedPlayerOfferId = -1;
 
@@ -48,12 +48,13 @@ var HunterGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(connectedPlayerId) return;
+                    if(connectedPlayer) return;
 
-                    connectedPlayerId = data.player.playerId;
+                    connectedPlayer = data.player;
                     connectedPlayerInventory = data.inventory;
 
                     formatHunterTrade();
+                    ftv.displayTrade();
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -143,13 +144,10 @@ var HunterGame = function()
 
     function formatHunterTrade()
     {
-        ftv.haveDisplay.innerHTML = "Items: "+ftm.qtyNonPeltItems();
-        ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 4 Items";
+        ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
+        ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
 
-        hunterTradeCounter.innerHTML = "Trade:0";
-        hunterTradeHave.innerHTML = "Have: "+itemPelt.qty;
-
-        if(itemPelt.qty == 0) ftv.currentTradeBtnView.style.display = 'block';
+        //if(itemPelt.qty == 0) ftv.currentTradeBtnView.style.display = 'block';
     }
 
     function confirmTrade()
@@ -198,7 +196,6 @@ var HunterGame = function()
 
         ftv.displaydelta(itemPelt.name,1);
 
-        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         harvestButtonText.innerHTML = "Leave ";
         harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
      

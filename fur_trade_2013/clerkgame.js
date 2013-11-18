@@ -11,6 +11,7 @@ var ClerkGame = function()
     //trade vars
     var itemOffering = -1;
     var connectedPlayerId = 0;
+    var connectedPlayerTotalQty = 0;
     var connectedPlayerOfferQty = 0;
 
     self.init = function()
@@ -31,19 +32,35 @@ var ClerkGame = function()
                     var data = JSON.parse(request);
                     //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.role == "CLERK") return;
+
+                    alert('recvd');
+
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
-
-                    formatHunterLounge();
                 }
                 eh.tradeRequestReceived = function(request)
                 {
-                    //should never get this
+                    if(request.receiverId != ftm.player.playerId) return;
+                    if(connectedPlayerId) return;
+
+                    connectedPlayerId = request.player.playerId;
+                    connectedPlayerTotalQty = request.inventory;
+                    var inv = [];
+                    for(var i = 0; i < ftm.items.length; i++)
+                        if(ftm.items[i].qty > 0) inv.push({"itemId":ftm.items[i].itemId,"qty":ftm.items[i].qty});
+                    eh.sendTradeAccept(ftm.player, connectedPlayerId, inv);
+
+                    console.log(connectedPlayerId);
+                    console.log(connectedPlayerTotalQty);
+                    console.log(inv);
+
+                    formatClerkTrade();
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
-                    if(request.receiverId != ftm.player.playerId) return;
+                    //should never get this
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -57,8 +74,6 @@ var ClerkGame = function()
                 eh.register();
                 eh.sendNewPlayer(ftm.player);
                 eh.sendIdentification(ftm.player);
-
-
 
                 formatClerkLounge();
                 ftv.displayGuruWithMessage("Find a <b>trapper</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
@@ -92,7 +107,7 @@ var ClerkGame = function()
 
     function formatClerkLounge()
     {
-        
+        //nothing to do?
     }
 
     function formatClerkTrade()
@@ -101,18 +116,8 @@ var ClerkGame = function()
         ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Goal: 20";
 
         document.getElementById('clerktradepool').innerHTML = "";
-        if(itemGun.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGun));
-        if(itemBeads.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBeads));
-        if(itemBlanket.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemBlanket));
-        if(itemKettle.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKettle));
-        if(itemGunpowder.qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemGunpowder));
-        if(itemMBalls.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemMBalls));
-        if(itemAxeHead.qty   > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemAxeHead));
-        if(itemPlume.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemPlume));
-        if(itemHoe.qty       > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemHoe));
-        if(itemFabric.qty    > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemFabric));
-        if(itemSpear.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemSpear));
-        if(itemKnife.qty     > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(itemKnife));
+        for(var i = 0; i < ftm.items.length; i++)
+            if(ftm.items[i].qty > 0) document.getElementById('clerktradepool').appendChild(getTradeCell(ftm.items[i]));
 
         if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
     }

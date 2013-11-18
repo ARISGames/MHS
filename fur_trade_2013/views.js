@@ -7,7 +7,7 @@ var FurTradeViews = function()
     self.currentGetView      = null;
     self.currentTradeView    = null;
     self.currentTradeBtnView = null;
-    self.currentLoungeView    = null;
+    self.currentLoungeView   = null;
     self.currentGuruView     = null;
     self.currentGuruTalkView = null;
 
@@ -16,7 +16,7 @@ var FurTradeViews = function()
     self.clerkGetView      = document.getElementById('clerkget');
     self.clerkTradeView    = document.getElementById('clerktrade');
     self.clerkTradeBtnView = document.getElementById('clerktradebutton');
-    self.clerkLoungeView    = document.getElementById('clerklounge');
+    self.clerkLoungeView   = document.getElementById('clerklounge');
     self.clerkGuruView     = document.getElementById('clerkguru'); self.clerkGuruView.progress = 50;
     self.clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
@@ -25,7 +25,7 @@ var FurTradeViews = function()
     self.hunterGetView      = document.getElementById('hunterget');
     self.hunterTradeView    = document.getElementById('huntertrade');
     self.hunterTradeBtnView = document.getElementById('huntertradebutton');
-    self.hunterLoungeView    = document.getElementById('hunterlounge');
+    self.hunterLoungeView   = document.getElementById('hunterlounge');
     self.hunterGuruView     = document.getElementById('hunterguru'); self.hunterGuruView.progress = 50;
     self.hunterGuruTalkView = document.getElementById('huntergurutalk');
 

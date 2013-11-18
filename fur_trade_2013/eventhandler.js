@@ -21,8 +21,6 @@ var EventHandler = function()
     self.newPlayerReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("NEW_PLAYER");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
         setTimeout(function(){self.sendIdentification(ftm.player);},200); //give the new player a second
     }
@@ -34,8 +32,6 @@ var EventHandler = function()
     self.playerLeftReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("PLAYER_LEFT");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
         var i = self.playerPositionInVisiblePlayers(data.player);
         if(i != -1) self.visiblePlayers.splice(i,1);
@@ -48,23 +44,19 @@ var EventHandler = function()
     self.identificationReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("IDENTIFICATION");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
         var i = self.playerPositionInVisiblePlayers(data.player);
         if(i != -1) self.visiblePlayers.push(data.player);
         else        self.visiblePlayers[i] = data.player;
     }
 
-    self.sendTradeRequest = function(player, receiverId)
+    self.sendTradeRequest = function(player, receiverId, inventory)
     {
-        pm.sendData("TRADE_REQUEST",requestString(player,receiverId,"",""));
+        pm.sendData("TRADE_REQUEST",requestString(player,receiverId,inventory,""));
     }
     self.tradeRequestReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("TRADE_REQUEST");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
     }
 
@@ -75,8 +67,6 @@ var EventHandler = function()
     self.tradeAcceptReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("TRADE_ACCEPT");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
     }
 
@@ -87,8 +77,6 @@ var EventHandler = function()
     self.alterOfferReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("ALTER_OFFER");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
     }
 
@@ -99,8 +87,6 @@ var EventHandler = function()
     self.tradeReadyReceived = function(request)
     {
         var data = JSON.parse(request);
-        console.log("TRADE_READY");
-        console.log(data);
         if(data.player.playerId == ftm.player.playerId) return;
     }
 

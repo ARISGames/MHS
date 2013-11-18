@@ -12,6 +12,7 @@ var HunterGame = function()
     //trade vars
     var fursOffering = 0;
     var connectedPlayerId = 0;
+    var connectedPlayerInventory = [];
     var connectedPlayerOfferId = -1;
 
     self.init = function()
@@ -31,6 +32,10 @@ var HunterGame = function()
                     var data = JSON.parse(request);
                     //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.role == "TRAPPER") return;
+
+                    alert('recvd');
+
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
@@ -44,6 +49,16 @@ var HunterGame = function()
                 eh.tradeAcceptReceived = function(request)
                 {
                     if(request.receiverId != ftm.player.playerId) return;
+                    if(connectedPlayerId) return;
+
+                    connectedPlayerId = request.player.playerId;
+                    connectedPlayerInventory = request.inventory;
+
+                    console.log(connectedPlayerId);
+                    console.log(connectedPlayerTotalQty);
+                    console.log(inv);
+
+                    formatHunterTrade();
                 }
                 eh.alterOfferReceived = function(request)
                 {

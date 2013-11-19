@@ -60,7 +60,7 @@ var HunterGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
                     connectedPlayerOfferId = data.offer;
                     formatHunterClientOffer();
                     imReady = false;
@@ -71,7 +71,7 @@ var HunterGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
                     if(data.offer != connectedPlayerOfferId)
                         eh.alterOfferReceived(request);
                     theyreReady = true;

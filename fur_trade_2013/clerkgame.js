@@ -50,7 +50,7 @@ var ClerkGame = function()
                     connectedPlayerTotalQty = data.inventory;
                     var inv = [];
                     for(var i = 0; i < items.length; i++)
-                        if(items[i].qty > 0) inv.push(items[i].itemId);
+                        if(items[i].qty > 0 && items[i].itemId != itemPelt.itemId) inv.push(items[i].itemId);
                     eh.sendTradeAccept(ftm.player, connectedPlayer.playerId, inv);
 
                     formatClerkTrade();
@@ -138,7 +138,7 @@ var ClerkGame = function()
         var offset = 10;
         for(var i = 0; i < items.length; i++)
         {
-            if(items[i].qty > 0)
+            if(items[i].qty > 0 && items[i].itemId != itemPelt.itemId)
             {
                 var itemCell = getTradeCell(items[i]);
                 itemCell.style.left = offset+"px";

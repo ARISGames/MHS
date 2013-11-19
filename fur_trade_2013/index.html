@@ -110,7 +110,12 @@ window.onerror = function(msg, url, linenumber)
     </div>
     <div id='clerklounge' class='lounge full_screen'>
         <div id='clerkloungecontent'>
-            Waiting for hunter...
+            <div id='clerkloungetitle'>
+                Your store is now open! Wait here for a Trapper looking to trade!
+            </div>
+            <div id='clerkloungetext'>
+                Searching for trapper...
+            </div>
         </div>
     </div>
     <div id='clerktrade' class='trade full_screen'>
@@ -167,7 +172,7 @@ window.onerror = function(msg, url, linenumber)
         </div>
     </div>
     <div id='hunterlounge' class='lounge full_screen'>
-        <div id='hunterloungesearchbutton' ontouchstart="game.searchAgain()">Try Again</div>
+        <div id='hunterloungesearchbutton' ontouchstart="game.searchAgain()">Search Again</div>
         <div id='hunterloungepool'></div>
     </div>
     <div id='huntertrade' class='trade full_screen'>

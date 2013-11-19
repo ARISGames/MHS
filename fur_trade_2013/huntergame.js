@@ -122,7 +122,7 @@ var HunterGame = function()
     self.searchAgain = function()
     {
         document.getElementById('hunterloungesearchbutton').innerHTML = "Searching...";
-        setTimeout(function(){document.getElementById('hunterloungesearchbutton').innerHTML = "Try Again";},1000);
+        setTimeout(function(){document.getElementById('hunterloungesearchbutton').innerHTML = "Search Again";},1000);
         cleanConnection();
         formatHunterLounge();
         eh.sendNewPlayer(ftm.player);

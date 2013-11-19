@@ -77,7 +77,7 @@ var ClerkGame = function()
                 eh.sendIdentification(ftm.player);
 
                 formatClerkLounge();
-                ftv.displayGuruWithMessage("Find a <b>trapper</b> looking to trade! Then, <b>select the item</b> you would like to trade. Once you and <b>your partner</b> have agreed on a trade, <b>smack your devices together</b> to make the trade!");
+                ftv.displayGuruWithMessage("We've <b>opened our shop</b>! Now, we simply wait for a <b>trapper</b> looking to trade! (Look around to see if any of your friends are <b>trappers</b> who need help getting to <b>level 2</b>.)");
                 ftv.displayLounge();
             }
             else //if on harvest page

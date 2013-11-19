@@ -80,7 +80,7 @@ var ClerkGame = function()
                         eh.alterOfferReceived(request);
                     theyreReady = true;
 
-                    //if(imReady) MAKE TRADE
+                    if(imReady) confirmTrade();
                     formatClerkReady();
                 }
 
@@ -177,11 +177,14 @@ var ClerkGame = function()
 
     function confirmTrade()
     {
-        if(!selectedItem) selectedItem = itemNull;
-        selectedItem.qty -= 1;
-        itemPelt.qty     += data.hunter;
+        imReady = false;
+        theyreReady = false;
 
-        ARIS.setItemCount(selectedItem.itemId,selectedItem.qty);
+        var item = ftm.itemForItemId(itemOffering);
+        item.qty -= 1;
+        itemPelt.qty += connectedPlayerOfferQty;
+
+        ARIS.setItemCount(item.itemId,item.qty);
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
         if(itemPelt.qty >= 20)
@@ -197,11 +200,13 @@ var ClerkGame = function()
             ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
         }
-        else if(selectedItem.peltCost >= data.hunter)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for only <b>"+data.hunter+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-        else if(selectedItem.peltCost+1 == data.hunter) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+selectedItem.name+"</b> for <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-        else if(selectedItem.peltCost < data.hunter)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+selectedItem.name+"</b> for only <b>"+selectedItem.peltCost+" pelts</b>, and just traded it for <b>"+data.hunter+" pelts</b>! Keep this up!");
+        else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.name+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelts</b>! Try to get <b>more pelts</b> for your items!");
+        else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.name+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
+        else if(item.peltCost < connectedPlayerOfferQty)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+item.name+"</b> for only <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! Keep this up!");
 
-        selectedItem = null;
+        connectedPlayerOfferQty = 0;
+        itemOffering = -1;
+        formatClerkTrade();
     }
 
     self.clerkBuyConfirmed = function()
@@ -258,7 +263,7 @@ var ClerkGame = function()
     {
         imReady = true;
         eh.sendTradeReady(ftm.player, connectedPlayer.playerId, itemOffering);
-        //if(theyreReady) MAKE TRADE
+        if(theyreReady) confirmTrade();
         formatClerkReady();
     }
 }

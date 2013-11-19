@@ -76,7 +76,7 @@ var HunterGame = function()
                         eh.alterOfferReceived(request);
                     theyreReady = true;
 
-                    //if(imReady) MAKE TRADE
+                    if(imReady) confirmTrade();
                     formatHunterReady();
                 }
 
@@ -233,7 +233,10 @@ var HunterGame = function()
 
     function confirmTrade()
     {
-        var item = ftm.items[connectedPlayerOfferId];
+        imReady = false;
+        theyreReady = false;
+
+        var item = ftm.itemForItemId(connectedPlayerOfferId);
         item.qty         += 1;
         itemPelt.qty     -= fursOffering;
 
@@ -253,20 +256,10 @@ var HunterGame = function()
             ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); };
         }
-        else if(item == itemGun)       ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemBeads)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemBlanket)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemKettle)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemGunpowder) ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemMBalls)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemAxeHead)   ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemPlume)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemHoe)       ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemFabric)    ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemSpear)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
-        else if(item == itemKnife)     ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
+        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
 
         fursOffering = 0;
+        connectedPlayerOfferId = -1;
         formatHunterTrade();
     }
 
@@ -315,7 +308,7 @@ var HunterGame = function()
     {
         imReady = true;
         eh.sendTradeReady(ftm.player, connectedPlayer.playerId, fursOffering);
-        //if(theyreReady) MAKE TRADE
+        if(theyreReady) confirmTrade();
         formatHunterReady();
     }
 }

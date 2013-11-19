@@ -13,6 +13,8 @@ var ClerkGame = function()
     var connectedPlayer = null;
     var connectedPlayerTotalQty = 0;
     var connectedPlayerOfferQty = 0;
+    var imReady = false;
+    var theyreReady = false;
 
     self.init = function()
     {
@@ -65,11 +67,21 @@ var ClerkGame = function()
                     if(data.player.playerId != connectedPlayer.playerId) return;
                     connectedPlayerOfferQty = data.offer;
                     formatClerkClientOffer();
+                    imReady = false;
+                    theyreReady = false;
+                    formatClerkReady();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
+                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.offer != connectedPlayerOfferQty)
+                        eh.alterOfferReceived(request);
+                    theyreReady = true;
+
+                    //if(imReady) MAKE TRADE
+                    formatClerkReady();
                 }
 
                 eh.register();
@@ -230,6 +242,24 @@ var ClerkGame = function()
         itemOffering = item.itemId;
         formatClerkOffer();
         eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, itemOffering);
+        theyreReady = false;
+        imReady = false;
+        formatClerkReady();
+    }
+
+    function formatClerkReady()
+    {
+        if(imReady && !theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Waiting for Hunter...";
+        if(!imReady && theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Make Trade!";
+        if(!imReady && !theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Ready to Trade";
+    }
+
+    self.readyTouched = function()
+    {
+        imReady = true;
+        eh.sendTradeReady(ftm.player, connectedPlayer.playerId, itemOffering);
+        //if(theyreReady) MAKE TRADE
+        formatClerkReady();
     }
 }
 

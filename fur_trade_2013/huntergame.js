@@ -12,6 +12,8 @@ var HunterGame = function()
     var connectedPlayer = null;
     var connectedPlayerInventory = [];
     var connectedPlayerOfferId = -1;
+    var imReady = false;
+    var theyreReady = false;
 
     self.init = function()
     {
@@ -61,11 +63,21 @@ var HunterGame = function()
                     if(data.player.playerId != connectedPlayer.playerId) return;
                     connectedPlayerOfferId = data.offer;
                     formatHunterClientOffer();
+                    imReady = false;
+                    theyreReady = false;
+                    formatHunterReady();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
+                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.offer != connectedPlayerOfferId)
+                        eh.alterOfferReceived(request);
+                    theyreReady = true;
+
+                    //if(imReady) MAKE TRADE
+                    formatHunterReady();
                 }
 
                 cleanConnection();
@@ -117,6 +129,13 @@ var HunterGame = function()
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(eh.visiblePlayers[i]));
         if(eh.visiblePlayers.length == 0)
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(null));
+    }
+
+    function formatHunterReady()
+    {
+        if(imReady && !theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Waiting for Clerk...";
+        if(!imReady && theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Make Trade!";
+        if(!imReady && !theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Ready to Trade";
     }
 
     self.searchAgain = function()
@@ -276,6 +295,9 @@ var HunterGame = function()
             fursOffering++;
         formatHunterOffer();
         eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
+        theyreReady = false;
+        imReady = false;
+        formatHunterReady();
     }
 
     self.decrementTouched = function()
@@ -284,9 +306,17 @@ var HunterGame = function()
             fursOffering--;
         formatHunterOffer();
         eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
+        theyreReady = false;
+        imReady = false;
+        formatHunterReady();
     }
 
-    var events = ["NEW_PLAYER","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","ALTER_OFFER","TRADE_READY"];
-    var callbacks = [];
+    self.readyTouched = function()
+    {
+        imReady = true;
+        eh.sendTradeReady(ftm.player, connectedPlayer.playerId, fursOffering);
+        //if(theyreReady) MAKE TRADE
+        formatHunterReady();
+    }
 }
 

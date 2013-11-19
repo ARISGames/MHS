@@ -80,9 +80,9 @@ var EventHandler = function()
         if(data.player.playerId == ftm.player.playerId) return;
     }
 
-    self.sendTradeReady = function(player, receiverId, inventory, offer)
+    self.sendTradeReady = function(player, receiverId, offer)
     {
-        pm.sendData("TRADE_READY",requestString(player,receiverId,inventory,offer));//also include inventory, offer
+        pm.sendData("TRADE_READY",requestString(player,receiverId,"",offer));
     }
     self.tradeReadyReceived = function(request)
     {

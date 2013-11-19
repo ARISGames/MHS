@@ -68,6 +68,7 @@ var HunterGame = function()
                     if(data.receiverId != ftm.player.playerId) return;
                 }
 
+                cleanConnection();
                 eh.register();
                 eh.sendNewPlayer(ftm.player);
                 eh.sendIdentification(ftm.player);
@@ -100,6 +101,15 @@ var HunterGame = function()
         }
     }
 
+    function cleanConnection()
+    {
+        fursOffering = 0;
+        connectedPlayer = null;
+        connectedPlayerInventory = [];
+        connectedPlayerOfferId = -1;
+        eh.visiblePlayers = [];
+    }
+
     function formatHunterLounge()
     {
         document.getElementById('hunterloungepool').innerHTML = "";
@@ -107,6 +117,16 @@ var HunterGame = function()
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(eh.visiblePlayers[i]));
         if(eh.visiblePlayers.length == 0)
             document.getElementById('hunterloungepool').appendChild(getLoungeCell(null));
+    }
+
+    self.searchAgain = function()
+    {
+        document.getElementById('hunterloungesearchbutton').innerHTML = "Searching...";
+        setTimeout(function(){document.getElementById('hunterloungesearchbutton').innerHTML = "Try Again";},1000);
+        cleanConnection();
+        formatHunterLounge();
+        eh.sendNewPlayer(ftm.player);
+        eh.sendIdentification(ftm.player);
     }
 
     function getLoungeCell(player)
@@ -131,7 +151,7 @@ var HunterGame = function()
             cell.setAttribute('class','loungecell');
             var title = document.createElement('div');
             title.setAttribute('class','loungecellnulltitle');
-            title.innerHTML = "(Waiting for <b>clerk</b> to open shop...)";
+            title.innerHTML = "<span style='font-size:23px;'>No open shops found.</span><br />Waiting for clerk to open shop...";
             cell.appendChild(title);
         }
 

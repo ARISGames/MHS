@@ -14,6 +14,7 @@ div,span,html,body
 {
     padding:0px;
     margin:0px;
+    overflow:visible;
 }
 
 body
@@ -309,7 +310,7 @@ body
     position:absolute;
     top:10px;
     left:10px;
-    width:300px;
+    width:296px; /*account for border*/
     height:40px;
     font-size:33px;
     font-family:gotham_font;
@@ -335,7 +336,7 @@ body
 .loungecell
 {
     position:relative;
-    width:296px;
+    width:296px; /*account for border*/
     height:100px;
     border:2px solid black;
     margin-bottom:10px;
@@ -402,6 +403,9 @@ body
     left:100px;
     height:30px;
     font-size:30px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
 }
 
 .tradeclientpool
@@ -411,43 +415,6 @@ body
     left:100px;
     height:40px;
     width:210px;
-}
-
-.tradeclientoffer
-{
-    position:absolute;
-    left:0px;
-    top:100px;
-    width:320px;
-    height:100px;
-}
-
-.tradeclientoffertitle
-{
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:320px;
-    height:20px;
-    font-size:20px;
-    text-align:center;
-}
-
-.tradeclientoffercontent
-{
-    position:absolute;
-    top:20px;
-    left:0px;
-    width:320px;
-    height:80px;
-}
-
-.tradeoffer
-{
-    position:absolute;
-    top:200px;
-    left:0px;
-    width:320px;
 }
 
 #clerktradeclientpoolimg
@@ -467,30 +434,73 @@ body
     font-size:20px;
 }
 
+.tradeoffer
+{
+    position:absolute;
+    left:0px;
+    width:320px;
+    height:100px;
+}
+
+.myoffer
+{
+    top:200px;
+}
+
+.theiroffer
+{
+    top:100px;
+}
+
+.tradeofferprompt
+{
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:150px;
+    height:100px;
+    font-size:40px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+.tradeoffercontent
+{
+    position:absolute;
+    top:0px;
+    left:135px;
+    width:185px;
+    height:100px;
+}
+
+.tradeofferimg
+{
+    position:absolute;
+    top:5px;
+    left:0px;
+    width:95px;
+    height:95px;
+}
+
 #clerktradeclientofferimg
 {
     position:absolute;
     top:0px;
-    left:115px;
-    width:90px;
-    height:90px;
+    left:0px;
+    width:100px;
+    height:100px;
 }
 
 #clerktradeclientofferqty
 {
     position:absolute;
-    left:180px;
-    top:40px;
-    font-size:30px;
-}
-
-#clerktradeofferimg
-{
-    position:absolute;
-    top:0px;
-    left:115px;
-    width:90px;
-    height:90px;
+    left:100px;
+    top:50px;
+    font-size:40px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
 }
 
 #clerktradepool
@@ -564,24 +574,6 @@ body
     width:38px;
     text-align:center;
     font-size:15px;
-}
-
-#huntertradeclientofferimg
-{
-    position:absolute;
-    top:0px;
-    left:115px;
-    width:90px;
-    height:90px;
-}
-
-#huntertradeofferimg
-{
-    position:absolute;
-    top:0px;
-    left:80px;
-    width:160px;
-    height:160px;
 }
 
 #huntertradeofferqty

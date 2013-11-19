@@ -128,15 +128,18 @@ window.onerror = function(msg, url, linenumber)
                 <div id='clerktradeclientpoolqty'></div>
             </div>
         </div>
-        <div id='clerktradeclientoffer' class='tradeclientoffer'>
-            <div id='clerktradeclientoffertitle' class='tradeclientoffertitle'>Offering:</div>
-            <div id='clerktradeclientoffercontent' class='tradeclientoffercontent'>
-                <img id='clerktradeclientofferimg'/>
+        <div id='clerktradeclientoffer' class='tradeoffer theiroffer'>
+            <div class='tradeofferprompt'>Their Offer:</div>
+            <div class='tradeoffercontent'>
+                <img id='clerktradeclientofferimg' class='tradeofferimg'/>
                 <div id='clerktradeclientofferqty'></div>
             </div>
         </div>
-        <div id='clerktradeoffer' class='tradeoffer'>
-            <img id="clerktradeofferimg"/>
+        <div id='clerktradeoffer' class='tradeoffer myoffer'>
+            <div class='tradeofferprompt'>Your Offer:</div>
+            <div class='tradeoffercontent'>
+                <img id="clerktradeofferimg" class='tradeofferimg'/>
+            </div>
             <div id='clerktradepool'>
             </div>
         </div>
@@ -183,18 +186,21 @@ window.onerror = function(msg, url, linenumber)
             <div id='huntertradeclientpool' class='tradeclientpool'>
             </div>
         </div>
-        <div id='huntertradeclientoffer' class='tradeclientoffer'>
-            <div id='huntertradeclientoffertitle' class='tradeclientoffertitle'>Offering:</div>
-            <div id='huntertradeclientoffercontent' class='tradeclientoffercontent'>
-                <img id='huntertradeclientofferimg'/>
+        <div id='huntertradeclientoffer' class='tradeoffer theiroffer'>
+            <div class='tradeofferprompt'>Their Offer:</div>
+            <div class='tradeoffercontent'>
+                <img id='huntertradeclientofferimg' class='tradeofferimg'/>
             </div>
         </div>
-        <div id='huntertradeoffer' class='tradeoffer'>
-            <img id='huntertradeofferimg'/>
-            <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
-            <div id='huntertradeofferqty'></div>
-            <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
-            <div id='huntertradeoffertotal'></div>
+        <div id='huntertradeoffer' class='tradeoffer myoffer'>
+            <div class='tradeofferprompt'>Your Offer:</div>
+            <div class='tradeoffercontent'>
+                <img id='huntertradeofferimg' class='tradeofferimg'/>
+                <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
+                <div id='huntertradeofferqty'></div>
+                <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
+                <div id='huntertradeoffertotal'></div>
+            </div>
         </div>
         <div id='huntertradebutton' class='bottombutton'>
             <div id='huntertradebuttontext' class="bottombuttontext">Ready to Trade</div><img src='assets/forward_arrow.png' class='forwardarrow' />

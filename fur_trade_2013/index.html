@@ -196,9 +196,12 @@ window.onerror = function(msg, url, linenumber)
             <div class='tradeofferprompt'>Your Offer:</div>
             <div class='tradeoffercontent'>
                 <img id='huntertradeofferimg' class='tradeofferimg'/>
-                <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
                 <div id='huntertradeofferqty'></div>
+            </div>
+            <div id='huntertradepool'>
+                <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
                 <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
+                <div id='huntertradeofferqty2'></div>
                 <div id='huntertradeoffertotal'></div>
             </div>
         </div>

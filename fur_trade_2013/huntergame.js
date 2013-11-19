@@ -193,6 +193,7 @@ var HunterGame = function()
     function formatHunterOffer()
     {
         document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
+        document.getElementById('huntertradeofferqty2').innerHTML = "x"+fursOffering;
     }
 
     function getClerkTradeCell(item)

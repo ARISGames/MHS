@@ -139,7 +139,7 @@ window.onerror = function(msg, url, linenumber)
             </div>
         </div>
         <div id='clerktradebutton' class='bottombutton'>
-            <div id='clerktradebuttontext' class="bottombuttontext">Ready</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+            <div id='clerktradebuttontext' class="bottombuttontext">Ready to Trade</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
 
     </div>
@@ -180,16 +180,24 @@ window.onerror = function(msg, url, linenumber)
         <div id='huntertradeclient' class='tradeclient'>
             <img id='huntertradeclientimg' class='tradeclientimg' />
             <div id='huntertradeclientname' class='tradeclientname'></div>
-            <div id='huntertradeclientpool' class='tradeclientpool'></div>
+            <div id='huntertradeclientpool' class='tradeclientpool'>
+            </div>
         </div>
         <div id='huntertradeclientoffer' class='tradeclientoffer'>
             <div id='huntertradeclientoffertitle' class='tradeclientoffertitle'>Offering:</div>
-            <div id='huntertradeclientoffercontent' class='tradeclientoffercontent'></div>
+            <div id='huntertradeclientoffercontent' class='tradeclientoffercontent'>
+                <img id='huntertradeclientofferimg'/>
+            </div>
         </div>
         <div id='huntertradeoffer' class='tradeoffer'>
+            <img id='huntertradeofferimg'/>
+            <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
+            <div id='huntertradeofferqty'></div>
+            <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
+            <div id='huntertradeoffertotal'></div>
         </div>
         <div id='huntertradebutton' class='bottombutton'>
-            <div id='huntertradebuttontext' class="bottombuttontext">Ready</div><img src='assets/forward_arrow.png' class='forwardarrow' />
+            <div id='huntertradebuttontext' class="bottombuttontext">Ready to Trade</div><img src='assets/forward_arrow.png' class='forwardarrow' />
         </div>
 
     </div>

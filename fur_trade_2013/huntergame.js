@@ -6,8 +6,6 @@ var HunterGame = function()
     var harvestButton = document.getElementById('harvestbutton');
     var harvestButtonText = document.getElementById('harvestbuttontext');
     var hunterGuruButton = document.getElementById("huntergurubutton");
-    var hunterTradeCounter = document.getElementById('huntertradecounter');
-    var hunterTradeHave = document.getElementById('huntertradehave');
 
     //trade vars
     var fursOffering = 0;
@@ -60,6 +58,9 @@ var HunterGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
+                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    connectedPlayerOfferId = data.offer;
+                    formatHunterClientOffer();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
@@ -147,7 +148,47 @@ var HunterGame = function()
         ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
         ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
 
-        //if(itemPelt.qty == 0) ftv.currentTradeBtnView.style.display = 'block';
+        document.getElementById('huntertradeclientpool').innerHTML = "";
+        var offset = 5;
+        for(var i = 0; i < connectedPlayerInventory.length; i++)
+        {
+            var itemCell = getClerkTradeCell(ftm.itemForItemId(connectedPlayerInventory[i]));
+            itemCell.style.left = offset+"px";
+            offset+=40;
+            document.getElementById('huntertradeclientpool').appendChild(itemCell);
+        }
+
+        document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
+
+        document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
+        formatHunterOffer();
+        document.getElementById('huntertradeoffertotal').innerHTML = "x"+itemPelt.qty;
+    }
+
+    function formatHunterClientOffer()
+    {
+        document.getElementById('huntertradeclientofferimg').src = 'assets/'+ftm.itemForItemId(connectedPlayerOfferId).imageName;
+    }
+
+    function formatHunterOffer()
+    {
+        document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
+    }
+
+    function getClerkTradeCell(item)
+    {
+        var cell = document.createElement('div');
+        cell.setAttribute('class','huntertradeclientcell');
+        var img = document.createElement('img');
+        img.setAttribute('class','huntertradeclientcellimg');
+        img.src = 'assets/'+item.imageName;
+        var label = document.createElement('div');
+        label.setAttribute('class','huntertradeclientcelllabel');
+        label.innerHTML = item.name;
+        cell.appendChild(img);
+        cell.appendChild(label);
+
+        return cell;
     }
 
     function confirmTrade()
@@ -208,22 +249,20 @@ var HunterGame = function()
         }
     }
 
-    self.hunterIncrement = function()
+    self.incrementTouched = function()
     {
         if(fursOffering+1 <= itemPelt.qty)
-        {
             fursOffering++;
-            hunterTradeCounter.innerHTML = "Trade:"+fursOffering;
-        }
+        formatHunterOffer();
+        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
     }
 
-    self.hunterDecrement = function()
+    self.decrementTouched = function()
     {
         if(fursOffering-1 >= 0)
-        {
             fursOffering--;
-            hunterTradeCounter.innerHTML = "Trade:"+fursOffering;
-        }
+        formatHunterOffer();
+        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
     }
 
     var events = ["NEW_PLAYER","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","ALTER_OFFER","TRADE_READY"];

@@ -62,6 +62,9 @@ var ClerkGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
+                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    connectedPlayerOfferQty = data.offer;
+                    formatClerkClientOffer();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
@@ -117,7 +120,7 @@ var ClerkGame = function()
         document.getElementById('clerktradeclientpoolqty').innerHTML = "x"+connectedPlayerTotalQty;
 
         document.getElementById('clerktradeclientofferimg').src = 'assets/'+itemPelt.imageName;
-        document.getElementById('clerktradeclientofferqty').innerHTML = "x"+connectedPlayerOfferQty;
+        formatClerkClientOffer();
 
         document.getElementById('clerktradepool').innerHTML = "";
         var offset = 10;
@@ -131,7 +134,16 @@ var ClerkGame = function()
                 document.getElementById('clerktradepool').appendChild(itemCell);
             }
         }
-        if(ftm.qtyNonPeltItems() == 0) ftv.currentTradeBtnView.style.display = 'block';
+    }
+
+    function formatClerkClientOffer()
+    {
+        document.getElementById('clerktradeclientofferqty').innerHTML = "x"+connectedPlayerOfferQty;
+    }
+
+    function formatClerkOffer()
+    {
+        document.getElementById('clerktradeofferimg').src = 'assets/'+ftm.itemForItemId(itemOffering).imageName;
     }
 
     function getTradeCell(item)
@@ -216,7 +228,7 @@ var ClerkGame = function()
     var clerkTradeItemSelected = function(item)
     {
         itemOffering = item.itemId;
-        document.getElementById('clerktradeofferimg').src = 'assets/'+item.imageName;
+        formatClerkOffer();
         eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, itemOffering);
     }
 }

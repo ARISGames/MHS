@@ -9,7 +9,6 @@ var FurTradeViews = function()
     self.currentTradeView    = null;
     self.currentTradeClientImageView = null;
     self.currentTradeClientNameView  = null;
-    self.currentTradeBtnView = null;
     self.currentGuruView     = null;
     self.currentGuruTalkView = null;
 
@@ -20,7 +19,6 @@ var FurTradeViews = function()
     self.clerkTradeView    = document.getElementById('clerktrade');
     self.clerkTradeClientImageView = document.getElementById('clerktradeclientimg');
     self.clerkTradeClientNameView  = document.getElementById('clerktradeclientname');
-    self.clerkTradeBtnView = document.getElementById('clerktradebutton');
     self.clerkGuruView     = document.getElementById('clerkguru'); self.clerkGuruView.progress = 50;
     self.clerkGuruTalkView = document.getElementById('clerkgurutalk');
 
@@ -31,7 +29,6 @@ var FurTradeViews = function()
     self.hunterTradeView    = document.getElementById('huntertrade');
     self.hunterTradeClientImageView = document.getElementById('huntertradeclientimg');
     self.hunterTradeClientNameView  = document.getElementById('huntertradeclientname');
-    self.hunterTradeBtnView = document.getElementById('huntertradebutton');
     self.hunterGuruView     = document.getElementById('hunterguru'); self.hunterGuruView.progress = 50;
     self.hunterGuruTalkView = document.getElementById('huntergurutalk');
 
@@ -92,7 +89,6 @@ var FurTradeViews = function()
             self.currentTradeView     = self.hunterTradeView;
             self.currentTradeClientImageView = self.hunterTradeClientImageView;
             self.currentTradeClientNameView  = self.hunterTradeClientNameView;
-            self.currentTradeBtnView  = self.hunterTradeBtnView;
             self.currentGuruView      = self.hunterGuruView;
             self.currentGuruTalkView  = self.hunterGuruTalkView;
         }
@@ -105,7 +101,6 @@ var FurTradeViews = function()
             self.currentTradeView     = self.clerkTradeView;
             self.currentTradeClientImageView = self.clerkTradeClientImageView;
             self.currentTradeClientNameView  = self.clerkTradeClientNameView;
-            self.currentTradeBtnView  = self.clerkTradeBtnView;
             self.currentGuruView      = self.clerkGuruView;
             self.currentGuruTalkView  = self.clerkGuruTalkView;
         }
@@ -137,7 +132,6 @@ var FurTradeViews = function()
         if(self.currentGetView)       self.currentGetView.style.display      = 'none';
         if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'block';
         if(self.currentTradeView)     self.currentTradeView.style.display    = 'none';
-        if(self.currentTradeBtnView)  self.currentTradeBtnView.style.display = 'none';
     }
 
     self.displayTrade = function()
@@ -146,7 +140,6 @@ var FurTradeViews = function()
         if(self.currentGetView)       self.currentGetView.style.display       = 'none';
         if(self.currentLoungeView)    self.currentLoungeView.style.display    = 'none';
         if(self.currentTradeView)     self.currentTradeView.style.display     = 'block';
-        if(self.currentTradeBtnView)  self.currentTradeBtnView.style.display  = 'none';
     }
 
     self.displayGuruWithMessage = function(message)

@@ -37,6 +37,16 @@ var EventHandler = function()
         if(i != -1) self.visiblePlayers.splice(i,1);
     }
 
+    self.sendPlayerPing = function(player, receiverId)
+    {
+        pm.sendData("PLAYER_PING",requestString(player,receiverId,"",""));
+    }
+    self.playerPingReceived = function(request)
+    {
+        var data = JSON.parse(request);
+        if(data.player.playerId == ftm.player.playerId) return;
+    }
+
     self.sendIdentification = function(player)
     {
         pm.sendData("IDENTIFICATION",requestString(player,"","",""));
@@ -92,8 +102,8 @@ var EventHandler = function()
 
     self.register = function()
     {
-        var events = ["NEW_PLAYER", "PLAYER_LEFT","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","ALTER_OFFER","TRADE_READY"];
-        var callbacks = [self.newPlayerReceived, self.playerLeftReceived, self.identificationReceived, self.tradeRequestReceived, self.tradeAcceptReceived, self.alterOfferReceived, self.tradeReadyReceived];
+        var events = ["NEW_PLAYER", "PLAYER_LEFT","PLAYER_PING","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","ALTER_OFFER","TRADE_READY"];
+        var callbacks = [self.newPlayerReceived, self.playerLeftReceived, self.playerPingReceived, self.identificationReceived, self.tradeRequestReceived, self.tradeAcceptReceived, self.alterOfferReceived, self.tradeReadyReceived];
 
         //USING HARD CODED CONSTANTS FROM 
         // ../../../server/config.class.php

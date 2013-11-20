@@ -40,6 +40,25 @@ var ClerkGame = function()
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
                 }
+                eh.playerLeftReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    var i = eh.playerPositionInVisiblePlayers(data.player);
+                    if(i != -1) eh.visiblePlayers.splice(i,1);
+                    if(data.player.playerId == connectedPlayer.playerId)
+                    {
+                        cleanConnection();
+                        formatClerkLounge();
+                    }
+                }
+                eh.playerPingReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    timeSinceLastInteraction = new Date();
+                }
                 eh.tradeRequestReceived = function(request)
                 {
                     var data = JSON.parse(request);
@@ -55,6 +74,7 @@ var ClerkGame = function()
 
                     formatClerkTrade();
                     ftv.displayTrade();
+                    startDoomsdayTimer();
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
@@ -70,6 +90,7 @@ var ClerkGame = function()
                     imReady = false;
                     theyreReady = false;
                     formatClerkReady();
+                    timeSinceLastInteraction = new Date();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
@@ -82,11 +103,13 @@ var ClerkGame = function()
 
                     if(imReady) confirmTrade();
                     formatClerkReady();
+                    timeSinceLastInteraction = new Date();
                 }
 
                 eh.register();
                 eh.sendNewPlayer(ftm.player);
                 eh.sendIdentification(ftm.player);
+                window.addEventListener('beforeunload', function() { eh.sendPlayerLeft(ftm.player); }, false);
 
                 formatClerkLounge();
                 ftv.displayGuruWithMessage("We've <b>opened our shop</b>! Now, we simply wait for a <b>trapper</b> looking to trade! (Look around to see if any of your friends are <b>trappers</b> who need help getting to <b>level 2</b>.)");
@@ -98,6 +121,27 @@ var ClerkGame = function()
                 ftv.displayGet();
             }
         }
+    }
+
+    var timeSinceLastInteraction = new Date();
+    var doomsdayShouldTick = false;
+    function startDoomsdayTimer()
+    {
+        timeSinceLastInteraction = new Date();
+        doomsdayShouldTick = true;
+        tickDoomsday();
+    }
+    function tickDoomsday()
+    {
+        eh.sendPlayerPing(ftm.player, connectedPlayer.playerId);
+        if((new Date() - timeSinceLastInteraction)/1000 > 10)
+        {
+            cleanConnection();
+            formatClerkLounge();
+            ftv.displayLounge();
+        }
+        if(doomsdayShouldTick)
+            setTimeout(tickDoomsday, 5000);
     }
 
     var formatClerkGet = function()
@@ -116,6 +160,16 @@ var ClerkGame = function()
             buyButtonText.innerHTML = "Continue ";
             buyButton.ontouchstart = function() { ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!"); };
         }
+    }
+
+    function cleanConnection()
+    {
+        doomsdayShouldTick = false;
+        itemOffering = -1;
+        connectedPlayer = null;
+        connectedPlayerTotalQty = 0;
+        connectedPlayerOfferQty = 0;
+        eh.visiblePlayers = [];
     }
 
     function formatClerkLounge()

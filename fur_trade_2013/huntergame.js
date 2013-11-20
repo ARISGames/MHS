@@ -40,6 +40,25 @@ var HunterGame = function()
 
                     formatHunterLounge();
                 }
+                eh.playerLeftReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    var i = eh.playerPositionInVisiblePlayers(data.player);
+                    if(i != -1) eh.visiblePlayers.splice(i,1);
+                    if(data.player.playerId == connectedPlayer.playerId)
+                    {
+                        cleanConnection();
+                        formatHunterLounge();
+                    }
+                }
+                eh.playerPingReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    timeSinceLastInteraction = new Date();
+                }
                 eh.tradeRequestReceived = function(request)
                 {
                     //should never get this
@@ -55,6 +74,7 @@ var HunterGame = function()
 
                     formatHunterTrade();
                     ftv.displayTrade();
+                    startDoomsdayTimer();
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -66,6 +86,7 @@ var HunterGame = function()
                     imReady = false;
                     theyreReady = false;
                     formatHunterReady();
+                    timeSinceLastInteraction = new Date();
                 }
                 eh.tradeReadyReceived = function(request)
                 {
@@ -78,12 +99,14 @@ var HunterGame = function()
 
                     if(imReady) confirmTrade();
                     formatHunterReady();
+                    timeSinceLastInteraction = new Date();
                 }
 
                 cleanConnection();
                 eh.register();
                 eh.sendNewPlayer(ftm.player);
                 eh.sendIdentification(ftm.player);
+                window.addEventListener('beforeunload', function() { eh.sendPlayerLeft(ftm.player); }, false);
 
                 formatHunterLounge();
                 ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are <b>clerks</b> who need help getting to <b>level 2</b>). Touch a clerk on the list to <b>open a trade</b>!");
@@ -95,6 +118,27 @@ var HunterGame = function()
                 ftv.displayGet();
             }
         }
+    }
+
+    var timeSinceLastInteraction = new Date();
+    var doomsdayShouldTick = false;
+    function startDoomsdayTimer()
+    {
+        timeSinceLastInteraction = new Date();
+        doomsdayShouldTick = true;
+        tickDoomsday();
+    }
+    function tickDoomsday()
+    {
+        eh.sendPlayerPing(ftm.player, connectedPlayer.playerId);
+        if((new Date() - timeSinceLastInteraction)/1000 > 10)
+        {
+            cleanConnection();
+            formatHunterLounge();
+            ftv.displayLounge();
+        }
+        if(doomsdayShouldTick)
+            setTimeout(tickDoomsday, 5000);
     }
 
     function formatHunterGet()
@@ -115,6 +159,7 @@ var HunterGame = function()
 
     function cleanConnection()
     {
+        doomsdayShouldTick = false;
         fursOffering = 0;
         connectedPlayer = null;
         connectedPlayerInventory = [];

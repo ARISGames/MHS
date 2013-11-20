@@ -27,7 +27,7 @@ ARIS.ready = function() { partReady(); };
 function begin()
 {
     shm = new SodHouseModel();
-    shv = new SodHouseView();
+    shv = new SodHouseViews();
     shm.loadStateFromARIS(stateReceived);
 }
 
@@ -43,6 +43,7 @@ function stateReceived()
 
 function vidComplete()
 {
+    ARIS.exitToScanner("Scan something in the Sod House!");
 }
 
 window.addEventListener('load', partReady, false);

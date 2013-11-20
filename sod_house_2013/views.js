@@ -1,4 +1,4 @@
-var FurTradeViews = function()
+var SodHouseViews = function()
 {
     var self = this;
 

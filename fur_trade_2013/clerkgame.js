@@ -135,7 +135,7 @@ var ClerkGame = function()
         formatClerkClientOffer();
 
         document.getElementById('clerktradepool').innerHTML = "";
-        var offset = 10;
+        var offset = 0;
         for(var i = 0; i < items.length; i++)
         {
             if(items[i].qty > 0 && items[i].itemId != itemPelt.itemId)

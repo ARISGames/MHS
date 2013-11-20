@@ -201,7 +201,7 @@ var HunterGame = function()
 
         document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
         formatHunterOffer();
-        document.getElementById('huntertradeoffertotal').innerHTML = "x"+itemPelt.qty;
+        document.getElementById('huntertradeoffertotal').innerHTML = "In your Inventory:"+itemPelt.qty;
     }
 
     function formatHunterClientOffer()
@@ -212,7 +212,6 @@ var HunterGame = function()
     function formatHunterOffer()
     {
         document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
-        document.getElementById('huntertradeofferqty2').innerHTML = "x"+fursOffering;
     }
 
     function getClerkTradeCell(item)

@@ -64,7 +64,7 @@ var ClerkGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
                     connectedPlayerOfferQty = data.offer;
                     formatClerkClientOffer();
                     imReady = false;
@@ -75,7 +75,7 @@ var ClerkGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.receiverId != ftm.player.playerId) return;
-                    if(data.player.playerId != connectedPlayer.playerId) return;
+                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
                     if(data.offer != connectedPlayerOfferQty)
                         eh.alterOfferReceived(request);
                     theyreReady = true;

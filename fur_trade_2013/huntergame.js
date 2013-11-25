@@ -281,11 +281,11 @@ var HunterGame = function()
         theyreReady = false;
 
         var item = ftm.itemForItemId(connectedPlayerOfferId);
-        item.qty         += 1;
-        itemPelt.qty     -= fursOffering;
+        item.qty     += 1;
+        itemPelt.qty -= fursOffering;
 
-        ARIS.setItemCount(item.itemId,        item.qty);
-        ARIS.setItemCount(itemPelt.itemId,    itemPelt.qty);
+        ARIS.setItemCount(item.itemId,     item.qty);
+        ARIS.setItemCount(itemPelt.itemId, itemPelt.qty);
 
         if(ftm.qtyNonPeltItems() >= 4)
         {
@@ -300,7 +300,7 @@ var HunterGame = function()
             ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); };
         }
-        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>!");
+        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" items</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
 
         fursOffering = 0;
         connectedPlayerOfferId = -1;

@@ -378,36 +378,6 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
-.tradeclient
-{
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:320px;
-    height:100px;
-}
-
-.tradeclientimg
-{
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:80px;
-    height:80px;
-}
-
-.tradeclientname
-{
-    position:absolute;
-    top:10px;
-    left:100px;
-    height:30px;
-    font-size:30px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
 .tradeoffer
 {
     position:absolute;
@@ -416,9 +386,46 @@ body
     height:100px;
 }
 
-.myoffer
+.tradeplayername
 {
-    top:200px;
+    position:absolute;
+    top:10px;
+    left:0px;
+    width:320px;
+    height:15px;
+    padding-bottom:5px; /*remember to alter height in conjunction with this*/
+    font-size:20px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:2px 2px 5px #000000;
+    background-color:rgba(200,200,200,0.75);
+}
+
+.tradeplayerimg
+{
+    position:absolute;
+    top:0px;
+    left:10px;
+    width:40px;
+    height:40px;
+}
+
+.tradeoffercontent
+{
+    position:absolute;
+    top:40px;
+    left:0px;
+    width:320px;
+    height:60px;
+}
+
+.tradeofferimg
+{
+    position:absolute;
+    top:0px;
+    left:130px;
+    width:60px;
+    height:60px;
 }
 
 .theiroffer
@@ -426,51 +433,25 @@ body
     top:100px;
 }
 
-.tradeofferprompt
+.myoffer
 {
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:150px;
-    height:100px;
-    font-size:40px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    top:200px;
 }
 
-.tradeoffercontent
+.tradepool
 {
     position:absolute;
-    top:0px;
-    left:135px;
-    width:185px;
-    height:100px;
-}
-
-.tradeofferimg
-{
-    position:absolute;
-    top:5px;
+    top:300px;
     left:0px;
-    width:95px;
-    height:95px;
-}
-
-#clerktradeclientofferimg
-{
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:100px;
+    width:320px;
     height:100px;
 }
 
 #clerktradeclientofferqty
 {
     position:absolute;
-    left:100px;
-    top:50px;
+    left:198px;
+    top:18px;
     font-size:40px;
     font-family:gotham_font;
     color:#F58124;
@@ -479,11 +460,8 @@ body
 
 #clerktradepool
 {
-    position:absolute;
-    top:100px;
     left:10px;
     width:300px;
-    height:100px;
     overflow-x:scroll;
     overflow-y:hidden;
 }
@@ -555,15 +533,6 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
-#huntertradepool
-{
-    position:absolute;
-    top:100px;
-    left:0px;
-    width:320px;
-    height:100px;
-}
-
 #huntertradeofferqty2
 {
     position:absolute;
@@ -575,23 +544,23 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
-#huntertradeofferinc
-{
-    position:absolute;
-    left:200px;
-    top:0px;
-    font-size:120px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
 #huntertradeofferdec
 {
     position:absolute;
     left:70px;
     top:0px;
-    font-size:120px;
+    font-size:40px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#huntertradeofferinc
+{
+    position:absolute;
+    left:200px;
+    top:0px;
+    font-size:40px;
     font-family:gotham_font;
     color:#F58124;
     text-shadow:5px 5px 10px #000000;

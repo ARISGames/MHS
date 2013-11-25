@@ -226,8 +226,17 @@ var HunterGame = function()
 
     function formatHunterTrade()
     {
-        ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
-        ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        document.getElementById('huntertradeimg').src       = ftm.player.photoURL;
+        document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
+        document.getElementById('huntertradename').innerHTML       = spaces+ftm.player.displayname;
+        document.getElementById('huntertradeclientname').innerHTML = spaces+connectedPlayer.displayname;
+        ftv.haveDisplay.style.fontSize = "40px";
+        ftv.haveDisplay.style.height = "60px";
+        ftv.haveDisplay.innerHTML = "Items Gained:"+ftm.qtyNonPeltItems();
+        ftv.wantDisplay.style.textAlign = "right";
+        ftv.wantDisplay.style.top = "70px";
+        ftv.wantDisplay.innerHTML = "Goal:4&nbsp;&nbsp;";
 
         document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
 

@@ -120,24 +120,23 @@ window.onerror = function(msg, url, linenumber)
     </div>
     <div id='clerktrade' class='trade full_screen'>
 
-        <div id='clerktradeclient' class='tradeclient'>
-            <img id='clerktradeclientimg' class='tradeclientimg' />
-            <div id='clerktradeclientname' class='tradeclientname'></div>
-        </div>
-        <div id='clerktradeclientoffer' class='tradeoffer theiroffer'>
-            <div class='tradeofferprompt'>Their Offer:</div>
+        <div id='clerktradeclient' class='tradeoffer theiroffer'>
+            <div id='clerktradeclientname' class='tradeplayername'></div>
+            <img id='clerktradeclientimg' class='tradeplayerimg' />
             <div class='tradeoffercontent'>
                 <img id='clerktradeclientofferimg' class='tradeofferimg'/>
                 <div id='clerktradeclientofferqty'></div>
             </div>
         </div>
         <div id='clerktradeoffer' class='tradeoffer myoffer'>
-            <div class='tradeofferprompt'>Your Offer:</div>
+            <div id='clerktradename' class='tradeplayername'></div>
+            <img id='clerktradeimg' class='tradeplayerimg' />
             <div class='tradeoffercontent'>
-                <img id="clerktradeofferimg" class='tradeofferimg'/>
+                <img id='clerktradeofferimg' class='tradeofferimg'/>
+                <div id='clerktradeofferqty'></div>
             </div>
-            <div id='clerktradepool'>
-            </div>
+        </div>
+        <div id='clerktradepool' class='tradepool'>
         </div>
         <div id='clerktradebutton' class='bottombutton' ontouchstart="game.readyTouched()">
             <div id='clerktradebuttontext' class="bottombuttontext">Ready to Trade</div><img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -176,27 +175,25 @@ window.onerror = function(msg, url, linenumber)
     </div>
     <div id='huntertrade' class='trade full_screen'>
 
-        <div id='huntertradeclient' class='tradeclient'>
-            <img id='huntertradeclientimg' class='tradeclientimg' />
-            <div id='huntertradeclientname' class='tradeclientname'></div>
-        </div>
-        <div id='huntertradeclientoffer' class='tradeoffer theiroffer'>
-            <div class='tradeofferprompt'>Their Offer:</div>
+        <div id='huntertradeclient' class='tradeoffer theiroffer'>
+            <div id='huntertradeclientname' class='tradeplayername'></div>
+            <img id='huntertradeclientimg' class='tradeplayerimg' />
             <div class='tradeoffercontent'>
                 <img id='huntertradeclientofferimg' class='tradeofferimg'/>
             </div>
         </div>
         <div id='huntertradeoffer' class='tradeoffer myoffer'>
-            <div class='tradeofferprompt'>Your Offer:</div>
+            <div id='huntertradename' class='tradeplayername'></div>
+            <img id='huntertradeimg' class='tradeplayerimg' />
             <div class='tradeoffercontent'>
                 <img id='huntertradeofferimg' class='tradeofferimg'/>
                 <div id='huntertradeofferqty'></div>
             </div>
-            <div id='huntertradepool'>
-                <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
-                <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
-                <div id='huntertradeoffertotal'></div>
-            </div>
+        </div>
+        <div id='huntertradepool' class='tradepool'>
+            <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
+            <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
+            <div id='huntertradeoffertotal'></div>
         </div>
         <div id='huntertradebutton' class='bottombutton' ontouchstart="game.readyTouched()">
             <div id='huntertradebuttontext' class="bottombuttontext">Ready to Trade</div><img src='assets/forward_arrow.png' class='forwardarrow' />

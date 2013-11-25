@@ -173,8 +173,17 @@ var ClerkGame = function()
 
     function formatClerkTrade()
     {
-        ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
-        ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        document.getElementById('clerktradeimg').src       = ftm.player.photoURL;
+        document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
+        document.getElementById('clerktradename').innerHTML       = spaces+ftm.player.displayname;
+        document.getElementById('clerktradeclientname').innerHTML = spaces+connectedPlayer.displayname;
+        ftv.haveDisplay.style.fontSize = "40px";
+        ftv.haveDisplay.style.height = "60px";
+        ftv.haveDisplay.innerHTML = "Pelts Gained:"+itemPelt.qty;
+        ftv.wantDisplay.style.textAlign = "right";
+        ftv.wantDisplay.style.top = "70px";
+        ftv.wantDisplay.innerHTML = "Goal:20&nbsp;&nbsp;";
 
         document.getElementById('clerktradeclientofferimg').src = 'assets/'+itemPelt.imageName;
         formatClerkClientOffer();

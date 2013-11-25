@@ -239,10 +239,9 @@ var HunterGame = function()
         ftv.wantDisplay.innerHTML = "Goal:4&nbsp;&nbsp;";
 
         document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
-
-        document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
         formatHunterOffer();
         document.getElementById('huntertradeoffertotal').innerHTML = "In your Inventory:"+itemPelt.qty;
+        formatHunterClientOffer();
     }
 
     function formatHunterClientOffer()
@@ -267,7 +266,7 @@ var HunterGame = function()
         ARIS.setItemCount(item.itemId,     item.qty);
         ARIS.setItemCount(itemPelt.itemId, itemPelt.qty);
 
-        if(ftm.qtyNonPeltItems() >= 4)
+        if(ftm.qtyNonPeltItems() >= 4 && ftm.currentLevel == 2)
         {
             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);

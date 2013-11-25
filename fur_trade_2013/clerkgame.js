@@ -200,6 +200,9 @@ var ClerkGame = function()
                 document.getElementById('clerktradepool').appendChild(itemCell);
             }
         }
+
+        formatClerkClientOffer();
+        formatClerkOffer();
     }
 
     function formatClerkClientOffer()
@@ -241,7 +244,7 @@ var ClerkGame = function()
         ARIS.setItemCount(item.itemId,item.qty);
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
-        if(itemPelt.qty >= 20)
+        if(itemPelt.qty >= 20 && ftm.currentLevel == 2)
         {
             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);

@@ -10,7 +10,6 @@ var HunterGame = function()
     //trade vars
     var fursOffering = 0;
     var connectedPlayer = null;
-    var connectedPlayerInventory = [];
     var connectedPlayerOfferId = -1;
     var imReady = false;
     var theyreReady = false;
@@ -70,7 +69,6 @@ var HunterGame = function()
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
-                    connectedPlayerInventory = data.inventory;
 
                     formatHunterTrade();
                     ftv.displayTrade();
@@ -162,7 +160,6 @@ var HunterGame = function()
         doomsdayShouldTick = false;
         fursOffering = 0;
         connectedPlayer = null;
-        connectedPlayerInventory = [];
         connectedPlayerOfferId = -1;
         eh.visiblePlayers = [];
     }
@@ -224,23 +221,13 @@ var HunterGame = function()
 
     var loungeCellSelected = function(player)
     {
-        eh.sendTradeRequest(ftm.player, player.playerId, itemPelt.qty);
+        eh.sendTradeRequest(ftm.player, player.playerId);
     }
 
     function formatHunterTrade()
     {
         ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
         ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
-
-        document.getElementById('huntertradeclientpool').innerHTML = "";
-        var offset = 5;
-        for(var i = 0; i < connectedPlayerInventory.length; i++)
-        {
-            var itemCell = getClerkTradeCell(ftm.itemForItemId(connectedPlayerInventory[i]));
-            itemCell.style.left = offset+"px";
-            offset+=40;
-            document.getElementById('huntertradeclientpool').appendChild(itemCell);
-        }
 
         document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
 

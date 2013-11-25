@@ -408,32 +408,6 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
-.tradeclientpool
-{
-    position:absolute;
-    top:50px;
-    left:100px;
-    height:40px;
-    width:210px;
-}
-
-#clerktradeclientpoolimg
-{
-    position:absolute;
-    left:0px;
-    top:0px;
-    width:40px;
-    height:40px;
-}
-
-#clerktradeclientpoolqty
-{
-    position:absolute;
-    left:40px;
-    top:0px;
-    font-size:20px;
-}
-
 .tradeoffer
 {
     position:absolute;
@@ -540,12 +514,6 @@ body
     width:80px;
     text-align:center;
     font-size:15px;
-}
-
-#huntertradeclientpool
-{
-    overflow-x:scroll;
-    overflow-y:hidden;
 }
 
 .huntertradeclientcell

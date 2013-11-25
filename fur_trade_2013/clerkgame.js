@@ -11,7 +11,6 @@ var ClerkGame = function()
     //trade vars
     var itemOffering = -1;
     var connectedPlayer = null;
-    var connectedPlayerTotalQty = 0;
     var connectedPlayerOfferQty = 0;
     var imReady = false;
     var theyreReady = false;
@@ -66,11 +65,7 @@ var ClerkGame = function()
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
-                    connectedPlayerTotalQty = data.inventory;
-                    var inv = [];
-                    for(var i = 0; i < items.length; i++)
-                        if(items[i].qty > 0 && items[i].itemId != itemPelt.itemId) inv.push(items[i].itemId);
-                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId, inv);
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
 
                     formatClerkTrade();
                     ftv.displayTrade();
@@ -167,7 +162,6 @@ var ClerkGame = function()
         doomsdayShouldTick = false;
         itemOffering = -1;
         connectedPlayer = null;
-        connectedPlayerTotalQty = 0;
         connectedPlayerOfferQty = 0;
         eh.visiblePlayers = [];
     }
@@ -181,9 +175,6 @@ var ClerkGame = function()
     {
         ftv.currentTradeClientImageView.src = connectedPlayer.photoURL;
         ftv.currentTradeClientNameView.innerHTML = connectedPlayer.displayname;
-
-        document.getElementById('clerktradeclientpoolimg').src = 'assets/'+itemPelt.imageName;
-        document.getElementById('clerktradeclientpoolqty').innerHTML = "x"+connectedPlayerTotalQty;
 
         document.getElementById('clerktradeclientofferimg').src = 'assets/'+itemPelt.imageName;
         formatClerkClientOffer();

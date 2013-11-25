@@ -56,6 +56,8 @@ var Item = function(itemEnum)
     self.webPageId = -1;
     self.owner = null;
     self.name = "";
+    self.singular = "";
+    self.plural = "";
     self.imageName = "";
     self.peltCost = 0;
     self.qty = 0;
@@ -71,6 +73,8 @@ var Item = function(itemEnum)
             self.owner = roleHunter;
             self.peltCost = 1;
             self.name = "Beaver Pelt";
+            self.singular = "Beaver Pelt";
+            self.plural = "Beaver Pelts";
             self.imageName = "pelt.png";
             break;
         case itemEnumGun:
@@ -79,6 +83,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 10;
             self.name = "Gun";
+            self.singular = "Gun";
+            self.plural = "Guns";
             self.imageName = "gun.jpg";
             break;
         case itemEnumBeads:
@@ -86,7 +92,9 @@ var Item = function(itemEnum)
             self.webPageId = 3726;
             self.owner = roleClerk;
             self.peltCost = 3;
-            self.name = "Bead";
+            self.name = "Beads";
+            self.singular = "Bag of Beads";
+            self.plural = "Bags of Beads";
             self.imageName = "beads.jpg";
             break;
         case itemEnumBlanket:
@@ -95,6 +103,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 4;
             self.name = "Blanket";
+            self.singular = "Blanket";
+            self.plural = "Blankets";
             self.imageName = "blanket.jpg";
             break;
         case itemEnumKettle:
@@ -103,6 +113,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 5;
             self.name = "Kettle";
+            self.singular = "Kettle";
+            self.plural = "Kettles";
             self.imageName = "kettle.jpg";
             break;
         case itemEnumGunpowder:
@@ -111,6 +123,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Gunpowder";
+            self.singular = "Bag of Gunpowder";
+            self.plural = "Bags of Gunpowder";
             self.imageName = "gunpowder.jpg";
             break;
         case itemEnumMBalls:
@@ -119,6 +133,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Musket Balls";
+            self.singular = "Bag of Musket Balls";
+            self.plural = "Bags of Musket Balls";
             self.imageName = "bullets.jpg";
             break;
         case itemEnumAxeHead:
@@ -127,6 +143,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Axe Head";
+            self.singular = "Axe Head";
+            self.plural = "Axe Heads";
             self.imageName = "axehead.jpg";
             break;
         case itemEnumPlume:
@@ -135,6 +153,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Plume";
+            self.singular = "Plume";
+            self.plural = "Plumes";
             self.imageName = "plume.jpg";
             break;
         case itemEnumHoe:
@@ -143,6 +163,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Hoe";
+            self.singular = "Hoe";
+            self.plural = "Hoes";
             self.imageName = "hoe.jpg";
             break;
         case itemEnumFabric:
@@ -151,6 +173,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 3;
             self.name = "Fabric";
+            self.singular = "Sheet of Fabric";
+            self.plural = "Sheets of Fabric";
             self.imageName = "fabric.jpg";
             break;
         case itemEnumSpear:
@@ -159,6 +183,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Muskrat Spear";
+            self.singular = "Muskrat Spear";
+            self.plural = "Muskrat Spears";
             self.imageName = "spear.jpg";
             break;
         case itemEnumKnife:
@@ -167,6 +193,8 @@ var Item = function(itemEnum)
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Knife";
+            self.singular = "Knife";
+            self.plural = "Knives";
             self.imageName = "knife.jpg";
             break;
         default:

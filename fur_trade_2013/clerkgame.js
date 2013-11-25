@@ -146,7 +146,7 @@ var ClerkGame = function()
         if(ftm.webPageItem != itemPelt)
         {
             ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+ftm.webPageItem.peltCost;
-            sellerDialog.innerHTML = "I've got a <b>"+ftm.webPageItem.name+"</b> in stock... I'd be willing to part with it for the price of <b>"+ftm.webPageItem.peltCost+" pelts</b>. Whad'ya say?";
+            sellerDialog.innerHTML = "I've got a <b>"+ftm.webPageItem.singular+"</b> in stock... I'd be willing to part with it for the price of <b>"+ftm.webPageItem.peltCost+" pelts</b>. Whad'ya say?";
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }
         else
@@ -254,9 +254,9 @@ var ClerkGame = function()
             ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
         }
-        else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.name+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-        else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.name+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-        else if(item.peltCost < connectedPlayerOfferQty)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+item.name+"</b> for only <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! Keep this up!");
+        else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelts</b>! Try to get <b>more pelts</b> for your items!");
+        else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
+        else if(item.peltCost < connectedPlayerOfferQty)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+item.singular+"</b> for only <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! Keep this up!");
 
         connectedPlayerOfferQty = 0;
         itemOffering = -1;

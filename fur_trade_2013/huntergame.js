@@ -255,22 +255,6 @@ var HunterGame = function()
         document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
     }
 
-    function getClerkTradeCell(item)
-    {
-        var cell = document.createElement('div');
-        cell.setAttribute('class','huntertradeclientcell');
-        var img = document.createElement('img');
-        img.setAttribute('class','huntertradeclientcellimg');
-        img.src = 'assets/'+item.imageName;
-        var label = document.createElement('div');
-        label.setAttribute('class','huntertradeclientcelllabel');
-        label.innerHTML = item.name;
-        cell.appendChild(img);
-        cell.appendChild(label);
-
-        return cell;
-    }
-
     function confirmTrade()
     {
         imReady = false;
@@ -293,10 +277,10 @@ var HunterGame = function()
         }
         else if(itemPelt.qty == 0)
         {
-            ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>, but it looks like <b>you're out of pelts</b>!");
+            ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); };
         }
-        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.name+"</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" items</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
+        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" items</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
 
         fursOffering = 0;
         connectedPlayerOfferId = -1;
@@ -308,6 +292,7 @@ var HunterGame = function()
         itemPelt.qty++;//500;
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
+        ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         ftv.displaydelta(itemPelt.name,1);
 
         harvestButtonText.innerHTML = "Leave ";

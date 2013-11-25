@@ -226,7 +226,7 @@ var HunterGame = function()
 
     function formatHunterTrade()
     {
-        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('huntertradeimg').src       = ftm.player.photoURL;
         document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('huntertradename').innerHTML       = spaces+ftm.player.displayname;
@@ -302,7 +302,7 @@ var HunterGame = function()
         {
             ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
             ftm.currentLevel = 2;
-            ftv.displayGuruWithMessage("10 beaver pelts should be enough for us to trade... Let's <b>find a clerk</b>- someone gathering items from Minnesota!");
+            ftv.displayGuruWithMessage("10 beaver pelts should be enough for us to trade... Let's <b>find a clerk</b>- someone gathering items from Europe!");
             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
         }
     }

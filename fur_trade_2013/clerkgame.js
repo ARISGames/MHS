@@ -173,7 +173,7 @@ var ClerkGame = function()
 
     function formatClerkTrade()
     {
-        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('clerktradeimg').src       = ftm.player.photoURL;
         document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('clerktradename').innerHTML       = spaces+ftm.player.displayname;

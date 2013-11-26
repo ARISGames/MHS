@@ -258,8 +258,8 @@ var FurTradeModel = function()
             //alert(player.username);
             //alert(player.displayname);
             self.player = player;
-            if(self.currentRole == roleClerk) self.player.role = "CLERK";
-            if(self.currentRole == roleHunter) self.player.role = "TRAPPER";
+            if(self.currentRole == roleClerk) self.player.role = "clerk";
+            if(self.currentRole == roleHunter) self.player.role = "trapper";
         }
 
         var params = ARIS.parseURLParams(document.URL);
@@ -347,11 +347,13 @@ var FurTradeModel = function()
         if(data.item_qty%2 == 0)
         {
             self.currentRole = roleClerk;
+            if(self.player) self.player.role = "clerk";
             decrementSecretLocationCount();
         }
         else
         {
             self.currentRole = roleHunter;
+            if(self.player) self.player.role = "trapper";
             incrementSecretLocationCount();
         }
 

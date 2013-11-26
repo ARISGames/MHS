@@ -33,7 +33,7 @@ var ClerkGame = function()
                     var data = JSON.parse(request);
                     //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
-                    if(data.player.role == "CLERK") return;
+                    if(data.player.role == "clerk") return;
 
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);

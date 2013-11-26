@@ -26,6 +26,13 @@ var HunterGame = function()
         {
             if(ftm.webPageItem == itemNull) //if on trade page
             {
+                eh.newPlayerReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(connectedPlayer) return;
+                    setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
+                }
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
@@ -73,6 +80,8 @@ var HunterGame = function()
                     formatHunterTrade();
                     ftv.displayTrade();
                     startDoomsdayTimer();
+                    if(ftm.currentLevel == 2)
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>4 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -279,7 +288,12 @@ var HunterGame = function()
             ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); };
         }
-        else ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" items</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
+        else
+        {
+            var plural = "s";
+            if(ftm.qtyNonPeltItems() == 1) plural = "";
+            ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
+        }
 
         fursOffering = 0;
         connectedPlayerOfferId = -1;

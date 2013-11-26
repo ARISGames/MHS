@@ -28,6 +28,13 @@ var ClerkGame = function()
         {
             if(ftm.webPageItem == itemNull) //if on trade page
             {
+                eh.newPlayerReceived = function(request)
+                {
+                    var data = JSON.parse(request);
+                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(connectedPlayer) return;
+                    setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
+                }
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
@@ -70,6 +77,8 @@ var ClerkGame = function()
                     formatClerkTrade();
                     ftv.displayTrade();
                     startDoomsdayTimer();
+                    if(ftm.currentLevel == 2)
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>20 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {

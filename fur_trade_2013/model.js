@@ -95,7 +95,7 @@ var Item = function(itemEnum)
             self.name = "Beads";
             self.singular = "Bag of Beads";
             self.plural = "Bags of Beads";
-            self.imageName = "beads.jpg";
+            self.imageName = "beads.png";
             break;
         case itemEnumBlanket:
             self.itemId = 47032;
@@ -145,7 +145,7 @@ var Item = function(itemEnum)
             self.name = "Axe Head";
             self.singular = "Axe Head";
             self.plural = "Axe Heads";
-            self.imageName = "axehead.jpg";
+            self.imageName = "axe.png";
             break;
         case itemEnumPlume:
             self.itemId = 49589;
@@ -155,7 +155,7 @@ var Item = function(itemEnum)
             self.name = "Plume";
             self.singular = "Plume";
             self.plural = "Plumes";
-            self.imageName = "plume.jpg";
+            self.imageName = "plume.png";
             break;
         case itemEnumHoe:
             self.itemId = 50181;
@@ -259,7 +259,7 @@ var FurTradeModel = function()
             //alert(player.displayname);
             self.player = player;
             if(self.currentRole == roleClerk) self.player.role = "clerk";
-            if(self.currentRole == roleHunter) self.player.role = "trapper";
+            if(self.currentRole == roleHunter) self.player.role = "hunter";
         }
 
         var params = ARIS.parseURLParams(document.URL);
@@ -353,7 +353,7 @@ var FurTradeModel = function()
         else
         {
             self.currentRole = roleHunter;
-            if(self.player) self.player.role = "trapper";
+            if(self.player) self.player.role = "hunter";
             incrementSecretLocationCount();
         }
 

@@ -38,7 +38,7 @@ var HunterGame = function()
                     var data = JSON.parse(request);
                     //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
-                    if(data.player.role == "trapper") return;
+                    if(data.player.role == "hunter") return;
 
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
@@ -281,7 +281,7 @@ var HunterGame = function()
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
             ftm.currentLevel = 3;
             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
-            ftv.displayGuruWithMessage("Level 2 complete! Nice work for a new trapper!");
+            ftv.displayGuruWithMessage("Level 2 complete! Nice work for a new hunter!");
         }
         else if(itemPelt.qty == 0)
         {

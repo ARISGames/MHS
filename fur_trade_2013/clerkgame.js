@@ -116,7 +116,7 @@ var ClerkGame = function()
                 window.addEventListener('beforeunload', function() { eh.sendPlayerLeft(ftm.player); }, false);
 
                 formatClerkLounge();
-                ftv.displayGuruWithMessage("We've <b>opened our shop</b>! Now, we simply wait for a <b>trapper</b> looking to trade! (Look around to see if any of your friends are <b>trappers</b> who need help getting to <b>level 2</b>.)");
+                ftv.displayGuruWithMessage("We've <b>opened our shop</b>! Now, we simply wait for a <b>hunter</b> looking to trade! (Look around to see if any of your friends are <b>hunters</b> who need help getting to <b>level 2</b>.)");
                 ftv.displayLounge();
             }
             else //if on harvest page
@@ -300,7 +300,7 @@ var ClerkGame = function()
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
                 ftm.currentLevel = 2;
-                ftv.displayGuruWithMessage("Good work! Now that the post is stocked, we should <b>find a local trapper</b> to trade our stock for <b>pelts</b>!");
+                ftv.displayGuruWithMessage("Good work! Now that the post is stocked, we should <b>find a local hunter</b> to trade our stock for <b>pelts</b>!");
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
             }
         }

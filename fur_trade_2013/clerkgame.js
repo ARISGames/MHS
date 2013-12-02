@@ -155,7 +155,19 @@ var ClerkGame = function()
         if(ftm.webPageItem != itemPelt)
         {
             ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+ftm.webPageItem.peltCost;
-            sellerDialog.innerHTML = "I've got a <b>"+ftm.webPageItem.singular+"</b> in stock... I'd be willing to part with it for the price of <b>"+ftm.webPageItem.peltCost+" pelts</b>. Whad'ya say?";
+
+            if(ftm.webPageItem.itemId == itemPlume.itemId)     sellerDialog.innerHTML = "Here's an <b>Ostrich Plume</b> for <b>"+itemPlume.peltCost+" beaver pelts</b>. Everyone at the fur post will want one to decorate their hat.";
+            if(ftm.webPageItem.itemId == itemGunpowder.itemId) sellerDialog.innerHTML = "Here's some <b>Gun Powder</b> for <b>"+itemGunpowder.peltCost+" beaver pelts</b>. You want more pelts, right? Can't shoot a bullet without gunpowder!";
+            if(ftm.webPageItem.itemId == itemMBalls.itemId)    sellerDialog.innerHTML = "Here are some <b>Musket Balls</b> for <b>"+itemMBalls.peltCost+" beaver pelts</b>. Guns are pretty useless unless they have ammo...";
+            if(ftm.webPageItem.itemId == itemAxeHead.itemId)   sellerDialog.innerHTML = "Here's an <b>Axe Head</b> for <b>"+itemAxeHead.peltCost+" beaver pelts</b>. This iron tool will last longer than stone and bone tools.";
+            if(ftm.webPageItem.itemId == itemBeads.itemId)     sellerDialog.innerHTML = "Here's some <b>Beads</b> for <b>"+itemBeads.peltCost+" beaver pelts</b>. They are really popular with the American Indians for decorating their clothes and shoes.";
+            if(ftm.webPageItem.itemId == itemKettle.itemId)    sellerDialog.innerHTML = "Here's a <b>Brass Kettle</b> for <b>"+itemKettle.peltCost+" beaver pelts</b>. This is a hot item at the fur post because brass kettles last much longer than ones made from clay or birchbark.";
+            if(ftm.webPageItem.itemId == itemBlanket.itemId)   sellerDialog.innerHTML = "Here's a <b>Blanket</b> for <b>"+itemBlanket.peltCost+" beaver pelts</b>. Since making clothing from animal hide takes a long time, fabric and blankets are very popular with American Indians";
+            if(ftm.webPageItem.itemId == itemFabric.itemId)    sellerDialog.innerHTML = "Here's a <b>Fabric</b> from England for <b>"+itemFabric.peltCost+" beaver pelts</b>. Since Making clothing from animal hide takes a long time, fabric is very popular with American Indians.";
+            if(ftm.webPageItem.itemId == itemGun.itemId)       sellerDialog.innerHTML = "Here's a <b>Gun</b> for <b>"+itemGun.peltCost+" beaver pelts</b>. With both guns and traps, hunters will be able to bring in lots of pelts.";
+            if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "Here's an <b>Iron Hoe</b> for <b>"+.peltCost+" beaver pelts</b>. American Indians like them because they last longer than tools made of bone and stone.";
+            if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "Here's an <b>Iron Muskrat Spear</b> for <b>"+.peltCost+" beaver pelts</b>. Trappers like these because they are strong and make hunting for muskrats easier.";
+
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }
         else

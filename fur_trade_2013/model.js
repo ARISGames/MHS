@@ -105,7 +105,7 @@ var Item = function(itemEnum)
             self.name = "Blanket";
             self.singular = "Blanket";
             self.plural = "Blankets";
-            self.imageName = "blanket.jpg";
+            self.imageName = "blanket.png";
             break;
         case itemEnumKettle:
             self.itemId = 47038;
@@ -115,7 +115,7 @@ var Item = function(itemEnum)
             self.name = "Kettle";
             self.singular = "Kettle";
             self.plural = "Kettles";
-            self.imageName = "kettle.jpg";
+            self.imageName = "kettle.png";
             break;
         case itemEnumGunpowder:
             self.itemId = 49584;
@@ -165,7 +165,7 @@ var Item = function(itemEnum)
             self.name = "Hoe";
             self.singular = "Hoe";
             self.plural = "Hoes";
-            self.imageName = "hoe.jpg";
+            self.imageName = "hoe.png";
             break;
         case itemEnumFabric:
             self.itemId = 50184;
@@ -175,7 +175,7 @@ var Item = function(itemEnum)
             self.name = "Fabric";
             self.singular = "Sheet of Fabric";
             self.plural = "Sheets of Fabric";
-            self.imageName = "fabric.jpg";
+            self.imageName = "fabric.png";
             break;
         case itemEnumSpear:
             self.itemId = 50187;
@@ -185,7 +185,7 @@ var Item = function(itemEnum)
             self.name = "Muskrat Spear";
             self.singular = "Muskrat Spear";
             self.plural = "Muskrat Spears";
-            self.imageName = "spear.jpg";
+            self.imageName = "spear.png";
             break;
         case itemEnumKnife:
             self.itemId = 50188;
@@ -195,7 +195,7 @@ var Item = function(itemEnum)
             self.name = "Knife";
             self.singular = "Knife";
             self.plural = "Knives";
-            self.imageName = "knife.jpg";
+            self.imageName = "knife.png";
             break;
         default:
             return null;

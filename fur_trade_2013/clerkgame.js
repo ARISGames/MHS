@@ -165,8 +165,8 @@ var ClerkGame = function()
             if(ftm.webPageItem.itemId == itemBlanket.itemId)   sellerDialog.innerHTML = "Here's a <b>Blanket</b> for <b>"+itemBlanket.peltCost+" beaver pelts</b>. Since making clothing from animal hide takes a long time, fabric and blankets are very popular with American Indians";
             if(ftm.webPageItem.itemId == itemFabric.itemId)    sellerDialog.innerHTML = "Here's a <b>Fabric</b> from England for <b>"+itemFabric.peltCost+" beaver pelts</b>. Since Making clothing from animal hide takes a long time, fabric is very popular with American Indians.";
             if(ftm.webPageItem.itemId == itemGun.itemId)       sellerDialog.innerHTML = "Here's a <b>Gun</b> for <b>"+itemGun.peltCost+" beaver pelts</b>. With both guns and traps, hunters will be able to bring in lots of pelts.";
-            if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "Here's an <b>Iron Hoe</b> for <b>"+.peltCost+" beaver pelts</b>. American Indians like them because they last longer than tools made of bone and stone.";
-            if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "Here's an <b>Iron Muskrat Spear</b> for <b>"+.peltCost+" beaver pelts</b>. Trappers like these because they are strong and make hunting for muskrats easier.";
+            if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "Here's an <b>Iron Hoe</b> for <b>"+itemHoe.peltCost+" beaver pelts</b>. American Indians like them because they last longer than tools made of bone and stone.";
+            if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "Here's an <b>Iron Muskrat Spear</b> for <b>"+itemSpear.peltCost+" beaver pelts</b>. Trappers like these because they are strong and make hunting for muskrats easier.";
 
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }

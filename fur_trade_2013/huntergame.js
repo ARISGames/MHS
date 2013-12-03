@@ -152,7 +152,7 @@ var HunterGame = function()
     {
         ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
 
-        if(ftm.currentLevel < 2) ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 10 pelts";
+        if(ftm.currentLevel < 2) ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;You Need: 8 pelts";
         else ftv.wantDisplay.style.display = 'hidden';
 
         if(ftm.webPageItem.itemEnum != itemEnumPelt)
@@ -160,7 +160,7 @@ var HunterGame = function()
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
             harvestButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Scan a beaver on the ground to trap it!"); };
-            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b>! (Look for tiles on the ground.)");
+            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 8 beavers</b>! (Look for tiles on the ground.)");
         }
     }
 
@@ -260,7 +260,7 @@ var HunterGame = function()
 
     function formatHunterOffer()
     {
-        document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
+        document.getElementById('huntertradeofferqty').innerHTML = fursOffering;
     }
 
     function confirmTrade()
@@ -322,11 +322,11 @@ var HunterGame = function()
         harvestButtonText.innerHTML = "Leave ";
         harvestButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Scan a beaver on the ground to trap it!"); };
      
-        if(ftm.currentLevel == 1 && itemPelt.qty == 10)
+        if(ftm.currentLevel == 1 && itemPelt.qty >= 8)
         {
             ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
             ftm.currentLevel = 2;
-            ftv.displayGuruWithMessage("Good work! 10 beaver pelts should be enough for us to start trading with <b>clerks</b>!");
+            ftv.displayGuruWithMessage("Good work! 8 beaver pelts should be enough for us to start trading with <b>clerks</b>!");
             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
         }
     }

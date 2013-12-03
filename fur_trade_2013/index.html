@@ -157,7 +157,7 @@ window.onerror = function(msg, url, linenumber)
         <img src='assets/hunter_prompt.png' class='introprompt' />
         <img id='hunterintroimage' class='introimage' src='assets/natam.png' />
         <div class='introdialog'>
-            I hear you're interested in joining us <b>Hunters</b>. I'm <b>Monsomanian</b>. The other Ojibwe and I bring pelts to the fur post to trade for European goods. <b>Help us hunt 10 beaver for pelts</b>!
+            I hear you're interested in joining us <b>Hunters</b>. I'm <b>Monsomanian</b>. The other Ojibwe and I bring pelts to the fur post to trade for European goods. <b>Help us hunt 8 beaver for pelts</b>!
         </div>
         <div class='bottombutton' ontouchstart='ARIS.exitToScanner("You are a Hunter! Scan a beaver on the ground to trap it!");'>
             <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -191,8 +191,8 @@ window.onerror = function(msg, url, linenumber)
             </div>
         </div>
         <div id='huntertradepool' class='tradepool'>
-            <div id='huntertradeofferinc' ontouchstart="game.incrementTouched()">+</div>
-            <div id='huntertradeofferdec' ontouchstart="game.decrementTouched()">-</div>
+            <img id='huntertradeofferinc' ontouchstart="game.incrementTouched()" src='assets/plus.png'/>
+            <img id='huntertradeofferdec' ontouchstart="game.decrementTouched()" src='assets/minus.png'/>
             <div id='huntertradeoffertotal'></div>
         </div>
         <div id='huntertradebutton' class='bottombutton' ontouchstart="game.readyTouched()">

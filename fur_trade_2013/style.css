@@ -525,20 +525,9 @@ body
 #huntertradeofferqty
 {
     position:absolute;
-    left:100px;
-    top:50px;
-    font-size:40px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
-#huntertradeofferqty2
-{
-    position:absolute;
-    left:80px;
-    top:10px;
-    font-size:100px;
+    left:120px;
+    top:70px;
+    font-size:90px;
     font-family:gotham_font;
     color:#F58124;
     text-shadow:5px 5px 10px #000000;
@@ -547,23 +536,17 @@ body
 #huntertradeofferdec
 {
     position:absolute;
-    left:70px;
-    top:0px;
-    font-size:40px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    width:64px;
+    left:35px;
+    top:20px;
 }
 
 #huntertradeofferinc
 {
     position:absolute;
-    left:200px;
-    top:0px;
-    font-size:40px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
+    width:64px;
+    left:222px;
+    top:20px;
 }
 
 #huntertradeoffertotal

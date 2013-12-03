@@ -159,7 +159,7 @@ var HunterGame = function()
         {
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
-            harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
+            harvestButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Scan a beaver on the ground to trap it!"); };
             ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b>! (Look for tiles on the ground.)");
         }
     }
@@ -320,7 +320,7 @@ var HunterGame = function()
         ftv.displaydelta(itemPelt.name,1);
 
         harvestButtonText.innerHTML = "Leave ";
-        harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
+        harvestButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Scan a beaver on the ground to trap it!"); };
      
         if(ftm.currentLevel == 1 && itemPelt.qty == 10)
         {

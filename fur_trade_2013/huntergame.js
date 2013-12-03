@@ -81,7 +81,7 @@ var HunterGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>4 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -116,7 +116,7 @@ var HunterGame = function()
                 window.addEventListener('beforeunload', function() { eh.sendPlayerLeft(ftm.player); }, false);
 
                 formatHunterLounge();
-                ftv.displayGuruWithMessage("Wait for a <b>clerk partner</b> to <b>open up shop</b>! (Look around to see if any of your friends are <b>clerks</b> who need help getting to <b>level 2</b>). Touch a clerk on the list to <b>open a trade</b>!");
+                ftv.displayGuruWithMessage("Wait for a <b>clerk</b> partner to open up shop! Look around to see if any of your friends are clerks who need help getting to level 2. <b>Select</b> a clerk on the list to start trading!");
                 ftv.displayLounge();
             }
             else //if on harvest page
@@ -160,7 +160,7 @@ var HunterGame = function()
             peltGet.src = "assets/"+ftm.webPageItem.imageName;
             harvestButtonText.innerHTML = "Leave ";
             harvestButton.ontouchstart = function() { ARIS.exitToScanner("Scan a beaver on the ground to trap it!"); };
-            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b> (look for tiles on the ground), not robbing a shop!");
+            ftv.displayGuruWithMessage("Hey! You won't find what you're looking for behind the counter! I asked for your help <b>trapping 10 beavers</b>! (Look for tiles on the ground.)");
         }
     }
 
@@ -245,7 +245,7 @@ var HunterGame = function()
         ftv.haveDisplay.innerHTML = "Items Gained:"+ftm.qtyNonPeltItems();
         ftv.wantDisplay.style.textAlign = "right";
         ftv.wantDisplay.style.top = "70px";
-        ftv.wantDisplay.innerHTML = "Goal:4&nbsp;&nbsp;";
+        ftv.wantDisplay.innerHTML = "Goal:5&nbsp;&nbsp;";
 
         document.getElementById('huntertradeofferimg').src = 'assets/'+itemPelt.imageName;
         formatHunterOffer();
@@ -275,7 +275,7 @@ var HunterGame = function()
         ARIS.setItemCount(item.itemId,     item.qty);
         ARIS.setItemCount(itemPelt.itemId, itemPelt.qty);
 
-        if(ftm.qtyNonPeltItems() >= 4 && ftm.currentLevel == 2)
+        if(ftm.qtyNonPeltItems() >= 5 && ftm.currentLevel == 2)
         {
             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
@@ -293,17 +293,17 @@ var HunterGame = function()
             var plural = "s";
             if(ftm.qtyNonPeltItems() == 1) plural = "";
 
-            if(item.itemId == itemPlume.itemId)     ftv.displayGuruWithMessage("You have an <b>Ostrich Plume</b>! You'll look mighty spiffy when you decorate your hat with it! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemGunpowder.itemId) ftv.displayGuruWithMessage("Nice trade! With <b>Gun Powder</b>, you can use traps AND guns to bring in more pelts to the post. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemMBalls.itemId)    ftv.displayGuruWithMessage("Smart trade. A gun won't get you very far without ammo, so it's smart to stock up on <b>Musket Balls</b>. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemAxeHead.itemId)   ftv.displayGuruWithMessage("You got an <b>Axe Head</b>! These are helpful because iron tools last longer than ones made of stone or bone. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemBeads.itemId)     ftv.displayGuruWithMessage("You now have <b>Beads</b> from Holland and Italy! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemKettle.itemId)    ftv.displayGuruWithMessage("You are now the proud owner of a <b>Brass Kettle</b> from Europe! These kettles are very durable and you can cook directly over a fire. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemBlanket.itemId)   ftv.displayGuruWithMessage("Nice trade. Trading for <b>Blankets</b> will save a lot of time skinning hides to make clothing. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemFabric.itemId)    ftv.displayGuruWithMessage("Nice trade. Trading for <b>Fabric</b> will save a lot of time skinning hides to make clothing. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemGun.itemId)       ftv.displayGuruWithMessage("Nice trade. A <b>Gun</b> is important for hunting- you can even get special guns to use with mittens! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemHoe.itemId)       ftv.displayGuruWithMessage("Nice one. A <b>Hoe</b> made of iron will last longer than bone and stone tools. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
-            if(item.itemId == itemSpear.itemId)     ftv.displayGuruWithMessage("That's a good tool to have! It will be easy to hunt Muskrats with a <b>Metal Spear</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(4-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemPlume.itemId)     ftv.displayGuruWithMessage("You have an <b>Ostrich Plume</b>! You'll look mighty spiffy when you decorate your hat with it! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemGunpowder.itemId) ftv.displayGuruWithMessage("Nice trade! With <b>Gun Powder</b>, you can use traps AND guns to bring in more pelts to the post. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemMBalls.itemId)    ftv.displayGuruWithMessage("Smart trade. A gun won't get you very far without ammo, so it's smart to stock up on <b>Musket Balls</b>. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemAxeHead.itemId)   ftv.displayGuruWithMessage("You got an <b>Axe Head</b>! These are helpful because iron tools last longer than ones made of stone or bone. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemBeads.itemId)     ftv.displayGuruWithMessage("You now have <b>Beads</b> from Holland and Italy to make beautiful decorations on your clothing or bandolier bags. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemKettle.itemId)    ftv.displayGuruWithMessage("You are now the proud owner of a <b>Brass Kettle</b> from Europe! These kettles are very durable and you can cook directly over a fire. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemBlanket.itemId)   ftv.displayGuruWithMessage("Nice trade. Trading for <b>Blankets</b> will save a lot of time skinning hides to make clothing. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemFabric.itemId)    ftv.displayGuruWithMessage("Nice trade. Trading for <b>Fabric</b> will save a lot of time skinning hides to make clothing. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemGun.itemId)       ftv.displayGuruWithMessage("Nice trade. A <b>Gun</b> is important for hunting- you can even get special guns to use with mittens! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemHoe.itemId)       ftv.displayGuruWithMessage("Nice one. A <b>Hoe</b> made of iron will last longer than bone and stone tools. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemSpear.itemId)     ftv.displayGuruWithMessage("That's a good tool to have! It will be easy to hunt Muskrats with a <b>Metal Spear</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
         }
 
         fursOffering = 0;
@@ -326,7 +326,7 @@ var HunterGame = function()
         {
             ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
             ftm.currentLevel = 2;
-            ftv.displayGuruWithMessage("10 beaver pelts should be enough for us to trade... Let's <b>find a clerk</b>- someone gathering items from Europe!");
+            ftv.displayGuruWithMessage("Good work! 10 beaver pelts should be enough for us to start trading with <b>clerks</b>!");
             hunterGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
         }
     }

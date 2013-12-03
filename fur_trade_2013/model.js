@@ -81,11 +81,11 @@ var Item = function(itemEnum)
             self.itemId = 47030;
             self.webPageId = 3720;
             self.owner = roleClerk;
-            self.peltCost = 10;
+            self.peltCost = 11;
             self.name = "Gun";
             self.singular = "Gun";
             self.plural = "Guns";
-            self.imageName = "gun.jpg";
+            self.imageName = "gun.png";
             break;
         case itemEnumBeads:
             self.itemId = 47035;
@@ -135,7 +135,7 @@ var Item = function(itemEnum)
             self.name = "Musket Balls";
             self.singular = "Bag of Musket Balls";
             self.plural = "Bags of Musket Balls";
-            self.imageName = "bullets.jpg";
+            self.imageName = "musketballs.png";
             break;
         case itemEnumAxeHead:
             self.itemId = 49587;

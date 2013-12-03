@@ -20,7 +20,7 @@ var ClerkGame = function()
         if(ftm.currentLevel == 0)
         {
             ftv.displayIntro();
-            ARIS.setItemCount(itemPelt.itemId,15);
+            ARIS.setItemCount(itemPelt.itemId,10);
             ARIS.setItemCount(roleClerk.roleId, 1);
             ARIS.setItemCount(roleHunter.roleId, 0);
         }
@@ -78,7 +78,7 @@ var ClerkGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>20 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
@@ -156,23 +156,27 @@ var ClerkGame = function()
         {
             ftv.wantDisplay.innerHTML = "&nbsp;&nbsp;Cost: "+ftm.webPageItem.peltCost;
 
-            if(ftm.webPageItem.itemId == itemPlume.itemId)     sellerDialog.innerHTML = "Here's an <b>Ostrich Plume</b> for <b>"+itemPlume.peltCost+" beaver pelts</b>. Everyone at the fur post will want one to decorate their hat.";
-            if(ftm.webPageItem.itemId == itemGunpowder.itemId) sellerDialog.innerHTML = "Here's some <b>Gun Powder</b> for <b>"+itemGunpowder.peltCost+" beaver pelts</b>. You want more pelts, right? Can't shoot a bullet without gunpowder!";
-            if(ftm.webPageItem.itemId == itemMBalls.itemId)    sellerDialog.innerHTML = "Here are some <b>Musket Balls</b> for <b>"+itemMBalls.peltCost+" beaver pelts</b>. Guns are pretty useless unless they have ammo...";
-            if(ftm.webPageItem.itemId == itemAxeHead.itemId)   sellerDialog.innerHTML = "Here's an <b>Axe Head</b> for <b>"+itemAxeHead.peltCost+" beaver pelts</b>. This iron tool will last longer than stone and bone tools.";
-            if(ftm.webPageItem.itemId == itemBeads.itemId)     sellerDialog.innerHTML = "Here's some <b>Beads</b> for <b>"+itemBeads.peltCost+" beaver pelts</b>. They are really popular with the American Indians for decorating their clothes and shoes.";
-            if(ftm.webPageItem.itemId == itemKettle.itemId)    sellerDialog.innerHTML = "Here's a <b>Brass Kettle</b> for <b>"+itemKettle.peltCost+" beaver pelts</b>. This is a hot item at the fur post because brass kettles last much longer than ones made from clay or birchbark.";
-            if(ftm.webPageItem.itemId == itemBlanket.itemId)   sellerDialog.innerHTML = "Here's a <b>Blanket</b> for <b>"+itemBlanket.peltCost+" beaver pelts</b>. Since making clothing from animal hide takes a long time, fabric and blankets are very popular with American Indians";
-            if(ftm.webPageItem.itemId == itemFabric.itemId)    sellerDialog.innerHTML = "Here's a <b>Fabric</b> from England for <b>"+itemFabric.peltCost+" beaver pelts</b>. Since Making clothing from animal hide takes a long time, fabric is very popular with American Indians.";
-            if(ftm.webPageItem.itemId == itemGun.itemId)       sellerDialog.innerHTML = "Here's a <b>Gun</b> for <b>"+itemGun.peltCost+" beaver pelts</b>. With both guns and traps, hunters will be able to bring in lots of pelts.";
-            if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "Here's an <b>Iron Hoe</b> for <b>"+itemHoe.peltCost+" beaver pelts</b>. American Indians like them because they last longer than tools made of bone and stone.";
-            if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "Here's an <b>Iron Muskrat Spear</b> for <b>"+itemSpear.peltCost+" beaver pelts</b>. Trappers like these because they are strong and make hunting for muskrats easier.";
+            var plural = "";
+            if(ftm.webPageItem.peltCost > 1) plural = "s";
+
+            if(ftm.webPageItem.itemId == itemPlume.itemId)     sellerDialog.innerHTML = "I'll sell you an <b>Ostrich Plume</b> for <b>"+itemPlume.peltCost+" beaver pelt"+plural+"</b> to stock your store. Everyone at the fur post will want one to decorate their hat.";
+            if(ftm.webPageItem.itemId == itemGunpowder.itemId) sellerDialog.innerHTML = "I'll sell you some <b>Gun Powder</b> for <b>"+itemGunpowder.peltCost+" beaver pelt"+plural+"</b> to stock your store. You want more pelts, right? Hunters can't shoot a bullet without gunpowder!";
+            if(ftm.webPageItem.itemId == itemMBalls.itemId)    sellerDialog.innerHTML = "I'll sell some <b>Musket Balls</b> for <b>"+itemMBalls.peltCost+" beaver pelt"+plural+"</b> to stock your store. Guns are pretty useless to hunters unless they have ammo...";
+            if(ftm.webPageItem.itemId == itemAxeHead.itemId)   sellerDialog.innerHTML = "I'll sell you an <b>Axe Head</b> for <b>"+itemAxeHead.peltCost+" beaver pelt"+plural+"</b> to stock your store. Iron tools are a big seller with American Indians because they last longer than the stone and bone tools they use now.";
+            if(ftm.webPageItem.itemId == itemBeads.itemId)     sellerDialog.innerHTML = "I'll sell you some <b>Beads</b> for <b>"+itemBeads.peltCost+" beaver pelt"+plural+"</b> to stock your store. They are really popular with the American Indians for decorating their clothes and shoes.";
+            if(ftm.webPageItem.itemId == itemKettle.itemId)    sellerDialog.innerHTML = "I'll sell you a <b>Brass Kettle</b> for <b>"+itemKettle.peltCost+" beaver pelt"+plural+"</b> to stock your store. This is a hot item at the fur post because brass kettles last much longer than ones made from clay or birchbark.";
+            if(ftm.webPageItem.itemId == itemBlanket.itemId)   sellerDialog.innerHTML = "I'll sell you a <b>Blanket</b> for <b>"+itemBlanket.peltCost+" beaver pelt"+plural+"</b> to stock your store. Blankets will be a huge seller at the fur post. It will save the American Indians a lot of time skinning hides to make clothing.";
+            if(ftm.webPageItem.itemId == itemFabric.itemId)    sellerDialog.innerHTML = "I'll sell you a <b>Fabric</b> from England for <b>"+itemFabric.peltCost+" beaver pelt"+plural+"</b> to stock your store. Since Making clothing from animal hide takes a long time, fabric is very popular with American Indians.";
+            if(ftm.webPageItem.itemId == itemGun.itemId)       sellerDialog.innerHTML = "I'll sell you a <b>Gun</b> for <b>"+itemGun.peltCost+" beaver pelt"+plural+"</b> to stock your store. With both guns and traps, hunters will be able to bring in lots of pelts.";
+            if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "I'll sell you an <b>Iron Hoe</b> for <b>"+itemHoe.peltCost+" beaver pelt"+plural+"</b> to stock your store. American Indians like them because they last longer than tools made of bone and stone.";
+            if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "I'll sell you an <b>Iron Muskrat Spear</b> for <b>"+itemSpear.peltCost+" beaver pelt"+plural+"</b> to stock your store. Hunters like these because they are strong and make hunting for muskrats easier.";
 
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }
         else
         {
-            sellerDialog.innerHTML = "These <b>Beaver Pelts</b> aren't for sale. Scan something <b>behind the clerk's counter</b> to stock the post with European goods...";
+            self.haveDisplay.innerHTML = "";
+            sellerDialog.innerHTML = "<b>Beaver Pelts</b> aren't for sale. You're supposed to be stocking your store! Scan something <b>behind the clerk's counter</b> to stock the post with European goods...";
             buyButtonText.innerHTML = "Continue ";
             buyButton.ontouchstart = function() { ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!"); };
         }
@@ -204,7 +208,7 @@ var ClerkGame = function()
         ftv.haveDisplay.innerHTML = "Pelts Gained:"+itemPelt.qty;
         ftv.wantDisplay.style.textAlign = "right";
         ftv.wantDisplay.style.top = "70px";
-        ftv.wantDisplay.innerHTML = "Goal:20&nbsp;&nbsp;";
+        ftv.wantDisplay.innerHTML = "Goal:15&nbsp;&nbsp;";
 
         document.getElementById('clerktradeclientofferimg').src = 'assets/'+itemPelt.imageName;
         formatClerkClientOffer();
@@ -265,7 +269,12 @@ var ClerkGame = function()
         ARIS.setItemCount(item.itemId,item.qty);
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
-        if(itemPelt.qty >= 20 && ftm.currentLevel == 2)
+        var buyplural = "";
+        if(item.peltCost > 1) buyplural = "s";
+        var tradeplural = "";
+        if(connectedPlayerOfferQty) tradeplural = "s";
+
+        if(itemPelt.qty >= 15 && ftm.currentLevel == 2)
         {
             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
@@ -275,12 +284,12 @@ var ClerkGame = function()
         }
         else if(ftm.qtyNonPeltItems() == 0)
         {
-            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>20 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+            ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
         }
-        else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelts</b>! Try to get <b>more pelts</b> for your items!");
-        else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! See if you can get even <b>more pelts</b> for your items!");
-        else if(item.peltCost < connectedPlayerOfferQty)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+item.singular+"</b> for only <b>"+item.peltCost+" pelts</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelts</b>! Keep this up!");
+        else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! Try to get <b>more pelts</b> for your items!");
+        else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! See if you can get even <b>more pelts</b> for your items!");
+        else if(item.peltCost < connectedPlayerOfferQty)    ftv.displayGuruWithMessage("Wow! Great job trading! You bought that <b>"+item.singular+"</b> for only <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! Keep this up!");
 
         connectedPlayerOfferQty = 0;
         itemOffering = -1;
@@ -298,7 +307,7 @@ var ClerkGame = function()
             if(ftm.curentLevel == 1)
                 sellerDialog.innerHTML = "Thanks! Look around and <b>spend your "+itemPelt.qty-ftm.webPageItem.peltCost+" remaining beaver pelts</b> on <b>more items for the store</b>- I'll take care of selling the pelts for cash.";
             else
-                sellerDialog.innerHTML = "Thanks! I'll take care of selling the pelts for cash.";
+                sellerDialog.innerHTML = "Thanks for the pelts! I'll take care of selling them for cash.";
 
             ftm.webPageItem.qty += 1;//500;
             itemPelt.qty        -= ftm.webPageItem.peltCost;
@@ -315,6 +324,7 @@ var ClerkGame = function()
                 ftv.displayGuruWithMessage("Good work! Now that the post is stocked, we should <b>find a local hunter</b> to trade our stock for <b>pelts</b>!");
                 clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
             }
+            ftv.haveDisplay.innerHTML = "Pelts: "+itemPelt.qty;
         }
         buyButtonText.innerHTML = "Continue ";
         buyButton.ontouchstart = function() { ARIS.exitToScanner("Scan a clerk item behind the fur trade counter!"); };

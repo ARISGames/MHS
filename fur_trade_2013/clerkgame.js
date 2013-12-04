@@ -176,7 +176,7 @@ var ClerkGame = function()
         }
         else
         {
-            self.haveDisplay.innerHTML = "";
+            ftv.haveDisplay.innerHTML = "";
             sellerDialog.innerHTML = "<b>Beaver Pelts</b> aren't for sale. You're supposed to be stocking your store! Scan something <b>behind the clerk's counter</b> to stock the post with European goods...";
             buyButtonText.innerHTML = "Continue ";
             buyButton.ontouchstart = function() { ARIS.exitToScanner("You are a Clerk! Scan an item behind the fur trade counter!"); };
@@ -265,14 +265,14 @@ var ClerkGame = function()
         theyreReady = false;
 
         var item = ftm.itemForItemId(itemOffering);
-        item.qty -= 1;
+        if(item) item.qty -= 1;
         itemPelt.qty += connectedPlayerOfferQty;
 
-        ARIS.setItemCount(item.itemId,item.qty);
+        if(item) ARIS.setItemCount(item.itemId,item.qty);
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
         var buyplural = "";
-        if(item.peltCost > 1) buyplural = "s";
+        if(item && item.peltCost > 1) buyplural = "s";
         var tradeplural = "";
         if(connectedPlayerOfferQty) tradeplural = "s";
 

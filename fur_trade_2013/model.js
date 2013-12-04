@@ -249,7 +249,15 @@ var FurTradeModel = function()
             var o;
             if     (o = self.itemForItemId(updatedItemId))                                          o.qty = qty;
             else if(qty > 0 && (o = self.levelForLevelId(updatedItemId)) && o >= self.currentLevel) self.currentLevel = o+1;
-            else if(qty > 0 && (o = self.roleForRoleId(updatedItemId)))                             self.currentRole = o;
+            else if(qty > 0 && (o = self.roleForRoleId(updatedItemId)))
+            {
+                self.currentRole = o;
+                if(self.player)
+                {
+                    if(self.currentRole == roleClerk) self.player.role = "clerk";
+                    if(self.currentRole == roleHunter) self.player.role = "hunter";
+                }
+            }
         };
 
         ARIS.didReceivePlayer = function(player)

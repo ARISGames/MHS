@@ -199,7 +199,7 @@ var ClerkGame = function()
 
     function formatClerkTrade()
     {
-        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('clerktradeimg').src       = ftm.player.photoURL;
         document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('clerktradetitle').innerHTML       = spaces+"Your offer:";
@@ -226,7 +226,7 @@ var ClerkGame = function()
                 {
                     var itemCell = getTradeCell(items[i]);
                     itemCell.style.left = offset+"px";
-                    offset+=90;
+                    offset+=110;
                     document.getElementById('clerktradepool').appendChild(itemCell);
                 }
             }

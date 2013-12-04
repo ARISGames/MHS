@@ -235,7 +235,7 @@ var HunterGame = function()
 
     function formatHunterTrade()
     {
-        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('huntertradeimg').src       = ftm.player.photoURL;
         document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('huntertradetitle').innerHTML       = spaces+"Your offer:";
@@ -262,8 +262,8 @@ var HunterGame = function()
 
     function formatHunterOffer()
     {
-        document.getElementById('huntertradeofferqty').innerHTML = fursOffering;
-        document.getElementById('huntertradeofferqty2').innerHTML = "x"+fursOffering;
+        document.getElementById('huntertradeofferqty').innerHTML = "x"+fursOffering;
+        //document.getElementById('huntertradeofferqty2').innerHTML = fursOffering;
     }
 
     function confirmTrade()

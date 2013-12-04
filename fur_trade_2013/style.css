@@ -399,6 +399,8 @@ body
     color:#F58124;
     text-shadow:2px 2px 5px #000000;
     background-color:rgba(200,200,200,0.75);
+    overflow:visible;
+    white-space:nowrap;
 }
 
 .tradeplayerimg
@@ -528,6 +530,17 @@ body
     left:120px;
     top:70px;
     font-size:90px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
+#huntertradeofferqty2
+{
+    position:absolute;
+    left:198px;
+    top:18px;
+    font-size:40px;
     font-family:gotham_font;
     color:#F58124;
     text-shadow:5px 5px 10px #000000;

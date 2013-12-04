@@ -125,7 +125,7 @@ var Item = function(itemEnum)
             self.name = "Gunpowder";
             self.singular = "Bag of Gunpowder";
             self.plural = "Bags of Gunpowder";
-            self.imageName = "gunpowder.jpg";
+            self.imageName = "gunpowder.png";
             break;
         case itemEnumMBalls:
             self.itemId = 49586;

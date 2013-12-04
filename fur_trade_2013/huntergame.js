@@ -238,8 +238,8 @@ var HunterGame = function()
         var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('huntertradeimg').src       = ftm.player.photoURL;
         document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
-        document.getElementById('huntertradename').innerHTML       = spaces+ftm.player.displayname;
-        document.getElementById('huntertradeclientname').innerHTML = spaces+connectedPlayer.displayname;
+        document.getElementById('huntertradename').innerHTML       = spaces+ftm.player.displayname+"'s offer: (Hunter)";
+        document.getElementById('huntertradeclientname').innerHTML = spaces+connectedPlayer.displayname+"'s offer: (Clerk)";
         ftv.haveDisplay.style.fontSize = "40px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Items Gained:"+ftm.qtyNonPeltItems();
@@ -261,6 +261,7 @@ var HunterGame = function()
     function formatHunterOffer()
     {
         document.getElementById('huntertradeofferqty').innerHTML = fursOffering;
+        document.getElementById('huntertradeofferqty2').innerHTML = "x"+fursOffering;
     }
 
     function confirmTrade()

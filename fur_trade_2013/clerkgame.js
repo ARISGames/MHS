@@ -170,6 +170,7 @@ var ClerkGame = function()
             if(ftm.webPageItem.itemId == itemGun.itemId)       sellerDialog.innerHTML = "I'll sell you a <b>Gun</b> for <b>"+itemGun.peltCost+" beaver pelt"+plural+"</b> to stock your store. With both guns and traps, hunters will be able to bring in lots of pelts.";
             if(ftm.webPageItem.itemId == itemHoe.itemId)       sellerDialog.innerHTML = "I'll sell you an <b>Iron Hoe</b> for <b>"+itemHoe.peltCost+" beaver pelt"+plural+"</b> to stock your store. American Indians like them because they last longer than tools made of bone and stone.";
             if(ftm.webPageItem.itemId == itemSpear.itemId)     sellerDialog.innerHTML = "I'll sell you an <b>Iron Muskrat Spear</b> for <b>"+itemSpear.peltCost+" beaver pelt"+plural+"</b> to stock your store. Hunters like these because they are strong and make hunting for muskrats easier.";
+            if(ftm.webPageItem.itemId == itemKnife.itemId)     sellerDialog.innerHTML = "I'll sell you a <b>Knife</b> for <b>"+itemKnife.peltCost+" beaver pelt"+plural+"</b> to stock your store. Knives will be a big seller because metal lasts longer and is more durable than cutting tools made of bone, rock, or shell.";
 
             buyButtonText.innerHTML = "Buy "+ftm.webPageItem.name;
         }
@@ -249,7 +250,8 @@ var ClerkGame = function()
         img.src = 'assets/'+item.imageName;
         var label = document.createElement('div');
         label.setAttribute('class','tradecelllabel');
-        label.innerHTML = item.name+" x"+item.qty;
+        //label.innerHTML = item.name+" x"+item.qty;
+        if(item.qty > 1) label.innerHTML = "x"+item.qty;
         cell.appendChild(img);
         cell.appendChild(label);
         cell.ontouchstart = function() { clerkTradeItemSelected(item); };

@@ -488,12 +488,15 @@ body
 .tradecelllabel
 {
     position:absolute;
-    top:65px;
+    top:50px;
     left:0px;
-    height:15px;
+    height:30px;
     width:80px;
-    text-align:center;
-    font-size:15px;
+    text-align:right;
+    font-size:30px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
 }
 
 .huntertradeclientcell

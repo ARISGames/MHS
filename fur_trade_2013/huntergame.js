@@ -305,6 +305,7 @@ var HunterGame = function()
             if(item.itemId == itemGun.itemId)       ftv.displayGuruWithMessage("Nice trade. A <b>Gun</b> is important for hunting- you can even get special guns to use with mittens! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
             if(item.itemId == itemHoe.itemId)       ftv.displayGuruWithMessage("Nice one. A <b>Hoe</b> made of iron will last longer than bone and stone tools. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
             if(item.itemId == itemSpear.itemId)     ftv.displayGuruWithMessage("That's a good tool to have! It will be easy to hunt Muskrats with a <b>Metal Spear</b>! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item.itemId == itemKnife.itemId)     ftv.displayGuruWithMessage("Good trade! <b>Knives</b> are a great tool to have for hunting and cooking! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
         }
 
         fursOffering = 0;

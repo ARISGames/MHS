@@ -386,7 +386,7 @@ body
     height:100px;
 }
 
-.tradeplayername
+.tradeplayertitle
 {
     position:absolute;
     top:10px;
@@ -394,13 +394,28 @@ body
     width:320px;
     height:15px;
     padding-bottom:5px; /*remember to alter height in conjunction with this*/
-    font-size:20px;
+    font-size:30px;
     font-family:gotham_font;
     color:#F58124;
     text-shadow:2px 2px 5px #000000;
     background-color:rgba(200,200,200,0.75);
     overflow:visible;
     white-space:nowrap;
+}
+
+.tradeplayername
+{
+    position:absolute;
+    top:74px;
+    left:10px;
+    width:60px;
+    height:15px;
+    font-size:15px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:2px 2px 5px #000000;
+    overflow:visible;
+    text-align:center;
 }
 
 .tradeplayerimg
@@ -530,17 +545,6 @@ body
 #huntertradeofferqty
 {
     position:absolute;
-    left:120px;
-    top:70px;
-    font-size:90px;
-    font-family:gotham_font;
-    color:#F58124;
-    text-shadow:5px 5px 10px #000000;
-}
-
-#huntertradeofferqty2
-{
-    position:absolute;
     left:198px;
     top:18px;
     font-size:40px;
@@ -549,19 +553,28 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
+#huntertradeofferqty2
+{
+    position:absolute;
+    left:120px;
+    top:70px;
+    font-size:90px;
+    font-family:gotham_font;
+    color:#F58124;
+    text-shadow:5px 5px 10px #000000;
+}
+
 #huntertradeofferdec
 {
     position:absolute;
-    width:64px;
-    left:35px;
+    left:45px;
     top:20px;
 }
 
 #huntertradeofferinc
 {
     position:absolute;
-    width:64px;
-    left:222px;
+    left:180px;
     top:20px;
 }
 

@@ -202,8 +202,10 @@ var ClerkGame = function()
         var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         document.getElementById('clerktradeimg').src       = ftm.player.photoURL;
         document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
-        document.getElementById('clerktradename').innerHTML       = spaces+ftm.player.displayname+"'s offer: (Clerk)";
-        document.getElementById('clerktradeclientname').innerHTML = spaces+connectedPlayer.displayname+"'s offer: (Hunter)";
+        document.getElementById('clerktradetitle').innerHTML       = spaces+"Your offer:";
+        document.getElementById('clerktradeclienttitle').innerHTML = spaces+"Their offer:";
+        document.getElementById('clerktradename').innerHTML       = "Clerk "+ftm.player.displayname;
+        document.getElementById('clerktradeclientname').innerHTML = "Hunter "+connectedPlayer.displayname;
         ftv.haveDisplay.style.fontSize = "40px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Pelts Gained:"+itemPelt.qty;
@@ -218,12 +220,15 @@ var ClerkGame = function()
         var offset = 0;
         for(var i = 0; i < items.length; i++)
         {
-            if(items[i].qty > 0 && items[i].itemId != itemPelt.itemId)
+            if(items[i].itemId != itemPelt.itemId)
             {
-                var itemCell = getTradeCell(items[i]);
-                itemCell.style.left = offset+"px";
-                offset+=90;
-                document.getElementById('clerktradepool').appendChild(itemCell);
+                for(var j = 0; j < items[i].qty; j++)
+                {
+                    var itemCell = getTradeCell(items[i]);
+                    itemCell.style.left = offset+"px";
+                    offset+=90;
+                    document.getElementById('clerktradepool').appendChild(itemCell);
+                }
             }
         }
 
@@ -250,8 +255,7 @@ var ClerkGame = function()
         img.src = 'assets/'+item.imageName;
         var label = document.createElement('div');
         label.setAttribute('class','tradecelllabel');
-        //label.innerHTML = item.name+" x"+item.qty;
-        if(item.qty > 1) label.innerHTML = "x"+item.qty;
+        label.innerHTML = item.name;
         cell.appendChild(img);
         cell.appendChild(label);
         cell.ontouchstart = function() { clerkTradeItemSelected(item); };

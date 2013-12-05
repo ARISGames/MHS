@@ -186,7 +186,7 @@ var HunterGame = function()
     {
         if(imReady && !theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Waiting for Clerk...";
         if(!imReady && theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Make Trade!";
-        if(!imReady && !theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Ready to Trade";
+        if(!imReady && !theyreReady) document.getElementById('huntertradebuttontext').innerHTML = "Make Trade!";
     }
 
     self.searchAgain = function()
@@ -290,7 +290,7 @@ var HunterGame = function()
         {
             if(!item) ftv.displayGuruWithMessage("What! You just gave those pelts away for nothing! Now <b>you're out of pelts</b>!");
             else      ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
-            hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more pelts to trade!"); };
+            hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Collect more pelts to trade!"); };
         }
         else
         {

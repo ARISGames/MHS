@@ -112,6 +112,7 @@ var DrillGame = function()
 
     var drillStarted = function(data)
     {
+        imv.displayActivity();
         drillBGImage.style.display = "none";
         imv.neutralHUD();
         drillOn = true;
@@ -120,11 +121,13 @@ var DrillGame = function()
 
     var drillStopped = function(data)
     {
+        imv.displayActivity();
         drillOn = false;
     }
 
     var drillLit = function(data)
     {
+        imv.displayActivity();
         drillBGImage.style.display = "none";
         lastReceivedLight = parseInt(data);
         if(lastReceivedLight == 1) drillStarted();

@@ -291,7 +291,7 @@ var ClerkGame = function()
         else if(ftm.qtyNonPeltItems() == 0)
         {
             ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
-            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("Collect more items to trade!"); };
+            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Clerk! Collect more items to trade!"); };
         }
         else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! Try to get <b>more pelts</b> for your items!");
         else if(item.peltCost+1 == connectedPlayerOfferQty) ftv.displayGuruWithMessage("Good work! You made a <b>profit</b> on that last trade! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! See if you can get even <b>more pelts</b> for your items!");
@@ -311,7 +311,7 @@ var ClerkGame = function()
         else
         {
             if(ftm.curentLevel == 1)
-                sellerDialog.innerHTML = "Thanks! Look around and <b>spend your "+itemPelt.qty-ftm.webPageItem.peltCost+" remaining beaver pelts</b> on <b>more items for the store</b>- I'll take care of selling the pelts for cash.";
+                sellerDialog.innerHTML = "Thanks! I'll take care of selling the pelts for cash. Look around and <b>spend all of your "+itemPelt.qty-ftm.webPageItem.peltCost+" remaining beaver pelts</b> on more items for the store.";
             else
                 sellerDialog.innerHTML = "Thanks for the pelts! I'll take care of selling them for cash.";
 
@@ -350,7 +350,7 @@ var ClerkGame = function()
     {
         if(imReady && !theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Waiting for Hunter...";
         if(!imReady && theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Make Trade!";
-        if(!imReady && !theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Ready to Trade";
+        if(!imReady && !theyreReady) document.getElementById('clerktradebuttontext').innerHTML = "Make Trade!";
     }
 
     self.readyTouched = function()

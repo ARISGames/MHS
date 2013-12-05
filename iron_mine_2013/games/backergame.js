@@ -107,6 +107,7 @@ var BackerGame = function()
     var rightVibeTime = 0;
     var poked = function(data)
     {
+        imv.displayActivity();
         imv.neutralHUD();
 
         var oreToReceive = littleMinOreReceived + Math.round(Math.random()*(littleMaxOreReceived-littleMinOreReceived));
@@ -152,6 +153,7 @@ var BackerGame = function()
 
     var rumbled = function(data)
     {
+        imv.displayActivity();
         rocks.src = 'assets/backer_rocks_danger.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
         if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }
@@ -160,6 +162,7 @@ var BackerGame = function()
 
     var caved = function(data)
     {
+        imv.displayActivity();
         rocks.src = 'assets/backer_rocks_danger.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
         if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }

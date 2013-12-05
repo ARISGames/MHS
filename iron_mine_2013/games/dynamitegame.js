@@ -119,6 +119,7 @@ var DynamiteGame = function()
 
     var updateDynamiteSlotTrue = function(slot)
     {
+        imv.displayActivity();
         dynamiteExplosion.style.display = 'none';
         imv.neutralHUD();
         var newHolesFilledFlags = [];
@@ -139,6 +140,7 @@ var DynamiteGame = function()
     this.plungerReady = function(data)
     {
         //Fill the dynamite
+        imv.displayActivity();
         var newHolesFilledFlags = [];
         for(var i = 1; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = true;
@@ -151,6 +153,7 @@ var DynamiteGame = function()
 
     this.plungerPressed = function(data)
     {
+        imv.displayActivity();
         if(currentState != STATE_PRESS_PLUNGER) fail();
         else                                    succeed();
 

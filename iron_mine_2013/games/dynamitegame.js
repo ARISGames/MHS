@@ -119,7 +119,7 @@ var DynamiteGame = function()
 
     var updateDynamiteSlotTrue = function(slot)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.dynamite) imv.displayActivity();
         dynamiteExplosion.style.display = 'none';
         imv.neutralHUD();
         var newHolesFilledFlags = [];
@@ -140,7 +140,7 @@ var DynamiteGame = function()
     this.plungerReady = function(data)
     {
         //Fill the dynamite
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.dynamite) imv.displayActivity();
         var newHolesFilledFlags = [];
         for(var i = 1; i < holesFilledFlags.length; i++)
             newHolesFilledFlags[i] = true;
@@ -153,7 +153,7 @@ var DynamiteGame = function()
 
     this.plungerPressed = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.dynamite) imv.displayActivity();
         if(currentState != STATE_PRESS_PLUNGER) fail();
         else                                    succeed();
 
@@ -210,6 +210,7 @@ var DynamiteGame = function()
                 imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
                 imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>dynamite</b>, be sure to <b>check out the drill and the backer</b>.");
                 ARIS.setItemCount(imm.ITEM_ID_DYNAMITE, 1);
+                imm.dynamite = true;
             }
             else if(!success && failCount == 1)
                 imv.displayGuruWithMessage("You blew up Sven. <b>Medical bills are expensive...</b> Next time give the guys a chance to clear the area and <b>wait until the light turns green</b>.");

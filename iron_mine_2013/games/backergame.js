@@ -87,6 +87,7 @@ var BackerGame = function()
                 imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
                 imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>backer</b>, be sure to <b>check out the blaster and the drill</b>.");
                 ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
+                imm.backer = true;
             }
             if(!success && failCount == 1)
                 imv.displayGuruWithMessage("Looks like you lost your leg in the cave-in... <b>I bet that fake leg was expensive</b>! Unfortunately, there's <b>not much you can do to prevent an unsafe cave-in</b>. Just gotta hope for the best!");
@@ -107,7 +108,7 @@ var BackerGame = function()
     var rightVibeTime = 0;
     var poked = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.backer) imv.displayActivity();
         imv.neutralHUD();
 
         var oreToReceive = littleMinOreReceived + Math.round(Math.random()*(littleMaxOreReceived-littleMinOreReceived));
@@ -153,7 +154,7 @@ var BackerGame = function()
 
     var rumbled = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.backer) imv.displayActivity();
         rocks.src = 'assets/backer_rocks_danger.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
         if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }
@@ -162,7 +163,7 @@ var BackerGame = function()
 
     var caved = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.backer) imv.displayActivity();
         rocks.src = 'assets/backer_rocks_danger.png';
         if(data == 1) { var alreadyVibing = (leftVibeTime  != 0); leftVibeTime  = 60; if(!alreadyVibing) vibeLeftPoker();  }
         if(data == 2) { var alreadyVibing = (rightVibeTime != 0); rightVibeTime = 60; if(!alreadyVibing) vibeRightPoker(); }

@@ -94,6 +94,7 @@ var DrillGame = function()
                 imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
                 imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>drill</b>, be sure to <b>check out the blaster and the backer</b>.");
                 ARIS.setItemCount(imm.ITEM_ID_DRILL, 1);
+                imm.drill = true;
             }
             if(!success && failCount == 1) 
                 imv.displayGuruWithMessage("Not quite! You've broken your drill bit! <b>That costs money...</b> Look at the lights and be sure to <b>release on green</b>!");
@@ -112,7 +113,7 @@ var DrillGame = function()
 
     var drillStarted = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.drill) imv.displayActivity();
         drillBGImage.style.display = "none";
         imv.neutralHUD();
         drillOn = true;
@@ -121,13 +122,13 @@ var DrillGame = function()
 
     var drillStopped = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.drill) imv.displayActivity();
         drillOn = false;
     }
 
     var drillLit = function(data)
     {
-        imv.displayActivity();
+        if(!imm.currentLevel == 1 || !imm.drill) imv.displayActivity();
         drillBGImage.style.display = "none";
         lastReceivedLight = parseInt(data);
         if(lastReceivedLight == 1) drillStarted();

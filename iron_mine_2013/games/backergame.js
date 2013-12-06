@@ -52,12 +52,12 @@ var BackerGame = function()
         leftpokerimg.src  = 'assets/backer_pole_left_green.png';
         rightpokerimg.src = 'assets/backer_pole_right_green.png';
 
+        successCount++;
+        checkGuru(true, oreToReceive);
+
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
-
-        successCount++;
-        checkGuru(true, oreToReceive);
     }
 
     function fail()

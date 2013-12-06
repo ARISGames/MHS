@@ -62,12 +62,12 @@ var DrillGame = function()
         imv.successHUD();
         var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
 
+        successCount++;
+        checkGuru(true, oreToReceive);
+
         imv.displayMoneyDelta(oreToReceive);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
-
-        successCount++;
-        checkGuru(true, oreToReceive);
     }
 
     function fail()

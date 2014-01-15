@@ -26,6 +26,7 @@ $shl2 = getItemCountForDate(18419,$d);
 $shc1 = getItemCountForDate(26271,$d);
 $shc2 = getItemCountForDate(0,$d);
 ?>
+
 <table>
 <tr>
 <td>Fur Trade</td>

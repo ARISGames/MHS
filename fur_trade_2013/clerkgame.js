@@ -32,7 +32,7 @@ var ClerkGame = function()
                 {
                     var data = JSON.parse(request);
                     if(data.player.playerId == ftm.player.playerId) return;
-                    if(connectedPlayer) return;
+                    //if(connectedPlayer) return;
                     setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
                 }
                 eh.identificationReceived = function(request)

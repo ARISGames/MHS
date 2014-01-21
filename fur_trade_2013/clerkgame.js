@@ -45,6 +45,8 @@ var ClerkGame = function()
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i == -1) eh.visiblePlayers.push(data.player);
                     else        eh.visiblePlayers[i] = data.player;
+
+                    formatClerkLounge();
                 }
                 eh.playerLeftReceived = function(request)
                 {
@@ -194,7 +196,11 @@ var ClerkGame = function()
 
     function formatClerkLounge()
     {
-        //nothing to do?
+        document.getElementById('clerkloungepool').innerHTML = "";
+        for(var i = 0; i < eh.visiblePlayers.length; i++)
+            document.getElementById('clerkloungepool').appendChild(getLoungeCell(eh.visiblePlayers[i]));
+        if(eh.visiblePlayers.length == 0)
+            document.getElementById('clerkloungepool').appendChild(getLoungeCell(null));
     }
 
     function formatClerkTrade()
@@ -234,6 +240,35 @@ var ClerkGame = function()
 
         formatClerkClientOffer();
         formatClerkOffer();
+    }
+
+    function getLoungeCell(player)
+    {
+        if(player)
+        {
+            var cell = document.createElement('div');
+            cell.setAttribute('class','loungecell');
+            var img = document.createElement('img');
+            img.setAttribute('class','loungecellimg');
+            img.src = player.photoURL;
+            var title = document.createElement('div');
+            title.setAttribute('class','loungecelltitle');
+            title.innerHTML = player.displayname;
+            cell.appendChild(img);
+            cell.appendChild(title);
+            //cell.ontouchstart = function() { loungeCellSelected(player); };
+        }
+        else //null cell
+        {
+            var cell = document.createElement('div');
+            cell.setAttribute('class','loungecell');
+            var title = document.createElement('div');
+            title.setAttribute('class','loungecellnulltitle');
+            title.innerHTML = "<span style='font-size:23px;'>No hunters found.</span><br />Waiting for hunter to enter shop...";
+            cell.appendChild(title);
+        }
+
+        return cell;
     }
 
     function formatClerkClientOffer()

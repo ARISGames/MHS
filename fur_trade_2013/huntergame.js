@@ -76,6 +76,8 @@ var HunterGame = function()
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
+                    ftm.player.availability = "busy";
+                    eh.sendIdentification(ftm.player);
 
                     formatHunterTrade();
                     ftv.displayTrade();
@@ -171,6 +173,8 @@ var HunterGame = function()
         connectedPlayer = null;
         connectedPlayerOfferId = -1;
         eh.visiblePlayers = [];
+
+        ftm.player.availability = "available";
     }
 
     function formatHunterLounge()
@@ -211,9 +215,12 @@ var HunterGame = function()
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
             title.innerHTML = player.displayname;
+            if(player.availability == "busy")
+                title.innerHTML += " (busy)";
             cell.appendChild(img);
             cell.appendChild(title);
-            cell.ontouchstart = function() { loungeCellSelected(player); };
+            if(player.availability != "busy")
+                cell.ontouchstart = function() { loungeCellSelected(player); };
         }
         else //null cell
         {

@@ -75,6 +75,8 @@ var ClerkGame = function()
 
                     connectedPlayer = data.player;
                     eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
+                    ftm.player.availability = "busy";
+                    eh.sendIdentification(ftm.player);
 
                     formatClerkTrade();
                     ftv.displayTrade();
@@ -192,6 +194,8 @@ var ClerkGame = function()
         connectedPlayer = null;
         connectedPlayerOfferQty = 0;
         eh.visiblePlayers = [];
+
+        ftm.player.availability = "available";
     }
 
     function formatClerkLounge()
@@ -254,9 +258,10 @@ var ClerkGame = function()
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
             title.innerHTML = player.displayname;
+            if(player.availability == "busy")
+                title.innerHTML += " (busy)";
             cell.appendChild(img);
             cell.appendChild(title);
-            //cell.ontouchstart = function() { loungeCellSelected(player); };
         }
         else //null cell
         {

@@ -279,10 +279,10 @@ var HunterGame = function()
         theyreReady = false;
 
         var item = ftm.itemForItemId(connectedPlayerOfferId);
-        if(item) item.qty += 1;
+        if(item != itemNull) item.qty += 1;
         itemPelt.qty -= fursOffering;
 
-        if(item) ARIS.setItemCount(item.itemId,     item.qty);
+        if(item != itemNull) ARIS.setItemCount(item.itemId,     item.qty);
         ARIS.setItemCount(itemPelt.itemId, itemPelt.qty);
 
         if(ftm.qtyNonPeltItems() >= 5 && ftm.currentLevel == 2)
@@ -295,8 +295,8 @@ var HunterGame = function()
         }
         else if(itemPelt.qty == 0)
         {
-            if(!item) ftv.displayGuruWithMessage("What! You just gave those pelts away for nothing! Now <b>you're out of pelts</b>!");
-            else      ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
+            if(item != itemNull) ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
+            else                 ftv.displayGuruWithMessage("What! You just gave those pelts away for nothing! Now <b>you're out of pelts</b>!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Collect more pelts to trade!"); };
         }
         else
@@ -304,7 +304,7 @@ var HunterGame = function()
             var plural = "s";
             if(ftm.qtyNonPeltItems() == 1) plural = "";
 
-            if(!item)                                    ftv.displayGuruWithMessage("You just gave those pelts away for nothing! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
+            if(item == itemNull)                         ftv.displayGuruWithMessage("You just gave those pelts away for nothing! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
             else if(item.itemId == itemPlume.itemId)     ftv.displayGuruWithMessage("You have an <b>Ostrich Plume</b>! You'll look mighty spiffy when you decorate your hat with it! You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
             else if(item.itemId == itemGunpowder.itemId) ftv.displayGuruWithMessage("Nice trade! With <b>Gun Powder</b>, you can use traps AND guns to bring in more pelts to the post. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");
             else if(item.itemId == itemMBalls.itemId)    ftv.displayGuruWithMessage("Smart trade. A gun won't get you very far without ammo, so it's smart to stock up on <b>Musket Balls</b>. You've gotten us <b>"+ftm.qtyNonPeltItems()+" item"+plural+"</b>- only <b>"+(5-ftm.qtyNonPeltItems())+" more</b> to go!");

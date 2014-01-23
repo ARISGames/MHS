@@ -309,14 +309,14 @@ var ClerkGame = function()
         theyreReady = false;
 
         var item = ftm.itemForItemId(itemOffering);
-        if(item) item.qty -= 1;
+        if(item != itemNull) item.qty -= 1;
         itemPelt.qty += connectedPlayerOfferQty;
 
-        if(item) ARIS.setItemCount(item.itemId,item.qty);
+        if(item != itemNull) ARIS.setItemCount(item.itemId,item.qty);
         ARIS.setItemCount(itemPelt.itemId,itemPelt.qty);
 
         var buyplural = "";
-        if(item && item.peltCost > 1) buyplural = "s";
+        if(item != itemNull && item.peltCost > 1) buyplural = "s";
         var tradeplural = "";
         if(connectedPlayerOfferQty) tradeplural = "s";
 

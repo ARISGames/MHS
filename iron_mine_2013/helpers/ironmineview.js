@@ -186,7 +186,8 @@ var IronMineView = function()
         self.moneydelta.delta = delta;
         if(delta >= 0) //ore
         {
-            self.moneydelta.innerHTML = '+'+delta+' ore';
+            //self.moneydelta.innerHTML = '+'+delta+' ore';
+            self.moneydelta.innerHTML = '$'+((delta-(delta%100))/100)+'.'+(delta%100 < 10 ? '0' : '')+(delta%100);
             self.moneydelta.style.color = "#009344";
         }
         else if(delta < 0)//money

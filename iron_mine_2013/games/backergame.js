@@ -47,7 +47,8 @@ var BackerGame = function()
     function succeed()
     {
         imv.successHUD();
-        var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        //var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        var oreToReceive = minOreReceived + (0.5*(maxOreReceived-minOreReceived));
 
         leftpokerimg.src  = 'assets/backer_pole_left_green.png';
         rightpokerimg.src = 'assets/backer_pole_right_green.png';
@@ -55,7 +56,8 @@ var BackerGame = function()
         successCount++;
         checkGuru(true, oreToReceive);
 
-        imv.displayMoneyDelta(oreToReceive);
+        //imv.displayMoneyDelta(oreToReceive);
+        imv.displayMoneyDelta(oreToReceive*imm.oreWorth);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
     }
@@ -111,9 +113,11 @@ var BackerGame = function()
         if(!imm.currentLevel == 1 || !imm.backer) imv.displayActivity();
         imv.neutralHUD();
 
-        var oreToReceive = littleMinOreReceived + Math.round(Math.random()*(littleMaxOreReceived-littleMinOreReceived));
+        //var oreToReceive = littleMinOreReceived + Math.round(Math.random()*(littleMaxOreReceived-littleMinOreReceived));
+        var oreToReceive = littleMinOreReceived + (0.5*(littleMaxOreReceived-littleMinOreReceived));
 
-        imv.displayMoneyDelta(oreToReceive);
+        //imv.displayMoneyDelta(oreToReceive);
+        imv.displayMoneyDelta(oreToReceive*imm.oreWorth);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
 

@@ -171,7 +171,8 @@ var DynamiteGame = function()
     function succeed()
     {
         imv.successHUD();
-        var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        //var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        var oreToReceive = minOreReceived + (0.5*(maxOreReceived-minOreReceived));
 
         dynamiteSticksImg.src = 'assets/dynamite_green.png';
         dynamiteExplosion.style.display = 'block';
@@ -179,7 +180,8 @@ var DynamiteGame = function()
         successCount++;
         checkGuru(true, oreToReceive);
 
-        imv.displayMoneyDelta(oreToReceive);
+        //imv.displayMoneyDelta(oreToReceive);
+        imv.displayMoneyDelta(oreToReceive*imm.oreWorth);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
     }

@@ -60,12 +60,14 @@ var DrillGame = function()
     {
         drillBGImage.style.display = "block";
         imv.successHUD();
-        var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        //var oreToReceive = minOreReceived + Math.round(Math.random()*(maxOreReceived-minOreReceived));
+        var oreToReceive = minOreReceived + (0.5*(maxOreReceived-minOreReceived));
 
         successCount++;
         checkGuru(true, oreToReceive);
 
-        imv.displayMoneyDelta(oreToReceive);
+        //imv.displayMoneyDelta(oreToReceive);
+        imv.displayMoneyDelta(oreToReceive*imm.oreWorth);
         ARIS.setItemCount(imm.ITEM_ID_ORE, imm.ore+oreToReceive);
         if(imm.currentLevel != 1) ARIS.setItemCount(imm.ITEM_ID_MONEY, imm.money+(oreToReceive*imm.oreWorth));
     }

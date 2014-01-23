@@ -87,6 +87,19 @@ var ClerkGame = function()
                 eh.tradeAcceptReceived = function(request)
                 {
                     //should never get this
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
+                    if(connectedPlayer) return;
+
+                    connectedPlayer = data.player;
+                    ftm.player.availability = "busy";
+                    eh.sendIdentification(ftm.player);
+
+                    formatClerkTrade();
+                    ftv.displayTrade();
+                    startDoomsdayTimer();
+                    if(ftm.currentLevel == 2)
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -207,6 +220,11 @@ var ClerkGame = function()
             document.getElementById('clerkloungepool').appendChild(getLoungeCell(null));
     }
 
+    var loungeCellSelected = function(player)
+    {
+        eh.sendTradeRequest(ftm.player, player.playerId);
+    }
+
     function formatClerkTrade()
     {
         var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -262,6 +280,8 @@ var ClerkGame = function()
                 title.innerHTML += " (busy)";
             cell.appendChild(img);
             cell.appendChild(title);
+            if(player.availability != "busy")
+                cell.ontouchstart = function() { loungeCellSelected(player); };
         }
         else //null cell
         {

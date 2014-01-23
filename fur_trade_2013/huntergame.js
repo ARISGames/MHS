@@ -68,6 +68,20 @@ var HunterGame = function()
                 eh.tradeRequestReceived = function(request)
                 {
                     //should never get this
+                    var data = JSON.parse(request);
+                    if(data.receiverId != ftm.player.playerId) return;
+                    if(connectedPlayer) return;
+
+                    connectedPlayer = data.player;
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
+                    ftm.player.availability = "busy";
+                    eh.sendIdentification(ftm.player);
+
+                    formatHunterTrade();
+                    ftv.displayTrade();
+                    startDoomsdayTimer();
+                    if(ftm.currentLevel == 2)
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {

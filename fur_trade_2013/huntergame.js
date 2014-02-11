@@ -132,7 +132,7 @@ var HunterGame = function()
                 window.addEventListener('beforeunload', function() { eh.sendPlayerLeft(ftm.player); }, false);
 
                 formatHunterLounge();
-                ftv.displayGuruWithMessage("Wait for a <b>clerk</b> partner to open up shop! Look around to see if any of your friends are clerks who need help getting to level 2. <b>Select</b> a clerk on the list to start trading!");
+                ftv.displayGuruWithMessage("Wait for a <b>clerk</b> partner to open up shop! <b>Select</b> a clerk on the list to start trading!");
                 ftv.displayLounge();
             }
             else //if on harvest page

@@ -315,7 +315,7 @@ var ClerkGame = function()
         img.src = 'assets/'+item.imageName;
         var label = document.createElement('div');
         label.setAttribute('class','tradecelllabel');
-        label.innerHTML = item.name;
+        label.innerHTML = item.name+"("+item.peltCost+")";
         cell.appendChild(img);
         cell.appendChild(label);
         cell.ontouchstart = function() { clerkTradeItemSelected(item); };

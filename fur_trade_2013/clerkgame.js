@@ -220,6 +220,16 @@ var ClerkGame = function()
             document.getElementById('clerkloungepool').appendChild(getLoungeCell(null));
     }
 
+    self.searchAgain = function()
+    {
+        document.getElementById('clerkloungesearchbutton').innerHTML = "Searching...";
+        setTimeout(function(){document.getElementById('clerkloungesearchbutton').innerHTML = "Search Again";},1000);
+        cleanConnection();
+        formatClerkLounge();
+        eh.sendNewPlayer(ftm.player);
+        eh.sendIdentification(ftm.player);
+    }
+
     var loungeCellSelected = function(player)
     {
         eh.sendTradeRequest(ftm.player, player.playerId);

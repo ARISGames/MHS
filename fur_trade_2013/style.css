@@ -269,6 +269,15 @@ body
     width:300px;
 }
 
+#peltgetbg
+{
+    display:block;
+    position:absolute;
+    top:0px;
+    left:-92px; /* (504-320)/2 */
+    height:504px;
+}
+
 #clerkloungecontent
 {
     position:absolute;

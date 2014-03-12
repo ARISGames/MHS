@@ -311,8 +311,8 @@ var HunterGame = function()
         }
         else if(itemPelt.qty == 0)
         {
-            if(item != itemNull) ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>, but it looks like <b>you're out of pelts</b>!");
-            else                 ftv.displayGuruWithMessage("What! You just gave those pelts away for nothing! Now <b>you're out of pelts</b>!");
+            if(item != itemNull) ftv.displayGuruWithMessage("Thanks for the <b>"+item.singular+"</b>! It looks like <b>you're out of pelts</b>- time to go hunting!");
+            else                 ftv.displayGuruWithMessage("What! You just gave those pelts away for nothing! Now <b>you're out of pelts</b>! Time to go hunting!");
             hunterGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Hunter! Collect more pelts to trade!"); };
         }
         else

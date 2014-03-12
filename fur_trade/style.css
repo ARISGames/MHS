@@ -264,9 +264,9 @@ body
 {
     display:block;
     position:absolute;
-    top:125px;
-    left:10px;
-    width:300px;
+    bottom:54px;
+    right:10px;
+    width:100px;
 }
 
 #peltgetbg

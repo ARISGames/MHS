@@ -360,9 +360,14 @@ var ClerkGame = function()
             clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
             ftv.displayGuruWithMessage("Level 2 complete. Excellent work, clerk. You'll be climbing the company ladder in no time.");
         }
-        else if(ftm.qtyNonPeltItems() == 0)
+        else if(ftm.qtyNonPeltItems() == 0 && ftm.currentLevel == 2)
         {
             ftv.displayGuruWithMessage("What have you done!?! You've traded away all your items and haven't made even <b>15 pelts</b>! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
+            clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Clerk! Collect more items to trade!"); };
+        }
+        else if(ftm.qtyNonPeltItems() == 0 && ftm.currentLevel == 3)
+        {
+            ftv.displayGuruWithMessage("You've traded away all your items! You'll have to <b>go back and buy more items with your pelts</b>. Then, make sure to <b>trade for a profit</b>!");
             clerkGuruButton.ontouchstart = function() { ARIS.exitToScanner("You are a Clerk! Collect more items to trade!"); };
         }
         else if(item.peltCost >= connectedPlayerOfferQty)   ftv.displayGuruWithMessage("Hey! We're trying to make a <b>profit</b>! You bought that <b>"+item.singular+"</b> for <b>"+item.peltCost+" pelt"+buyplural+"</b>, and just traded it for only <b>"+connectedPlayerOfferQty+" pelt"+tradeplural+"</b>! Try to get <b>more pelts</b> for your items!");

@@ -84,6 +84,19 @@ body
     background-color:rgba(237,177,31,0.5);
 }
 
+.checkholder
+{
+	position:absolute;
+	top:3px;
+	width:64px;
+	height:90px;
+	font-size:small;
+}
+.check
+{
+	width:64px;
+}
+
 #wantdisplay
 {
     width:200px;

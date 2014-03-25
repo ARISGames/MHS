@@ -75,7 +75,7 @@ window.onerror = function(msg, url, linenumber)
 
 <body class='full_screen'>
 
-<img id="success_popup" class="full_screen" style="display:block; visibility:hidden; z-index:10000" ontouchstart="document.getElementById('success_popup').style.visibility='hidden';"></img>
+<div id="success_popup" class="full_screen" style="display:block; visibility:hidden; z-index:10000; background-color:#000000;" ontouchstart="document.getElementById('success_popup').style.visibility='hidden';"><img id="success_popup_content" style="width:320px;"></div>
 
 <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 

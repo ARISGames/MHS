@@ -354,7 +354,7 @@ var ClerkGame = function()
         {
             ARIS.setItemCount(ftm.levelIdForLevel(2), 1);
             ARIS.setItemCount(ftm.levelIdForLevel(1), 0);
-            document.getElementById('success_popup').src = "assets/trade_complete_2.png";
+            document.getElementById('success_popup_content').src = "assets/trade_complete_2.png";
             document.getElementById('success_popup').style.visibility = "visible";
             ftm.currentLevel = 3;
             clerkGuruButton.ontouchstart = function(){ ARIS.exitToTab("QUESTS"); ftv.hideGuru(); };
@@ -403,7 +403,7 @@ var ClerkGame = function()
             if(ftm.currentLevel == 1 && itemPelt.qty == 0)
             {
                 ARIS.setItemCount(ftm.levelIdForLevel(1), 1);
-                document.getElementById('success_popup').src = "assets/trade_complete_1.png";
+                document.getElementById('success_popup_content').src = "assets/trade_complete_1.png";
                 document.getElementById('success_popup').style.visibility = "visible";
                 ftm.currentLevel = 2;
                 ftv.displayGuruWithMessage("Good work! Now that the post is stocked, we should <b>find a local hunter</b> to trade our stock for <b>pelts</b>!");

@@ -59,26 +59,30 @@
                         ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
                         ARIS.setItemCount(imm.LEVEL_IDS[1],1);
                         ARIS.setItemCount(imm.LEVEL_IDS[0],0);
-                        document.getElementById('success_popup').src = "assets/mine_complete_2.png";
+                        document.getElementById('success_popup_content').src = "assets/mine_complete_2.png";
                         document.getElementById('success_popup').style.visibility = "visible";
                         document.getElementById('success_popup').onclick=function(){ARIS.exitToTab("QUESTS");};
                     }
                 }
             }
-            else if(updatedItemId == imm.ITEM_ID_ORE)
-            {
-                imm.ore = qty;
-                if(imm.currentLevel == 1) imv.haveDisplay.innerHTML = 'Ore:'+imm.ore;
-            }
+            else if(updatedItemId == imm.ITEM_ID_ORE)                 imm.ore = qty;
             else if(qty > 0 && updatedItemId == imm.ITEM_ID_DRILL)    imm.drill    = true;
             else if(qty > 0 && updatedItemId == imm.ITEM_ID_DYNAMITE) imm.dynamite = true;
             else if(qty > 0 && updatedItemId == imm.ITEM_ID_BACKER)   imm.backer   = true;
+
+		if(imm.currentLevel == 1)
+		{
+			imv.haveDisplay.innerHTML = 
+			"<div class='checkholder' style='left:32px;'> <img class='check' src='assets/check_"+(imm.drill    ? "full.png" : "empty.png")+"'/><br />Drill</div>"+
+			"<div class='checkholder' style='left:128px;'><img class='check' src='assets/check_"+(imm.dynamite ? "full.png" : "empty.png")+"'/><br />Dynamite</div>"+
+			"<div class='checkholder' style='right:32px;'><img class='check' src='assets/check_"+(imm.backer   ? "full.png" : "empty.png")+"'/><br />Backer</div>";
+		}
 
             if(imm.currentLevel == 1 && imm.drill && imm.dynamite && imm.backer)
             {
                 ARIS.didUpdateItemQty = function(uiid, q) { }; //essentially removes self as listener
                 ARIS.setItemCount(imm.LEVEL_IDS[0],1);
-                document.getElementById('success_popup').src = "assets/mine_complete_1.png";
+                document.getElementById('success_popup_content').src = "assets/mine_complete_1.png";
                 document.getElementById('success_popup').style.visibility = "visible";
                 imv.displayGuruWithMessage("Alright! Now that you're aquainted with the roles in the mine, we can really <b>put you to work</b>. Come back tomorrow and we can start paying you for how much <b>ore you find</b>.");
                 imv.currentGuruButton.onclick = function(){ARIS.exitToTab("QUESTS");};
@@ -128,7 +132,7 @@
 
 <body class='full_screen'>
 
-    <img id="success_popup" class="full_screen" style="display:block; visibility:hidden; z-index:10000" onclick="document.getElementById('success_popup').style.visibility='hidden';"></img>
+    <div id="success_popup" class="full_screen" style="display:block; visibility:hidden; z-index:10000; background-color:#000000;" onclick="document.getElementById('success_popup').style.visibility='hidden';"><img id="success_popup_content" style="width:320px;"/></div>
 
     <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 

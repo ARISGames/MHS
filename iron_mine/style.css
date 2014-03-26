@@ -76,7 +76,7 @@ body
     position:absolute;
     top:0px;
     left:0px;
-    font-size:80px;
+    font-size:70px;
     font-family:gotham_font;
     color:#EDB11F;
     text-shadow:5px 5px 10px #000000;
@@ -91,6 +91,7 @@ body
 	width:64px;
 	height:90px;
 	font-size:small;
+	color:white;
 }
 .check
 {

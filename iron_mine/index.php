@@ -73,9 +73,9 @@
 		if(imm.currentLevel == 1)
 		{
 			imv.haveDisplay.innerHTML = 
-			"<div class='checkholder' style='left:32px;'> <img class='check' src='assets/check_"+(imm.drill    ? "full.png" : "empty.png")+"'/><br />Drill</div>"+
-			"<div class='checkholder' style='left:128px;'><img class='check' src='assets/check_"+(imm.dynamite ? "full.png" : "empty.png")+"'/><br />Dynamite</div>"+
-			"<div class='checkholder' style='right:32px;'><img class='check' src='assets/check_"+(imm.backer   ? "full.png" : "empty.png")+"'/><br />Backer</div>";
+			"<div class='checkholder' style='left:32px;'> <img class='check' src='assets/check_"+(imm.drill    ? "full.png" : "empty.png")+"'/><br />Driller</div>"+
+			"<div class='checkholder' style='left:128px;'><img class='check' src='assets/check_"+(imm.dynamite ? "full.png" : "empty.png")+"'/><br />Blaster</div>"+
+			"<div class='checkholder' style='right:32px;'><img class='check' src='assets/check_"+(imm.backer   ? "full.png" : "empty.png")+"'/><br />Backman</div>";
 		}
 
             if(imm.currentLevel == 1 && imm.drill && imm.dynamite && imm.backer)

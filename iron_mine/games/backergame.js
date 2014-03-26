@@ -33,15 +33,15 @@ var BackerGame = function()
         if(imm.currentLevel == 1)
         {
             if(!imm.backer)
-                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Looks like you're new to the mine. <b>Grab a backer pole, jab the ceiling, and hope for the best</b>. Good luck!";
+                imv.currentIntroTalk.innerHTML = "Pozdravljeni, My name's <b>Mike Zakotnik</b>- Looks like you're new to the mine. <b>Grab a backman pole, jab the ceiling, and hope for the best</b>. Good luck!";
             else
             {
                 imv.currentIntroButton.onclick = function() { ARIS.exitToScanner("Scan something in the Iron Mine!"); };
                 imv.currentIntroTalk.innerHTML = "Good work <b>checking for cave-ins</b>! If you haven't already, you should <b>check out the drills or the dynamite</b> to get a feel for <b>all the jobs in the mine</b>.";
             }
         }
-        else if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "Ah, so you've chosen the <b>backer</b>! Clearing the mine for cave-ins is important in collecting <b>a LOT of ore</b>, but there are often <b>expensive, unavoidable risks</b>. Good luck, my friend!";
-        else imv.currentIntroTalk.innerHTML = "So, you're <b>backer</b> for more, eh? (haha!) Good luck, my friend!";
+        else if(imm.currentLevel == 2) imv.currentIntroTalk.innerHTML = "Ah, so you've chosen the role of <b>backman</b>! Clearing the mine for cave-ins is important in collecting <b>a LOT of ore</b>, but there are often <b>expensive, unavoidable risks</b>. Good luck, my friend!";
+        else imv.currentIntroTalk.innerHTML = "So, you're <b>backman</b> for more, eh? (haha!) Good luck, my friend!";
     }
 
     function succeed()
@@ -87,7 +87,7 @@ var BackerGame = function()
             if(success && successCount == 2)
             {
                 imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};
-                imv.displayGuruWithMessage("Perfect. Now that you've mastered the <b>backer</b>, be sure to <b>check out the blaster and the drill</b>.");
+                imv.displayGuruWithMessage("Perfect. Now that you've mastered the job of <b>backman</b>, be sure to <b>check out the blaster and the drill</b>.");
                 ARIS.setItemCount(imm.ITEM_ID_BACKER, 1);
                 imm.backer = true;
             }

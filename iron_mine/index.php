@@ -121,6 +121,22 @@
         imv.displayIntro();
     }
 
+    var timevidstarted = new Date();
+    function vidComplete()
+    {  
+        //log that vid was skipped
+        var timevidskipped = new Date();
+        var secondselapsed = ((timevidskipped-timevidstarted)/1000);
+        if(secondselapsed < 20)
+        {
+            var xmlhttp;
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/991/0/"+imm.playerId,true); 
+            xmlhttp.send();
+        }
+        ARIS.exitToScanner("Scan something in the mine!");
+    }
+
     window.addEventListener('load', partReady, false);
     window.onerror = function(msg, url, linenumber) 
     {
@@ -141,7 +157,7 @@
             <video id="drillvidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
+            <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -175,7 +191,7 @@
             <video id="dynamitevidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
+            <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>
@@ -218,7 +234,7 @@
             <video id="backervidfile" width="320" height="504" webkit-playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
-            <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>
+            <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
             </div>
         </div>

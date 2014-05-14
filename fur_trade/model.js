@@ -357,13 +357,13 @@ var FurTradeModel = function()
         {
             self.currentRole = roleClerk;
             if(self.player) self.player.role = "clerk";
-            decrementSecretLocationCount();
+            incrementSecretLocationCount();
         }
         else
         {
             self.currentRole = roleHunter;
             if(self.player) self.player.role = "hunter";
-            incrementSecretLocationCount();
+            decrementSecretLocationCount();
         }
 
         requestRoleCallback();

@@ -41,8 +41,21 @@ function stateReceived()
     shv.displayVid();
 }
 
+
+var timevidstarted = new Date();
 function vidComplete()
-{
+{  
+    //log that vid was skipped
+    var timevidskipped = new Date();
+    var secondselapsed = ((timevidskipped-timevidstarted)/1000);
+    if(secondselapsed < 20)
+    {
+        var xmlhttp;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/992/0/"+shm.player.playerId,true); 
+        xmlhttp.send();
+    }
+
     ARIS.exitToCharacter(37030);
     //ARIS.exitToCharacter(39812);
 }

@@ -133,8 +133,10 @@
             xmlhttp=new XMLHttpRequest();
             xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/991/0/"+imm.playerId,true); 
             xmlhttp.send();
+	    setTimeout(function(){ARIS.exitToScanner("Scan something in the mine!");},500);
         }
-        ARIS.exitToScanner("Scan something in the mine!");
+	else
+       	    ARIS.exitToScanner("Scan something in the mine!");
     }
 
     window.addEventListener('load', partReady, false);

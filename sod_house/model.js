@@ -33,6 +33,7 @@ var SodHouseModel = function()
         ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
     }
 
+	// FIXME dead?
     self.sendRequest = function(fn, callback)
     {
         var xmlhttp;

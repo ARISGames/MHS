@@ -1,4 +1,4 @@
-var gameId = itemId = webPageId = function(id){return id;};
+var itemId = webPageId = locationId = gameId = function(id){return id;};
 
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;

@@ -36,6 +36,7 @@ var Remapper = function()
 
 		fs.readFile(filename, 'utf8', function(error, data)
 		{
+			if (error) throw error;
 			mapper.remap_files(JSON.parse(data));
 		});
 	};
@@ -50,7 +51,14 @@ var Remapper = function()
 			var filename = path.join(__dirname, remapping_file);
 			fs.readFile(filename, 'utf8', function(error, data)
 			{
+				if (error) throw error;
 				var remapped_string = mapper.remap_string(data);
+
+				fs.writeFile(filename, remapped_string, function(error)
+				{
+					if (error) throw error;
+					console.log("Remapped", remapping_file);
+				});
 			});
 		});
 	};

@@ -18,6 +18,7 @@
 <script type="text/javascript" src="games/backergame.js">     </script>
 <script type="text/javascript" src="games/strikegame.js">     </script>
 <script type="text/javascript">
+    var gameId = webHookId = function(id){return id;};
 
     //Helpers
     var pm; //PusherMan- handles all realtime events
@@ -72,7 +73,7 @@
 
 		if(imm.currentLevel == 1)
 		{
-			imv.haveDisplay.innerHTML = 
+			imv.haveDisplay.innerHTML =
 			"<div class='checkholder' style='left:32px;'> <img class='check' src='assets/check_"+(imm.drill    ? "full.png" : "empty.png")+"'/><br />Driller</div>"+
 			"<div class='checkholder' style='left:128px;'><img class='check' src='assets/check_"+(imm.dynamite ? "full.png" : "empty.png")+"'/><br />Blaster</div>"+
 			"<div class='checkholder' style='right:32px;'><img class='check' src='assets/check_"+(imm.backer   ? "full.png" : "empty.png")+"'/><br />Backman</div>";
@@ -109,11 +110,11 @@
                 break;
         }
 
-        pm = new PusherMan('<?php echo Config::pusher_key; ?>', 
-            'http://arisgames.org/server/events/<?php echo $private_default_auth; ?>', 
-            'http://arisgames.org/server/events/<?php echo $send_url; ?>', 
-            '<?php echo $private_default_channel; ?>', 
-            game.events, 
+        pm = new PusherMan('<?php echo Config::pusher_key; ?>',
+            'http://arisgames.org/server/events/<?php echo $private_default_auth; ?>',
+            'http://arisgames.org/server/events/<?php echo $send_url; ?>',
+            '<?php echo $private_default_channel; ?>',
+            game.events,
             game.callbacks);
 
         imv.displayGame(imm.stationType);
@@ -123,7 +124,7 @@
 
     var timevidstarted = new Date();
     function vidComplete()
-    {  
+    {
         //log that vid was skipped
         var timevidskipped = new Date();
         var secondselapsed = ((timevidskipped-timevidstarted)/1000);
@@ -131,7 +132,7 @@
         {
             var xmlhttp;
             xmlhttp=new XMLHttpRequest();
-            xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/991/0/"+imm.playerId,true); 
+            xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+gameId(5252)+"/"+webHookId(991)+"/0/"+imm.playerId,true);
             xmlhttp.send();
 	    setTimeout(function(){ARIS.exitToScanner("Scan something in the mine!");},500);
         }
@@ -140,7 +141,7 @@
     }
 
     window.addEventListener('load', partReady, false);
-    window.onerror = function(msg, url, linenumber) 
+    window.onerror = function(msg, url, linenumber)
     {
         alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
         return true;

@@ -37,7 +37,7 @@ var remappers = [
 	{"key": "items", "regex": /itemId\((\d+)\)/g},
 ];
 
-var dryrun = true;
+var dryrun = false;
 
 var Remapper = function()
 {
@@ -97,7 +97,7 @@ var Remapper = function()
 
 		remappers.forEach(function(remapper)
 		{
-			remapped_string.replace(remapper["regex"], function(match, capture1)
+			remapped_string = remapped_string.replace(remapper["regex"], function(match, capture1)
 			{
 				var replace_value = game_map_json.data.migration_maps[remapper["key"]][capture1];
 

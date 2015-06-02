@@ -26,9 +26,17 @@ var files_to_remap = [
 	"sod_house/index.html"
 ];
 
+var remappers = [
+	{"key": "webpages", "regex": /exitToWebpage\((\d+)\)/g},
+	{"key": "webpages", "regex": /webPageId\((\d+)\)/g}
+];
+
+var dryrun = true;
 
 var Remapper = function()
 {
+	// Load the json mapping from the import and then remap all files
+
 	this.run = function()
 	{
 		var mapper = this;
@@ -42,6 +50,8 @@ var Remapper = function()
 	};
 
 
+	// Loop through all files, run them through the remapper and save the result.
+
 	this.remap_files = function(game_map_json)
 	{
 		var mapper = this;
@@ -49,24 +59,45 @@ var Remapper = function()
 		files_to_remap.forEach(function(remapping_file)
 		{
 			var filename = path.join(__dirname, remapping_file);
-			fs.readFile(filename, 'utf8', function(error, data)
+			fs.readFile(filename, 'utf8', function(error, file_string)
 			{
 				if (error) throw error;
-				var remapped_string = mapper.remap_string(data);
+				var remapped_string = mapper.remap_string(file_string, game_map_json);
 
-				fs.writeFile(filename, remapped_string, function(error)
+				if(!dryrun)
 				{
-					if (error) throw error;
-					console.log("Remapped", remapping_file);
-				});
+					fs.writeFile(filename, remapped_string, function(error)
+					{
+						if (error) throw error;
+						console.log("Remapped", remapping_file);
+					});
+				}
+				else
+				{
+					console.log("Dryrun mapped", remapping_file);
+				}
 			});
 		});
 	};
 
 
-	this.remap_string = function(string)
+	// Run all regex mappers on a string replacing the matches with values from json
+
+	this.remap_string = function(string, game_map_json)
 	{
 		var remapped_string = string;
+
+		remappers.forEach(function(remapper)
+		{
+			remapped_string.replace(remapper["regex"], function(match, capture1)
+			{
+				var replace_value = game_map_json.data.migration_maps[remapper["key"]][capture1];
+
+				if(replace_value === undefined) throw "Missing entry in mapping values: " + remapper["key"] + "->" + capture1
+
+				console.log("REPLACE", capture1, "with", replace_value);
+			});
+		});
 
 		return remapped_string;
 	};

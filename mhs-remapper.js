@@ -26,9 +26,15 @@ var files_to_remap = [
 	"sod_house/index.html"
 ];
 
+// The only keys important to MHS
 var remappers = [
 	{"key": "webpages", "regex": /exitToWebpage\((\d+)\)/g},
-	{"key": "webpages", "regex": /webPageId\((\d+)\)/g}
+	{"key": "webpages", "regex": /webPageId\((\d+)\)/g},
+
+	{"key": "dialogs", "regex": /exitToCharacter\((\d+)\)/g},
+	{"key": "dialogs", "regex": /npcId\((\d+)\)/g},
+
+	{"key": "items", "regex": /itemId\((\d+)\)/g},
 ];
 
 var dryrun = true;
@@ -69,12 +75,12 @@ var Remapper = function()
 					fs.writeFile(filename, remapped_string, function(error)
 					{
 						if (error) throw error;
-						console.log("Remapped", remapping_file);
+						console.log("[!] Remapped", remapping_file);
 					});
 				}
 				else
 				{
-					console.log("Dryrun mapped", remapping_file);
+					console.log("[?] Dryrun Remapped", remapping_file);
 				}
 			});
 		});
@@ -87,6 +93,8 @@ var Remapper = function()
 	{
 		var remapped_string = string;
 
+		var replace_count = 0;
+
 		remappers.forEach(function(remapper)
 		{
 			remapped_string.replace(remapper["regex"], function(match, capture1)
@@ -95,9 +103,12 @@ var Remapper = function()
 
 				if(replace_value === undefined) throw "Missing entry in mapping values: " + remapper["key"] + "->" + capture1
 
-				console.log("REPLACE", capture1, "with", replace_value);
+				replace_count++;
+				return match.replace(capture1, replace_value);
 			});
 		});
+
+		console.log("[-] Replaced", replace_count, "instances");
 
 		return remapped_string;
 	};

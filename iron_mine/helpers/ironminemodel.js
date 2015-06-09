@@ -1,4 +1,4 @@
-var webPageId = function(number) { return number; };
+var webPageId = itemId = function(number) { return number; };
 
 var IronMineModel = function()
 {
@@ -12,7 +12,7 @@ var IronMineModel = function()
     self.STATION_TYPE_STRIKE = 3;
 
     //  Station Category->Id relations
-    self.STATION_IDS = [];
+    self.STATION_IDS = {};
     self.STATION_IDS[self.STATION_TYPE_DRILL]    = [webPageId(3545),webPageId(1151),webPageId(1152),webPageId(1153),webPageId(1154)]; //All webpage/station Id's of type 'drill'
     self.STATION_IDS[self.STATION_TYPE_DYNAMITE] = [webPageId(3548),webPageId(1155),webPageId(1156)]; //All webpage/station Id's of type 'dynamite'
     self.STATION_IDS[self.STATION_TYPE_BACKER]   = [webPageId(3555),webPageId(1160)]; //All webpage/station Id's of type 'backer'
@@ -44,7 +44,7 @@ var IronMineModel = function()
 
 
     //  Station Id->Category relations (populated with above info)
-    self.STATION_TYPES = [];
+    self.STATION_TYPES = {};
     for(var i in self.STATION_IDS[self.STATION_TYPE_DRILL])    self.STATION_TYPES[self.STATION_IDS[self.STATION_TYPE_DRILL][i]]    = self.STATION_TYPE_DRILL;
     for(var i in self.STATION_IDS[self.STATION_TYPE_DYNAMITE]) self.STATION_TYPES[self.STATION_IDS[self.STATION_TYPE_DYNAMITE][i]] = self.STATION_TYPE_DYNAMITE;
     for(var i in self.STATION_IDS[self.STATION_TYPE_BACKER])   self.STATION_TYPES[self.STATION_IDS[self.STATION_TYPE_BACKER][i]]   = self.STATION_TYPE_BACKER;

@@ -58,10 +58,10 @@ function vidComplete()
     var secondselapsed = ((timevidskipped-timevidstarted)/1000);
     if(secondselapsed < 20)
     {
-        var xmlhttp;
-        xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/989/0/"+ftm.player.playerId,true); 
-        xmlhttp.send();
+        //var xmlhttp;
+        //xmlhttp=new XMLHttpRequest();
+        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/989/0/"+ftm.player.playerId,true); 
+        //xmlhttp.send();
     }
 
     ftv.displayLoading();

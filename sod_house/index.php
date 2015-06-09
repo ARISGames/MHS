@@ -51,10 +51,10 @@ function vidComplete()
     var secondselapsed = ((timevidskipped-timevidstarted)/1000);
     if(secondselapsed < 20)
     {
-        var xmlhttp;
-        xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+gameId(5252)+"/"+webHookId(992)+"/0/"+shm.player.playerId,true); 
-        xmlhttp.send();
+        //var xmlhttp;
+        //xmlhttp=new XMLHttpRequest();
+        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+gameId(5252)+"/"+webHookId(992)+"/0/"+shm.player.playerId,true); 
+        //xmlhttp.send();
     }
 
     ARIS.exitToCharacter(npcId(37030));

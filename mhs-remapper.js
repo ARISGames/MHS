@@ -2,9 +2,9 @@
  *
  * - Run migrate. Get the response JSON and save it to a file.
  * - Run getQuestsForGame and save it to a file.
- * - Run this to translate to v2 ids in javascript/json files.
- * - Point all v2 game web page urls to new instance of javascript.
- * - Update quests to new versions.
+ * - Run this app to translate to v2 ids in javascript/json files. Deploy to hosted repo.
+ * - Run getWebPagesForGame, point all web page urls to new instance of javascript (hosted/mhs)
+ * - Update webpages and quests using autocrud with new versions.
  */
 
 /* Important files
@@ -23,7 +23,7 @@ var files_to_remap = [
 	"fur_trade/model.js",
 	"iron_mine/helpers/ironminemodel.js",
 	"iron_mine/index.php",
-	"sod_house/index.html"
+	"sod_house/index.php"
 ];
 
 // The only keys important to MHS

@@ -76,7 +76,7 @@ function roleReceived()
     game.init();
 }
 
-window.addEventListener('load', partReady, false);
+document.addEventListener( "DOMContentLoaded", partReady, false );
 window.onerror = function(msg, url, linenumber) 
 {
     //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);

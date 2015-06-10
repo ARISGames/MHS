@@ -19,7 +19,7 @@
         document.getElementById('drillvidfile').play();
     }
 
-    window.addEventListener('load', begin, false);
+    document.addEventListener( "DOMContentLoaded", begin, false );
     window.onerror = function(msg, url, linenumber) 
     {
         alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);

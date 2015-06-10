@@ -74,7 +74,7 @@ function vidComplete()
     {
         //var xmlhttp;
         //xmlhttp=new XMLHttpRequest();
-        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/989/0/"+ftm.player.playerId,true); 
+        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/5252/989/0/"+ftm.player.user_id,true); 
         //xmlhttp.send();
     }
 

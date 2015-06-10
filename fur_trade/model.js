@@ -1,4 +1,4 @@
-var itemId = webPageId = locationId = gameId = function(id){return id;};
+var itemId = web_page_id = locationId = game_id = function(id){return id;};
 
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
@@ -55,7 +55,7 @@ var Item = function(itemEnum)
     var self = this;
     self.itemEnum = itemEnum;
     self.itemId = -1;
-    self.webPageId = -1;
+    self.web_page_id = -1;
     self.owner = null;
     self.name = "";
     self.singular = "";
@@ -67,12 +67,12 @@ var Item = function(itemEnum)
     switch(itemEnum)
     {
         case itemEnumNull:
-            self.webPageId = webPageId(6953);
+            self.web_page_id = web_page_id(6953);
 			self.imageName = "empty.png";
             break;
         case itemEnumPelt:
             self.itemId = itemId(37958);
-            self.webPageId = webPageId(6941);
+            self.web_page_id = web_page_id(6941);
             self.owner = roleHunter;
             self.peltCost = 1;
             self.name = "Beaver Pelt";
@@ -82,7 +82,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumGun:
             self.itemId = itemId(37961);
-            self.webPageId = webPageId(6944);
+            self.web_page_id = web_page_id(6944);
             self.owner = roleClerk;
             self.peltCost = 11;
             self.name = "Gun";
@@ -92,7 +92,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumBeads:
             self.itemId = itemId(37967);
-            self.webPageId = webPageId(6950);
+            self.web_page_id = web_page_id(6950);
             self.owner = roleClerk;
             self.peltCost = 3;
             self.name = "Beads";
@@ -102,7 +102,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumBlanket:
             self.itemId = itemId(37964);
-            self.webPageId = webPageId(6938);
+            self.web_page_id = web_page_id(6938);
             self.owner = roleClerk;
             self.peltCost = 4;
             self.name = "Blanket";
@@ -112,7 +112,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumKettle:
             self.itemId = itemId(37970);
-            self.webPageId = webPageId(6947);
+            self.web_page_id = web_page_id(6947);
             self.owner = roleClerk;
             self.peltCost = 5;
             self.name = "Kettle";
@@ -122,7 +122,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumGunpowder:
             self.itemId = itemId(37976);
-            self.webPageId = webPageId(6959);
+            self.web_page_id = web_page_id(6959);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Gunpowder";
@@ -132,7 +132,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumMBalls:
             self.itemId = itemId(37979);
-            self.webPageId = webPageId(6962);
+            self.web_page_id = web_page_id(6962);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Musket Balls";
@@ -142,7 +142,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumAxeHead:
             self.itemId = itemId(37982);
-            self.webPageId = webPageId(6965);
+            self.web_page_id = web_page_id(6965);
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Axe Head";
@@ -152,7 +152,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumPlume:
             self.itemId = itemId(37985);
-            self.webPageId = webPageId(6968);
+            self.web_page_id = web_page_id(6968);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Plume";
@@ -162,7 +162,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumHoe:
             self.itemId = itemId(37988);
-            self.webPageId = webPageId(6971);
+            self.web_page_id = web_page_id(6971);
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Hoe";
@@ -172,7 +172,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumFabric:
             self.itemId = itemId(37991);
-            self.webPageId = webPageId(6974);
+            self.web_page_id = web_page_id(6974);
             self.owner = roleClerk;
             self.peltCost = 3;
             self.name = "Fabric";
@@ -182,7 +182,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumSpear:
             self.itemId = itemId(37997);
-            self.webPageId = webPageId(6977);
+            self.web_page_id = web_page_id(6977);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Muskrat Spear";
@@ -192,7 +192,7 @@ var Item = function(itemEnum)
             break;
         case itemEnumKnife:
             self.itemId = itemId(38000);
-            self.webPageId = webPageId(6980);
+            self.web_page_id = web_page_id(6980);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Knife";
@@ -230,9 +230,9 @@ var FurTradeModel = function()
 {
     var self = this;
 
-    self.gameId = 0;
+    self.game_id = 0;
     self.player = {};
-    self.webPageId = 0;
+    self.web_page_id = 0;
     self.webPageItem = null;
     self.webPageOwner = null;
 
@@ -265,9 +265,9 @@ var FurTradeModel = function()
 
         ARIS.didReceivePlayer = function(player)
         {
-            //alert(player.playerId);
+            //alert(player.user_id);
             //alert(player.username);
-            //alert(player.displayname);
+            //alert(player.display_name);
             self.player = player;
             if(self.currentRole == roleClerk) self.player.role = "clerk";
             if(self.currentRole == roleHunter) self.player.role = "hunter";
@@ -275,10 +275,10 @@ var FurTradeModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId = parseInt(params.gameId);
-        self.player.playerId = parseInt(params.playerId);
-        self.webPageId = parseInt(params.webPageId);
-        self.webPageItem = self.itemForWebPageId(self.webPageId);
+        self.game_id = parseInt(params.game_id);
+        self.player.user_id = parseInt(params.user_id);
+        self.web_page_id = parseInt(params.web_page_id);
+        self.webPageItem = self.itemForWebPageId(self.web_page_id);
         self.webPageRole = self.webPageItem.owner;
 
         ARIS.getPlayer();
@@ -297,7 +297,7 @@ var FurTradeModel = function()
     self.itemForWebPageId = function(id)
     {
         for(var i in items)
-            if(items[i].webPageId == id) return items[i];
+            if(items[i].web_page_id == id) return items[i];
         return null;
     }
     self.roleForRoleId = function(id)

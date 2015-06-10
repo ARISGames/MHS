@@ -2,9 +2,9 @@ var SodHouseModel = function()
 {
     var self = this;
 
-    self.gameId = 0; 
+    self.game_id = 0; 
     self.player = {};
-    self.webPageId = 0;
+    self.web_page_id = 0;
 
     self.currentLevel = 1;
 
@@ -25,9 +25,9 @@ var SodHouseModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId = parseInt(params.gameId);
-        self.player.playerId = parseInt(params.playerId);
-        self.webPageId = parseInt(params.webPageId);
+        self.game_id = parseInt(params.game_id);
+        self.player.user_id = parseInt(params.user_id);
+        self.web_page_id = parseInt(params.web_page_id);
 
         ARIS.getPlayer();
         ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced

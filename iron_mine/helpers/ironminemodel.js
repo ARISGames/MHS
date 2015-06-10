@@ -1,4 +1,4 @@
-var webPageId = itemId = function(number) { return number; };
+var web_page_id = itemId = function(number) { return number; };
 
 var IronMineModel = function()
 {
@@ -13,34 +13,34 @@ var IronMineModel = function()
 
     //  Station Category->Id relations
     self.STATION_IDS = {};
-    self.STATION_IDS[self.STATION_TYPE_DRILL]    = [webPageId(6926),webPageId(6866),webPageId(6869),webPageId(6872),webPageId(6875)]; //All webpage/station Id's of type 'drill'
-    self.STATION_IDS[self.STATION_TYPE_DYNAMITE] = [webPageId(6929),webPageId(6878),webPageId(6881)]; //All webpage/station Id's of type 'dynamite'
-    self.STATION_IDS[self.STATION_TYPE_BACKER]   = [webPageId(6932),webPageId(6884)]; //All webpage/station Id's of type 'backer'
-    self.STATION_IDS[self.STATION_TYPE_STRIKE]   = [webPageId(6935),webPageId(6923)]; //All webpage/station Id's of type 'strike'
+    self.STATION_IDS[self.STATION_TYPE_DRILL]    = [web_page_id(6926),web_page_id(6866),web_page_id(6869),web_page_id(6872),web_page_id(6875)]; //All webpage/station Id's of type 'drill'
+    self.STATION_IDS[self.STATION_TYPE_DYNAMITE] = [web_page_id(6929),web_page_id(6878),web_page_id(6881)]; //All webpage/station Id's of type 'dynamite'
+    self.STATION_IDS[self.STATION_TYPE_BACKER]   = [web_page_id(6932),web_page_id(6884)]; //All webpage/station Id's of type 'backer'
+    self.STATION_IDS[self.STATION_TYPE_STRIKE]   = [web_page_id(6935),web_page_id(6923)]; //All webpage/station Id's of type 'strike'
 
 	// Half of these numbers get replaced so the new game can talk to the v1 station IDS (which corresponded to the v1 game objects)
 	// Left value: New v2 web page, right: v1 web page (and Pusher channel ID)
 	self.PUSHER_ID_MAP = {};
 
 	// Drills
-	self.PUSHER_ID_MAP[webPageId(6926)] = 3545;
-	self.PUSHER_ID_MAP[webPageId(6866)] = 1151;
-	self.PUSHER_ID_MAP[webPageId(6869)] = 1152;
-	self.PUSHER_ID_MAP[webPageId(6872)] = 1153;
-	self.PUSHER_ID_MAP[webPageId(6875)] = 1154;
+	self.PUSHER_ID_MAP[web_page_id(6926)] = 3545;
+	self.PUSHER_ID_MAP[web_page_id(6866)] = 1151;
+	self.PUSHER_ID_MAP[web_page_id(6869)] = 1152;
+	self.PUSHER_ID_MAP[web_page_id(6872)] = 1153;
+	self.PUSHER_ID_MAP[web_page_id(6875)] = 1154;
 
 	// Dynamite
-	self.PUSHER_ID_MAP[webPageId(6929)] = 3548;
-	self.PUSHER_ID_MAP[webPageId(6878)] = 1155;
-	self.PUSHER_ID_MAP[webPageId(6881)] = 1156;
+	self.PUSHER_ID_MAP[web_page_id(6929)] = 3548;
+	self.PUSHER_ID_MAP[web_page_id(6878)] = 1155;
+	self.PUSHER_ID_MAP[web_page_id(6881)] = 1156;
 
 	// Backer
-	self.PUSHER_ID_MAP[webPageId(6932)] = 3555;
-	self.PUSHER_ID_MAP[webPageId(6884)] = 1160;
+	self.PUSHER_ID_MAP[web_page_id(6932)] = 3555;
+	self.PUSHER_ID_MAP[web_page_id(6884)] = 1160;
 
 	// Strike
-	self.PUSHER_ID_MAP[webPageId(6935)] = 3556;
-	self.PUSHER_ID_MAP[webPageId(6923)] = 3031;
+	self.PUSHER_ID_MAP[web_page_id(6935)] = 3556;
+	self.PUSHER_ID_MAP[web_page_id(6923)] = 3031;
 
 
     //  Station Id->Category relations (populated with above info)
@@ -67,13 +67,13 @@ var IronMineModel = function()
     self.ITEM_IDS = [self.ITEM_ID_MONEY, self.ITEM_ID_ORE, self.ITEM_ID_DRILL, self.ITEM_ID_ANTON, self.ITEM_ID_DYNAMITE, self.ITEM_ID_MATTI, self.ITEM_ID_BACKER, self.ITEM_ID_MIKE, self.ITEM_ID_STRIKE, self.ITEM_ID_STRIKE_FAIL, self.ITEM_ID_STRIKE_SUCCEED];
 
     //From URL
-    self.gameId;
-    self.playerId;
-    self.webPageId;
+    self.game_id;
+    self.user_id;
+    self.web_page_id;
 
     //State
     self.stationType;//One of STATION_TYPE_ enums
-    self.stationId;//Same as webPageId, but more functionally named (identifies one drill from another...)
+    self.stationId;//Same as web_page_id, but more functionally named (identifies one drill from another...)
 
     //Personal
     self.currentLevel = 1;
@@ -118,12 +118,12 @@ var IronMineModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId    = parseInt(params.gameId);
-        self.playerId  = parseInt(params.playerId);
-        self.webPageId = parseInt(params.webPageId);
+        self.game_id    = parseInt(params.game_id);
+        self.user_id  = parseInt(params.user_id);
+        self.web_page_id = parseInt(params.web_page_id);
 
-        self.stationType = self.STATION_TYPES[self.webPageId];
-        self.stationId   = self.PUSHER_ID_MAP[self.webPageId];
+        self.stationType = self.STATION_TYPES[self.web_page_id];
+        self.stationId   = self.PUSHER_ID_MAP[self.web_page_id];
 
         for(var i in self.ITEM_IDS)  ARIS.getItemCount(self.ITEM_IDS[i]);
         for(var i in self.LEVEL_IDS) ARIS.getItemCount(self.LEVEL_IDS[i]);

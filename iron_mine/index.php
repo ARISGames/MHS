@@ -17,7 +17,7 @@
 <script type="text/javascript" src="games/backergame.js">     </script>
 <script type="text/javascript" src="games/strikegame.js">     </script>
 <script type="text/javascript">
-    var gameId = webHookId = function(id){return id;};
+    var game_id = webHookId = function(id){return id;};
 
     //Helpers
     var pm; //PusherMan- handles all realtime events
@@ -131,7 +131,7 @@
         {
             //var xmlhttp;
             //xmlhttp=new XMLHttpRequest();
-            //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+gameId(5252)+"/"+webHookId(991)+"/0/"+imm.playerId,true);
+            //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+game_id(5252)+"/"+webHookId(991)+"/0/"+imm.user_id,true);
             //xmlhttp.send();
 	    setTimeout(function(){ARIS.exitToScanner("Scan something in the mine!");},500);
         }

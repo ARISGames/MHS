@@ -29,15 +29,15 @@ var HunterGame = function()
                 eh.newPlayerReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     //if(connectedPlayer) return;
                     setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
                 }
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.user_id+") They:"+data.player.display_name+"("+data.player.user_id+")");
+                    if(data.player.user_id == ftm.player.user_id) return;
                     if(data.player.role == "hunter") return;
 
                     var i = eh.playerPositionInVisiblePlayers(data.player);
@@ -49,10 +49,10 @@ var HunterGame = function()
                 eh.playerLeftReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i != -1) eh.visiblePlayers.splice(i,1);
-                    if(data.player.playerId == connectedPlayer.playerId)
+                    if(data.player.user_id == connectedPlayer.user_id)
                     {
                         cleanConnection();
                         formatHunterLounge();
@@ -61,19 +61,19 @@ var HunterGame = function()
                 eh.playerPingReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     timeSinceLastInteraction = new Date();
                 }
                 eh.tradeRequestReceived = function(request)
                 {
                     //should never get this
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
-                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.user_id);
                     ftm.player.availability = "busy";
                     eh.sendIdentification(ftm.player);
 
@@ -81,12 +81,12 @@ var HunterGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.display_name+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
@@ -97,13 +97,13 @@ var HunterGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.display_name+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.alterOfferReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     connectedPlayerOfferId = data.offer;
                     formatHunterClientOffer();
                     imReady = false;
@@ -114,8 +114,8 @@ var HunterGame = function()
                 eh.tradeReadyReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     if(data.offer != connectedPlayerOfferId)
                         eh.alterOfferReceived(request);
                     theyreReady = true;
@@ -153,7 +153,7 @@ var HunterGame = function()
     }
     function tickDoomsday()
     {
-        eh.sendPlayerPing(ftm.player, connectedPlayer.playerId);
+        eh.sendPlayerPing(ftm.player, connectedPlayer.user_id);
         if((new Date() - timeSinceLastInteraction)/1000 > 10)
         {
             cleanConnection();
@@ -228,7 +228,7 @@ var HunterGame = function()
             img.src = player.photoURL;
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
-            title.innerHTML = player.displayname;
+            title.innerHTML = player.display_name;
             if(player.availability == "busy")
                 title.innerHTML += " (busy)";
             cell.appendChild(img);
@@ -251,7 +251,7 @@ var HunterGame = function()
 
     var loungeCellSelected = function(player)
     {
-        eh.sendTradeRequest(ftm.player, player.playerId);
+        eh.sendTradeRequest(ftm.player, player.user_id);
     }
 
     function formatHunterTrade()
@@ -261,8 +261,8 @@ var HunterGame = function()
         document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('huntertradetitle').innerHTML       = spaces+"Your offer:";
         document.getElementById('huntertradeclienttitle').innerHTML = spaces+"Their offer:";
-        document.getElementById('huntertradename').innerHTML       = "Hunter "+ftm.player.displayname;
-        document.getElementById('huntertradeclientname').innerHTML = "Clerk "+connectedPlayer.displayname;
+        document.getElementById('huntertradename').innerHTML       = "Hunter "+ftm.player.display_name;
+        document.getElementById('huntertradeclientname').innerHTML = "Clerk "+connectedPlayer.display_name;
         ftv.haveDisplay.style.fontSize = "37px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Items Gained:"+ftm.qtyNonPeltItems();
@@ -371,7 +371,7 @@ var HunterGame = function()
         if(fursOffering+1 <= itemPelt.qty)
             fursOffering++;
         formatHunterOffer();
-        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
+        eh.sendAlterOffer(ftm.player, connectedPlayer.user_id, fursOffering);
         theyreReady = false;
         imReady = false;
         formatHunterReady();
@@ -382,7 +382,7 @@ var HunterGame = function()
         if(fursOffering-1 >= 0)
             fursOffering--;
         formatHunterOffer();
-        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, fursOffering);
+        eh.sendAlterOffer(ftm.player, connectedPlayer.user_id, fursOffering);
         theyreReady = false;
         imReady = false;
         formatHunterReady();
@@ -391,7 +391,7 @@ var HunterGame = function()
     self.readyTouched = function()
     {
         imReady = true;
-        eh.sendTradeReady(ftm.player, connectedPlayer.playerId, fursOffering);
+        eh.sendTradeReady(ftm.player, connectedPlayer.user_id, fursOffering);
         if(theyreReady) confirmTrade();
         formatHunterReady();
     }

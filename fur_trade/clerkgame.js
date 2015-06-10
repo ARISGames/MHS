@@ -31,15 +31,15 @@ var ClerkGame = function()
                 eh.newPlayerReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     //if(connectedPlayer) return;
                     setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
                 }
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.user_id+") They:"+data.player.display_name+"("+data.player.user_id+")");
+                    if(data.player.user_id == ftm.player.user_id) return;
                     if(data.player.role == "clerk") return;
 
                     var i = eh.playerPositionInVisiblePlayers(data.player);
@@ -51,10 +51,10 @@ var ClerkGame = function()
                 eh.playerLeftReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i != -1) eh.visiblePlayers.splice(i,1);
-                    if(data.player.playerId == connectedPlayer.playerId)
+                    if(data.player.user_id == connectedPlayer.user_id)
                     {
                         cleanConnection();
                         formatClerkLounge();
@@ -63,18 +63,18 @@ var ClerkGame = function()
                 eh.playerPingReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     timeSinceLastInteraction = new Date();
                 }
                 eh.tradeRequestReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
-                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.user_id);
                     ftm.player.availability = "busy";
                     eh.sendIdentification(ftm.player);
 
@@ -82,13 +82,13 @@ var ClerkGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.display_name+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
                     //should never get this
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
@@ -99,13 +99,13 @@ var ClerkGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.display_name+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.alterOfferReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     connectedPlayerOfferQty = data.offer;
                     formatClerkClientOffer();
                     imReady = false;
@@ -116,8 +116,8 @@ var ClerkGame = function()
                 eh.tradeReadyReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     if(data.offer != connectedPlayerOfferQty)
                         eh.alterOfferReceived(request);
                     theyreReady = true;
@@ -154,7 +154,7 @@ var ClerkGame = function()
     }
     function tickDoomsday()
     {
-        eh.sendPlayerPing(ftm.player, connectedPlayer.playerId);
+        eh.sendPlayerPing(ftm.player, connectedPlayer.user_id);
         if((new Date() - timeSinceLastInteraction)/1000 > 10)
         {
             cleanConnection();
@@ -232,7 +232,7 @@ var ClerkGame = function()
 
     var loungeCellSelected = function(player)
     {
-        eh.sendTradeRequest(ftm.player, player.playerId);
+        eh.sendTradeRequest(ftm.player, player.user_id);
     }
 
     function formatClerkTrade()
@@ -242,8 +242,8 @@ var ClerkGame = function()
         document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('clerktradetitle').innerHTML       = spaces+"Your offer:";
         document.getElementById('clerktradeclienttitle').innerHTML = spaces+"Their offer:";
-        document.getElementById('clerktradename').innerHTML       = "Clerk "+ftm.player.displayname;
-        document.getElementById('clerktradeclientname').innerHTML = "Hunter "+connectedPlayer.displayname;
+        document.getElementById('clerktradename').innerHTML       = "Clerk "+ftm.player.display_name;
+        document.getElementById('clerktradeclientname').innerHTML = "Hunter "+connectedPlayer.display_name;
         ftv.haveDisplay.style.fontSize = "37px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Pelts Gained:"+itemPelt.qty;
@@ -285,7 +285,7 @@ var ClerkGame = function()
             img.src = player.photoURL;
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
-            title.innerHTML = player.displayname;
+            title.innerHTML = player.display_name;
             if(player.availability == "busy")
                 title.innerHTML += " (busy)";
             cell.appendChild(img);
@@ -419,7 +419,7 @@ var ClerkGame = function()
     {
         itemOffering = item.itemId;
         formatClerkOffer();
-        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, itemOffering);
+        eh.sendAlterOffer(ftm.player, connectedPlayer.user_id, itemOffering);
         theyreReady = false;
         imReady = false;
         formatClerkReady();
@@ -435,7 +435,7 @@ var ClerkGame = function()
     self.readyTouched = function()
     {
         imReady = true;
-        eh.sendTradeReady(ftm.player, connectedPlayer.playerId, itemOffering);
+        eh.sendTradeReady(ftm.player, connectedPlayer.user_id, itemOffering);
         if(theyreReady) confirmTrade();
         formatClerkReady();
     }

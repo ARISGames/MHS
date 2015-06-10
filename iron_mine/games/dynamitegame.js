@@ -50,7 +50,7 @@ var DynamiteGame = function()
 
     self.setup = function()
     {
-        if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][0])//debug
+        if(imm.web_page_id == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][0])//debug
         {
             imv.dynamiteGame.className += " dynamite_left_bg";
             dynamiteHoles[1].style.top  = '97px';  dynamiteHoles[1].style.left = '5px';
@@ -60,7 +60,7 @@ var DynamiteGame = function()
             dynamiteHoles[5].style.top  = '53px';  dynamiteHoles[5].style.left = '220px';
             dynamiteHoles[6].style.top  = '111px'; dynamiteHoles[6].style.left = '270px';
         }
-        else if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][1])
+        else if(imm.web_page_id == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][1])
         {
             imv.dynamiteGame.className += " dynamite_right_bg";
             dynamiteHoles[1].style.top  = '52px';  dynamiteHoles[1].style.left = '20px';
@@ -70,7 +70,7 @@ var DynamiteGame = function()
             dynamiteHoles[5].style.top  = '133px'; dynamiteHoles[5].style.left = '225px';
             dynamiteHoles[6].style.top  = '63px';  dynamiteHoles[6].style.left = '265px';
         }
-        else if(imm.webPageId == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][2])
+        else if(imm.web_page_id == imm.STATION_IDS[imm.STATION_TYPE_DYNAMITE][2])
         {
             imv.dynamiteGame.className += " dynamite_left_bg";
             dynamiteHoles[1].style.top  = '97px';  dynamiteHoles[1].style.left = '5px';

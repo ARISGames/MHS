@@ -57,7 +57,7 @@ function vidComplete()
         //xmlhttp.send();
     }
 
-    ARIS.exitToCharacter(npcId(37030));
+    ARIS.exitToCharacter(npcId(23997));
 }
 
 document.addEventListener( "DOMContentLoaded", partReady, false );

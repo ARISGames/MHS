@@ -21,8 +21,8 @@ var itemEnumKnife     = 13;
 var itemEnums = [itemEnumNull, itemEnumPelt, itemEnumGun, itemEnumBeads, itemEnumBlanket, itemEnumKettle, itemEnumGunpowder, itemEnumMBalls, itemEnumAxeHead, itemEnumPlume, itemEnumHoe, itemEnumFabric, itemEnumSpear, itemEnumKnife];
 
 //*These are the only sets of enumerators that correspond to legitimate ARIS ids
-var levelId1 = itemId(47022);
-var levelId2 = itemId(47023);
+var levelId1 = itemId(36987);
+var levelId2 = itemId(36990);
 var levelIds=[levelId1,levelId2];
 
 var Role = function(roleEnum)
@@ -36,12 +36,12 @@ var Role = function(roleEnum)
     {
         case roleEnumClerk:
             self.title = "Clerk";
-            self.roleId = itemId(47026);
+            self.roleId = itemId(36993);
             self.imageName = "clerk.png";
             break;
         case roleEnumHunter:
             self.title = "Hunter";
-            self.roleId = itemId(47027);
+            self.roleId = itemId(36996);
             self.imageName = "hunter.png";
             break;
         default:
@@ -67,11 +67,11 @@ var Item = function(itemEnum)
     switch(itemEnum)
     {
         case itemEnumNull:
-            self.webPageId = webPageId(3731);
+            self.webPageId = webPageId(6708);
             break;
         case itemEnumPelt:
-            self.itemId = itemId(47029);
-            self.webPageId = webPageId(3718);
+            self.itemId = itemId(36999);
+            self.webPageId = webPageId(6696);
             self.owner = roleHunter;
             self.peltCost = 1;
             self.name = "Beaver Pelt";
@@ -80,8 +80,8 @@ var Item = function(itemEnum)
             self.imageName = "pelt.png";
             break;
         case itemEnumGun:
-            self.itemId = itemId(47030);
-            self.webPageId = webPageId(3720);
+            self.itemId = itemId(37002);
+            self.webPageId = webPageId(6699);
             self.owner = roleClerk;
             self.peltCost = 11;
             self.name = "Gun";
@@ -90,8 +90,8 @@ var Item = function(itemEnum)
             self.imageName = "gun.png";
             break;
         case itemEnumBeads:
-            self.itemId = itemId(47035);
-            self.webPageId = webPageId(3726);
+            self.itemId = itemId(37008);
+            self.webPageId = webPageId(6705);
             self.owner = roleClerk;
             self.peltCost = 3;
             self.name = "Beads";
@@ -100,8 +100,8 @@ var Item = function(itemEnum)
             self.imageName = "beads.png";
             break;
         case itemEnumBlanket:
-            self.itemId = itemId(47032);
-            self.webPageId = webPageId(3715);
+            self.itemId = itemId(37005);
+            self.webPageId = webPageId(6693);
             self.owner = roleClerk;
             self.peltCost = 4;
             self.name = "Blanket";
@@ -110,8 +110,8 @@ var Item = function(itemEnum)
             self.imageName = "blanket.png";
             break;
         case itemEnumKettle:
-            self.itemId = itemId(47038);
-            self.webPageId = webPageId(3723);
+            self.itemId = itemId(37011);
+            self.webPageId = webPageId(6702);
             self.owner = roleClerk;
             self.peltCost = 5;
             self.name = "Kettle";
@@ -120,8 +120,8 @@ var Item = function(itemEnum)
             self.imageName = "kettle.png";
             break;
         case itemEnumGunpowder:
-            self.itemId = itemId(49584);
-            self.webPageId = webPageId(3974);
+            self.itemId = itemId(37017);
+            self.webPageId = webPageId(6714);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Gunpowder";
@@ -130,8 +130,8 @@ var Item = function(itemEnum)
             self.imageName = "gunpowder.png";
             break;
         case itemEnumMBalls:
-            self.itemId = itemId(49586);
-            self.webPageId = webPageId(3975);
+            self.itemId = itemId(37020);
+            self.webPageId = webPageId(6717);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Musket Balls";
@@ -140,8 +140,8 @@ var Item = function(itemEnum)
             self.imageName = "musketballs.png";
             break;
         case itemEnumAxeHead:
-            self.itemId = itemId(49587);
-            self.webPageId = webPageId(3977);
+            self.itemId = itemId(37023);
+            self.webPageId = webPageId(6720);
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Axe Head";
@@ -150,8 +150,8 @@ var Item = function(itemEnum)
             self.imageName = "axe.png";
             break;
         case itemEnumPlume:
-            self.itemId = itemId(49589);
-            self.webPageId = webPageId(3978);
+            self.itemId = itemId(37026);
+            self.webPageId = webPageId(6723);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Plume";
@@ -160,8 +160,8 @@ var Item = function(itemEnum)
             self.imageName = "plume.png";
             break;
         case itemEnumHoe:
-            self.itemId = itemId(50181);
-            self.webPageId = webPageId(3997);
+            self.itemId = itemId(37029);
+            self.webPageId = webPageId(6726);
             self.owner = roleClerk;
             self.peltCost = 2;
             self.name = "Hoe";
@@ -170,8 +170,8 @@ var Item = function(itemEnum)
             self.imageName = "hoe.png";
             break;
         case itemEnumFabric:
-            self.itemId = itemId(50184);
-            self.webPageId = webPageId(3999);
+            self.itemId = itemId(37032);
+            self.webPageId = webPageId(6729);
             self.owner = roleClerk;
             self.peltCost = 3;
             self.name = "Fabric";
@@ -180,8 +180,8 @@ var Item = function(itemEnum)
             self.imageName = "fabric.png";
             break;
         case itemEnumSpear:
-            self.itemId = itemId(50187);
-            self.webPageId = webPageId(4001);
+            self.itemId = itemId(37038);
+            self.webPageId = webPageId(6732);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Muskrat Spear";
@@ -190,8 +190,8 @@ var Item = function(itemEnum)
             self.imageName = "spear.png";
             break;
         case itemEnumKnife:
-            self.itemId = itemId(50188);
-            self.webPageId = webPageId(4002);
+            self.itemId = itemId(37041);
+            self.webPageId = webPageId(6735);
             self.owner = roleClerk;
             self.peltCost = 1;
             self.name = "Knife";

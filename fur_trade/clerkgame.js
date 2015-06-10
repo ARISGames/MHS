@@ -38,7 +38,7 @@ var ClerkGame = function()
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
+                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.playerId+") They:"+data.player.display_name+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
                     if(data.player.role == "clerk") return;
 
@@ -82,7 +82,7 @@ var ClerkGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.display_name+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
@@ -99,7 +99,7 @@ var ClerkGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.displayname+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
+                        ftv.displayGuruWithMessage("Now that you've got some <b>items</b>, try to sell them to <b>"+connectedPlayer.display_name+"</b> at a <b>profit</b>! Aim to get a total of <b>15 pelts</b>. (If you run out of <b>items</b>, you can always exit to your <b>scanner</b> and purchase more.)");
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -242,8 +242,8 @@ var ClerkGame = function()
         document.getElementById('clerktradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('clerktradetitle').innerHTML       = spaces+"Your offer:";
         document.getElementById('clerktradeclienttitle').innerHTML = spaces+"Their offer:";
-        document.getElementById('clerktradename').innerHTML       = "Clerk "+ftm.player.displayname;
-        document.getElementById('clerktradeclientname').innerHTML = "Hunter "+connectedPlayer.displayname;
+        document.getElementById('clerktradename').innerHTML       = "Clerk "+ftm.player.display_name;
+        document.getElementById('clerktradeclientname').innerHTML = "Hunter "+connectedPlayer.display_name;
         ftv.haveDisplay.style.fontSize = "37px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Pelts Gained:"+itemPelt.qty;
@@ -285,7 +285,7 @@ var ClerkGame = function()
             img.src = player.photoURL;
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
-            title.innerHTML = player.displayname;
+            title.innerHTML = player.display_name;
             if(player.availability == "busy")
                 title.innerHTML += " (busy)";
             cell.appendChild(img);

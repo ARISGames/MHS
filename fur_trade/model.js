@@ -266,7 +266,7 @@ var FurTradeModel = function()
         {
             //alert(player.playerId);
             //alert(player.username);
-            //alert(player.displayname);
+            //alert(player.display_name);
             self.player = player;
             if(self.currentRole == roleClerk) self.player.role = "clerk";
             if(self.currentRole == roleHunter) self.player.role = "hunter";

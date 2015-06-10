@@ -36,7 +36,7 @@ var HunterGame = function()
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    //alert("Me:"+ftm.player.displayname+"("+ftm.player.playerId+") They:"+data.player.displayname+"("+data.player.playerId+")");
+                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.playerId+") They:"+data.player.display_name+"("+data.player.playerId+")");
                     if(data.player.playerId == ftm.player.playerId) return;
                     if(data.player.role == "hunter") return;
 
@@ -81,7 +81,7 @@ var HunterGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.display_name+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.tradeAcceptReceived = function(request)
                 {
@@ -97,7 +97,7 @@ var HunterGame = function()
                     ftv.displayTrade();
                     startDoomsdayTimer();
                     if(ftm.currentLevel == 2)
-                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.displayname+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
+                        ftv.displayGuruWithMessage("Now that you've collected some <b>pelts</b>, see what items <b>"+connectedPlayer.display_name+"</b> will sell you! Aim to get a total of <b>5 items</b>. (If you run out of pelts, you can always go back to your <b>scanner</b> and collect more).");
                 }
                 eh.alterOfferReceived = function(request)
                 {
@@ -228,7 +228,7 @@ var HunterGame = function()
             img.src = player.photoURL;
             var title = document.createElement('div');
             title.setAttribute('class','loungecelltitle');
-            title.innerHTML = player.displayname;
+            title.innerHTML = player.display_name;
             if(player.availability == "busy")
                 title.innerHTML += " (busy)";
             cell.appendChild(img);
@@ -261,8 +261,8 @@ var HunterGame = function()
         document.getElementById('huntertradeclientimg').src = connectedPlayer.photoURL;
         document.getElementById('huntertradetitle').innerHTML       = spaces+"Your offer:";
         document.getElementById('huntertradeclienttitle').innerHTML = spaces+"Their offer:";
-        document.getElementById('huntertradename').innerHTML       = "Hunter "+ftm.player.displayname;
-        document.getElementById('huntertradeclientname').innerHTML = "Clerk "+connectedPlayer.displayname;
+        document.getElementById('huntertradename').innerHTML       = "Hunter "+ftm.player.display_name;
+        document.getElementById('huntertradeclientname').innerHTML = "Clerk "+connectedPlayer.display_name;
         ftv.haveDisplay.style.fontSize = "37px";
         ftv.haveDisplay.style.height = "60px";
         ftv.haveDisplay.innerHTML = "Items Gained:"+ftm.qtyNonPeltItems();

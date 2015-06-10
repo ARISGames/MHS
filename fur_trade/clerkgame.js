@@ -31,15 +31,15 @@ var ClerkGame = function()
                 eh.newPlayerReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     //if(connectedPlayer) return;
                     setTimeout(function(){eh.sendIdentification(ftm.player);},200); //give the new player a second
                 }
                 eh.identificationReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.playerId+") They:"+data.player.display_name+"("+data.player.playerId+")");
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    //alert("Me:"+ftm.player.display_name+"("+ftm.player.user_id+") They:"+data.player.display_name+"("+data.player.user_id+")");
+                    if(data.player.user_id == ftm.player.user_id) return;
                     if(data.player.role == "clerk") return;
 
                     var i = eh.playerPositionInVisiblePlayers(data.player);
@@ -51,10 +51,10 @@ var ClerkGame = function()
                 eh.playerLeftReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
                     var i = eh.playerPositionInVisiblePlayers(data.player);
                     if(i != -1) eh.visiblePlayers.splice(i,1);
-                    if(data.player.playerId == connectedPlayer.playerId)
+                    if(data.player.user_id == connectedPlayer.user_id)
                     {
                         cleanConnection();
                         formatClerkLounge();
@@ -63,18 +63,18 @@ var ClerkGame = function()
                 eh.playerPingReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.player.playerId == ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.player.user_id == ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     timeSinceLastInteraction = new Date();
                 }
                 eh.tradeRequestReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
-                    eh.sendTradeAccept(ftm.player, connectedPlayer.playerId);
+                    eh.sendTradeAccept(ftm.player, connectedPlayer.user_id);
                     ftm.player.availability = "busy";
                     eh.sendIdentification(ftm.player);
 
@@ -88,7 +88,7 @@ var ClerkGame = function()
                 {
                     //should never get this
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
                     if(connectedPlayer) return;
 
                     connectedPlayer = data.player;
@@ -104,8 +104,8 @@ var ClerkGame = function()
                 eh.alterOfferReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     connectedPlayerOfferQty = data.offer;
                     formatClerkClientOffer();
                     imReady = false;
@@ -116,8 +116,8 @@ var ClerkGame = function()
                 eh.tradeReadyReceived = function(request)
                 {
                     var data = JSON.parse(request);
-                    if(data.receiverId != ftm.player.playerId) return;
-                    if(!connectedPlayer || data.player.playerId != connectedPlayer.playerId) return;
+                    if(data.receiverId != ftm.player.user_id) return;
+                    if(!connectedPlayer || data.player.user_id != connectedPlayer.user_id) return;
                     if(data.offer != connectedPlayerOfferQty)
                         eh.alterOfferReceived(request);
                     theyreReady = true;
@@ -154,7 +154,7 @@ var ClerkGame = function()
     }
     function tickDoomsday()
     {
-        eh.sendPlayerPing(ftm.player, connectedPlayer.playerId);
+        eh.sendPlayerPing(ftm.player, connectedPlayer.user_id);
         if((new Date() - timeSinceLastInteraction)/1000 > 10)
         {
             cleanConnection();
@@ -232,7 +232,7 @@ var ClerkGame = function()
 
     var loungeCellSelected = function(player)
     {
-        eh.sendTradeRequest(ftm.player, player.playerId);
+        eh.sendTradeRequest(ftm.player, player.user_id);
     }
 
     function formatClerkTrade()
@@ -419,7 +419,7 @@ var ClerkGame = function()
     {
         itemOffering = item.itemId;
         formatClerkOffer();
-        eh.sendAlterOffer(ftm.player, connectedPlayer.playerId, itemOffering);
+        eh.sendAlterOffer(ftm.player, connectedPlayer.user_id, itemOffering);
         theyreReady = false;
         imReady = false;
         formatClerkReady();
@@ -435,7 +435,7 @@ var ClerkGame = function()
     self.readyTouched = function()
     {
         imReady = true;
-        eh.sendTradeReady(ftm.player, connectedPlayer.playerId, itemOffering);
+        eh.sendTradeReady(ftm.player, connectedPlayer.user_id, itemOffering);
         if(theyreReady) confirmTrade();
         formatClerkReady();
     }

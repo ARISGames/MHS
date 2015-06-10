@@ -23,7 +23,7 @@ var StrikeGame = function()
         }
         var reqObj = {
                         "game_id":imm.game_id,
-                        "playerArray":[imm.playerId],
+                        "playerArray":[imm.user_id],
                         "items":false,
                         "attributes":false,
                         "notes":false
@@ -34,7 +34,7 @@ var StrikeGame = function()
 
     var beatHeart = function()
     {
-        pm.sendData("STRIKE_HEARTBEAT",JSON.stringify({"id":imm.playerId,"url":imm.playerPicURL,"timer":timeTilStrike}));
+        pm.sendData("STRIKE_HEARTBEAT",JSON.stringify({"id":imm.user_id,"url":imm.playerPicURL,"timer":timeTilStrike}));
     }
 
     var joinStrike = function()
@@ -49,7 +49,7 @@ var StrikeGame = function()
     
     var strikeBeatRequested = function(data)
     {
-        if(joinedPlayers[imm.playerId]) //if a member of the strike
+        if(joinedPlayers[imm.user_id]) //if a member of the strike
             beatHeart();
     }
 
@@ -58,7 +58,7 @@ var StrikeGame = function()
         var player = JSON.parse(data);
         if(player.timer < timeTilStrike) timeTilStrike = player.timer;
         if(joinedPlayers[player.id]) { joinedPlayers[player.id].heartbeat = 100; return; } //they are already a member
-        if(imm.playerId != player.id && !joinedPlayers[imm.playerId]) return; //I'm not yet a member, and the joining member isn't me
+        if(imm.user_id != player.id && !joinedPlayers[imm.user_id]) return; //I'm not yet a member, and the joining member isn't me
 
         player.heartbeat = 100;
         player.image = new Image();

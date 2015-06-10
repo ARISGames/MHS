@@ -26,7 +26,7 @@ var SodHouseModel = function()
 
         var params = ARIS.parseURLParams(document.URL);
         self.game_id = parseInt(params.game_id);
-        self.player.playerId = parseInt(params.playerId);
+        self.player.user_id = parseInt(params.user_id);
         self.web_page_id = parseInt(params.web_page_id);
 
         ARIS.getPlayer();

@@ -6,7 +6,7 @@ var EventHandler = function()
     self.playerPositionInVisiblePlayers = function(player)
     {
         for(var i = 0; i < self.visiblePlayers.length; i++)
-            if(self.visiblePlayers[i] && self.visiblePlayers[i].playerId == player.playerId) return i;
+            if(self.visiblePlayers[i] && self.visiblePlayers[i].user_id == player.user_id) return i;
         return -1;
     }
     var requestString = function(player, receiverId,offer)
@@ -21,7 +21,7 @@ var EventHandler = function()
     self.newPlayerReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
         setTimeout(function(){self.sendIdentification(ftm.player);},200); //give the new player a second
     }
 
@@ -32,7 +32,7 @@ var EventHandler = function()
     self.playerLeftReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
         var i = self.playerPositionInVisiblePlayers(data.player);
         if(i != -1) self.visiblePlayers.splice(i,1);
     }
@@ -44,7 +44,7 @@ var EventHandler = function()
     self.playerPingReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
     }
 
     self.sendIdentification = function(player)
@@ -54,7 +54,7 @@ var EventHandler = function()
     self.identificationReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
         var i = self.playerPositionInVisiblePlayers(data.player);
         if(i != -1) self.visiblePlayers.push(data.player);
         else        self.visiblePlayers[i] = data.player;
@@ -67,7 +67,7 @@ var EventHandler = function()
     self.tradeRequestReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
     }
 
     self.sendTradeAccept = function(player, receiverId)
@@ -77,7 +77,7 @@ var EventHandler = function()
     self.tradeAcceptReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
     }
 
     self.sendAlterOffer = function(player, receiverId, offer)
@@ -87,7 +87,7 @@ var EventHandler = function()
     self.alterOfferReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
     }
 
     self.sendTradeReady = function(player, receiverId, offer)
@@ -97,7 +97,7 @@ var EventHandler = function()
     self.tradeReadyReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.playerId == ftm.player.playerId) return;
+        if(data.player.user_id == ftm.player.user_id) return;
     }
 
     self.register = function()

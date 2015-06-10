@@ -68,7 +68,7 @@ var IronMineModel = function()
 
     //From URL
     self.game_id;
-    self.playerId;
+    self.user_id;
     self.web_page_id;
 
     //State
@@ -119,7 +119,7 @@ var IronMineModel = function()
 
         var params = ARIS.parseURLParams(document.URL);
         self.game_id    = parseInt(params.game_id);
-        self.playerId  = parseInt(params.playerId);
+        self.user_id  = parseInt(params.user_id);
         self.web_page_id = parseInt(params.web_page_id);
 
         self.stationType = self.STATION_TYPES[self.web_page_id];

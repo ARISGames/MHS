@@ -264,7 +264,7 @@ var FurTradeModel = function()
 
         ARIS.didReceivePlayer = function(player)
         {
-            //alert(player.playerId);
+            //alert(player.user_id);
             //alert(player.username);
             //alert(player.display_name);
             self.player = player;
@@ -275,7 +275,7 @@ var FurTradeModel = function()
 
         var params = ARIS.parseURLParams(document.URL);
         self.game_id = parseInt(params.game_id);
-        self.player.playerId = parseInt(params.playerId);
+        self.player.user_id = parseInt(params.user_id);
         self.web_page_id = parseInt(params.web_page_id);
         self.webPageItem = self.itemForWebPageId(self.web_page_id);
         self.webPageRole = self.webPageItem.owner;

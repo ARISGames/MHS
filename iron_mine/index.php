@@ -131,7 +131,7 @@
         {
             //var xmlhttp;
             //xmlhttp=new XMLHttpRequest();
-            //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+game_id(5252)+"/"+webHookId(991)+"/0/"+imm.playerId,true);
+            //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+game_id(5252)+"/"+webHookId(991)+"/0/"+imm.user_id,true);
             //xmlhttp.send();
 	    setTimeout(function(){ARIS.exitToScanner("Scan something in the mine!");},500);
         }

@@ -5,3 +5,34 @@
 '<,'>s/http:\\\/\\\/arisgames.org\\\/server\\\/gamedata\\\/5252\\\/mhs\\\//http:\/\/arisgames.org\/hosted\/MHS\//g
 '<,'>s/\\\/index.php//g
 '<,'>s/\\\/index.html//g
+
+" CLI replacers from Kevins bash profile
+# Search for files by content
+search_file_content() {
+	if [ $# -gt 1 ]
+	then
+		location="${@:2}"
+	else
+		location="."
+	fi
+
+	grep -lr --color=never "$1" $location
+}
+
+
+# Replace content in files
+replace_file_content() {
+	search_text="$1"
+	replace_text="$2"
+
+	IFS=$'\n' read -d '' -r -a filenames
+	for file_name in "${filenames[@]}"; do
+		# FIXME needs conditional for OSX/Linux
+		sed -i "" -e "s/$search_text/$replace_text/g" $file_name
+	done
+}
+
+search_file_content "displayname" | replace_file_content "displayname" "display_name"
+search_file_content "gameId" | replace_file_content "gameId" "game_id"
+search_file_content "webPageId" | replace_file_content "webPageId" "web_page_id"
+search_file_content "playerId" | replace_file_content "playerId" "user_id"

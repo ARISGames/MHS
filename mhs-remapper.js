@@ -16,14 +16,14 @@
 var fs   = require('fs');
 var path = require('path');
 
-var json_mapping_file = "mhs-ptp-migration-map-game.json";
+var json_mapping_file = "mhs-ptp-migration-map-game-6644.json";
 
 var files_to_remap = [
-	"mhs-ptp-quest.json",
+	"mhs-ptp-quest-6644.json",
 	"fur_trade/model.js",
 	"iron_mine/helpers/ironminemodel.js",
 	"iron_mine/index.php",
-	"sod_house/index.html"
+	"sod_house/index.php"
 ];
 
 // The only keys important to MHS
@@ -37,7 +37,7 @@ var remappers = [
 	{"key": "items", "regex": /itemId\((\d+)\)/g},
 ];
 
-var dryrun = false;
+var dryrun = true;
 
 var Remapper = function()
 {

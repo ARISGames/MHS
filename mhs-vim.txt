@@ -2,4 +2,6 @@
 :'<,'>s/\(\d\+\)/Id(\1)/g
 
 " Search replace for web urls in getWebPagesForGame
-http:\\\/\\\/arisgames.org\\\/server\\\/gamedata\\\/5252\\\/mhs
+'<,'>s/http:\\\/\\\/arisgames.org\\\/server\\\/gamedata\\\/5252\\\/mhs\\\//http:\/\/arisgames.org\/hosted\/MHS\//g
+'<,'>s/\\\/index.php//g
+'<,'>s/\\\/index.html//g

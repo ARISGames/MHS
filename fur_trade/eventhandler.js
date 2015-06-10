@@ -108,11 +108,11 @@ var EventHandler = function()
         //USING HARD CODED CONSTANTS FROM 
         // ../../../../config.class.php
         // ../../../../events/pusher_defaults.php
-        pm = new PusherMan('79f6a265dbb7402a49c9', 
-            'http://arisgames.org/server/events/auths/private_auth.php', 
-            'http://arisgames.org/server/events/send.php', 
-            'private-default-channel', 
-            events, 
+        pm = new PusherMan(pm_config.pusher_key,
+            'http://arisgames.org/server/events/' + pm_config.private_default_auth,
+            'http://arisgames.org/server/events/' + pm_config.send_url,
+            pm_config.private_default_channel,
+            events,
             callbacks);
     }
 }

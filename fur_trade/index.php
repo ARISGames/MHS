@@ -1,3 +1,4 @@
+<?php require_once('../mhs-config.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,19 @@
 
 <script type="text/javascript">
     var ARIS = {};//Get ARIS variable existant ASAP just to keep things simple
+</script>
+
+<script>
+// Values from server config for js files to use.
+var pm_config =
+{
+    pusher_key: '<?php echo Config::pusher_key; ?>',
+    private_default_auth: '<?php echo $private_default_auth; ?>',
+    send_url: '<?php echo $send_url; ?>',
+    private_default_channel: '<?php echo $private_default_channel; ?>'
+}
+
+var server_path = '<?php echo Config::serverWWWPath; ?>';
 </script>
 
 <script type="text/javascript" src="utils/json2.js"></script>

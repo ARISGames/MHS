@@ -375,7 +375,7 @@ var FurTradeModel = function()
     {
         var xmlhttp;
         xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("GET","http://arisgames.org/server/json.php/v1."+fn,true);
+        xmlhttp.open("POST",server_path+"/json.php/v2."+fn,true);
         xmlhttp.onreadystatechange = function()
         {
             if(xmlhttp.readyState == 4&& xmlhttp.status == 200)

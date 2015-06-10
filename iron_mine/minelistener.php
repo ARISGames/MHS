@@ -1,5 +1,4 @@
-<?php require_once('../../../../config.class.php'); ?>
-<?php require_once('../../../../events/pusher_defaults.php'); ?>
+<?php require_once('../mhs-config.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>

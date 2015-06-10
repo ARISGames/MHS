@@ -313,7 +313,11 @@ var ClerkGame = function()
 
     function formatClerkOffer()
     {
-        document.getElementById('clerktradeofferimg').src = 'assets/'+ftm.itemForItemId(itemOffering).imageName;
+		var item = ftm.itemForItemId(itemOffering);
+		if(item.imageName) // No Trade
+		{
+			document.getElementById('clerktradeofferimg').src = 'assets/'+item.imageName;
+		}
     }
 
     function getTradeCell(item)

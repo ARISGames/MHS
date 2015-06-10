@@ -2,7 +2,7 @@ var SodHouseModel = function()
 {
     var self = this;
 
-    self.gameId = 0; 
+    self.game_id = 0; 
     self.player = {};
     self.webPageId = 0;
 
@@ -25,7 +25,7 @@ var SodHouseModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId = parseInt(params.gameId);
+        self.game_id = parseInt(params.game_id);
         self.player.playerId = parseInt(params.playerId);
         self.webPageId = parseInt(params.webPageId);
 

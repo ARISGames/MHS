@@ -67,7 +67,7 @@ var IronMineModel = function()
     self.ITEM_IDS = [self.ITEM_ID_MONEY, self.ITEM_ID_ORE, self.ITEM_ID_DRILL, self.ITEM_ID_ANTON, self.ITEM_ID_DYNAMITE, self.ITEM_ID_MATTI, self.ITEM_ID_BACKER, self.ITEM_ID_MIKE, self.ITEM_ID_STRIKE, self.ITEM_ID_STRIKE_FAIL, self.ITEM_ID_STRIKE_SUCCEED];
 
     //From URL
-    self.gameId;
+    self.game_id;
     self.playerId;
     self.webPageId;
 
@@ -118,7 +118,7 @@ var IronMineModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId    = parseInt(params.gameId);
+        self.game_id    = parseInt(params.game_id);
         self.playerId  = parseInt(params.playerId);
         self.webPageId = parseInt(params.webPageId);
 

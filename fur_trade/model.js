@@ -1,4 +1,4 @@
-var itemId = webPageId = locationId = gameId = function(id){return id;};
+var itemId = webPageId = locationId = game_id = function(id){return id;};
 
 var roleEnumClerk  = 0;
 var roleEnumHunter = 1;
@@ -229,7 +229,7 @@ var FurTradeModel = function()
 {
     var self = this;
 
-    self.gameId = 0;
+    self.game_id = 0;
     self.player = {};
     self.webPageId = 0;
     self.webPageItem = null;
@@ -274,7 +274,7 @@ var FurTradeModel = function()
         }
 
         var params = ARIS.parseURLParams(document.URL);
-        self.gameId = parseInt(params.gameId);
+        self.game_id = parseInt(params.game_id);
         self.player.playerId = parseInt(params.playerId);
         self.webPageId = parseInt(params.webPageId);
         self.webPageItem = self.itemForWebPageId(self.webPageId);

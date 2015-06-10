@@ -22,7 +22,7 @@ var StrikeGame = function()
             document.getElementById("strike_join_button").onclick = joinStrike;
         }
         var reqObj = {
-                        "gameId":imm.gameId,
+                        "game_id":imm.game_id,
                         "playerArray":[imm.playerId],
                         "items":false,
                         "attributes":false,

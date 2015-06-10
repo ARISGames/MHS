@@ -15,7 +15,7 @@
 <script type="text/javascript" src="model.js"></script>
 <script type="text/javascript" src="views.js"></script>
 <script type="text/javascript">
-var gameId = webHookId = npcId = function(id){return id;};
+var game_id = webHookId = npcId = function(id){return id;};
 
 var shm;
 var shv;
@@ -53,7 +53,7 @@ function vidComplete()
     {
         //var xmlhttp;
         //xmlhttp=new XMLHttpRequest();
-        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+gameId(5252)+"/"+webHookId(992)+"/0/"+shm.player.playerId,true); 
+        //xmlhttp.open("GET","http://arisgames.org/server/json.php/v1.webhooks.setWebHookReq/"+game_id(5252)+"/"+webHookId(992)+"/0/"+shm.player.playerId,true); 
         //xmlhttp.send();
     }
 

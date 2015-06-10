@@ -4,7 +4,7 @@ var SodHouseModel = function()
 
     self.game_id = 0; 
     self.player = {};
-    self.webPageId = 0;
+    self.web_page_id = 0;
 
     self.currentLevel = 1;
 
@@ -27,7 +27,7 @@ var SodHouseModel = function()
         var params = ARIS.parseURLParams(document.URL);
         self.game_id = parseInt(params.game_id);
         self.player.playerId = parseInt(params.playerId);
-        self.webPageId = parseInt(params.webPageId);
+        self.web_page_id = parseInt(params.web_page_id);
 
         ARIS.getPlayer();
         ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced

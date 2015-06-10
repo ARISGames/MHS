@@ -1,0 +1,2 @@
+<?php require_once('path_to_aris/config.class.php'); ?>
+<?php require_once('path_to_aris/events/pusher_defaults.php'); ?>

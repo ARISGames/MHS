@@ -333,29 +333,20 @@ var FurTradeModel = function()
     }
     var incrementSecretLocationCount = function()
     {
-        // players.dropItem(gameId=5252,playerId=0,itemId=46645,lat=0.0,lon=0.0,qty=1);
-        // http://arisgames.org/server/json.php/v1.players.dropItem/5252/0/46645/0/0/1
-        // {"data":false,"returnCode":0,"returnCodeDescription":null}
-        self.sendRequest("players.dropItem/"+gameId(5252)+"/0/"+itemId(46645)+"/0/0/1",function(data){});
+		self.sendRequest("instances.giveQtyToInstance", {instance_id: 584996, qty: 1});
     }
     var decrementSecretLocationCount = function()
     {
-        // players.pickupItemFromLocation(gameId=5252,playerId=0,itemId=46645,locationId=339410,qty=1);
-        // http://arisgames.org/server/json.php/v1.players.pickupItemFromLocation/5252/0/46645/339410/1
-        // {"data":true,"returnCode":0,"returnCodeDescription":null}
-        self.sendRequest("players.pickupItemFromLocation/"+gameId(5252)+"/0/"+itemId(46645)+"/"+locationId(339410)+"/1",function(data){});
+		self.sendRequest("instances.takeQtyFromInstance", {instance_id: 584996, qty: 1});
     }
     var getSecretLocation = function()
     {
-        // locations.getLocation(gameId=5252,locationId=339410);
-        // http://arisgames.org/server/json.php/v1.locations.getLocation/5252/339410
-        // {"data":{"location_id":"339410","game_id":"5252","name":"PHILS ITEM- DO NOT TOUCH","description":"","latitude":"0","longitude":"0","error":"0","type":"Item","type_id":"46645","icon_media_id":"0","item_qty":"1","hidden":"","force_view":"","allow_quick_travel":"","wiggle":"0","show_title":"0","spawnstamp":"2013-10-03 19:37:46"},"returnCode":0,"returnCodeDescription":null}
-        self.sendRequest("locations.getLocation/"+gameId(5252)+"/"+locationId(339410),gotSecretLocation);
+		self.sendRequest("instances.getInstance", {instance_id: 584996}, gotSecretLocation);
     }
     var gotSecretLocation = function(data)
     {
         self.currentLevel = 0; //newly assigned role, so override current level
-        if(data.item_qty%2 == 0)
+        if(parseInt(data.qty)%2 == 0)
         {
             self.currentRole = roleClerk;
             if(self.player) self.player.role = "clerk";
@@ -371,17 +362,21 @@ var FurTradeModel = function()
         requestRoleCallback();
     }
 
-    self.sendRequest = function(fn, callback)
+	// v2 api interface
+	self.sendRequest = function(fn, params, callback)
     {
         var xmlhttp;
         xmlhttp=new XMLHttpRequest();
         xmlhttp.open("POST",server_path+"/json.php/v2."+fn,true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.onreadystatechange = function()
         {
-            if(xmlhttp.readyState == 4&& xmlhttp.status == 200)
+            if(callback && xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
                 callback(JSON.parse(xmlhttp.responseText).data);
+			}
         }
-        xmlhttp.send();
+        xmlhttp.send(JSON.stringify(params));
     }
 }
 

@@ -279,10 +279,7 @@ var HunterGame = function()
     function formatHunterClientOffer()
     {
 		var item = ftm.itemForItemId(connectedPlayerOfferId);
-		if(item.imageName) // No Trade
-		{
-			document.getElementById('huntertradeclientofferimg').src = 'assets/'+item.imageName;
-		}
+		document.getElementById('huntertradeclientofferimg').src = 'assets/'+item.imageName;
     }
 
     function formatHunterOffer()

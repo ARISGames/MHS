@@ -10,7 +10,7 @@ help:
 	@echo ""
 	@echo "make [deploy]"
 
-CHECKOUT_COMMAND="cd /var/www/html/hosted/MHS && git checkout v2_remapped && git pull"
+CHECKOUT_COMMAND="cd /var/www/html/hosted/MHS && git fetch && git checkout v2_6644_remap && git pull"
 
 STATUS_COMMAND="cd /var/www/html/hosted/MHS && git fetch && git log -1 --date=short --pretty=format:'%Cred%h%Creset %Cgreen%cd%Creset %C(bold blue)%an%Creset%C(yellow)%d%Creset %s%Creset'"
 

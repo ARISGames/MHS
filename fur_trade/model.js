@@ -331,17 +331,18 @@ var FurTradeModel = function()
         requestRoleCallback = callback;
         getSecretLocation();
     }
+
     var incrementSecretLocationCount = function()
     {
-		self.sendRequest("instances.giveQtyToInstance", {instance_id: 584996, qty: 1});
+		self.sendRequest("instances.giveQtyToInstance", {instance_id: 703653, qty: 1});
     }
     var decrementSecretLocationCount = function()
     {
-		self.sendRequest("instances.takeQtyFromInstance", {instance_id: 584996, qty: 1});
+		self.sendRequest("instances.takeQtyFromInstance", {instance_id: 703653, qty: 1});
     }
     var getSecretLocation = function()
     {
-		self.sendRequest("instances.getInstance", {instance_id: 584996}, gotSecretLocation);
+		self.sendRequest("instances.getInstance", {instance_id: 703653}, gotSecretLocation);
     }
     var gotSecretLocation = function(data)
     {

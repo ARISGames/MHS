@@ -68,6 +68,7 @@ var Item = function(itemEnum)
     {
         case itemEnumNull:
             self.webPageId = webPageId(3731);
+			self.imageName = "empty.png";
             break;
         case itemEnumPelt:
             self.itemId = itemId(47029);

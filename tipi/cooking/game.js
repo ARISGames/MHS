@@ -2,115 +2,88 @@
 (function() {
   var Bison, Chokecherries, Timpsula;
 
-  Timpsula = (function() {
-    function Timpsula() {
-      this.ticks = 0;
-      this.stage = 0;
-    }
-
-    Timpsula.prototype.tick = function(pg) {
-      this.ticks++;
+  Timpsula = {
+    create: function() {
+      return this.stage = 0;
+    },
+    step: function() {
       if (this.stage <= 4) {
-        return this;
+        return null;
       } else {
-        return new Bison;
+        return this.app.setState(Bison);
       }
-    };
-
-    Timpsula.prototype.draw = function(pg) {
-      return pg.layer.drawImage(pg.images["timpsula-" + (Math.min(this.stage, 4))], 0, 0, pg.layer.width, pg.layer.height);
-    };
-
-    Timpsula.prototype.pointerdown = function(e, pg) {
+    },
+    render: function() {
+      return this.app.layer.drawImage(this.app.images["timpsula-" + (Math.min(this.stage, 4))], 0, 0, this.app.layer.width, this.app.layer.height);
+    },
+    pointerdown: function(e) {
       var ref, ref1;
       if ((ref = this.stage) === 1 || ref === 2 || ref === 3) {
         this.stage++;
-        return pg.sound.play('chop');
+        return this.app.sound.play('chop');
       } else if ((ref1 = this.stage) === 0 || ref1 === 4) {
         return this.stage++;
       }
-    };
-
-    return Timpsula;
-
-  })();
-
-  Bison = (function() {
-    function Bison() {
-      this.ticks = 0;
-      this.stage = 0;
     }
+  };
 
-    Bison.prototype.tick = function(pg) {
-      this.ticks++;
+  Bison = {
+    create: function() {
+      return this.stage = 0;
+    },
+    step: function() {
       if (this.stage <= 6) {
-        return this;
+        return null;
       } else {
-        return new Chokecherries;
+        return this.app.setState(Chokecherries);
       }
-    };
-
-    Bison.prototype.draw = function(pg) {
-      return pg.layer.drawImage(pg.images["bison-" + (Math.min(this.stage, 6))], 0, 0, pg.layer.width, pg.layer.height);
-    };
-
-    Bison.prototype.pointerdown = function(e, pg) {
+    },
+    render: function() {
+      return this.app.layer.drawImage(this.app.images["bison-" + (Math.min(this.stage, 6))], 0, 0, this.app.layer.width, this.app.layer.height);
+    },
+    pointerdown: function(e) {
       var ref, ref1;
       if ((ref = this.stage) === 0 || ref === 1 || ref === 2 || ref === 3 || ref === 6) {
         if (this.stage === 0) {
-          pg.sound.play('fwoosh');
+          this.app.sound.play('fwoosh');
         }
         if (this.stage === 1) {
-          pg.sound.play('ting');
+          this.app.sound.play('ting');
         }
         if (this.stage === 2) {
-          pg.sound.play('slap');
+          this.app.sound.play('slap');
         }
         if (this.stage === 3) {
-          pg.sound.play('sizzle');
+          this.app.sound.play('sizzle');
         }
         return this.stage++;
       } else if ((ref1 = this.stage) === 4 || ref1 === 5) {
-        pg.sound.play('slap');
+        this.app.sound.play('slap');
         return this.stage++;
       }
-    };
-
-    return Bison;
-
-  })();
-
-  Chokecherries = (function() {
-    function Chokecherries() {
-      this.ticks = 0;
-      this.stage = 0;
     }
+  };
 
-    Chokecherries.prototype.tick = function(pg) {
-      this.ticks++;
-      return this;
-    };
-
-    Chokecherries.prototype.draw = function(pg) {
-      return pg.layer.drawImage(pg.images["chokecherries-" + (Math.min(this.stage, 4))], 0, 0, pg.layer.width, pg.layer.height);
-    };
-
-    Chokecherries.prototype.pointerdown = function(e, pg) {
+  Chokecherries = {
+    create: function() {
+      return this.stage = 0;
+    },
+    step: function() {},
+    render: function() {
+      return this.app.layer.drawImage(this.app.images["chokecherries-" + (Math.min(this.stage, 4))], 0, 0, this.app.layer.width, this.app.layer.height);
+    },
+    pointerdown: function(e) {
       var ref, ref1;
       if ((ref = this.stage) === 0) {
         return this.stage++;
       } else if ((ref1 = this.stage) === 1 || ref1 === 2 || ref1 === 3) {
-        pg.sound.play('squish');
+        this.app.sound.play('squish');
         return this.stage++;
       }
-    };
-
-    return Chokecherries;
-
-  })();
+    }
+  };
 
   $(document).ready(function() {
-    window.game = new Timpsula;
     return window.app = playground({
       create: function() {
         var i, j, k, l;
@@ -125,26 +98,8 @@
         }
         return this.loadSounds('chop', 'fwoosh', 'ting', 'slap', 'sizzle', 'squish');
       },
-      step: function() {
-        return window.game = window.game.tick(this);
-      },
-      render: function() {
-        return window.game.draw(this);
-      },
-      pointerdown: function(e) {
-        if (window.game['pointerdown'] != null) {
-          return window.game.pointerdown(e, this);
-        }
-      },
-      pointermove: function(e) {
-        if (window.game['pointermove'] != null) {
-          return window.game.pointermove(e, this);
-        }
-      },
-      pointerup: function(e) {
-        if (window.game['pointerup'] != null) {
-          return window.game.pointerup(e, this);
-        }
+      ready: function() {
+        return this.setState(Timpsula);
       }
     });
   });

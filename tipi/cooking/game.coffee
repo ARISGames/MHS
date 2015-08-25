@@ -1,91 +1,71 @@
-class Timpsula
-  constructor: ->
-    @ticks = 0
+Timpsula =
+  create: ->
     @stage = 0
 
-  tick: (pg) ->
-    @ticks++
+  step: ->
     if @stage <= 4
-      @
+      null
     else
-      new Bison
+      @app.setState Bison
 
-  draw: (pg) ->
-    pg.layer.drawImage pg.images["timpsula-#{Math.min @stage, 4}"], 0, 0, pg.layer.width, pg.layer.height
+  render: ->
+    @app.layer.drawImage @app.images["timpsula-#{Math.min @stage, 4}"], 0, 0, @app.layer.width, @app.layer.height
 
-  pointerdown: (e, pg) ->
+  pointerdown: (e) ->
     if @stage in [1, 2, 3]
       @stage++
-      pg.sound.play 'chop'
+      @app.sound.play 'chop'
     else if @stage in [0, 4]
       @stage++
 
-class Bison
-  constructor: ->
-    @ticks = 0
+Bison =
+  create: ->
     @stage = 0
 
-  tick: (pg) ->
-    @ticks++
+  step: ->
     if @stage <= 6
-      @
+      null
     else
-      # pg.sound.stop 'sizzle'
-      new Chokecherries
+      # @app.sound.stop 'sizzle'
+      @app.setState Chokecherries
 
-  draw: (pg) ->
-    pg.layer.drawImage pg.images["bison-#{Math.min @stage, 6}"], 0, 0, pg.layer.width, pg.layer.height
+  render: ->
+    @app.layer.drawImage @app.images["bison-#{Math.min @stage, 6}"], 0, 0, @app.layer.width, @app.layer.height
 
-  pointerdown: (e, pg) ->
+  pointerdown: (e) ->
     if @stage in [0, 1, 2, 3, 6]
-      pg.sound.play 'fwoosh' if @stage == 0
-      pg.sound.play 'ting' if @stage == 1
-      pg.sound.play 'slap' if @stage == 2
-      pg.sound.play 'sizzle' if @stage == 3
+      @app.sound.play 'fwoosh' if @stage == 0
+      @app.sound.play 'ting' if @stage == 1
+      @app.sound.play 'slap' if @stage == 2
+      @app.sound.play 'sizzle' if @stage == 3
       @stage++
     else if @stage in [4, 5]
-      pg.sound.play 'slap'
+      @app.sound.play 'slap'
       @stage++
 
-class Chokecherries
-  constructor: ->
-    @ticks = 0
+Chokecherries =
+  create: ->
     @stage = 0
 
-  tick: (pg) ->
-    @ticks++
-    @
+  step: ->
 
-  draw: (pg) ->
-    pg.layer.drawImage pg.images["chokecherries-#{Math.min @stage, 4}"], 0, 0, pg.layer.width, pg.layer.height
+  render: ->
+    @app.layer.drawImage @app.images["chokecherries-#{Math.min @stage, 4}"], 0, 0, @app.layer.width, @app.layer.height
 
-  pointerdown: (e, pg) ->
+  pointerdown: (e) ->
     if @stage in [0]
       @stage++
     else if @stage in [1, 2, 3]
-      pg.sound.play 'squish'
+      @app.sound.play 'squish'
       @stage++
 
 $(document).ready ->
-
-  window.game = new Timpsula
   window.app = playground
-
     create: ->
       @loadImage("timpsula-#{i}.png") for i in [0..4]
       @loadImage("bison-#{i}.png") for i in [0..6]
       @loadImage("chokecherries-#{i}.png") for i in [0..4]
       @loadSounds 'chop', 'fwoosh', 'ting', 'slap', 'sizzle', 'squish'
 
-    step: ->
-      window.game = window.game.tick @
-    
-    render: ->
-      window.game.draw @
-
-    pointerdown: (e) ->
-      window.game.pointerdown(e, @) if window.game['pointerdown']?
-    pointermove: (e) ->
-      window.game.pointermove(e, @) if window.game['pointermove']?
-    pointerup: (e) ->
-      window.game.pointerup(e, @) if window.game['pointerup']?
+    ready: ->
+      @setState Timpsula

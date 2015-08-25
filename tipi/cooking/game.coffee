@@ -43,10 +43,13 @@ bisonImages =
   loader.image("bison-#{i}.png") for i in [0..6]
 chokecherryImages =
   loader.image("chokecherries-#{i}.png") for i in [0..4]
-chopSound = loader.sound(['chop.ogg', 'chop.wav'])
-fwooshSound = loader.sound(['fwoosh.ogg', 'fwoosh.wav'])
-tingSound = loader.sound(['ting.ogg', 'ting.wav'])
-slapSound = loader.sound(['slap.ogg', 'slap.wav'])
+soundFormats = (name) -> loader.sound(["#{name}.ogg", "#{name}.mp3"])
+chopSound = soundFormats 'chop'
+fwooshSound = soundFormats 'fwoosh'
+tingSound = soundFormats 'ting'
+slapSound = soundFormats 'slap'
+sizzleSound = soundFormats 'sizzle'
+squishSound = soundFormats 'squish'
 
 class Timpsula
   constructor: (@canvas) ->
@@ -82,6 +85,7 @@ class Bison
     if @stage <= 6
       @
     else
+      sizzleSound.stop()
       new Chokecherries @canvas
 
   draw: ->
@@ -91,11 +95,16 @@ class Bison
     fwooshSound.play() if @stage == 0
     tingSound.play() if @stage == 1
     slapSound.play() if @stage == 2
+    sizzleSound.play() if @stage == 3
     @stage++ if @stage in [0, 1, 2, 3, 6]
   swipe: (e) ->
-    @stage++ if @stage in [4, 5]
+    if @stage in [4, 5]
+      @stage++
+      slapSound.play()
   swipeupdown: (e) ->
-    @stage++ if @stage in [4, 5]
+    if @stage in [4, 5]
+      @stage++
+      slapSound.play()
 
 class Chokecherries
   constructor: (@canvas) ->
@@ -114,9 +123,13 @@ class Chokecherries
   mousedown: (e) ->
     @stage++ if @stage in [0]
   swipe: (e) ->
-    @stage++ if @stage in [1, 2, 3, 4]
+    if @stage in [1, 2, 3]
+      @stage++
+      squishSound.play()
   swipeupdown: (e) ->
-    @stage++ if @stage in [1, 2, 3, 4]
+    if @stage in [1, 2, 3]
+      @stage++
+      squishSound.play()
 
 $(document).ready ->
   canvas = $('#the-canvas')[0]

@@ -53,7 +53,9 @@ class Timpsula
     @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
-    @stage++
+    @stage++ if @stage in [0, 4]
+  swipeupdown: (e) ->
+    @stage++ if @stage in [1, 2, 3]
 
 class Bison
   constructor: (@canvas) ->
@@ -76,7 +78,11 @@ class Bison
     @ctx.drawImage @imgs[Math.min @stage, 6], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
-    @stage++
+    @stage++ if @stage in [0, 1, 2, 3, 6]
+  swipe: (e) ->
+    @stage++ if @stage in [4, 5]
+  swipeupdown: (e) ->
+    @stage++ if @stage in [4, 5]
 
 class Chokecherries
   constructor: (@canvas) ->
@@ -96,7 +102,11 @@ class Chokecherries
     @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
-    @stage++
+    @stage++ if @stage in [0]
+  swipe: (e) ->
+    @stage++ if @stage in [1, 2, 3, 4]
+  swipeupdown: (e) ->
+    @stage++ if @stage in [1, 2, 3, 4]
 
 class V2
   constructor: (@x, @y) ->

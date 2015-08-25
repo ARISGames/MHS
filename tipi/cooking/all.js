@@ -88,7 +88,17 @@
     };
 
     Timpsula.prototype.mousedown = function(e) {
-      return this.stage++;
+      var ref;
+      if ((ref = this.stage) === 0 || ref === 4) {
+        return this.stage++;
+      }
+    };
+
+    Timpsula.prototype.swipeupdown = function(e) {
+      var ref;
+      if ((ref = this.stage) === 1 || ref === 2 || ref === 3) {
+        return this.stage++;
+      }
     };
 
     return Timpsula;
@@ -127,7 +137,24 @@
     };
 
     Bison.prototype.mousedown = function(e) {
-      return this.stage++;
+      var ref;
+      if ((ref = this.stage) === 0 || ref === 1 || ref === 2 || ref === 3 || ref === 6) {
+        return this.stage++;
+      }
+    };
+
+    Bison.prototype.swipe = function(e) {
+      var ref;
+      if ((ref = this.stage) === 4 || ref === 5) {
+        return this.stage++;
+      }
+    };
+
+    Bison.prototype.swipeupdown = function(e) {
+      var ref;
+      if ((ref = this.stage) === 4 || ref === 5) {
+        return this.stage++;
+      }
     };
 
     return Bison;
@@ -162,7 +189,24 @@
     };
 
     Chokecherries.prototype.mousedown = function(e) {
-      return this.stage++;
+      var ref;
+      if ((ref = this.stage) === 0) {
+        return this.stage++;
+      }
+    };
+
+    Chokecherries.prototype.swipe = function(e) {
+      var ref;
+      if ((ref = this.stage) === 1 || ref === 2 || ref === 3 || ref === 4) {
+        return this.stage++;
+      }
+    };
+
+    Chokecherries.prototype.swipeupdown = function(e) {
+      var ref;
+      if ((ref = this.stage) === 1 || ref === 2 || ref === 3 || ref === 4) {
+        return this.stage++;
+      }
     };
 
     return Chokecherries;

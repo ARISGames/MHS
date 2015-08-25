@@ -20,6 +20,15 @@ class Loader
     img.src = url
     img
 
+  sound: (urls) ->
+    sound = null
+    @queue
+      load: (cb) ->
+        sound = new Howl
+          urls: urls
+          onload: cb
+    sound
+
   # Runs the callback the next time the queue is empty.
   afterLoad: (callback) ->
     if @queued is 0
@@ -27,20 +36,23 @@ class Loader
     else
       @waiting.push callback
 
-loadAll = (loadables, callback) ->
-  loader = new Loader
-  loader.queue x for x in loadables
-  loader.afterLoad callback
+loader = new Loader
+timpsulaImages =
+  loader.image("timpsula-#{i}.png") for i in [0..4]
+bisonImages =
+  loader.image("bison-#{i}.png") for i in [0..6]
+chokecherryImages =
+  loader.image("chokecherries-#{i}.png") for i in [0..4]
+chopSound = loader.sound(['chop.ogg', 'chop.wav'])
+fwooshSound = loader.sound(['fwoosh.ogg', 'fwoosh.wav'])
+tingSound = loader.sound(['ting.ogg', 'ting.wav'])
+slapSound = loader.sound(['slap.ogg', 'slap.wav'])
 
 class Timpsula
   constructor: (@canvas) ->
     @ctx = @canvas.getContext '2d'
     @ticks = 0
     @stage = 0
-    loader = new Loader
-    @imgs =
-      loader.image("timpsula-#{i}.png") for i in [0..4]
-    # TODO: wait for load
 
   tick: ->
     @ticks++
@@ -50,22 +62,20 @@ class Timpsula
       new Bison @canvas
 
   draw: ->
-    @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
+    @ctx.drawImage timpsulaImages[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
     @stage++ if @stage in [0, 4]
   swipeupdown: (e) ->
-    @stage++ if @stage in [1, 2, 3]
+    if @stage in [1, 2, 3]
+      @stage++
+      chopSound.play()
 
 class Bison
   constructor: (@canvas) ->
     @ctx = @canvas.getContext '2d'
     @ticks = 0
     @stage = 0
-    loader = new Loader
-    @imgs =
-      loader.image("bison-#{i}.png") for i in [0..6]
-    # TODO: wait for load
 
   tick: ->
     @ticks++
@@ -75,9 +85,12 @@ class Bison
       new Chokecherries @canvas
 
   draw: ->
-    @ctx.drawImage @imgs[Math.min @stage, 6], 0, 0, @canvas.width, @canvas.height
+    @ctx.drawImage bisonImages[Math.min @stage, 6], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
+    fwooshSound.play() if @stage == 0
+    tingSound.play() if @stage == 1
+    slapSound.play() if @stage == 2
     @stage++ if @stage in [0, 1, 2, 3, 6]
   swipe: (e) ->
     @stage++ if @stage in [4, 5]
@@ -90,16 +103,13 @@ class Chokecherries
     @ticks = 0
     @stage = 0
     loader = new Loader
-    @imgs =
-      loader.image("chokecherries-#{i}.png") for i in [0..4]
-    # TODO: wait for load
 
   tick: ->
     @ticks++
     @
 
   draw: ->
-    @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
+    @ctx.drawImage chokecherryImages[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
 
   mousedown: (e) ->
     @stage++ if @stage in [0]
@@ -107,36 +117,6 @@ class Chokecherries
     @stage++ if @stage in [1, 2, 3, 4]
   swipeupdown: (e) ->
     @stage++ if @stage in [1, 2, 3, 4]
-
-class V2
-  constructor: (@x, @y) ->
-
-  plus: ({x, y}) ->
-    new V2(@x + x, @y + y)
-
-  minus: ({x, y}) ->
-    new V2(@x - x, @y - y)
-
-  times: ({x, y}) ->
-    new V2(@x * x, @y * y)
-
-  distance: ({x, y}) ->
-    Math.sqrt((@x - x) ** 2 + (@y - y) ** 2)
-
-  magnitude: ->
-    @distance new V2(0, 0)
-
-  angle: ->
-    Math.atan2 @y, @x
-
-  withMagnitude: (r) ->
-    V2Polar(r, @angle())
-
-  withAngle: (theta) ->
-    V2Polar(@magnitude(), theta)
-
-V2Polar = (r, theta) ->
-  new V2(r * Math.cos(theta), r * Math.sin(theta))
 
 $(document).ready ->
   canvas = $('#the-canvas')[0]
@@ -154,8 +134,9 @@ $(document).ready ->
   resize()
   $(window).resize -> resize()
 
-  gameLoop = ->
-    window.game = window.game.tick()
-    window.game.draw()
-    requestAnimationFrame gameLoop
-  gameLoop()
+  loader.afterLoad ->
+    gameLoop = ->
+      window.game = window.game.tick()
+      window.game.draw()
+      requestAnimationFrame gameLoop
+    gameLoop()

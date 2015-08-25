@@ -44,7 +44,53 @@ class Timpsula
 
   tick: ->
     @ticks++
-    return @
+    if @stage <= 4
+      @
+    else
+      new Bison @canvas
+
+  draw: ->
+    @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height
+
+  mousedown: (e) ->
+    @stage++
+
+class Bison
+  constructor: (@canvas) ->
+    @ctx = @canvas.getContext '2d'
+    @ticks = 0
+    @stage = 0
+    loader = new Loader
+    @imgs =
+      loader.image("bison-#{i}.png") for i in [0..6]
+    # TODO: wait for load
+
+  tick: ->
+    @ticks++
+    if @stage <= 6
+      @
+    else
+      new Chokecherries @canvas
+
+  draw: ->
+    @ctx.drawImage @imgs[Math.min @stage, 6], 0, 0, @canvas.width, @canvas.height
+
+  mousedown: (e) ->
+    @stage++
+
+class Chokecherries
+  constructor: (@canvas) ->
+    @ctx = @canvas.getContext '2d'
+    @ticks = 0
+    @stage = 0
+    loader = new Loader
+    @imgs =
+      loader.image("chokecherries-#{i}.png") for i in [0..4]
+    # TODO: wait for load
+
+  tick: ->
+    @ticks++
+    @
 
   draw: ->
     @ctx.drawImage @imgs[Math.min @stage, 4], 0, 0, @canvas.width, @canvas.height

@@ -1,3 +1,18 @@
+drawCenter = (layer, image) ->
+  layerRatio = layer.width / layer.height
+  imageRatio = image.width / image.height
+  if layerRatio < imageRatio
+    # layer is narrower than image, bars on top and bottom
+    w = layer.width
+    h = layer.width / imageRatio
+  else
+    # image is narrower than layer, bars on left and right
+    w = imageRatio * layer.height
+    h = layer.height
+  x = (layer.width - w) / 2
+  y = (layer.height - h) / 2
+  layer.drawImage image, x, y, w, h
+
 Timpsula =
   create: ->
     @stage = 0
@@ -9,7 +24,8 @@ Timpsula =
       @app.setState Bison
 
   render: ->
-    @app.layer.drawImage @app.images["timpsula-#{Math.min @stage, 4}"], 0, 0, @app.layer.width, @app.layer.height
+    @app.layer.clear 'white'
+    drawCenter @app.layer, @app.images["timpsula-#{Math.min @stage, 4}"]
 
   pointerdown: (e) ->
     if @stage in [1, 2, 3]
@@ -30,7 +46,8 @@ Bison =
       @app.setState Chokecherries
 
   render: ->
-    @app.layer.drawImage @app.images["bison-#{Math.min @stage, 6}"], 0, 0, @app.layer.width, @app.layer.height
+    @app.layer.clear 'white'
+    drawCenter @app.layer, @app.images["bison-#{Math.min @stage, 6}"]
 
   pointerdown: (e) ->
     if @stage in [0, 1, 2, 3, 6]
@@ -50,7 +67,8 @@ Chokecherries =
   step: ->
 
   render: ->
-    @app.layer.drawImage @app.images["chokecherries-#{Math.min @stage, 4}"], 0, 0, @app.layer.width, @app.layer.height
+    @app.layer.clear 'white'
+    drawCenter @app.layer, @app.images["chokecherries-#{Math.min @stage, 4}"]
 
   pointerdown: (e) ->
     if @stage in [0]
@@ -60,7 +78,7 @@ Chokecherries =
       @stage++
 
 $(document).ready ->
-  window.app = playground
+  window.game = playground
     create: ->
       @loadImage("timpsula-#{i}.png") for i in [0..4]
       @loadImage("bison-#{i}.png") for i in [0..6]

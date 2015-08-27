@@ -76,14 +76,22 @@ Chokecherries =
     else if @stage in [1, 2, 3]
       @app.sound.play 'squish'
       @stage++
+    else if @stage is 4
+      window.ARIS.exitToDialog 28522
 
-$(document).ready ->
+allReady = ->
   window.game = playground
     create: ->
       @loadImage("timpsula-#{i}.png") for i in [0..4]
       @loadImage("bison-#{i}.png") for i in [0..6]
       @loadImage("chokecherries-#{i}.png") for i in [0..4]
       @loadSounds 'chop', 'fwoosh', 'ting', 'slap', 'sizzle', 'squish'
-
     ready: ->
       @setState Timpsula
+
+readies = 2
+oneReady = ->
+  readies--
+  allReady() if readies is 0
+window.ARIS = ready: oneReady
+document.addEventListener 'DOMContentLoaded', oneReady

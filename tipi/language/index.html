@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Language Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script type="text/javascript" src="fastclick.js"></script>
   <style type="text/css">
     body {
       font-family: sans-serif;
@@ -19,7 +21,7 @@
     #the-video {
       width: 100%;
       height: 50%;
-      background-color: green;
+      background-color: black;
     }
     #the-table {
       width: 100%;
@@ -89,12 +91,41 @@
       }
       element.classList.add('active');
     }
+    function isCorrect() {
+      return document.getElementById('button-day'     ).classList.contains('active') &&
+             document.getElementById('button-good'    ).classList.contains('active') &&
+             document.getElementById('button-relative').classList.contains('active');
+    }
+    function submit() {
+      if (typeof ARIS === 'undefined') {
+        if (isCorrect()) {
+          alert("You did it!");
+        } else {
+          alert("Try again.");
+        }
+      } else {
+        if (isCorrect()) {
+          ARIS.exitToDialog(29453);
+        } else {
+          ARIS.exitToDialog(30405);
+        }
+      }
+    }
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+      }, false);
+    }
   </script>
 </head>
 <body>
 
 <div id="the-box">
   <div id="the-video">
+    <video width="100%" height="100%" controls autoplay webkit-playsinline>
+      <source src="kaila.mp4" type="video/mp4">
+      Your browser does not support this video.
+    </video>
   </div>
   <table id="the-table">
     <tr id="top-row">
@@ -121,7 +152,7 @@
   </table>
   <table id="the-submit">
     <tr>
-      <td>Submit</td>
+      <td onclick="submit();">Submit</td>
     </tr>
   </table>
 </div>

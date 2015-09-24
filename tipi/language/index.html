@@ -63,6 +63,17 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+    #the-glen-image {
+      width: 100%;
+      background-image: url('glen.jpg');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #the-audio {
+      width: 100%;
+      height: 60px;
+    }
   </style>
   <script type="text/javascript">
     function userClicked(element) {
@@ -122,10 +133,20 @@
 
 <div id="the-box">
   <div id="the-video">
-    <video width="100%" height="100%" controls autoplay webkit-playsinline>
-      <source src="kaila.mp4" type="video/mp4">
-      Your browser does not support this video.
-    </video>
+    <table width="100%" height="100%">
+      <tr>
+        <td id="the-glen-image"></td>
+      </tr>
+      <tr>
+        <td id="the-audio">
+          <audio width="100%" height="100%" controls autoplay webkit-playsinline>
+            <source src="ben_sentence.ogg" type="audio/ogg">
+            <source src="ben_sentence.mp3" type="audio/mp3">
+            Your browser does not support this video.
+          </audio>
+        </td>
+      </tr>
+    </table>
   </div>
   <table id="the-table">
     <tr id="top-row">

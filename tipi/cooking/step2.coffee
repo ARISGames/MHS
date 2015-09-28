@@ -1,3 +1,9 @@
+# ARIS dialog IDs
+sashaBeforeStep1 = 29449
+sashaBeforeStep2 = 33976
+sashaBeforeStep3 = 33978
+sashaAfterCooking = 28522
+
 drawCenter = (layer, image) ->
   layerRatio = layer.width / layer.height
   imageRatio = image.width / image.height
@@ -13,27 +19,6 @@ drawCenter = (layer, image) ->
   y = (layer.height - h) / 2
   layer.drawImage image, x, y, w, h
 
-Timpsula =
-  create: ->
-    @stage = 0
-
-  step: ->
-    if @stage <= 4
-      null
-    else
-      @app.setState Bison
-
-  render: ->
-    @app.layer.clear 'white'
-    drawCenter @app.layer, @app.images["timpsula-#{Math.min @stage, 4}"]
-
-  pointerdown: (e) ->
-    if @stage in [1, 2, 3]
-      @stage++
-      @app.sound.play 'chop'
-    else if @stage in [0, 4]
-      @stage++
-
 Bison =
   create: ->
     @stage = 0
@@ -42,8 +27,7 @@ Bison =
     if @stage <= 6
       null
     else
-      # @app.sound.stop 'sizzle'
-      @app.setState Chokecherries
+      window.ARIS.exitToDialog sashaBeforeStep3
 
   render: ->
     @app.layer.clear 'white'
@@ -60,34 +44,13 @@ Bison =
       @app.sound.play 'slap'
       @stage++
 
-Chokecherries =
-  create: ->
-    @stage = 0
-
-  step: ->
-
-  render: ->
-    @app.layer.clear 'white'
-    drawCenter @app.layer, @app.images["chokecherries-#{Math.min @stage, 4}"]
-
-  pointerdown: (e) ->
-    if @stage in [0]
-      @stage++
-    else if @stage in [1, 2, 3]
-      @app.sound.play 'squish'
-      @stage++
-    else if @stage is 4
-      window.ARIS.exitToDialog 28522
-
 allReady = ->
   window.game = playground
     create: ->
-      @loadImage("timpsula-#{i}.png") for i in [0..4]
       @loadImage("bison-#{i}.png") for i in [0..6]
-      @loadImage("chokecherries-#{i}.png") for i in [0..4]
-      @loadSounds 'chop', 'fwoosh', 'ting', 'slap', 'sizzle', 'squish'
+      @loadSounds 'fwoosh', 'ting', 'slap', 'sizzle'
     ready: ->
-      @setState Timpsula
+      @setState Bison
 
 readies = 2
 oneReady = ->

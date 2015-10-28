@@ -29,14 +29,28 @@ Chokecherries =
     @app.layer.clear 'white'
     drawCenter @app.layer, @app.images["chokecherries-#{Math.min @stage, 4}"]
 
-  pointerdown: (e) ->
+  pointerdown: ({x, y}) ->
+    return unless x? and y?
+    @x = x / @app.width
+    @y = y / @app.height
+    @distance = 0
     if @stage in [0]
       @stage++
-    else if @stage in [1, 2, 3]
-      @app.sound.play 'squish'
-      @stage++
-    else if @stage is 4
-      window.ARIS.exitToDialog sashaAfterCooking
+
+  pointermove: ({x, y}) ->
+    return unless x? and y?
+    oldDistance = @distance
+    oldX = @x
+    oldY = @y
+    @x = x / @app.width
+    @y = y / @app.height
+    @distance += Math.sqrt((@x - oldX) ** 2 + (@y - oldY) ** 2)
+    if Math.floor(oldDistance / 3) != Math.floor(@distance / 3)
+      if @stage in [1, 2, 3]
+        @app.sound.play 'squish'
+        @stage++
+      else if @stage is 4
+        window.ARIS.exitToDialog sashaAfterCooking
 
 allReady = ->
   window.game = playground
@@ -52,3 +66,6 @@ oneReady = ->
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
+
+#ARIS.ready()
+#ARIS.exitToDialog = (d) -> console.log "exiting to dialog #{d}"

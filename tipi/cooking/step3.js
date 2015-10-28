@@ -35,15 +35,38 @@
       this.app.layer.clear('white');
       return drawCenter(this.app.layer, this.app.images["chokecherries-" + (Math.min(this.stage, 4))]);
     },
-    pointerdown: function(e) {
-      var ref, ref1;
+    pointerdown: function(arg) {
+      var ref, x, y;
+      x = arg.x, y = arg.y;
+      if (!((x != null) && (y != null))) {
+        return;
+      }
+      this.x = x / this.app.width;
+      this.y = y / this.app.height;
+      this.distance = 0;
       if ((ref = this.stage) === 0) {
         return this.stage++;
-      } else if ((ref1 = this.stage) === 1 || ref1 === 2 || ref1 === 3) {
-        this.app.sound.play('squish');
-        return this.stage++;
-      } else if (this.stage === 4) {
-        return window.ARIS.exitToDialog(sashaAfterCooking);
+      }
+    },
+    pointermove: function(arg) {
+      var oldDistance, oldX, oldY, ref, x, y;
+      x = arg.x, y = arg.y;
+      if (!((x != null) && (y != null))) {
+        return;
+      }
+      oldDistance = this.distance;
+      oldX = this.x;
+      oldY = this.y;
+      this.x = x / this.app.width;
+      this.y = y / this.app.height;
+      this.distance += Math.sqrt(Math.pow(this.x - oldX, 2) + Math.pow(this.y - oldY, 2));
+      if (Math.floor(oldDistance / 3) !== Math.floor(this.distance / 3)) {
+        if ((ref = this.stage) === 1 || ref === 2 || ref === 3) {
+          this.app.sound.play('squish');
+          return this.stage++;
+        } else if (this.stage === 4) {
+          return window.ARIS.exitToDialog(sashaAfterCooking);
+        }
       }
     }
   };

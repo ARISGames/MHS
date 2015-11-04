@@ -4,10 +4,12 @@
   <title>Language Challenge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script type="text/javascript" src="fastclick.js"></script>
+  <script type="text/javascript" src="playground.js"></script>
+  <script type="text/javascript" src="spinner.js"></script>
   <style type="text/css">
     body {
       font-family: sans-serif;
-      background-color: #422;
+      background-color: black;
     }
     #the-box {
       position: fixed;
@@ -26,22 +28,7 @@
     #the-table {
       width: 100%;
       height: 40%;
-      text-align: center;
       border-spacing: 5px;
-    }
-    #the-table td {
-      border: 1px solid black;
-      cursor: pointer;
-      background-color: #777;
-    }
-    #the-table td.active {
-      background-color: #bbb;
-    }
-    #the-table td.a-gap {
-      border: none;
-      cursor: default;
-      background-color: inherit;
-      color: white;
     }
     #the-submit {
       width: 100%;
@@ -53,7 +40,7 @@
       border: 1px solid black;
       border-radius: 10px;
       cursor: pointer;
-      background-color: #8c8;
+      background-color: rgb(235, 138, 22);
     }
     #top-row td {
       border-top-left-radius: 10px;
@@ -76,52 +63,6 @@
     }
   </style>
   <script type="text/javascript">
-    function userClicked(element) {
-      switch (element.id) {
-        case 'button-year':
-        case 'button-day':
-        case 'button-night':
-          document.getElementById('button-year').classList.remove('active');
-          document.getElementById('button-day').classList.remove('active');
-          document.getElementById('button-night').classList.remove('active');
-          break;
-        case 'button-good':
-        case 'button-orange':
-        case 'button-hazy':
-          document.getElementById('button-good').classList.remove('active');
-          document.getElementById('button-orange').classList.remove('active');
-          document.getElementById('button-hazy').classList.remove('active');
-          break;
-        case 'button-mother':
-        case 'button-friend':
-        case 'button-relative':
-          document.getElementById('button-mother').classList.remove('active');
-          document.getElementById('button-friend').classList.remove('active');
-          document.getElementById('button-relative').classList.remove('active');
-          break;
-      }
-      element.classList.add('active');
-    }
-    function isCorrect() {
-      return document.getElementById('button-day'     ).classList.contains('active') &&
-             document.getElementById('button-good'    ).classList.contains('active') &&
-             document.getElementById('button-relative').classList.contains('active');
-    }
-    function submit() {
-      if (typeof ARIS === 'undefined') {
-        if (isCorrect()) {
-          alert("You did it!");
-        } else {
-          alert("Try again.");
-        }
-      } else {
-        if (isCorrect()) {
-          ARIS.exitToDialog(29453);
-        } else {
-          ARIS.exitToDialog(30405);
-        }
-      }
-    }
     if ('addEventListener' in document) {
       document.addEventListener('DOMContentLoaded', function() {
         FastClick.attach(document.body);
@@ -148,32 +89,10 @@
       </tr>
     </table>
   </div>
-  <table id="the-table">
-    <tr id="top-row">
-      <td id="button-orange" onclick="userClicked(this);">Orange</td>
-      <td class="a-gap"></td>
-      <td id="button-day" onclick="userClicked(this);">Day</td>
-      <td class="a-gap">&mdash;</td>
-      <td id="button-mother" onclick="userClicked(this);">Mother</td>
-    </tr>
-    <tr>
-      <td id="button-good" onclick="userClicked(this);">Good</td>
-      <td class="a-gap">&mdash;</td>
-      <td id="button-year" onclick="userClicked(this);">Year</td>
-      <td class="a-gap"></td>
-      <td id="button-friend" onclick="userClicked(this);">Friend</td>
-    </tr>
-    <tr id="bottom-row">
-      <td id="button-hazy" onclick="userClicked(this);">Hazy</td>
-      <td class="a-gap"></td>
-      <td id="button-night" onclick="userClicked(this);">Night</td>
-      <td class="a-gap"></td>
-      <td id="button-relative" onclick="userClicked(this);">Relative</td>
-    </tr>
-  </table>
+  <div id="the-table"></div>
   <table id="the-submit">
     <tr>
-      <td onclick="submit();">Submit</td>
+      <td onclick="window.game.state.submit();">Submit</td>
     </tr>
   </table>
 </div>

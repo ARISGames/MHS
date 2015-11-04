@@ -60,7 +60,7 @@
       this.x = x / this.app.width;
       this.y = y / this.app.height;
       this.distance += Math.sqrt(Math.pow(this.x - oldX, 2) + Math.pow(this.y - oldY, 2));
-      if (Math.floor(oldDistance / 3) !== Math.floor(this.distance / 3)) {
+      if (Math.floor(oldDistance / 2) !== Math.floor(this.distance / 2)) {
         if ((ref = this.stage) === 1 || ref === 2 || ref === 3) {
           this.app.sound.play('squish');
           return this.stage++;

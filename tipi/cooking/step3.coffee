@@ -45,7 +45,7 @@ Chokecherries =
     @x = x / @app.width
     @y = y / @app.height
     @distance += Math.sqrt((@x - oldX) ** 2 + (@y - oldY) ** 2)
-    if Math.floor(oldDistance / 3) != Math.floor(@distance / 3)
+    if Math.floor(oldDistance / 2) != Math.floor(@distance / 2)
       if @stage in [1, 2, 3]
         @app.sound.play 'squish'
         @stage++

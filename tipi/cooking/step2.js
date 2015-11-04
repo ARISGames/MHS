@@ -34,6 +34,7 @@
       if (this.stage <= 6) {
         return null;
       } else {
+        this.app.sound.stop(this.sizzleSound);
         return window.ARIS.exitToDialog(sashaBeforeStep3);
       }
     },
@@ -54,7 +55,7 @@
           this.app.sound.play('slap');
         }
         if (this.stage === 3) {
-          this.app.sound.play('sizzle');
+          this.sizzleSound = this.app.sound.play('sizzle');
         }
         return this.stage++;
       } else if ((ref1 = this.stage) === 4 || ref1 === 5) {

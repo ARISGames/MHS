@@ -27,6 +27,7 @@ Bison =
     if @stage <= 6
       null
     else
+      @app.sound.stop @sizzleSound
       window.ARIS.exitToDialog sashaBeforeStep3
 
   render: ->
@@ -38,7 +39,8 @@ Bison =
       @app.sound.play 'fwoosh' if @stage == 0
       @app.sound.play 'ting' if @stage == 1
       @app.sound.play 'slap' if @stage == 2
-      @app.sound.play 'sizzle' if @stage == 3
+      if @stage == 3
+        @sizzleSound = @app.sound.play 'sizzle'
       @stage++
     else if @stage in [4, 5]
       @app.sound.play 'slap'

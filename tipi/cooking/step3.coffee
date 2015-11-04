@@ -22,6 +22,7 @@ drawCenter = (layer, image) ->
 Chokecherries =
   create: ->
     @stage = 0
+    @isPointerDown = true
 
   step: ->
 
@@ -31,21 +32,27 @@ Chokecherries =
 
   pointerdown: ({x, y}) ->
     return unless x? and y?
+    @isPointerDown = true
     @x = x / @app.width
     @y = y / @app.height
     @distance = 0
     if @stage in [0]
       @stage++
 
+  pointerup: ({x, y}) ->
+    return unless x? and y?
+    @isPointerDown = false
+
   pointermove: ({x, y}) ->
     return unless x? and y?
+    return unless @isPointerDown
     oldDistance = @distance
     oldX = @x
     oldY = @y
     @x = x / @app.width
     @y = y / @app.height
     @distance += Math.sqrt((@x - oldX) ** 2 + (@y - oldY) ** 2)
-    if Math.floor(oldDistance / 2) != Math.floor(@distance / 2)
+    if Math.floor(oldDistance / 1.5) != Math.floor(@distance / 1.5)
       if @stage in [1, 2, 3]
         @app.sound.play 'squish'
         @stage++

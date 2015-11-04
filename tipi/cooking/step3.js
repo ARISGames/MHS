@@ -28,7 +28,8 @@
 
   Chokecherries = {
     create: function() {
-      return this.stage = 0;
+      this.stage = 0;
+      return this.isPointerDown = true;
     },
     step: function() {},
     render: function() {
@@ -41,6 +42,7 @@
       if (!((x != null) && (y != null))) {
         return;
       }
+      this.isPointerDown = true;
       this.x = x / this.app.width;
       this.y = y / this.app.height;
       this.distance = 0;
@@ -48,10 +50,21 @@
         return this.stage++;
       }
     },
+    pointerup: function(arg) {
+      var x, y;
+      x = arg.x, y = arg.y;
+      if (!((x != null) && (y != null))) {
+        return;
+      }
+      return this.isPointerDown = false;
+    },
     pointermove: function(arg) {
       var oldDistance, oldX, oldY, ref, x, y;
       x = arg.x, y = arg.y;
       if (!((x != null) && (y != null))) {
+        return;
+      }
+      if (!this.isPointerDown) {
         return;
       }
       oldDistance = this.distance;
@@ -60,7 +73,7 @@
       this.x = x / this.app.width;
       this.y = y / this.app.height;
       this.distance += Math.sqrt(Math.pow(this.x - oldX, 2) + Math.pow(this.y - oldY, 2));
-      if (Math.floor(oldDistance / 2) !== Math.floor(this.distance / 2)) {
+      if (Math.floor(oldDistance / 1.5) !== Math.floor(this.distance / 1.5)) {
         if ((ref = this.stage) === 1 || ref === 2 || ref === 3) {
           this.app.sound.play('squish');
           return this.stage++;

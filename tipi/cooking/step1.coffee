@@ -43,7 +43,7 @@ Timpsula =
 allReady = ->
   window.game = playground
     create: ->
-      @loadImage("timpsula-#{i}.png") for i in [0..4]
+      @loadImage("timpsula-#{i}.jpg") for i in [0..4]
       @loadSounds 'chop'
     ready: ->
       @setState Timpsula

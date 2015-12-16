@@ -57,7 +57,7 @@
       create: function() {
         var i, j;
         for (i = j = 0; j <= 4; i = ++j) {
-          this.loadImage("timpsula-" + i + ".png");
+          this.loadImage("timpsula-" + i + ".jpg");
         }
         return this.loadSounds('chop');
       },

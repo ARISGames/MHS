@@ -70,7 +70,7 @@
       create: function() {
         var i, j;
         for (i = j = 0; j <= 6; i = ++j) {
-          this.loadImage("bison-" + i + ".png");
+          this.loadImage("bison-" + i + ".jpg");
         }
         return this.loadSounds('fwoosh', 'ting', 'slap', 'sizzle');
       },

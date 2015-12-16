@@ -62,7 +62,7 @@ Chokecherries =
 allReady = ->
   window.game = playground
     create: ->
-      @loadImage("chokecherries-#{i}.png") for i in [0..4]
+      @loadImage("chokecherries-#{i}.jpg") for i in [0..4]
       @loadSounds 'squish'
     ready: ->
       @setState Chokecherries

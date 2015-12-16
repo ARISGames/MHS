@@ -49,7 +49,7 @@ Bison =
 allReady = ->
   window.game = playground
     create: ->
-      @loadImage("bison-#{i}.png") for i in [0..6]
+      @loadImage("bison-#{i}.jpg") for i in [0..6]
       @loadSounds 'fwoosh', 'ting', 'slap', 'sizzle'
     ready: ->
       @setState Bison

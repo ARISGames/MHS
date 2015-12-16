@@ -89,7 +89,7 @@
       create: function() {
         var i, j;
         for (i = j = 0; j <= 4; i = ++j) {
-          this.loadImage("chokecherries-" + i + ".png");
+          this.loadImage("chokecherries-" + i + ".jpg");
         }
         return this.loadSounds('squish');
       },

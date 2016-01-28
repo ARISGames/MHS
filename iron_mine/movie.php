@@ -22,7 +22,7 @@
     window.addEventListener('load', begin, false);
     window.onerror = function(msg, url, linenumber) 
     {
-        alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
         return true;
     };
 </script>

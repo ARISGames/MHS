@@ -63,7 +63,7 @@ function vidComplete()
 document.addEventListener( "DOMContentLoaded", partReady, false );
 window.onerror = function(msg, url, linenumber) 
 {
-    alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+    //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
     return true;
 };
 </script>

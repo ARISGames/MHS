@@ -4,68 +4,76 @@ sashaBeforeStep2 = 33976
 sashaBeforeStep3 = 33978
 sashaAfterCooking = 28522
 
-drawCenter = (layer, image) ->
-  layerRatio = layer.width / layer.height
+drawCenter = (canvas, ctx, image) ->
+  layerRatio = canvas.width / canvas.height
   imageRatio = image.width / image.height
   if layerRatio < imageRatio
     # layer is narrower than image, bars on top and bottom
-    w = layer.width
-    h = layer.width / imageRatio
+    w = canvas.width
+    h = canvas.width / imageRatio
   else
     # image is narrower than layer, bars on left and right
-    w = imageRatio * layer.height
-    h = layer.height
-  x = (layer.width - w) / 2
-  y = (layer.height - h) / 2
-  layer.drawImage image, x, y, w, h
+    w = imageRatio * canvas.height
+    h = canvas.height
+  x = (canvas.width - w) / 2
+  y = (canvas.height - h) / 2
+  ctx.drawImage image, x, y, w, h
 
-Chokecherries =
-  create: ->
-    @stage = 0
-    @isPointerDown = true
+loadImage = (src, cb) ->
+  img = new Image
+  img.onload = -> cb img
+  img.src = src
 
-  step: ->
+steps =
+  [ { image: "chokecherries-0.jpg" }
+  , { image: "chokecherries-1.jpg" }
+  , { image: "chokecherries-2.jpg", sound: "squish" }
+  , { image: "chokecherries-3.jpg", sound: "squish" }
+  , { image: "chokecherries-4.jpg", sound: "squish" }
+  ]
 
-  render: ->
-    @app.layer.clear 'white'
-    drawCenter @app.layer, @app.images["chokecherries-#{Math.min @stage, 4}"]
-
-  pointerdown: ({x, y}) ->
-    return unless x? and y?
-    @isPointerDown = true
-    @x = x / @app.width
-    @y = y / @app.height
-    @distance = 0
-    if @stage in [0]
-      @stage++
-
-  pointerup: ({x, y}) ->
-    return unless x? and y?
-    @isPointerDown = false
-
-  pointermove: ({x, y}) ->
-    return unless x? and y?
-    return unless @isPointerDown
-    oldDistance = @distance
-    oldX = @x
-    oldY = @y
-    @x = x / @app.width
-    @y = y / @app.height
-    @distance += Math.sqrt((@x - oldX) ** 2 + (@y - oldY) ** 2)
-    if Math.floor(oldDistance / 1.5) != Math.floor(@distance / 1.5)
-      if @stage in [1, 2, 3]
-        @app.sound.play 'squish'
-        @stage++
-      else if @stage is 4
-        window.ARIS.exitToDialog sashaAfterCooking
+imgs = {}
+loadImages = (cb) ->
+  count = steps.length
+  for {image} in steps
+    do (image) ->
+      loadImage "images/#{image}", (img) ->
+        imgs[image] = img
+        count--
+        cb() if count is 0
+  undefined
 
 allReady = ->
-  window.game = playground
-    create: ->
-      @loadImage("chokecherries-#{i}.jpg") for i in [0..4]
-      @loadSounds 'squish'
-    ready: ->
-      @setState Chokecherries
+
+  canvas = document.getElementById 'the-canvas'
+  ctx = canvas.getContext '2d'
+  clickListener = null
+
+  step = -1
+  nextStep = ->
+    step++
+    if steps[step]?
+      {image, sound} = steps[step]
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      ctx.fillStyle = 'white'
+      ctx.fillRect 0, 0, canvas.width, canvas.height
+      if image?
+        drawCenter canvas, ctx, imgs[image]
+      if sound?
+        s = document.getElementById sound
+        # restart audio if it's already going
+        s.pause()
+        s.currentTime = 0
+        s.play()
+    else
+      window.ARIS.exitToDialog sashaAfterCooking
+  # canvas.addEventListener 'mousedown', nextStep
+  canvas.addEventListener 'touchstart', nextStep
+
+  Origami.fastclick document.body
+
+  loadImages nextStep
 
 readies = 2
 oneReady = ->
@@ -73,6 +81,3 @@ oneReady = ->
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
-
-#ARIS.ready()
-#ARIS.exitToDialog = (d) -> console.log "exiting to dialog #{d}"

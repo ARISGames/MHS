@@ -4,55 +4,78 @@ sashaBeforeStep2 = 33976
 sashaBeforeStep3 = 33978
 sashaAfterCooking = 28522
 
-drawCenter = (layer, image) ->
-  layerRatio = layer.width / layer.height
+drawCenter = (canvas, ctx, image) ->
+  layerRatio = canvas.width / canvas.height
   imageRatio = image.width / image.height
   if layerRatio < imageRatio
     # layer is narrower than image, bars on top and bottom
-    w = layer.width
-    h = layer.width / imageRatio
+    w = canvas.width
+    h = canvas.width / imageRatio
   else
     # image is narrower than layer, bars on left and right
-    w = imageRatio * layer.height
-    h = layer.height
-  x = (layer.width - w) / 2
-  y = (layer.height - h) / 2
-  layer.drawImage image, x, y, w, h
+    w = imageRatio * canvas.height
+    h = canvas.height
+  x = (canvas.width - w) / 2
+  y = (canvas.height - h) / 2
+  ctx.drawImage image, x, y, w, h
 
-Bison =
-  create: ->
-    @stage = 0
+loadImage = (src, cb) ->
+  img = new Image
+  img.onload = -> cb img
+  img.src = src
 
-  step: ->
-    if @stage <= 6
-      null
-    else
-      @app.sound.stop @sizzleSound
-      window.ARIS.exitToDialog sashaBeforeStep3
+steps =
+  [ { image: "bison-0.jpg" }
+  , { image: "bison-1.jpg", sound: "fwoosh" }
+  , { image: "bison-2.jpg", sound: "ting" }
+  , { image: "bison-3.jpg", sound: "slap" }
+  , { image: "bison-4.jpg", sound: "sizzle" }
+  , { image: "bison-5.jpg", sound: "slap" }
+  , { image: "bison-6.jpg", sound: "slap" }
+  ]
 
-  render: ->
-    @app.layer.clear 'white'
-    drawCenter @app.layer, @app.images["bison-#{Math.min @stage, 6}"]
-
-  pointerdown: (e) ->
-    if @stage in [0, 1, 2, 3, 6]
-      @app.sound.play 'fwoosh' if @stage == 0
-      @app.sound.play 'ting' if @stage == 1
-      @app.sound.play 'slap' if @stage == 2
-      if @stage == 3
-        @sizzleSound = @app.sound.play 'sizzle'
-      @stage++
-    else if @stage in [4, 5]
-      @app.sound.play 'slap'
-      @stage++
+imgs = {}
+loadImages = (cb) ->
+  count = steps.length
+  for {image} in steps
+    do (image) ->
+      loadImage "images/#{image}", (img) ->
+        imgs[image] = img
+        count--
+        cb() if count is 0
+  undefined
 
 allReady = ->
-  window.game = playground
-    create: ->
-      @loadImage("bison-#{i}.jpg") for i in [0..6]
-      @loadSounds 'fwoosh', 'ting', 'slap', 'sizzle'
-    ready: ->
-      @setState Bison
+
+  canvas = document.getElementById 'the-canvas'
+  ctx = canvas.getContext '2d'
+  clickListener = null
+
+  step = -1
+  nextStep = ->
+    step++
+    if steps[step]?
+      {image, sound} = steps[step]
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      ctx.fillStyle = 'white'
+      ctx.fillRect 0, 0, canvas.width, canvas.height
+      if image?
+        drawCenter canvas, ctx, imgs[image]
+      if sound?
+        s = document.getElementById sound
+        # restart audio if it's already going
+        s.pause()
+        s.currentTime = 0
+        s.play()
+    else
+      window.ARIS.exitToDialog sashaBeforeStep3
+  # canvas.addEventListener 'mousedown', nextStep
+  canvas.addEventListener 'touchstart', nextStep
+
+  Origami.fastclick document.body
+
+  loadImages nextStep
 
 readies = 2
 oneReady = ->

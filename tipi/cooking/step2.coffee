@@ -24,6 +24,7 @@ loadImage = (src, cb) ->
   img.onload = -> cb img
   img.src = src
 
+sounds = {}
 steps =
   [ { image: "bison-0.jpg" }
   , { image: "bison-1.jpg", sound: "fwoosh" }
@@ -63,11 +64,7 @@ allReady = ->
       if image?
         drawCenter canvas, ctx, imgs[image]
       if sound?
-        s = document.getElementById sound
-        # restart audio if it's already going
-        s.pause()
-        s.currentTime = 0
-        s.play()
+        sounds[sound].play()
     else
       window.ARIS.exitToDialog sashaBeforeStep3
   # canvas.addEventListener 'mousedown', nextStep
@@ -77,9 +74,13 @@ allReady = ->
 
   loadImages nextStep
 
-readies = 2
+readies = 6
 oneReady = ->
   readies--
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
+for s in ['sizzle', 'slap', 'ting', 'fwoosh']
+  sounds[s] = new Howl
+    src: ["sounds/#{s}.ogg", "sounds/#{s}.mp3"]
+    onload: oneReady

@@ -22,7 +22,6 @@ def upload_rf(sftp, from, to)
       Makefile README.md .sublime-grunt.cache
       node_modules shared
       coffee_out.js browserify_out.js minify_out.js.report.txt
-      images sounds
       }.include? ent
     full_from = "#{from}/#{ent}"
     full_to = "#{to}/#{ent}"

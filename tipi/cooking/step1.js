@@ -43,13 +43,27 @@
     }, {
       image: "timpsula-1.jpg"
     }, {
-      image: "timpsula-2.jpg",
-      sound: "chop"
+      image: "timpsula-2.jpg"
     }, {
       image: "timpsula-3.jpg",
       sound: "chop"
     }, {
       image: "timpsula-4.jpg",
+      sound: "chop"
+    }, {
+      image: "timpsula-5.jpg",
+      sound: "chop"
+    }, {
+      image: "timpsula-6.jpg",
+      sound: "chop"
+    }, {
+      image: "timpsula-7.jpg",
+      sound: "chop"
+    }, {
+      image: "timpsula-8.jpg",
+      sound: "chop"
+    }, {
+      image: "timpsula-9.jpg",
       sound: "chop"
     }
   ];

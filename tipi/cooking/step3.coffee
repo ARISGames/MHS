@@ -28,9 +28,15 @@ sounds = {}
 steps =
   [ { image: "chokecherries-0.jpg" }
   , { image: "chokecherries-1.jpg" }
-  , { image: "chokecherries-2.jpg", sound: "squish" }
-  , { image: "chokecherries-3.jpg", sound: "squish" }
-  , { image: "chokecherries-4.jpg", sound: "squish" }
+  , { image: "chokecherries-2.jpg" }
+  , { image: "chokecherries-3.jpg" }
+  , { image: "chokecherries-4.jpg" }
+  , { image: "chokecherries-5.jpg" }
+  , { image: "chokecherries-6.jpg", sound: "squish" }
+  , { image: "chokecherries-7.jpg", sound: "squish" }
+  , { image: "chokecherries-8.jpg", sound: "squish" }
+  , { image: "chokecherries-9.jpg", sound: "squish" }
+  , { image: "chokecherries-10.jpg", sound: "squish" }
   ]
 
 imgs = {}

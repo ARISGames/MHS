@@ -28,10 +28,10 @@ loadImage = (src, cb) ->
 sounds = {}
 steps =
   [ { image: "chokecherries-0.jpg" }
-  , { image: "chokecherries-1.jpg" }
-  , { image: "chokecherries-2.jpg" }
-  , { image: "chokecherries-3.jpg" }
-  , { image: "chokecherries-4.jpg" }
+  , { image: "chokecherries-1.jpg", sound: 'snap' }
+  , { image: "chokecherries-2.jpg", sound: 'snap' }
+  , { image: "chokecherries-3.jpg", sound: 'snap' }
+  , { image: "chokecherries-4.jpg", sound: 'snap' }
   , { image: "chokecherries-5.jpg" }
   , { image: "chokecherries-6.jpg", sound: "squish" }
   , { image: "chokecherries-7.jpg", sound: "squish" }
@@ -79,12 +79,13 @@ allReady = ->
 
   loadImages nextStep
 
-readies = 3
+readies = 4
 oneReady = ->
   readies--
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
-sounds['squish'] = new Howl
-  src: ['sounds/squish.ogg', 'sounds/squish.mp3']
-  onload: oneReady
+for s in ['squish', 'snap']
+  sounds[s] = new Howl
+    src: ["sounds/#{s}.ogg", "sounds/#{s}.mp3"]
+    onload: oneReady

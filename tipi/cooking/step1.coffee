@@ -2,7 +2,8 @@
 sashaBeforeStep1 = 29449
 sashaBeforeStep2 = 33976
 sashaBeforeStep3 = 33978
-sashaAfterCooking = 28522
+sashaBeforeStep4 = 53383
+sashaEnd = 28522
 
 drawCenter = (canvas, ctx, image) ->
   layerRatio = canvas.width / canvas.height

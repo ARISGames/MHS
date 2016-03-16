@@ -27,17 +27,18 @@ loadImage = (src, cb) ->
 
 sounds = {}
 steps =
-  [ { image: "chokecherries-0.jpg" }
-  , { image: "chokecherries-1.jpg" }
-  , { image: "chokecherries-2.jpg" }
-  , { image: "chokecherries-3.jpg" }
-  , { image: "chokecherries-4.jpg" }
-  , { image: "chokecherries-5.jpg" }
-  , { image: "chokecherries-6.jpg", sound: "squish" }
-  , { image: "chokecherries-7.jpg", sound: "squish" }
-  , { image: "chokecherries-8.jpg", sound: "squish" }
-  , { image: "chokecherries-9.jpg", sound: "squish" }
-  , { image: "chokecherries-10.jpg", sound: "squish" }
+  [ { image: "plating-1.jpg" }
+  , { image: "plating-2.jpg", sound: 'squish' }
+  , { image: "plating-3.jpg", sound: 'squish' }
+  , { image: "plating-4.jpg", sound: 'slap' }
+  , { image: "plating-5.jpg", sound: 'snap' }
+  , { image: "plating-6.jpg", sound: 'snap' }
+  , { image: "plating-7.jpg", sound: 'snap' }
+  , { image: "plating-8.jpg", sound: 'snap' }
+  , { image: "plating-9.jpg", sound: 'snap' }
+  , { image: "plating-10.jpg", sound: 'snap' }
+  , { image: "plating-11.jpg", sound: 'snap' }
+  , { image: "plating-12.jpg", sound: 'snap' }
   ]
 
 imgs = {}
@@ -71,7 +72,7 @@ allReady = ->
       if sound?
         sounds[sound].play()
     else
-      window.ARIS.exitToDialog sashaBeforeStep4
+      window.ARIS.exitToDialog sashaEnd
   # canvas.addEventListener 'mousedown', nextStep
   canvas.addEventListener 'touchstart', nextStep
 
@@ -79,12 +80,13 @@ allReady = ->
 
   loadImages nextStep
 
-readies = 3
+readies = 5
 oneReady = ->
   readies--
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
-sounds['squish'] = new Howl
-  src: ['sounds/squish.ogg', 'sounds/squish.mp3']
-  onload: oneReady
+for s in ['squish', 'slap', 'snap']
+  sounds[s] = new Howl
+    src: ["sounds/#{s}.ogg", "sounds/#{s}.mp3"]
+    onload: oneReady

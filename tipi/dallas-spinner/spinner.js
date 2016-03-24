@@ -8,7 +8,7 @@
   wordMap = [
     {
       Happy: 59806,
-      Sad: 59807,
+      "Caŋteŝica (Sad)": 59807,
       Calm: 59810
     }, {
       Creative: 59812,
@@ -16,7 +16,7 @@
       Surprised: 59815
     }, {
       Curious: 59817,
-      Thoughtful: 59819,
+      "Waŝte (Good)": 59819,
       Excited: 59822
     }
   ];
@@ -77,7 +77,7 @@
       };
     },
     render: function() {
-      var c, col, dims, fillColors, i, j, k, l, len, len1, len2, len3, len4, len5, m, n, o, r, ref, ref1, ref2, ref3, ref4, ref5, repeat, rowOffset, y;
+      var c, col, dims, fillColors, i, j, k, l, len, len1, len2, len3, len4, len5, lines, m, n, o, r, ref, ref1, ref2, ref3, ref4, ref5, repeat, rowOffset, y;
       dims = this.getDims();
       this.app.layer.clear('black');
       this.app.layer.globalAlpha(1);
@@ -107,7 +107,7 @@
       this.app.layer.textAlign('center');
       this.app.layer.textBaseline('middle');
       this.app.layer.fillStyle('black');
-      this.app.layer.font((this.app.layer.height / 10) + "px sans-serif");
+      this.app.layer.font((this.app.layer.height / 11) + "px sans-serif");
       ref3 = [0, 1, 2];
       for (m = 0, len3 = ref3.length; m < len3; m++) {
         c = ref3[m];
@@ -119,7 +119,13 @@
           ref5 = [-2, -1, 0];
           for (o = 0, len5 = ref5.length; o < len5; o++) {
             repeat = ref5[o];
-            this.app.layer.fillText(this.words[c][r], col.x + col.w / 2, y + dims.column1.h * repeat);
+            lines = this.words[c][r].split(/\s+/);
+            if (lines.length === 2) {
+              this.app.layer.fillText(lines[0], col.x + col.w / 2, y + dims.column1.h * repeat - this.app.layer.height / 16);
+              this.app.layer.fillText(lines[1], col.x + col.w / 2, y + dims.column1.h * repeat + this.app.layer.height / 16);
+            } else {
+              this.app.layer.fillText(lines[0], col.x + col.w / 2, y + dims.column1.h * repeat);
+            }
           }
         }
       }

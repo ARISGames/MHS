@@ -2,7 +2,7 @@
 dialogDallasEnd = 47262
 wordMap =
   [ { Happy: 59806
-    , Sad: 59807
+    , "Caŋteŝica (Sad)": 59807
     , Calm: 59810
     }
   , { Creative: 59812
@@ -10,7 +10,7 @@ wordMap =
     , Surprised: 59815
     }
   , { Curious: 59817
-    , Thoughtful: 59819
+    , "Waŝte (Good)": 59819
     , Excited: 59822
     }
   ]
@@ -70,13 +70,18 @@ Spinner =
     @app.layer.textAlign 'center'
     @app.layer.textBaseline 'middle'
     @app.layer.fillStyle 'black'
-    @app.layer.font "#{@app.layer.height / 10}px sans-serif"
+    @app.layer.font "#{@app.layer.height / 11}px sans-serif"
     for c in [0, 1, 2]
       col = dims["column#{c}"]
       for r in [0, 1, 2]
         y = col.y + col.h / 2 + (@columns[c] + r) * dims.row.h
         for repeat in [-2, -1, 0]
-          @app.layer.fillText @words[c][r], col.x + col.w / 2, y + dims.column1.h * repeat
+          lines = @words[c][r].split(/\s+/)
+          if lines.length is 2
+            @app.layer.fillText lines[0], col.x + col.w / 2, y + dims.column1.h * repeat - @app.layer.height / 16
+            @app.layer.fillText lines[1], col.x + col.w / 2, y + dims.column1.h * repeat + @app.layer.height / 16
+          else
+            @app.layer.fillText lines[0], col.x + col.w / 2, y + dims.column1.h * repeat
     @app.layer.fillStyle 'black'
     @app.layer.globalAlpha 0.3
     @app.layer.fillRect dims.column0.x, dims.column0.y, dims.row.w, dims.row.h

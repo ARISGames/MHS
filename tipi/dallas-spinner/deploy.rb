@@ -39,7 +39,7 @@ def upload_rf(sftp, from, to)
   end
 end
 
-[:cooking1, :cooking2, :cooking3].each do |aris|
+[:dallas1, :dallas2, :dallas3].each do |aris|
   url        = $fdl_logins[aris][:url]
   username   = $fdl_logins[aris][:username]
   password   = $fdl_logins[aris][:password]

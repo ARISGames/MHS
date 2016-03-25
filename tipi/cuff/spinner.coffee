@@ -1,4 +1,5 @@
 # ARIS dialog IDs
+dialogDallasEnd = 47262
 
 inRect = (rect, x, y) ->
   (rect.x <= x <= rect.x + rect.w) and (rect.y <= y <= rect.y + rect.h)
@@ -6,6 +7,7 @@ inRect = (rect, x, y) ->
 Spinner =
   create: ->
     @positions = [-892, -698, -287]
+    @done = false
 
   step: ->
 
@@ -35,11 +37,25 @@ Spinner =
 
   pointerup: ({x, y}) ->
     @clicked = null
+    @checkPositions()
 
   pointermove: ({x, y}) ->
     return unless @onScreen(x, y)
     return unless @clicked?
-    @positions[@clicked.row] = @clicked.position + (x - @clicked.x)
+    pn = @clicked.position + (x - @clicked.x)
+    pn = 0 if 0 < pn
+    pn = -1187 if pn < -1187
+    @positions[@clicked.row] = pn
+
+  checkPositions: ->
+    return if @done
+    return unless Math.abs(@positions[0] - @positions[1]) < 10
+    return unless Math.abs(@positions[0] - @positions[2]) < 10
+    return unless Math.abs(@positions[1] - @positions[2]) < 10
+    @done = true
+    setTimeout ->
+      ARIS.exitToDialog dialogDallasEnd
+    , 500
 
 allReady = ->
   window.game = playground
@@ -66,6 +82,6 @@ countdown = waitFor.length
 f() for f in waitFor
 
 # for debugging
-ARIS.exitToDialog = (d) -> console.log "exiting to dialog #{d}"
-ARIS.givePlayerItemCount = (item_id, count) -> console.log "giving player #{count} of item #{item_id}"
-ARIS.ready()
+#ARIS.exitToDialog = (d) -> console.log "exiting to dialog #{d}"
+#ARIS.givePlayerItemCount = (item_id, count) -> console.log "giving player #{count} of item #{item_id}"
+#ARIS.ready()

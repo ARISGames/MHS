@@ -13,30 +13,49 @@
     step: function() {},
     render: function() {
       this.app.layer.drawImage(this.app.images.bg, 0, 0);
-      this.app.layer.drawImage(this.app.images.row1, this.positions[0], 647);
-      this.app.layer.drawImage(this.app.images.row2, this.positions[1], 767);
-      return this.app.layer.drawImage(this.app.images.row3, this.positions[2], 887);
+      this.app.layer.drawImage(this.app.images.row0, this.positions[0], 647);
+      this.app.layer.drawImage(this.app.images.row1, this.positions[1], 767);
+      return this.app.layer.drawImage(this.app.images.row2, this.positions[2], 887);
+    },
+    onScreen: function(x, y) {
+      return (x != null) && (y != null) && ((0 <= x && x < 640)) && ((0 <= y && y < 1008));
     },
     pointerdown: function(arg) {
-      var x, y;
+      var row, x, y;
       x = arg.x, y = arg.y;
-      if (!((x != null) && (y != null))) {
-
+      if (!this.onScreen(x, y)) {
+        return;
       }
+      if ((647 <= y && y < 647 + 108)) {
+        row = 0;
+      } else if ((767 <= y && y < 767 + 108)) {
+        row = 1;
+      } else if ((887 <= y && y < 887 + 108)) {
+        row = 2;
+      } else {
+        return;
+      }
+      return this.clicked = {
+        row: row,
+        position: this.positions[row],
+        x: x
+      };
     },
     pointerup: function(arg) {
       var x, y;
       x = arg.x, y = arg.y;
-      if (!((x != null) && (y != null))) {
-
-      }
+      return this.clicked = null;
     },
     pointermove: function(arg) {
       var x, y;
       x = arg.x, y = arg.y;
-      if (!((x != null) && (y != null))) {
-
+      if (!this.onScreen(x, y)) {
+        return;
       }
+      if (this.clicked == null) {
+        return;
+      }
+      return this.positions[this.clicked.row] = this.clicked.position + (x - this.clicked.x);
     }
   };
 
@@ -44,9 +63,9 @@
     return window.game = playground({
       create: function() {
         this.loadImage('bg.jpg');
+        this.loadImage('row0');
         this.loadImage('row1');
-        this.loadImage('row2');
-        return this.loadImage('row3');
+        return this.loadImage('row2');
       },
       ready: function() {
         return this.setState(Spinner);

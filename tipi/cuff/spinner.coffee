@@ -11,26 +11,43 @@ Spinner =
 
   render: ->
     @app.layer.drawImage @app.images.bg, 0, 0
-    @app.layer.drawImage @app.images.row1, @positions[0], 647
-    @app.layer.drawImage @app.images.row2, @positions[1], 767
-    @app.layer.drawImage @app.images.row3, @positions[2], 887
+    @app.layer.drawImage @app.images.row0, @positions[0], 647
+    @app.layer.drawImage @app.images.row1, @positions[1], 767
+    @app.layer.drawImage @app.images.row2, @positions[2], 887
+
+  onScreen: (x, y) ->
+    x? and y? and (0 <= x < 640) and (0 <= y < 1008)
 
   pointerdown: ({x, y}) ->
-    return unless x? and y?
+    return unless @onScreen(x, y)
+    if 647 <= y < 647 + 108
+      row = 0
+    else if 767 <= y < 767 + 108
+      row = 1
+    else if 887 <= y < 887 + 108
+      row = 2
+    else
+      return
+    @clicked =
+      row: row
+      position: @positions[row]
+      x: x
 
   pointerup: ({x, y}) ->
-    return unless x? and y?
+    @clicked = null
 
   pointermove: ({x, y}) ->
-    return unless x? and y?
+    return unless @onScreen(x, y)
+    return unless @clicked?
+    @positions[@clicked.row] = @clicked.position + (x - @clicked.x)
 
 allReady = ->
   window.game = playground
     create: ->
       @loadImage 'bg.jpg'
+      @loadImage 'row0'
       @loadImage 'row1'
       @loadImage 'row2'
-      @loadImage 'row3'
 
     ready: ->
       @setState Spinner

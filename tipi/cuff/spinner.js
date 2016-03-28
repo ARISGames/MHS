@@ -14,11 +14,17 @@
       return this.done = false;
     },
     step: function() {},
+    fixX: function(n) {
+      return (n / 640) * this.app.width;
+    },
+    fixY: function(n) {
+      return (n / 1008) * this.app.height;
+    },
     render: function() {
-      this.app.layer.drawImage(this.app.images.bg, 0, 0);
-      this.app.layer.drawImage(this.app.images.row0, this.positions[0], 647);
-      this.app.layer.drawImage(this.app.images.row1, this.positions[1], 767);
-      return this.app.layer.drawImage(this.app.images.row2, this.positions[2], 887);
+      this.app.layer.drawImage(this.app.images.bg, 0, 0, this.fixX(640), this.fixY(1008));
+      this.app.layer.drawImage(this.app.images.row0, this.fixX(this.positions[0]), this.fixY(647), this.fixX(1827), this.fixY(108));
+      this.app.layer.drawImage(this.app.images.row1, this.fixX(this.positions[1]), this.fixY(767), this.fixX(1827), this.fixY(108));
+      return this.app.layer.drawImage(this.app.images.row2, this.fixX(this.positions[2]), this.fixY(887), this.fixX(1827), this.fixY(108));
     },
     onScreen: function(x, y) {
       return (x != null) && (y != null) && ((0 <= x && x < 640)) && ((0 <= y && y < 1008));
@@ -26,6 +32,11 @@
     pointerdown: function(arg) {
       var row, x, y;
       x = arg.x, y = arg.y;
+      if (!((x != null) && (y != null))) {
+        return;
+      }
+      x = (x / this.app.width) * 640;
+      y = (y / this.app.height) * 1008;
       if (!this.onScreen(x, y)) {
         return;
       }
@@ -53,10 +64,15 @@
     pointermove: function(arg) {
       var pn, x, y;
       x = arg.x, y = arg.y;
-      if (!this.onScreen(x, y)) {
+      if (this.clicked == null) {
         return;
       }
-      if (this.clicked == null) {
+      if (!((x != null) && (y != null))) {
+        return;
+      }
+      x = (x / this.app.width) * 640;
+      y = (y / this.app.height) * 1008;
+      if (!this.onScreen(x, y)) {
         return;
       }
       pn = this.clicked.position + (x - this.clicked.x);

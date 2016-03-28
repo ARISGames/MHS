@@ -11,16 +11,22 @@ Spinner =
 
   step: ->
 
+  fixX: (n) -> (n / 640) * @app.width
+  fixY: (n) -> (n / 1008) * @app.height
+
   render: ->
-    @app.layer.drawImage @app.images.bg, 0, 0
-    @app.layer.drawImage @app.images.row0, @positions[0], 647
-    @app.layer.drawImage @app.images.row1, @positions[1], 767
-    @app.layer.drawImage @app.images.row2, @positions[2], 887
+    @app.layer.drawImage @app.images.bg, 0, 0, @fixX(640), @fixY(1008)
+    @app.layer.drawImage @app.images.row0, @fixX(@positions[0]), @fixY(647), @fixX(1827), @fixY(108)
+    @app.layer.drawImage @app.images.row1, @fixX(@positions[1]), @fixY(767), @fixX(1827), @fixY(108)
+    @app.layer.drawImage @app.images.row2, @fixX(@positions[2]), @fixY(887), @fixX(1827), @fixY(108)
 
   onScreen: (x, y) ->
     x? and y? and (0 <= x < 640) and (0 <= y < 1008)
 
   pointerdown: ({x, y}) ->
+    return unless x? and y?
+    x = (x / @app.width) * 640
+    y = (y / @app.height) * 1008
     return unless @onScreen(x, y)
     if 647 <= y < 647 + 108
       row = 0
@@ -40,8 +46,11 @@ Spinner =
     @checkPositions()
 
   pointermove: ({x, y}) ->
-    return unless @onScreen(x, y)
     return unless @clicked?
+    return unless x? and y?
+    x = (x / @app.width) * 640
+    y = (y / @app.height) * 1008
+    return unless @onScreen(x, y)
     pn = @clicked.position + (x - @clicked.x)
     pn = 0 if 0 < pn
     pn = -1187 if pn < -1187

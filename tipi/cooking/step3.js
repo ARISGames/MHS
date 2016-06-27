@@ -41,35 +41,29 @@
 
   steps = [
     {
-      image: "chokecherries-0.jpg"
+      image: "choke-cherries1.jpg"
     }, {
-      image: "chokecherries-1.jpg",
+      image: "choke-cherries2.jpg",
       sound: 'snap'
     }, {
-      image: "chokecherries-2.jpg",
+      image: "choke-cherries3.jpg",
       sound: 'snap'
     }, {
-      image: "chokecherries-3.jpg",
+      image: "choke-cherries4.jpg",
       sound: 'snap'
     }, {
-      image: "chokecherries-4.jpg",
-      sound: 'snap'
+      image: "choke-cherries5.jpg"
     }, {
-      image: "chokecherries-5.jpg"
-    }, {
-      image: "chokecherries-6.jpg",
+      image: "choke-cherries6.jpg",
       sound: "squish"
     }, {
-      image: "chokecherries-7.jpg",
+      image: "choke-cherries7.jpg",
       sound: "squish"
     }, {
-      image: "chokecherries-8.jpg",
+      image: "choke-cherries8.jpg",
       sound: "squish"
     }, {
-      image: "chokecherries-9.jpg",
-      sound: "squish"
-    }, {
-      image: "chokecherries-10.jpg",
+      image: "choke-cherries9.jpg",
       sound: "squish"
     }
   ];

@@ -1,3 +1,9 @@
+var element = function(tag, init){
+    var e = $('<' + tag + ' />');
+    init(e);
+    return e;
+};
+
 var EventHandler = function(thisPlayer, item)
 {
     var self = this;
@@ -124,6 +130,26 @@ var EventHandler = function(thisPlayer, item)
         self.draw();
     }
 
+    self.viewPlayer = function(player)
+    {
+        location = 'view';
+        otherPlayer = player;
+        self.draw();
+    }
+
+    self.proposeTrade = function()
+    {
+        self.sendTradeRequest(otherPlayer.player_id);
+        location = 'sent';
+        self.draw();
+    }
+
+    self.cancelPropose = function()
+    {
+        location = 'players';
+        self.draw();
+    }
+
     self.draw = function()
     {
         var content = '';
@@ -131,17 +157,43 @@ var EventHandler = function(thisPlayer, item)
             if (item === null) {
                 content = "<p>You don't have an item!</p>";
             } else {
-                content = $("<div />");
-                content.append($("<p>You have: " + item + "</p>"));
-                content.append($("<p>Players to trade with:</p>"));
-                var ul = $("<ul />");
-                self.visiblePlayers.forEach(function(player){
-                    var li = $("<li />");
-                    li.text(JSON.stringify(player));
-                    ul.append(li);
+                content = element('div', function(div){
+                    div.append($("<p>You have: " + item + "</p>"));
+                    div.append($("<p>Players to trade with:</p>"));
+                    div.append(element('ul', function(ul){
+                        self.visiblePlayers.forEach(function(player){
+                            ul.append(element('li', function(li){
+                                li.append(element('a', function(a){
+                                    a.prop('href', '#');
+                                    a.on('click', function(){ self.viewPlayer(player); });
+                                    a.text(player.display_name);
+                                }));
+                            }));
+                        });
+                    }));
                 });
-                content.append(ul);
             }
+        } else if (location === 'view') {
+            content = element('div', function(div){
+                div.append("<p>You have: " + item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.proposeTrade);
+                        a.text('Propose trade');
+                    }));
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.cancelPropose);
+                        a.text('Cancel');
+                    }));
+                }));
+            });
         }
         $('#trade-screen').html(content);
     }

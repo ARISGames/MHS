@@ -23,7 +23,8 @@ var server_path = '<?php echo Config::serverWWWPath; ?>';
 
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="pusherman.js"></script>
-<script type="text/javascript" src="eventhandler.js"></script>
+<script type="text/javascript" src="eventhandler.js?cb=5"></script>
+<script type="text/javascript" src="zepto.min.js"></script>
 
 <script type="text/javascript">
 
@@ -33,7 +34,6 @@ ARIS.ready = function() { partReady(); };
 document.addEventListener( "DOMContentLoaded", partReady, false );
 
 function begin() {
-  alert('hi');
   var item = null;
   if (ARIS.cache.getPlayerItemCount(87021) > 0) {
     item = 'A';
@@ -43,7 +43,12 @@ function begin() {
     item = 'C';
   }
 
-  alert('Your item: ' + item);
+  ARIS.didReceivePlayer = function(player){
+    player.item = item;
+    window.eh = new EventHandler(player, item);
+    window.eh.register();
+  };
+  ARIS.getPlayer();
 }
 
 </script>
@@ -51,7 +56,7 @@ function begin() {
 </head>
 <body>
 
-Hello, world!
+<div id="trade-screen">Loading...</div>
 
 </body>
 </html>

@@ -9,6 +9,13 @@
     var ARIS = {};//Get ARIS variable existant ASAP just to keep things simple
 </script>
 
+<style type="text/css">
+body {
+  font-size: 20px;
+  font-family: sans-serif;
+}
+</style>
+
 <script>
 // Values from server config for js files to use.
 var pm_config = {
@@ -23,7 +30,7 @@ var server_path = '<?php echo Config::serverWWWPath; ?>';
 
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="pusherman.js"></script>
-<script type="text/javascript" src="eventhandler.js?cb=17"></script>
+<script type="text/javascript" src="eventhandler.js?cb=18"></script>
 <script type="text/javascript" src="zepto.min.js"></script>
 
 <script type="text/javascript">
@@ -36,11 +43,11 @@ document.addEventListener( "DOMContentLoaded", partReady, false );
 function begin() {
   var item = null;
   if (ARIS.cache.getPlayerItemCount(87021) > 0) {
-    item = 'A';
+    item = 'Item A';
   } else if (ARIS.cache.getPlayerItemCount(87023) > 0) {
-    item = 'B';
+    item = 'Item B';
   } else if (ARIS.cache.getPlayerItemCount(87024) > 0) {
-    item = 'C';
+    item = 'Item C';
   }
 
   ARIS.didReceivePlayer = function(player){

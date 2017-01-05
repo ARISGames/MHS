@@ -4,12 +4,22 @@ var element = function(tag, init){
     return e;
 };
 
+var button = function(str, fn){
+    return element('p', function(p){
+        p.append(element('a', function(a){
+            a.prop('href', '#');
+            a.on('click', fn);
+            a.text(str);
+        }));
+    })
+};
+
 var itemID = function(item){
-    if (item === 'A') {
+    if (item === 'Item A') {
         return 87021;
-    } else if (item === 'B') {
+    } else if (item === 'Item B') {
         return 87023;
-    } else if (item === 'C') {
+    } else if (item === 'Item C') {
         return 87024;
     } else {
         return null;
@@ -74,7 +84,8 @@ var EventHandler = function(thisPlayer, item)
     self.identificationReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.user_id == thisPlayer.user_id) return;
+        if (data.player.user_id == thisPlayer.user_id) return;
+        if (!(thisPlayer.item)) return;
         var i = self.playerPositionInVisiblePlayers(data.player);
         if(i == -1) self.visiblePlayers.push(data.player);
         else        self.visiblePlayers[i] = data.player;
@@ -213,7 +224,7 @@ var EventHandler = function(thisPlayer, item)
             } else {
                 content = element('div', function(div){
                     div.append($("<p>You have: " + item + "</p>"));
-                    div.append($("<p>Players to trade with:</p>"));
+                    div.append($("<p>These players have an item to trade. To find out what each player has, click on the player's name or ask them.</p>"));
                     div.append(element('ul', function(ul){
                         self.visiblePlayers.forEach(function(player){
                             ul.append(element('li', function(li){
@@ -233,20 +244,9 @@ var EventHandler = function(thisPlayer, item)
                 div.append(element('p', function(p){
                     p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
                 }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.proposeTrade);
-                        a.text('Propose trade');
-                    }));
-                }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.cancelPropose);
-                        a.text('Cancel');
-                    }));
-                }));
+                div.append("<p>Do you want to offer to make this trade?</p>");
+                div.append(button('Yes, offer to make this trade', self.proposeTrade));
+                div.append(button('No, find someone else to trade with', self.cancelPropose));
             });
         } else if (location === 'sent') {
             content = element('div', function(div){
@@ -257,50 +257,27 @@ var EventHandler = function(thisPlayer, item)
                 div.append(element('p', function(p){
                     p.text('Trade request sent.');
                 }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.cancelTrade);
-                        a.text('Cancel');
-                    }));
-                }));
+                div.append(button("Cancel Trade", self.cancelTrade));
             });
         } else if (location === 'received') {
             content = element('div', function(div){
                 div.append("<p>You've received a trade request!</p>");
                 div.append("<p>You have: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                    p.text(otherPlayer.display_name + ' has offered to trade: ' + otherPlayer.item);
                 }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.acceptTrade);
-                        a.text('Accept trade');
-                    }));
-                }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.cancelTrade);
-                        a.text('Cancel');
-                    }));
-                }));
+                div.append("<p>Do you want to make this trade?</p>");
+                div.append(button("Yes, make this trade", self.acceptTrade));
+                div.append(button("No, don't make this trade", self.cancelTrade));
             });
         } else if (location === 'ready') {
             content = element('div', function(div){
-                div.append("<p>Waiting for other player...</p>");
-                div.append("<p>You have: " + item + "</p>");
+                div.append("<p>Waiting for other player to accept...</p>");
+                div.append("<p>You've offered to trade: " + item + "</p>");
                 div.append(element('p', function(p){
                     p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
                 }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.cancelTrade);
-                        a.text('Cancel');
-                    }));
-                }));
+                div.append(button('Cancel', self.cancelTrade));
             });
         } else if (location === 'accept') {
             content = element('div', function(div){
@@ -309,28 +286,14 @@ var EventHandler = function(thisPlayer, item)
                 div.append(element('p', function(p){
                     p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
                 }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.finishTrade);
-                        a.text('Finish trade');
-                    }));
-                }));
-                div.append(element('p', function(p){
-                    p.append(element('a', function(a){
-                        a.prop('href', '#');
-                        a.on('click', self.cancelTrade);
-                        a.text('Cancel');
-                    }));
-                }));
+                div.append("<p>Do you want to make this trade?</p>");
+                div.append(button('Yes, make this trade', self.finishTrade));
+                div.append(button("No, don't make this trade", self.cancelTrade));
             });
         } else if (location === 'done') {
             content = element('div', function(div){
                 div.append("<p>Trade complete!</p>");
                 div.append("<p>You now have: " + otherPlayer.item + "</p>");
-                div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' how has: ' + item);
-                }));
             });
         }
         $('#trade-screen').html(content);

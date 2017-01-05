@@ -23,7 +23,7 @@ var server_path = '<?php echo Config::serverWWWPath; ?>';
 
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="pusherman.js"></script>
-<script type="text/javascript" src="eventhandler.js?cb=14"></script>
+<script type="text/javascript" src="eventhandler.js?cb=17"></script>
 <script type="text/javascript" src="zepto.min.js"></script>
 
 <script type="text/javascript">

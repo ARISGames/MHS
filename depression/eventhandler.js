@@ -4,6 +4,18 @@ var element = function(tag, init){
     return e;
 };
 
+var itemID = function(item){
+    if (item === 'A') {
+        return 87021;
+    } else if (item === 'B') {
+        return 87023;
+    } else if (item === 'C') {
+        return 87024;
+    } else {
+        return null;
+    }
+}
+
 var EventHandler = function(thisPlayer, item)
 {
     var self = this;
@@ -184,8 +196,12 @@ var EventHandler = function(thisPlayer, item)
     self.completeTrade = function()
     {
         location = 'done';
-        // TODO: trade items
+        ARIS.setItemCount(itemID(item), 0);
+        ARIS.setItemCount(itemID(otherPlayer.item), 1);
         self.draw();
+        setTimeout(function(){
+            ARIS.exitToTab('INVENTORY');
+        }, 2000);
     }
 
     self.draw = function()
@@ -306,6 +322,14 @@ var EventHandler = function(thisPlayer, item)
                         a.on('click', self.cancelTrade);
                         a.text('Cancel');
                     }));
+                }));
+            });
+        } else if (location === 'done') {
+            content = element('div', function(div){
+                div.append("<p>Trade complete!</p>");
+                div.append("<p>You now have: " + otherPlayer.item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' how has: ' + item);
                 }));
             });
         }

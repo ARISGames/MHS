@@ -77,7 +77,13 @@ var EventHandler = function(thisPlayer, item)
     self.tradeRequestReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.user_id == thisPlayer.user_id) return;
+        if (data.player.user_id == thisPlayer.user_id) return;
+        if (data.receiverId != thisPlayer.user_id) return;
+        if (location === 'players') {
+            location = 'received';
+            otherPlayer = data.player;
+            self.draw();
+        }
     }
 
     self.sendTradeAccept = function(receiverId)
@@ -87,7 +93,14 @@ var EventHandler = function(thisPlayer, item)
     self.tradeAcceptReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.user_id == thisPlayer.user_id) return;
+        if (data.player.user_id == thisPlayer.user_id) return;
+        if (data.receiverId != thisPlayer.user_id) return;
+        if (location === 'sent') {
+            location = 'accept';
+            self.draw();
+        } else if (location === 'ready') {
+            self.completeTrade();
+        }
     }
 
     self.sendTradeCancel = function(receiverId)
@@ -97,23 +110,19 @@ var EventHandler = function(thisPlayer, item)
     self.tradeCancelReceived = function(request)
     {
         var data = JSON.parse(request);
-        if(data.player.user_id == thisPlayer.user_id) return;
-    }
-
-    self.sendTradeReady = function(receiverId, offer)
-    {
-        pm.sendData("TRADE_READY",requestString(thisPlayer,receiverId,offer));
-    }
-    self.tradeReadyReceived = function(request)
-    {
-        var data = JSON.parse(request);
-        if(data.player.user_id == thisPlayer.user_id) return;
+        if (data.player.user_id == thisPlayer.user_id) return;
+        if (data.receiverId != thisPlayer.user_id) return;
+        if (!otherPlayer) return;
+        if (data.player.user_id != otherPlayer.user_id) return;
+        location = 'players';
+        otherPlayer = null;
+        self.draw();
     }
 
     self.register = function()
     {
-        var events = ["NEW_PLAYER","PLAYER_LEFT","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","TRADE_CANCEL","TRADE_READY"];
-        var callbacks = [self.newPlayerReceived, self.playerLeftReceived, self.identificationReceived, self.tradeRequestReceived, self.tradeAcceptReceived, self.tradeCancelReceived, self.tradeReadyReceived];
+        var events = ["NEW_PLAYER","PLAYER_LEFT","IDENTIFICATION","TRADE_REQUEST","TRADE_ACCEPT","TRADE_CANCEL"];
+        var callbacks = [self.newPlayerReceived, self.playerLeftReceived, self.identificationReceived, self.tradeRequestReceived, self.tradeAcceptReceived, self.tradeCancelReceived];
 
         //USING HARD CODED CONSTANTS FROM 
         // ../../../../config.class.php
@@ -139,7 +148,7 @@ var EventHandler = function(thisPlayer, item)
 
     self.proposeTrade = function()
     {
-        self.sendTradeRequest(otherPlayer.player_id);
+        self.sendTradeRequest(otherPlayer.user_id);
         location = 'sent';
         self.draw();
     }
@@ -147,6 +156,35 @@ var EventHandler = function(thisPlayer, item)
     self.cancelPropose = function()
     {
         location = 'players';
+        otherPlayer = null;
+        self.draw();
+    }
+
+    self.cancelTrade = function()
+    {
+        self.sendTradeCancel(otherPlayer.user_id);
+        location = 'players';
+        otherPlayer = null;
+        self.draw();
+    }
+
+    self.acceptTrade = function()
+    {
+        self.sendTradeAccept(otherPlayer.user_id);
+        location = 'ready';
+        self.draw();
+    }
+
+    self.finishTrade = function()
+    {
+        self.sendTradeAccept(otherPlayer.user_id);
+        self.completeTrade();
+    }
+
+    self.completeTrade = function()
+    {
+        location = 'done';
+        // TODO: trade items
         self.draw();
     }
 
@@ -190,6 +228,82 @@ var EventHandler = function(thisPlayer, item)
                     p.append(element('a', function(a){
                         a.prop('href', '#');
                         a.on('click', self.cancelPropose);
+                        a.text('Cancel');
+                    }));
+                }));
+            });
+        } else if (location === 'sent') {
+            content = element('div', function(div){
+                div.append("<p>You have: " + item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                }));
+                div.append(element('p', function(p){
+                    p.text('Trade request sent.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.cancelTrade);
+                        a.text('Cancel');
+                    }));
+                }));
+            });
+        } else if (location === 'received') {
+            content = element('div', function(div){
+                div.append("<p>You've received a trade request!</p>");
+                div.append("<p>You have: " + item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.acceptTrade);
+                        a.text('Accept trade');
+                    }));
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.cancelTrade);
+                        a.text('Cancel');
+                    }));
+                }));
+            });
+        } else if (location === 'ready') {
+            content = element('div', function(div){
+                div.append("<p>Waiting for other player...</p>");
+                div.append("<p>You have: " + item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.cancelTrade);
+                        a.text('Cancel');
+                    }));
+                }));
+            });
+        } else if (location === 'accept') {
+            content = element('div', function(div){
+                div.append("<p>Your trade request has been accepted!</p>");
+                div.append("<p>You have: " + item + "</p>");
+                div.append(element('p', function(p){
+                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.finishTrade);
+                        a.text('Finish trade');
+                    }));
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('a', function(a){
+                        a.prop('href', '#');
+                        a.on('click', self.cancelTrade);
                         a.text('Cancel');
                     }));
                 }));

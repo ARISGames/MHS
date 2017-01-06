@@ -14,6 +14,19 @@ body {
   font-size: 20px;
   font-family: sans-serif;
 }
+
+.img-left, .img-right {
+  width: 90px;
+  height: 90px;
+  margin: 5px;
+}
+
+.img-left { float: left; }
+.img-right { float: right; }
+
+p {
+  clear: both;
+}
 </style>
 
 <script>
@@ -26,11 +39,22 @@ var pm_config = {
 };
 
 var server_path = '<?php echo Config::serverWWWPath; ?>';
+
+var tradable_items = [
+  {item_id: 86984, item_name: 'Boy Scout Rifle'},
+  {item_id: 86983, item_name: 'CCC Uniform'},
+  {item_id: 86996, item_name: 'Crystal Radio'},
+  {item_id: 86988, item_name: 'Footlocker'},
+  {item_id: 86992, item_name: 'Milk Pail'},
+  {item_id: 86994, item_name: 'Oil Lamp'},
+  {item_id: 86990, item_name: 'Paper Doll'},
+  {item_id: 86986, item_name: 'Wagon'},
+]
 </script>
 
 <script type="text/javascript" src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script type="text/javascript" src="pusherman.js"></script>
-<script type="text/javascript" src="eventhandler.js?cb=18"></script>
+<script type="text/javascript" src="eventhandler.js?cb=20"></script>
 <script type="text/javascript" src="zepto.min.js"></script>
 
 <script type="text/javascript">
@@ -42,13 +66,11 @@ document.addEventListener( "DOMContentLoaded", partReady, false );
 
 function begin() {
   var item = null;
-  if (ARIS.cache.getPlayerItemCount(87021) > 0) {
-    item = 'Item A';
-  } else if (ARIS.cache.getPlayerItemCount(87023) > 0) {
-    item = 'Item B';
-  } else if (ARIS.cache.getPlayerItemCount(87024) > 0) {
-    item = 'Item C';
-  }
+  tradable_items.forEach(function(someItem){
+    if (ARIS.cache.getPlayerItemCount(someItem.item_id) > 0) {
+      item = someItem.item_name;
+    }
+  });
 
   ARIS.didReceivePlayer = function(player){
     player.item = item;

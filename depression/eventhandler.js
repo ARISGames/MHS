@@ -14,16 +14,14 @@ var button = function(str, fn){
     })
 };
 
-var itemID = function(item){
-    if (item === 'Item A') {
-        return 87021;
-    } else if (item === 'Item B') {
-        return 87023;
-    } else if (item === 'Item C') {
-        return 87024;
-    } else {
-        return null;
-    }
+var itemID = function(itemName){
+    var item_id = null;
+    tradable_items.forEach(function(item){
+        if (itemName === item.item_name) {
+            item_id = item.item_id;
+        }
+    });
+    return item_id;
 }
 
 var EventHandler = function(thisPlayer, item)
@@ -211,7 +209,7 @@ var EventHandler = function(thisPlayer, item)
         ARIS.setItemCount(itemID(otherPlayer.item), 1);
         self.draw();
         setTimeout(function(){
-            ARIS.exitToTab('INVENTORY');
+            ARIS.exitToDialog(77940);
         }, 2000);
     }
 
@@ -223,7 +221,13 @@ var EventHandler = function(thisPlayer, item)
                 content = "<p>You don't have an item!</p>";
             } else {
                 content = element('div', function(div){
-                    div.append($("<p>You have: " + item + "</p>"));
+                    div.append(element('p', function(p){
+                        p.append(element('img', function(img){
+                            img.addClass('img-left');
+                            img.prop('src', 'images/' + item + '.jpg');
+                        }));
+                        p.append('You have the ' + item + '.');
+                    }));
                     div.append($("<p>These players have an item to trade. To find out what each player has, click on the player's name or ask them.</p>"));
                     div.append(element('ul', function(ul){
                         self.visiblePlayers.forEach(function(player){
@@ -240,9 +244,19 @@ var EventHandler = function(thisPlayer, item)
             }
         } else if (location === 'view') {
             content = element('div', function(div){
-                div.append("<p>You have: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                    p.append(element('img', function(img){
+                        img.addClass('img-left');
+                        img.prop('src', 'images/' + item + '.jpg');
+                    }));
+                    p.append('You have the ' + item + '.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append(otherPlayer.display_name + ' has the ' + otherPlayer.item + '.');
                 }));
                 div.append("<p>Do you want to offer to make this trade?</p>");
                 div.append(button('Yes, offer to make this trade', self.proposeTrade));
@@ -250,9 +264,19 @@ var EventHandler = function(thisPlayer, item)
             });
         } else if (location === 'sent') {
             content = element('div', function(div){
-                div.append("<p>You have: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                    p.append(element('img', function(img){
+                        img.addClass('img-left');
+                        img.prop('src', 'images/' + item + '.jpg');
+                    }));
+                    p.append('You have the ' + item + '.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append(otherPlayer.display_name + ' has the ' + otherPlayer.item + '.');
                 }));
                 div.append(element('p', function(p){
                     p.text('Trade request sent.');
@@ -262,9 +286,19 @@ var EventHandler = function(thisPlayer, item)
         } else if (location === 'received') {
             content = element('div', function(div){
                 div.append("<p>You've received a trade request!</p>");
-                div.append("<p>You have: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has offered to trade: ' + otherPlayer.item);
+                    p.append(element('img', function(img){
+                        img.addClass('img-left');
+                        img.prop('src', 'images/' + item + '.jpg');
+                    }));
+                    p.append('You have the ' + item + '.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append(otherPlayer.display_name + ' has offered to trade the ' + otherPlayer.item + '.');
                 }));
                 div.append("<p>Do you want to make this trade?</p>");
                 div.append(button("Yes, make this trade", self.acceptTrade));
@@ -273,18 +307,38 @@ var EventHandler = function(thisPlayer, item)
         } else if (location === 'ready') {
             content = element('div', function(div){
                 div.append("<p>Waiting for other player to accept...</p>");
-                div.append("<p>You've offered to trade: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                    p.append(element('img', function(img){
+                        img.addClass('img-left');
+                        img.prop('src', 'images/' + item + '.jpg');
+                    }));
+                    p.append("You've offered to trade the " + item + '.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append(otherPlayer.display_name + ' has the ' + otherPlayer.item + '.');
                 }));
                 div.append(button('Cancel', self.cancelTrade));
             });
         } else if (location === 'accept') {
             content = element('div', function(div){
                 div.append("<p>Your trade request has been accepted!</p>");
-                div.append("<p>You have: " + item + "</p>");
                 div.append(element('p', function(p){
-                    p.text(otherPlayer.display_name + ' has: ' + otherPlayer.item);
+                    p.append(element('img', function(img){
+                        img.addClass('img-left');
+                        img.prop('src', 'images/' + item + '.jpg');
+                    }));
+                    p.append('You have the ' + item + '.');
+                }));
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append(otherPlayer.display_name + ' has the ' + otherPlayer.item + '.');
                 }));
                 div.append("<p>Do you want to make this trade?</p>");
                 div.append(button('Yes, make this trade', self.finishTrade));
@@ -293,7 +347,13 @@ var EventHandler = function(thisPlayer, item)
         } else if (location === 'done') {
             content = element('div', function(div){
                 div.append("<p>Trade complete!</p>");
-                div.append("<p>You now have: " + otherPlayer.item + "</p>");
+                div.append(element('p', function(p){
+                    p.append(element('img', function(img){
+                        img.addClass('img-right');
+                        img.prop('src', 'images/' + otherPlayer.item + '.jpg');
+                    }));
+                    p.append('You now have the ' + otherPlayer.item + '.');
+                }));
             });
         }
         $('#trade-screen').html(content);

@@ -1,48 +1,101 @@
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+}
+
 ENGINE.Game = {
 
   create: function() {
     this.started = false;
+    this.finished = false;
+    this.won = false;
+    this.lost = false;
     this.elapsed = 0;
-    this.offset = 0;
+    this.gametime = 0;
     this.hunger = 0;
+    this.buttons = [];
+    this.shops = [
+      'art',
+      'bakery',
+      'barber',
+      'bookstore',
+      'boutique',
+      'coffee',
+      'fastfood',
+      'flowers',
+      'fruits',
+      'icecream',
+      'market',
+      'music',
+      'pets',
+      'pizza',
+      'vegetables',
+      'watch',
+    ];
+    shuffle(this.shops);
   },
 
   step: function(dt) {
-    if (this.started) {
+    if (this.started && !this.finished) {
       this.elapsed += dt;
-      this.offset += dt / 60;
+      this.gametime += dt / 60;
       this.hunger += dt / 20;
+
+      if (this.gametime >= 1) {
+        this.gametime = 1;
+        this.finished = true;
+        this.won = true;
+      }
+
+      if (this.hunger >= 1) {
+        this.hunger = 1;
+        this.finished = true;
+        this.lost = true;
+      }
     }
   },
 
   pointerdown: function(event) {
     var app = this.app;
-    if (!this.started) {
-      var minX = app.width / 2 - 100;
-      var maxX = app.width / 2 + 100;
-      var minY = app.height / 2 - 50;
-      var maxY = app.height / 2 + 50;
-      if (minX <= event.x && event.x <= maxX && minY <= event.y && event.y <= maxY) {
-        this.started = true;
+    var self = this;
+    this.buttons.forEach(function(button){
+      if (button.minX <= event.x && event.x <= button.maxX && button.minY <= event.y && event.y <= button.maxY) {
+        button.fn.bind(self)();
       }
-    }
+    });
   },
 
   render: function() {
     var app = this.app;
     var layer = this.app.layer;
+    var scaling = app.height / 600;
 
     layer.clear("#222");
 
     var backgroundWidth = app.images.background.width * (app.height / app.images.background.height);
-    layer.drawImage(app.images.background, -(this.offset) * backgroundWidth, 0, backgroundWidth, app.height);
+    var backgroundOffset = -1 * this.gametime * (backgroundWidth - app.width);
+    layer.drawImage(app.images.background, backgroundOffset, 0, backgroundWidth, app.height);
+
+    var shopX = backgroundOffset + 20;
+    this.shops.forEach(function(shop){
+      if (shopX > app.width) return;
+      var img = app.images['shop_' + shop];
+      var shopWidth = img.width * scaling * 0.7;
+      var shopHeight = img.height * scaling * 0.7;
+      layer.drawImage(img, shopX, app.height * 0.85 - shopHeight, shopWidth, shopHeight);
+      shopX += shopWidth + 10;
+    });
 
     var walkImage = app.images['Walking_man_' + (Math.floor(this.elapsed * 3) % 4 + 1)];
     var walkHeight = app.height * 0.4;
     var walkWidth = walkImage.width * (walkHeight / walkImage.height);
-    layer.drawImage(walkImage, 0, app.height - walkHeight, walkWidth, walkHeight);
+    layer.drawImage(walkImage, this.gametime * (app.width - walkWidth), app.height - walkHeight, walkWidth, walkHeight);
 
-    var scaling = app.height / 600;
     layer.font(Math.floor(20 * scaling) + 'px sans-serif');
     layer.textAlign('left');
     layer
@@ -71,6 +124,15 @@ ENGINE.Game = {
       layer
         .fillStyle('black')
         .fillText('START', app.width / 2, maxY - 35);
+      this.buttons = [{
+        minX: minX,
+        maxX: maxX,
+        minY: minY,
+        maxY: maxY,
+        fn: function(){ this.started = true; },
+      }];
+    } else {
+      this.buttons = [];
     }
   }
 

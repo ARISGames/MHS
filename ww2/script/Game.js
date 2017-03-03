@@ -8,6 +8,9 @@ function shuffle(a) {
     }
 }
 
+var food = ['apple', 'burger', 'donut', 'popcorn', 'sandwich'];
+var distractions = ['book', 'cinema', 'guitar', 'record'];
+
 ENGINE.Game = {
 
   create: function() {
@@ -38,6 +41,14 @@ ENGINE.Game = {
       'watch',
     ];
     shuffle(this.shops);
+    this.shops.push(this.shops[0]);
+    this.shops.push(this.shops[1]);
+    this.shops.push(this.shops[2]);
+    this.icons = [];
+    for (var i = 0; i < 80; i++) {
+      this.icons.push(food[Math.floor(Math.random() * food.length)]);
+      this.icons.push(distractions[Math.floor(Math.random() * distractions.length)]);
+    }
   },
 
   step: function(dt) {
@@ -81,14 +92,43 @@ ENGINE.Game = {
     var backgroundOffset = -1 * this.gametime * (backgroundWidth - app.width);
     layer.drawImage(app.images.background, backgroundOffset, 0, backgroundWidth, app.height);
 
-    var shopX = backgroundOffset + 20;
+    var shopX = backgroundOffset + 20 * scaling;
     this.shops.forEach(function(shop){
       if (shopX > app.width) return;
       var img = app.images['shop_' + shop];
       var shopWidth = img.width * scaling * 0.7;
       var shopHeight = img.height * scaling * 0.7;
       layer.drawImage(img, shopX, app.height * 0.85 - shopHeight, shopWidth, shopHeight);
-      shopX += shopWidth + 10;
+      shopX += shopWidth + 10 * scaling;
+    });
+
+    var iconButtons = [];
+    var iconX = backgroundOffset * 2 + 20 * scaling;
+    this.icons.forEach(function(icon, i){
+      if (iconX > app.width) return;
+      var iconWidth = app.height * 0.15;
+      if (icon !== null) {
+        var img = app.images['icon_' + icon];
+        var iconHeight = img.height * (iconWidth / img.width);
+        var iconY = app.height * 0.25 - iconHeight / 2;
+        layer.drawImage(img, iconX, iconY, iconWidth, iconHeight);
+        iconButtons.push({
+          minX: iconX,
+          maxX: iconX + iconWidth,
+          minY: iconY,
+          maxY: iconY + iconHeight,
+          fn: function(){
+            this.icons[i] = null;
+            if (distractions.indexOf(icon) !== -1) {
+              this.hunger -= 0.1;
+            } else {
+              this.hunger -= 0.2;
+            }
+            if (this.hunger < 0) this.hunger = 0;
+          },
+        });
+      }
+      iconX += iconWidth + 40 * scaling;
     });
 
     var walkImage = app.images['Walking_man_' + (Math.floor(this.elapsed * 3) % 4 + 1)];
@@ -132,7 +172,7 @@ ENGINE.Game = {
         fn: function(){ this.started = true; },
       }];
     } else {
-      this.buttons = [];
+      this.buttons = iconButtons;
     }
   }
 

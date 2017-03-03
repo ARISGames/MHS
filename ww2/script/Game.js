@@ -16,6 +16,8 @@ ENGINE.Game = {
   create: function() {
     this.started = false;
     this.finished = false;
+    this.warning = false;
+    this.warned = false;
     this.won = false;
     this.lost = false;
     this.elapsed = 0;
@@ -45,28 +47,33 @@ ENGINE.Game = {
     this.shops.push(this.shops[1]);
     this.shops.push(this.shops[2]);
     this.icons = [];
-    for (var i = 0; i < 80; i++) {
-      this.icons.push(food[Math.floor(Math.random() * food.length)]);
-      this.icons.push(distractions[Math.floor(Math.random() * distractions.length)]);
+    var foodChain = 0;
+    var distractionChain = 0;
+    for (var i = 0; i < 140; i++) {
+      if ((Math.random() < (80 / (i + 150)) && distractionChain < 3) || foodChain > 5) {
+        this.icons.push(distractions[Math.floor(Math.random() * distractions.length)]);
+        foodChain = 0;
+        distractionChain++;
+      } else {
+        this.icons.push(food[Math.floor(Math.random() * food.length)]);
+        foodChain++;
+        distractionChain = 0;
+      }
     }
   },
 
   step: function(dt) {
-    if (this.started && !this.finished) {
+    if (this.started && !this.finished && !this.warning) {
       this.elapsed += dt;
-      this.gametime += dt / 60;
-      this.hunger += dt / 20;
+      this.gametime += dt / 45;
+      this.hunger += dt / 14;
 
       if (this.gametime >= 1) {
-        this.gametime = 1;
-        this.finished = true;
-        this.won = true;
+        this.app.setState(ENGINE.Won);
       }
 
       if (this.hunger >= 1) {
-        this.hunger = 1;
-        this.finished = true;
-        this.lost = true;
+        this.app.setState(ENGINE.Hunger);
       }
     }
   },
@@ -103,7 +110,7 @@ ENGINE.Game = {
     });
 
     var iconButtons = [];
-    var iconX = backgroundOffset * 2 + 20 * scaling;
+    var iconX = backgroundOffset * 2.3 + 20 * scaling;
     this.icons.forEach(function(icon, i){
       if (iconX > app.width) return;
       var iconWidth = app.height * 0.15;
@@ -120,9 +127,16 @@ ENGINE.Game = {
           fn: function(){
             this.icons[i] = null;
             if (distractions.indexOf(icon) !== -1) {
-              this.hunger -= 0.1;
+              this.hunger -= 0.08;
             } else {
-              this.hunger -= 0.2;
+              this.hunger -= 0.16;
+              if (this.warned) {
+                
+                app.setState(ENGINE.AteFood);
+              } else {
+                this.warning = true;
+                this.warned = true;
+              }
             }
             if (this.hunger < 0) this.hunger = 0;
           },
@@ -170,6 +184,29 @@ ENGINE.Game = {
         minY: minY,
         maxY: maxY,
         fn: function(){ this.started = true; },
+      }];
+    } else if (this.warning) {
+      var minX = app.width / 2 - 100;
+      var maxX = app.width / 2 + 100;
+      var minY = app.height / 2 - 50;
+      var maxY = app.height / 2 + 50;
+      layer
+        .fillStyle('#222')
+        .fillRect(minX, minY, maxX - minX, maxY - minY);
+      layer
+        .fillStyle('#2c2')
+        .fillRect(minX + 5, minY + 5, maxX - minX - 10, maxY - minY - 10);
+      layer.font('40px sans-serif');
+      layer.textAlign('center');
+      layer
+        .fillStyle('black')
+        .fillText('Continue', app.width / 2, maxY - 35);
+      this.buttons = [{
+        minX: minX,
+        maxX: maxX,
+        minY: minY,
+        maxY: maxY,
+        fn: function(){ this.warning = false; },
       }];
     } else {
       this.buttons = iconButtons;

@@ -1,3 +1,5 @@
+var ARIS = {};
+
 var app = new PLAYGROUND.Application({
 
   smoothing: true,

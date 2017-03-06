@@ -8,6 +8,14 @@ function shuffle(a) {
     }
 }
 
+function exitToDialog(id) {
+  try {
+    ARIS.exitToDialog(id);
+  } catch (e) {
+    console.log('In ARIS, this would go to dialog ' + id);
+  }
+}
+
 var food = ['apple', 'burger', 'donut', 'popcorn', 'sandwich'];
 var distractions = ['book', 'cinema', 'guitar', 'record'];
 
@@ -70,10 +78,12 @@ ENGINE.Game = {
 
       if (this.gametime >= 1) {
         this.app.setState(ENGINE.Won);
+        exitToDialog(90778);
       }
 
       if (this.hunger >= 1) {
         this.app.setState(ENGINE.Hunger);
+        exitToDialog(91046);
       }
     }
   },
@@ -131,8 +141,8 @@ ENGINE.Game = {
             } else {
               this.hunger -= 0.16;
               if (this.warned) {
-                
                 app.setState(ENGINE.AteFood);
+                exitToDialog(91046);
               } else {
                 this.warning = true;
                 this.warned = true;

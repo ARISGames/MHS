@@ -13,11 +13,13 @@ ENGINE.AteFood = {
     var app = this.app;
     var layer = this.app.layer;
 
+    var scaling = app.height / 600;
+
     layer.clear("#222");
 
     layer
-      .font('20px sans-serif')
-      .textAlign('left')
+      .font((30 * scaling) + 'px sans-serif')
+      .textAlign('center')
       .fillStyle('white')
       .fillText('You ate food...', app.width / 2, app.height / 2);
 

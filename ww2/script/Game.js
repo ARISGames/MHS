@@ -163,21 +163,25 @@ ENGINE.Game = {
       .fillRect(20, 45 * scaling, (app.width - 40) * this.hunger, 30 * scaling);
 
     if (!this.started) {
-      var minX = app.width / 2 - 100;
-      var maxX = app.width / 2 + 100;
-      var minY = app.height / 2 - 50;
-      var maxY = app.height / 2 + 50;
+      layer
+        .fillStyle('rgba(255,255,255,0.5)')
+        .fillRect(0, 0, app.width, app.height);
+
+      var minX = app.width / 2 - 100 * scaling;
+      var maxX = app.width / 2 + 100 * scaling;
+      var minY = app.height / 2 - 50 * scaling;
+      var maxY = app.height / 2 + 50 * scaling;
       layer
         .fillStyle('#222')
         .fillRect(minX, minY, maxX - minX, maxY - minY);
       layer
         .fillStyle('#2c2')
-        .fillRect(minX + 5, minY + 5, maxX - minX - 10, maxY - minY - 10);
-      layer.font('40px sans-serif');
+        .fillRect(minX + 5 * scaling, minY + 5 * scaling, maxX - minX - 10 * scaling, maxY - minY - 10 * scaling);
+      layer.font((40 * scaling) + 'px sans-serif');
       layer.textAlign('center');
       layer
         .fillStyle('black')
-        .fillText('START', app.width / 2, maxY - 35);
+        .fillText('START', app.width / 2, maxY - 35 * scaling);
       this.buttons = [{
         minX: minX,
         maxX: maxX,
@@ -186,21 +190,36 @@ ENGINE.Game = {
         fn: function(){ this.started = true; },
       }];
     } else if (this.warning) {
-      var minX = app.width / 2 - 100;
-      var maxX = app.width / 2 + 100;
-      var minY = app.height / 2 - 50;
-      var maxY = app.height / 2 + 50;
+      layer
+        .fillStyle('rgba(255,255,255,0.8)')
+        .fillRect(0, 0, app.width, app.height);
+
+      var textMinY = app.height * (1/5);
+
+      layer.font((22 * scaling) + 'px sans-serif');
+      layer.textAlign('center');
+      layer
+        .fillStyle('black')
+        .fillText("To stay in the study,", app.width / 2, textMinY)
+        .fillText("don't eat any extra food.", app.width / 2, textMinY + 50 * scaling)
+        .fillText("Stay busy by tapping", app.width / 2, textMinY + 100 * scaling)
+        .fillText("items that aren't food.", app.width / 2, textMinY + 150 * scaling);
+
+      var minX = app.width / 2 - 100 * scaling;
+      var maxX = app.width / 2 + 100 * scaling;
+      var minY = app.height * (4/5) - 50 * scaling;
+      var maxY = app.height * (4/5) + 50 * scaling;
       layer
         .fillStyle('#222')
         .fillRect(minX, minY, maxX - minX, maxY - minY);
       layer
         .fillStyle('#2c2')
-        .fillRect(minX + 5, minY + 5, maxX - minX - 10, maxY - minY - 10);
-      layer.font('40px sans-serif');
+        .fillRect(minX + 5 * scaling, minY + 5 * scaling, maxX - minX - 10 * scaling, maxY - minY - 10 * scaling);
+      layer.font((40 * scaling) + 'px sans-serif');
       layer.textAlign('center');
       layer
         .fillStyle('black')
-        .fillText('Continue', app.width / 2, maxY - 35);
+        .fillText('Continue', app.width / 2, maxY - 35 * scaling);
       this.buttons = [{
         minX: minX,
         maxX: maxX,

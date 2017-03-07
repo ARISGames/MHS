@@ -9,6 +9,7 @@ function exitToDialog(id) {
 ENGINE.Game = {
 
   create: function() {
+    this.question = 1;
   },
 
   step: function(dt) {
@@ -17,6 +18,8 @@ ENGINE.Game = {
   pointerdown: function(event) {
     var app = this.app;
     var self = this;
+    this.question++;
+    if (this.question > 3) this.question = 1;
   },
 
   textBook1: function(bookMinX, bookWidth, bookHeight) {
@@ -93,7 +96,23 @@ ENGINE.Game = {
     layer.drawImage(app.images.paper, 0, paperMinY, app.width, paperMaxY - paperMinY);
     layer.drawImage(app.images.book, bookMinX, 0, bookWidth, bookHeight);
 
-    this.textBook3(bookMinX, bookWidth, bookHeight);
+    switch (this.question) {
+      case 1: this.textBook1(bookMinX, bookWidth, bookHeight); break;
+      case 2: this.textBook2(bookMinX, bookWidth, bookHeight); break;
+      case 3: this.textBook3(bookMinX, bookWidth, bookHeight); break;
+    }
+
+    var jpnImage = app.images['japanese' + this.question];
+    var jpnHeight = paperMaxY - bookHeight;
+    var jpnWidth = Math.min(app.width, jpnImage.width * (jpnHeight / jpnImage.height));
+    jpnHeight = jpnImage.height * (jpnWidth / jpnImage.width);
+    layer.drawImage(jpnImage, (app.width - jpnWidth) / 2, bookHeight, jpnWidth, jpnHeight);
+
+    var engImage = app.images['english' + this.question];
+    var engHeight = app.height - paperMaxY;
+    var engWidth = Math.min(app.width, engImage.width * (engHeight / engImage.height));
+    engHeight = engImage.height * (engWidth / engImage.width);
+    layer.drawImage(engImage, (app.width - engWidth) / 2, paperMaxY, engWidth, engHeight);
   }
 
 };

@@ -8,7 +8,10 @@ var app = new PLAYGROUND.Application({
 
     this.loadImage("winglevel.jpg");
     this.loadImage("altimeter");
-    this.loadImage("flightstick");
+    this.loadImage("stick_up");
+    this.loadImage("stick_down");
+    this.loadImage("stick_left");
+    this.loadImage("stick_right");
 
   },
 

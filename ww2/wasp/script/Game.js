@@ -33,13 +33,32 @@ ENGINE.Game = {
 
   step: function(dt) {
 
-    /* update your game logic here */
-    this.elapsed += dt;
+    if (this.position == 'down') {
+      this.altitude += dt * 1200;
+    } else if (this.position == 'up') {
+      this.altitude -= dt * 1200;
+    }
+
+    if (this.altitude < 0) this.altitude = 0;
+    if (this.altitude > 9500) this.altitude = 9500;
+
+    if (this.position == 'left') {
+      this.winglevel -= dt * 0.7;
+    } else if (this.position == 'right') {
+      this.winglevel += dt * 0.7;
+    } else {
+      if      (this.winglevel > 0) this.winglevel -= Math.min( this.winglevel, dt * 0.4);
+      else if (this.winglevel < 0) this.winglevel += Math.min(-this.winglevel, dt * 0.4);
+    }
+
+    if (this.altitude < 0) this.altitude = 0;
+    if (this.altitude > 9500) this.altitude = 9500;
+    if (this.winglevel < -1) this.winglevel = -1;
+    if (this.winglevel > 1) this.winglevel = 1;
 
   },
 
-  mousedown: function(data) {
-
+  handlepointer: function(data) {
     var box = getBox(this.app);
     var x = (data.x - box.x) / box.width;
     var y = (data.y - box.y) / box.height;
@@ -55,7 +74,19 @@ ENGINE.Game = {
     } else if (167/415 <= x && x <= 251/415 && 528/739 <= y && y <= 618/739) {
       this.position = 'center';
     }
+  },
 
+  pointerdown: function(data) {
+    this.isdown = true;
+    this.handlepointer(data);
+  },
+
+  pointerup: function(data) {
+    this.isdown = false;
+  },
+
+  pointermove: function(data) {
+    if (this.isdown) this.handlepointer(data);
   },
 
   render: function() {
@@ -74,7 +105,8 @@ ENGINE.Game = {
 
     switch (this.position) {
       case 'center':
-        layer.fillStyle('rgb(165,202,149)')
+        layer.beginPath()
+          .fillStyle('rgb(165,202,149)')
           .strokeStyle('black')
           .lineWidth(box.width * 0.005)
           .arc(box.x + box.width * 0.5, box.y + box.height * (0.748 + 0.03), box.width * 0.09, 0, 2 * Math.PI, false)
@@ -99,6 +131,27 @@ ENGINE.Game = {
     var meterHeight = meterWidth * (app.images.winglevel.height / app.images.winglevel.width);
     layer.drawImage(app.images.winglevel, box.x + box.width * 0.05, box.y + box.height * 0.3, meterWidth, meterHeight);
     layer.drawImage(app.images.altimeter, box.x + box.width * 0.525, box.y + box.height * 0.3, meterWidth, meterHeight);
+
+    var altimeter = {x: box.x + box.width * (306/414), y: box.y + box.height * (310/739)};
+    var altirads = (this.altitude / 10000) * 2 * Math.PI - 0.5 * Math.PI;
+    var altiradius = box.width * (58/414);
+    layer.strokeStyle('black')
+      .lineWidth(box.width * 0.012)
+      .beginPath()
+      .moveTo(altimeter.x, altimeter.y)
+      .lineTo(altimeter.x + Math.cos(altirads) * altiradius, altimeter.y + Math.sin(altirads) * altiradius)
+      .stroke();
+
+    var winglevel = {x: box.x + box.width * (110/414), y: box.y + box.height * (318/739)};
+    var wingrads = this.winglevel * 0.25 * Math.PI - 0.5 * Math.PI;
+    var wingradiusX = box.width * (58/414);
+    var wingradiusY = box.height * (48/739);
+    layer.strokeStyle('black')
+      .lineWidth(box.width * 0.012)
+      .beginPath()
+      .moveTo(winglevel.x, winglevel.y)
+      .lineTo(winglevel.x + Math.cos(wingrads) * wingradiusX, winglevel.y + Math.sin(wingrads) * wingradiusY)
+      .stroke();
 
   }
 

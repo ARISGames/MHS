@@ -6,7 +6,7 @@ var app = new PLAYGROUND.Application({
 
     /* things to preload */
 
-    this.loadImage("winglevel.jpg");
+    this.loadImage("winglevel");
     this.loadImage("altimeter");
     this.loadImage("stick_up");
     this.loadImage("stick_down");

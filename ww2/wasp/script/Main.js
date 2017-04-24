@@ -1,6 +1,6 @@
 var app = new PLAYGROUND.Application({
 
-  smoothing: false,
+  smoothing: true,
 
   create: function() {
 
@@ -15,6 +15,7 @@ var app = new PLAYGROUND.Application({
     this.loadImage("clouds.jpg");
     this.loadImage("pilot_bad.jpg");
     this.loadImage("pilot_good.jpg");
+    this.loadImage("clipboard");
 
   },
 
@@ -22,7 +23,7 @@ var app = new PLAYGROUND.Application({
 
     /* after preloading route events to the game state */
 
-    this.setState(ENGINE.Game);
+    this.setState(ENGINE.Checklist);
 
   }
 

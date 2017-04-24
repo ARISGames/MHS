@@ -1,25 +1,3 @@
-function getBox(app) {
-  if (app.width / app.height > 9 / 16) {
-    // window is wider than ipod. boxes on left/right
-    var w = app.height * (9 / 16);
-    return {
-      width: w,
-      height: app.height,
-      x: (app.width - w) / 2,
-      y: 0,
-    };
-  } else {
-    // window is taller than ipod. boxes on top/bottom
-    var h = app.width * (16 / 9);
-    return {
-      width: app.width,
-      height: h,
-      x: 0,
-      y: (app.height - h) / 2,
-    };
-  }
-}
-
 ENGINE.Game = {
 
   create: function() {
@@ -106,7 +84,7 @@ ENGINE.Game = {
     var layer = this.app.layer;
 
     layer.clear("white");
-    layer.drawImage(app.images.clouds, 0, 0, app.width, app.height);
+    layer.drawImage(app.images.clouds, 0, 0, app.width, app.height); // TODO tessellate
     var box = getBox(app);
 
     var dialogHeight = box.height * 0.27;

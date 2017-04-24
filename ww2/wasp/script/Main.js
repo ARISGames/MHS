@@ -12,6 +12,9 @@ var app = new PLAYGROUND.Application({
     this.loadImage("stick_down");
     this.loadImage("stick_left");
     this.loadImage("stick_right");
+    this.loadImage("clouds.jpg");
+    this.loadImage("pilot_bad.jpg");
+    this.loadImage("pilot_good.jpg");
 
   },
 

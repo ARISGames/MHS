@@ -10,7 +10,11 @@ ENGINE.Checklist = {
 
   pointerdown: function(data) {
     if (this.elapsed > 1.5) {
-      this.app.setState(ENGINE.Game);
+      if (window.gameLevel > 4) {
+        ARIS.exitToDialog(94542);
+      } else {
+        this.app.setState(ENGINE.Game);
+      }
     }
   },
 

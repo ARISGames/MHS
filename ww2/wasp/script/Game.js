@@ -1,6 +1,7 @@
 ENGINE.Game = {
 
   create: function() {
+    this.increaseLevel();
 
     this.position = 'center';
     this.elapsed = 0;
@@ -12,14 +13,40 @@ ENGINE.Game = {
 
     this.pilot = 'good';
 
+    this.testing = null;
+    this.testTime = 0;
+  },
+
+  increaseLevel: function() {
+    window.gameLevel++;
     switch (window.gameLevel) {
       case 1:
         this.dialogs = [
           "First, practice your controls and learn how they work. Press Continue when you're ready to start.",
+          "_TEST_Now you try. Go up to 7000 feet and hold it there.",
+          "Well done!",
+        ]
+        break;
+      case 2:
+        this.dialogs = [
+          "_TEST_Next, turn left. Push the lever right. Hold it when the pointer is all the way to the left.",
+          "Good job!",
+        ]
+        break;
+      case 3:
+        this.dialogs = [
+          "_TEST_Now, turn right, and hold it there.",
+          "Good work!",
+        ]
+        break;
+      case 4:
+        this.dialogs = [
+          "_TEST_Last one. Go down to 5000 feet and hold it there.",
+          "Good work!",
         ]
         break;
     }
-
+    this.startTest();
   },
 
   step: function(dt) {
@@ -53,6 +80,19 @@ ENGINE.Game = {
 
     this.cloudX += this.winglevel * dt;
 
+    if (this.testing) {
+      if (this.testPassing()) {
+        this.testTime += dt;
+      } else {
+        this.testTime = 0;
+      }
+      if (this.testTime > 2) {
+        this.testTime = 0;
+        this.testing = null;
+        this.advanceLine();
+      }
+    }
+
   },
 
   handlepointer: function(data) {
@@ -85,12 +125,42 @@ ENGINE.Game = {
     var x = (data.x - box.x) / box.width;
     var y = (data.y - box.y) / box.height;
 
-    if (0 <= x && x <= 1 && 0 <= y && y <= 0.27) {
-      this.dialogs = this.dialogs.slice(1);
+    if (0 <= x && x <= 1 && 0 <= y && y <= 0.27 && !(this.testing)) {
+      this.advanceLine();
       return;
     }
 
     this.handlepointer(data);
+  },
+
+  advanceLine: function() {
+    this.dialogs = this.dialogs.slice(1);
+    if (this.dialogs.length == 0) {
+      window.completed[window.gameLevel - 1] = true;
+      this.increaseLevel();
+      this.app.setState(ENGINE.Checklist);
+    }
+    this.startTest();
+  },
+
+  startTest: function() {
+    if (this.dialogs.length > 0 && this.dialogs[0].slice(0, 6) === '_TEST_') {
+      this.dialogs[0] = this.dialogs[0].slice(6);
+      switch (window.gameLevel) {
+        case 1:
+          this.testing = '7000';
+          break;
+        case 2:
+          this.testing = 'LEFT';
+          break;
+        case 3:
+          this.testing = 'RIGHT';
+          break;
+        case 4:
+          this.testing = '5000';
+          break;
+      }
+    }
   },
 
   pointerup: function(data) {
@@ -99,6 +169,20 @@ ENGINE.Game = {
 
   pointermove: function(data) {
     if (this.isdown) this.handlepointer(data);
+  },
+
+  testPassing: function() {
+    switch (this.testing) {
+      case '7000':
+        return 6500 <= this.altitude && this.altitude <= 7500;
+      case 'LEFT':
+        return this.winglevel <= -0.99;
+      case 'RIGHT':
+        return this.winglevel >= 0.99;
+      case '5000':
+        return 4500 <= this.altitude && this.altitude <= 5500;
+    }
+    return false;
   },
 
   render: function() {
@@ -183,8 +267,17 @@ ENGINE.Game = {
       layer.textAlign('left').fillStyle('white').font(Math.floor(box.height * 0.03) + 'px sans-serif');
       wrapText(layer, this.dialogs[0], box.x + pilotWidth + box.width * 0.02, box.y + box.height * 0.05, box.width - pilotWidth - box.width * 0.02, box.height * 0.035);
     
-      layer.textAlign('right').fillStyle('white').font(Math.floor(box.height * 0.026) + 'px sans-serif');
-      layer.fillText('Continue >', box.x + box.width * 0.98, box.y + dialogHeight * 0.98);
+      if (!this.testing) {
+        layer.textAlign('right').fillStyle('white').font(Math.floor(box.height * 0.026) + 'px sans-serif');
+        layer.fillText('Continue >', box.x + box.width * 0.98, box.y + dialogHeight * 0.98);
+      }
+    }
+
+    if (this.testing) {
+      layer.fillStyle(this.testPassing() ? 'rgb(30,200,30)' : 'rgb(191,191,191)')
+        .beginPath()
+        .arc(box.x + box.width * 0.13, box.y + box.height * 0.92, box.width * 0.05, 0, 2 * Math.PI, false)
+        .fill();
     }
 
   }

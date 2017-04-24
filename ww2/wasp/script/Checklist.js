@@ -2,7 +2,6 @@ ENGINE.Checklist = {
 
   create: function() {
     this.elapsed = 0;
-    window.gameLevel++;
   },
 
   step: function(dt) {

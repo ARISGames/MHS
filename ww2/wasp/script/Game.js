@@ -12,6 +12,14 @@ ENGINE.Game = {
 
     this.pilot = 'good';
 
+    switch (window.gameLevel) {
+      case 1:
+        this.dialogs = [
+          "First, practice your controls and learn how they work. Press Continue when you're ready to start.",
+        ]
+        break;
+    }
+
   },
 
   step: function(dt) {
@@ -54,19 +62,34 @@ ENGINE.Game = {
 
     if (45/415 <= x && x <= 156/415 && 524/739 + 0.05 <= y && y <= 620/739 + 0.05) {
       this.position = 'left';
+      return;
     } else if (267/415 <= x && x <= 376/415 && 524/739 + 0.05 <= y && y <= 620/739 + 0.05) {
       this.position = 'right';
+      return;
     } else if (167/415 <= x && x <= 251/415 && 424/739 + 0.05 <= y && y <= 514/739 + 0.05) {
       this.position = 'up';
+      return;
     } else if (167/415 <= x && x <= 251/415 && 630/739 + 0.05 <= y && y <= 722/739 + 0.05) {
       this.position = 'down';
+      return;
     } else if (167/415 <= x && x <= 251/415 && 528/739 + 0.05 <= y && y <= 618/739 + 0.05) {
       this.position = 'center';
+      return;
     }
   },
 
   pointerdown: function(data) {
     this.isdown = true;
+
+    var box = getBox(this.app);
+    var x = (data.x - box.x) / box.width;
+    var y = (data.y - box.y) / box.height;
+
+    if (0 <= x && x <= 1 && 0 <= y && y <= 0.27) {
+      this.dialogs = this.dialogs.slice(1);
+      return;
+    }
+
     this.handlepointer(data);
   },
 
@@ -153,7 +176,16 @@ ENGINE.Game = {
     }
 
     var pilotImage = app.images['pilot_' + this.pilot];
-    layer.drawImage(pilotImage, box.x, box.y, dialogHeight / pilotImage.height * pilotImage.width, dialogHeight);
+    var pilotWidth = dialogHeight / pilotImage.height * pilotImage.width;
+    layer.drawImage(pilotImage, box.x, box.y, pilotWidth, dialogHeight);
+
+    if (this.dialogs.length > 0) {
+      layer.textAlign('left').fillStyle('white').font(Math.floor(box.height * 0.03) + 'px sans-serif');
+      wrapText(layer, this.dialogs[0], box.x + pilotWidth + box.width * 0.02, box.y + box.height * 0.05, box.width - pilotWidth - box.width * 0.02, box.height * 0.035);
+    
+      layer.textAlign('right').fillStyle('white').font(Math.floor(box.height * 0.026) + 'px sans-serif');
+      layer.fillText('Continue >', box.x + box.width * 0.98, box.y + dialogHeight * 0.98);
+    }
 
   }
 

@@ -35,6 +35,19 @@ ENGINE.Checklist = {
     if (this.elapsed > 1.5) {
       layer.font(Math.floor(box.width * 0.07) + 'px sans-serif').textAlign('center').fillText('Continue >', box.x + box.width * 0.5, box.y + box.height * 0.98);
     }
+
+    if (window.completed[0]) {
+      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.204, box.width * 0.2, box.height * 0.13);
+    }
+    if (window.completed[1]) {
+      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.39, box.width * 0.2, box.height * 0.13);
+    }
+    if (window.completed[2]) {
+      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.58, box.width * 0.2, box.height * 0.13);
+    }
+    if (window.completed[3]) {
+      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.775, box.width * 0.2, box.height * 0.13);
+    }
   }
 
 };

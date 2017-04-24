@@ -41,3 +41,4 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 }
 
 window.gameLevel = 0;
+window.completed = [false, false, false, false];

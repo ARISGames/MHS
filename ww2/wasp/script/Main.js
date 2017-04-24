@@ -16,6 +16,7 @@ var app = new PLAYGROUND.Application({
     this.loadImage("pilot_bad.jpg");
     this.loadImage("pilot_good.jpg");
     this.loadImage("clipboard");
+    this.loadImage("check");
 
   },
 

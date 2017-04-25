@@ -78,7 +78,7 @@ ENGINE.Game = {
     if (this.winglevel < -1) this.winglevel = -1;
     if (this.winglevel > 1) this.winglevel = 1;
 
-    this.cloudX += this.winglevel * dt;
+    this.cloudX -= this.winglevel * dt;
 
     if (this.testing) {
       if (this.testPassing()) {
@@ -191,10 +191,19 @@ ENGINE.Game = {
     var layer = this.app.layer;
 
     layer.clear("white");
-    layer.drawImage(app.images.clouds, 0, 0, app.width, app.height); // TODO tessellate
     var box = getBox(app);
 
+    var modulo = function(a, b) { return (+a % (b = +b) + b) % b; };
     var dialogHeight = box.height * 0.27;
+    var cloudXnormal = modulo(this.cloudX / 1.2, 1);
+    var cloudYnormal = modulo(this.cloudY / 1500, 1);
+    var cloudWidth = box.width * 2;
+    var cloudHeight = cloudWidth / app.images.clouds.width * app.images.clouds.height;
+    layer.drawImage(app.images.clouds, box.x + cloudWidth * cloudXnormal, box.y + dialogHeight + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
+    layer.drawImage(app.images.clouds, box.x + cloudWidth * (cloudXnormal - 1), box.y + dialogHeight + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
+    layer.drawImage(app.images.clouds, box.x + cloudWidth * cloudXnormal, box.y + dialogHeight + cloudHeight * (cloudYnormal - 1), cloudWidth, cloudHeight);
+    layer.drawImage(app.images.clouds, box.x + cloudWidth * (cloudXnormal - 1), box.y + dialogHeight + cloudHeight * (cloudYnormal - 1), cloudWidth, cloudHeight);
+
     layer.fillStyle('#333').fillRect(box.x - 5, box.y + box.height * 0.41, box.width + 10, box.height);
     layer.fillStyle('#333').fillRect(box.x - 5, box.y - 5, box.width + 10, dialogHeight + 5);
     if (box.y == 0) {

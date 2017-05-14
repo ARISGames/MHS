@@ -25,8 +25,16 @@ every second:
 
 function shouldReplaceControl(curControl, newControl) {
   if (curControl === null) return true;
+  if (Date.now() - curControl.start_time >= 60000) {
+    return true;
+  }
   if (Date.now() - newControl.start_time >= 60000) {
     return false;
+  }
+  if (curControl.user_id === newControl.user_id) {
+    if (curControl.start_time < newControl.start_time) return true;
+    if (curControl.start_time > newControl.start_time) return false;
+    return curControl.count < newControl.count;
   }
   return newControl.start_time < curControl.start_time ||
     (newControl.start_time == curControl.start_time && newControl.user_id <= curControl.user_id);
@@ -49,56 +57,48 @@ ENGINE.Game = {
 
     var self = this;
     events.forEach(function(e){
-      console.log(e);
-      switch (e.event) {
-        case '1171_AMMO_INCREMENT':
-          if (window.activeControl1 && window.activeControl1.user_id == window.user_id) {
-            window.activeControl1.count++;
-          }
-          break;
-        case '1172_AMMO_INCREMENT':
-          if (window.activeControl2 && window.activeControl2.user_id == window.user_id) {
-            window.activeControl2.count++;
-          }
-          break;
-        case '1171_AMMO_RESET':
-          window.activeControl1 = null;
-          break;
-        case '1172_AMMO_RESET':
-          window.activeControl2 = null;
-          break;
-        case '1171_APP_CONTROL':
-          e.data = JSON.parse(e.data);
-          if (shouldReplaceControl(window.activeControl1, e.data)) {
-            window.activeControl1 = e.data;
-          }
-          break;
-        case '1172_APP_CONTROL':
-          e.data = JSON.parse(e.data);
-          if (shouldReplaceControl(window.activeControl2, e.data)) {
-            window.activeControl2 = e.data;
-          }
-          break;
+      if (e.event === window.machine_id + '_AMMO_INCREMENT') {
+        if ( window.activeControl
+          && window.activeControl.user_id == window.user_id
+          && Date.now() - window.activeControl.start_time < 60000 ) {
+          window.activeControl.count++;
+        }
+      } else if (e.event === window.machine_id + '_AMMO_RESET') {
+        window.activeControl = null;
+      } else if (e.event === window.machine_id + '_APP_CONTROL') {
+        e.data = JSON.parse(e.data);
+        if (shouldReplaceControl(window.activeControl, e.data)) {
+          window.activeControl = e.data;
+        }
       }
     });
 
   },
 
   pointerdown: function(event) {
-    if (10 <= event.x && event.x < 90 && 10 <= event.y && event.y <= 90) {
-      window.activeControl1 = {
+    if ( this.weHaveControl()
+      && 10 <= event.x && event.x < 50
+      && 60 <= event.y && event.y < 100 ) {
+      window.activeControl = {
         "count": 0,
         "user_id": window.user_id,
         "start_time": Date.now(),
       };
     }
-    if (100 <= event.x && event.x < 180 && 10 <= event.y && event.y <= 90) {
-      window.activeControl2 = {
-        "count": 0,
-        "user_id": window.user_id,
-        "start_time": Date.now(),
-      };
+    if ( 10 <= event.x && event.x < 50
+      && 110 <= event.y && event.y < 150 ) {
+      window.bulletPusher.sendData(window.machine_id + '_AMMO_INCREMENT', 'x');
     }
+  },
+
+  weHaveControl: function() {
+    return window.activeControl === null ||
+      window.activeControl.user_id === window.user_id ||
+      Date.now() - window.activeControl.start_time >= 60000;
+  },
+
+  showTime: function(elapsedMilli) {
+    return (Math.max(60000 - elapsedMilli, 0) / 1000).toFixed(1);
   },
 
   render: function() {
@@ -107,17 +107,31 @@ ENGINE.Game = {
 
     layer.clear("#222");
 
+    var message;
+    if (window.activeControl === null) {
+      message = 'Press Reset to start.';
+    } else {
+      message = 'Time: ' + this.showTime(Date.now() - window.activeControl.start_time) + ' - Bullets: ' + window.activeControl.count
+    }
     layer.fillStyle('white')
       .font('20px sans-serif')
-      .fillText('Ammo 1: ' + JSON.stringify(window.activeControl1), 10, 140);
+      .fillText(message, 10, 40);
 
-    layer.fillStyle('white')
-      .font('20px sans-serif')
-      .fillText('Ammo 2: ' + JSON.stringify(window.activeControl2), 10, 180);
+    if (this.weHaveControl()) {
+      layer.fillStyle('red')
+        .fillRect(10, 60, 40, 40)
+        .fillStyle('white')
+        .font('20px sans-serif')
+        .fillText('Reset', 60, 90);
+    }
 
-    layer.fillStyle('white')
-      .fillRect(10, 10, 80, 80)
-      .fillRect(100, 10, 80, 80);
+    if (true) {
+      layer.fillStyle('blue')
+        .fillRect(10, 110, 40, 40)
+        .fillStyle('white')
+        .font('20px sans-serif')
+        .fillText('Make bullet', 60, 140);
+    }
   },
 
 };

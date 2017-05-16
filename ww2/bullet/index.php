@@ -19,6 +19,8 @@
 
     <script type="text/javascript">
 
+      var ARIS = {};
+
       window.machine_id = parseInt(window.location.search.slice(1)) || 1171;
 
       window.bulletEvents = [];

@@ -43,6 +43,7 @@ function shouldReplaceControl(curControl, newControl) {
 ENGINE.Game = {
 
   create: function() {
+    this.exitedToDialog = false;
   },
 
   step: function(dt) {
@@ -65,6 +66,7 @@ ENGINE.Game = {
         }
       } else if (e.event === window.machine_id + '_AMMO_RESET') {
         window.activeControl = null;
+        resetMachine();
       } else if (e.event === window.machine_id + '_APP_CONTROL') {
         e.data = JSON.parse(e.data);
         if (shouldReplaceControl(window.activeControl, e.data)) {
@@ -73,20 +75,29 @@ ENGINE.Game = {
       }
     });
 
+    if (window.activeControl && Date.now() - window.activeControl.start_time >= 60000) {
+      ARIS.exitToDialog(90833);
+      this.exitedToDialog = true;
+    }
+
   },
 
   pointerdown: function(event) {
+    var app = this.app;
+    var layer = this.app.layer;
+    var scaling = app.width / 300;
+
     if ( this.weHaveControl()
-      && 10 <= event.x && event.x < 50
-      && 60 <= event.y && event.y < 100 ) {
+      && 10 * scaling <= event.x && event.x < 50 * scaling
+      && 60 * scaling <= event.y && event.y < 100 * scaling ) {
       window.activeControl = {
         "count": 0,
         "user_id": window.user_id,
         "start_time": Date.now(),
       };
     }
-    if ( 10 <= event.x && event.x < 50
-      && 110 <= event.y && event.y < 150 ) {
+    if ( 10 * scaling <= event.x && event.x < 50 * scaling
+      && 110 * scaling <= event.y && event.y < 150 * scaling ) {
       window.bulletPusher.sendData(window.machine_id + '_AMMO_INCREMENT', 'x');
     }
   },
@@ -105,6 +116,8 @@ ENGINE.Game = {
     var app = this.app;
     var layer = this.app.layer;
 
+    var scaling = app.width / 300;
+
     layer.clear("#222");
 
     var message;
@@ -114,23 +127,23 @@ ENGINE.Game = {
       message = 'Time: ' + this.showTime(Date.now() - window.activeControl.start_time) + ' - Bullets: ' + window.activeControl.count
     }
     layer.fillStyle('white')
-      .font('20px sans-serif')
-      .fillText(message, 10, 40);
+      .font((20 * scaling) + 'px sans-serif')
+      .fillText(message, 10 * scaling, 40 * scaling);
 
     if (this.weHaveControl()) {
       layer.fillStyle('red')
-        .fillRect(10, 60, 40, 40)
+        .fillRect(10 * scaling, 60 * scaling, 40 * scaling, 40 * scaling)
         .fillStyle('white')
-        .font('20px sans-serif')
-        .fillText('Reset', 60, 90);
+        .font((20 * scaling) + 'px sans-serif')
+        .fillText('Reset', 60 * scaling, 90 * scaling);
     }
 
     if (true) {
       layer.fillStyle('blue')
-        .fillRect(10, 110, 40, 40)
+        .fillRect(10 * scaling, 110 * scaling, 40 * scaling, 40 * scaling)
         .fillStyle('white')
-        .font('20px sans-serif')
-        .fillText('Make bullet', 60, 140);
+        .font((20 * scaling) + 'px sans-serif')
+        .fillText('Make bullet', 60 * scaling, 140 * scaling);
     }
   },
 

@@ -85,20 +85,21 @@ ENGINE.Game = {
   pointerdown: function(event) {
     var app = this.app;
     var layer = this.app.layer;
-    var scaling = app.width / 300;
+    var scaling = app.height / 900;
 
-    if ( this.weHaveControl()
-      && 10 * scaling <= event.x && event.x < 50 * scaling
-      && 60 * scaling <= event.y && event.y < 100 * scaling ) {
+    var startX = 20 * scaling;
+    var startY = app.height * (2/3) + 20 * scaling;
+    var startW = app.width - 40 * scaling;
+    var startH = app.height * (1/3) - 40 * scaling;
+
+    if ( window.activeControl === null
+      && startX <= event.x && event.x < startX + startW
+      && startY <= event.y && event.y < startY + startH ) {
       window.activeControl = {
         "count": 0,
         "user_id": window.user_id,
         "start_time": Date.now(),
       };
-    }
-    if ( 10 * scaling <= event.x && event.x < 50 * scaling
-      && 110 * scaling <= event.y && event.y < 150 * scaling ) {
-      window.bulletPusher.sendData(window.machine_id + '_AMMO_INCREMENT', 'x');
     }
   },
 
@@ -116,35 +117,33 @@ ENGINE.Game = {
     var app = this.app;
     var layer = this.app.layer;
 
-    var scaling = app.width / 300;
+    var scaling = app.height / 900;
 
     layer.clear("#222");
 
-    var message;
-    if (window.activeControl === null) {
-      message = 'Press Reset to start.';
-    } else {
-      message = 'Time: ' + this.showTime(Date.now() - window.activeControl.start_time) + ' - Bullets: ' + window.activeControl.count
-    }
     layer.fillStyle('white')
-      .font((20 * scaling) + 'px sans-serif')
-      .fillText(message, 10 * scaling, 40 * scaling);
+      .fillRect(20 * scaling, 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling)
+      .fillRect(20 * scaling, app.height * (1/3) + 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling)
+      .fillStyle(window.activeControl === null ? '#a33' : '#666')
+      .fillRect(20 * scaling, app.height * (2/3) + 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling);
 
-    if (this.weHaveControl()) {
-      layer.fillStyle('red')
-        .fillRect(10 * scaling, 60 * scaling, 40 * scaling, 40 * scaling)
+    layer.font(Math.floor(app.height * (1/7)) + 'px sans-serif');
+    if (window.activeControl === null) {
+      layer.fillStyle('black')
+        .fillText(this.showTime(0), 40 * scaling, app.height * (1/3 - 1/11))
+        .fillText('0', 40 * scaling, app.height * (2/3 - 1/11))
         .fillStyle('white')
-        .font((20 * scaling) + 'px sans-serif')
-        .fillText('Reset', 60 * scaling, 90 * scaling);
+        .fillText('START', 40 * scaling, app.height * (3/3 - 1/11));
+    } else {
+      layer.fillStyle('black')
+        .fillText(this.showTime(Date.now() - window.activeControl.start_time), 40 * scaling, app.height * (1/3 - 1/11))
+        .fillText(window.activeControl.count, 40 * scaling, app.height * (2/3 - 1/11));
     }
 
-    if (true) {
-      layer.fillStyle('blue')
-        .fillRect(10 * scaling, 110 * scaling, 40 * scaling, 40 * scaling)
-        .fillStyle('white')
-        .font((20 * scaling) + 'px sans-serif')
-        .fillText('Make bullet', 60 * scaling, 140 * scaling);
-    }
+    layer.font(Math.floor(app.height * (1/16)) + 'px sans-serif');
+    layer.fillStyle('#aaa')
+      .fillText('TIME', 40 * scaling, app.height * (0/3 + 1/10))
+      .fillText('BULLETS', 40 * scaling, app.height * (1/3 + 1/10));
   },
 
 };

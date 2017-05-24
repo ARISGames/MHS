@@ -75,8 +75,12 @@ ENGINE.Game = {
       }
     });
 
-    if (window.activeControl && Date.now() - window.activeControl.start_time >= 60000) {
-      ARIS.exitToDialog(90833);
+    if (window.activeControl && Date.now() - window.activeControl.start_time >= 60000 && !this.exitedToDialog) {
+      if (window.activeControl.count >= 5) {
+        ARIS.exitToDialog(90833);
+      } else {
+        ARIS.exitToDialog(95916);
+      }
       this.exitedToDialog = true;
     }
 

@@ -8,8 +8,9 @@ var app = new PLAYGROUND.Application({
 
     /* things to preload */
 
-    this.loadImage('book');
-    this.loadImage('paper');
+    this.loadImage('book1');
+    this.loadImage('book2');
+    this.loadImage('book3');
     this.loadImage('japanese1');
     this.loadImage('japanese2');
     this.loadImage('japanese3');

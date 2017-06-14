@@ -155,7 +155,7 @@ ENGINE.Game = {
       iconX += iconWidth + 40 * scaling;
     });
 
-    var walkImage = app.images['Walking_man_' + (Math.floor(this.elapsed * 3) % 4 + 1)];
+    var walkImage = app.images['walking-v2-' + (Math.floor(this.elapsed * 18) % 24)];
     var walkHeight = app.height * 0.4;
     var walkWidth = walkImage.width * (walkHeight / walkImage.height);
     layer.drawImage(walkImage, this.gametime * (app.width - walkWidth), app.height - walkHeight, walkWidth, walkHeight);

@@ -8,10 +8,9 @@ var app = new PLAYGROUND.Application({
 
     /* things to preload */
 
-    this.loadImage('Walking_man_1');
-    this.loadImage('Walking_man_2');
-    this.loadImage('Walking_man_3');
-    this.loadImage('Walking_man_4');
+    for (var i = 0; i < 24; i++) {
+        this.loadImage('walking-v2-' + i);
+    }
     this.loadImage('background.jpg');
     this.loadImage('icon_apple');
     this.loadImage('icon_book');

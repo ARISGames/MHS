@@ -60,7 +60,7 @@ ENGINE.Game = {
     }
 
     if (this.altitude < 0) this.altitude = 0;
-    if (this.altitude > 9500) this.altitude = 9500;
+    if (this.altitude > 9000) this.altitude = 9000;
 
     this.cloudY += this.altitude - prevAltitude;
 
@@ -73,8 +73,6 @@ ENGINE.Game = {
       else if (this.winglevel < 0) this.winglevel += Math.min(-this.winglevel, dt * 0.4);
     }
 
-    if (this.altitude < 0) this.altitude = 0;
-    if (this.altitude > 9500) this.altitude = 9500;
     if (this.winglevel < -1) this.winglevel = -1;
     if (this.winglevel > 1) this.winglevel = 1;
 
@@ -100,19 +98,19 @@ ENGINE.Game = {
     var x = (data.x - box.x) / box.width;
     var y = (data.y - box.y) / box.height;
 
-    if (45/415 <= x && x <= 156/415 && 524/739 + 0.05 <= y && y <= 620/739 + 0.05) {
-      this.position = 'left';
-      return;
-    } else if (267/415 <= x && x <= 376/415 && 524/739 + 0.05 <= y && y <= 620/739 + 0.05) {
-      this.position = 'right';
-      return;
-    } else if (167/415 <= x && x <= 251/415 && 424/739 + 0.05 <= y && y <= 514/739 + 0.05) {
+    if (0.42 <= x && x <= 0.42 + 0.16 && 0.67 <= y && y <= 0.67 + 0.12) {
       this.position = 'up';
       return;
-    } else if (167/415 <= x && x <= 251/415 && 630/739 + 0.05 <= y && y <= 722/739 + 0.05) {
+    } else if (0.42 <= x && x <= 0.42 + 0.16 && 0.865 <= y && y <= 0.865 + 0.12) {
       this.position = 'down';
       return;
-    } else if (167/415 <= x && x <= 251/415 && 528/739 + 0.05 <= y && y <= 618/739 + 0.05) {
+    } else if (0.24 <= x && x <= 0.24 + 0.2 && 0.78 <= y && y <= 0.78 + 0.09) {
+      this.position = 'left';
+      return;
+    } else if (0.56 <= x && x <= 0.56 + 0.2 && 0.78 <= y && y <= 0.78 + 0.09) {
+      this.position = 'right';
+      return;
+    } else if (0.42 <= x && x <= 0.42 + 0.16 && 0.78 <= y && y <= 0.78 + 0.09) {
       this.position = 'center';
       return;
     }
@@ -125,7 +123,7 @@ ENGINE.Game = {
     var x = (data.x - box.x) / box.width;
     var y = (data.y - box.y) / box.height;
 
-    if (0 <= x && x <= 1 && 0 <= y && y <= 0.27 && !(this.testing)) {
+    if (0.7 <= x && x <= 1 && 0.9 <= y && y <= 1 && !(this.testing)) {
       this.advanceLine();
       return;
     }
@@ -138,6 +136,7 @@ ENGINE.Game = {
     if (this.dialogs.length == 0) {
       window.completed[window.gameLevel - 1] = true;
       this.increaseLevel();
+      this.position = 'center';
       this.app.setState(ENGINE.Checklist);
     }
     this.startTest();
@@ -194,18 +193,21 @@ ENGINE.Game = {
     var box = getBox(app);
 
     var modulo = function(a, b) { return (+a % (b = +b) + b) % b; };
-    var dialogHeight = box.height * 0.27;
+
+    var cockpitWidth = box.width;
+    var cockpitHeight = cockpitWidth / app.images.cockpit.width * app.images.cockpit.height;
+
     var cloudXnormal = modulo(this.cloudX / 1.2, 1);
     var cloudYnormal = modulo(this.cloudY / 1500, 1);
-    var cloudWidth = box.width * 2;
-    var cloudHeight = cloudWidth / app.images.clouds.width * app.images.clouds.height;
-    layer.drawImage(app.images.clouds, box.x + cloudWidth * cloudXnormal, box.y + dialogHeight + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
-    layer.drawImage(app.images.clouds, box.x + cloudWidth * (cloudXnormal - 1), box.y + dialogHeight + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
-    layer.drawImage(app.images.clouds, box.x + cloudWidth * cloudXnormal, box.y + dialogHeight + cloudHeight * (cloudYnormal - 1), cloudWidth, cloudHeight);
-    layer.drawImage(app.images.clouds, box.x + cloudWidth * (cloudXnormal - 1), box.y + dialogHeight + cloudHeight * (cloudYnormal - 1), cloudWidth, cloudHeight);
+    var cloudWidth = box.width * 7;
+    var cloudHeight = cloudWidth / app.images.sky.width * app.images.sky.height;
+    layer.drawImage(app.images.sky, box.x + cloudWidth * cloudXnormal, box.y + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
+    layer.drawImage(app.images.sky, box.x + cloudWidth * (cloudXnormal - 1), box.y + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
 
-    layer.fillStyle('#333').fillRect(box.x - 5, box.y + box.height * 0.41, box.width + 10, box.height);
-    layer.fillStyle('#333').fillRect(box.x - 5, box.y - 5, box.width + 10, dialogHeight + 5);
+    layer.drawImage(app.images.cockpit, box.x, box.y, cockpitWidth, cockpitHeight);
+    layer.fillStyle('white')
+      .fillRect(box.x, cockpitHeight, box.width, box.height - cockpitHeight);
+
     if (box.y == 0) {
       layer.fillStyle('#222').fillRect(0, 0, box.x, app.height);
       layer.fillStyle('#222').fillRect(box.x + box.width, 0, app.width - box.x - box.width, app.height);
@@ -214,72 +216,44 @@ ENGINE.Game = {
       layer.fillStyle('#222').fillRect(0, box.y + box.height, app.width, app.height - box.y - box.height);
     }
 
+    var leftGaugeX = box.x + box.width * 0.05;
+    var rightGaugeX = box.x + box.width * 0.525;
+    var gaugeY = box.y + box.height * 0.325;
     var meterWidth = box.width * 0.425;
-    var meterHeight = meterWidth * (app.images.winglevel.height / app.images.winglevel.width);
-    layer.drawImage(app.images.winglevel, box.x + box.width * 0.05, box.y + box.height * 0.3 + box.height * 0.13, meterWidth, meterHeight);
-    layer.drawImage(app.images.altimeter, box.x + box.width * 0.525, box.y + box.height * 0.3 + box.height * 0.13, meterWidth, meterHeight);
+    var meterHeight = meterWidth * (app.images.gauge_left.height / app.images.gauge_left.width);
+    layer.drawImage(app.images.gauge_left, leftGaugeX, gaugeY, meterWidth, meterHeight);
+    layer.drawImage(app.images.gauge_right, rightGaugeX, gaugeY, meterWidth, meterHeight);
 
-    var altimeter = {x: box.x + box.width * (306/414), y: box.y + box.height * (310/739) + box.height * 0.13};
-    var altirads = (this.altitude / 10000) * 2 * Math.PI - 0.5 * Math.PI;
-    var altiradius = box.width * (58/414);
-    layer.strokeStyle('black')
-      .lineWidth(box.width * 0.012)
-      .beginPath()
-      .moveTo(altimeter.x, altimeter.y)
-      .lineTo(altimeter.x + Math.cos(altirads) * altiradius, altimeter.y + Math.sin(altirads) * altiradius)
-      .stroke();
+    var wingrads = this.winglevel * 2/9 * Math.PI;
+    layer.save();
+    layer.translate(leftGaugeX + meterWidth/2, gaugeY + meterHeight/2);
+    layer.rotate(wingrads);
+    layer.drawImage(app.images.gauge_left_spinner, -meterWidth/2, -meterHeight/2, meterWidth, meterHeight);
+    layer.restore();
 
-    var winglevel = {x: box.x + box.width * (110/414), y: box.y + box.height * (318/739) + box.height * 0.13};
-    var wingrads = this.winglevel * 0.25 * Math.PI - 0.5 * Math.PI;
-    var wingradiusX = box.width * (58/414);
-    var wingradiusY = box.height * (48/739);
-    layer.strokeStyle('black')
-      .lineWidth(box.width * 0.012)
-      .beginPath()
-      .moveTo(winglevel.x, winglevel.y)
-      .lineTo(winglevel.x + Math.cos(wingrads) * wingradiusX, winglevel.y + Math.sin(wingrads) * wingradiusY)
-      .stroke();
+    var altirads = (-0.97 + ((this.altitude / 9000) * 1.76)) * Math.PI;
+    layer.save();
+    layer.translate(rightGaugeX + meterWidth/2, gaugeY + meterHeight/2);
+    layer.rotate(altirads);
+    layer.drawImage(app.images.gauge_right_spinner, -meterWidth/2, -meterHeight/2, meterWidth, meterHeight);
+    layer.restore();
 
-    layer.fillStyle('rgb(207,226,243)')
-      .fillRect(box.x + box.width * 0.235, box.y + box.height * (0.71 + 0.03) + box.height * 0.05, box.width * 0.8 * 0.66, box.width * 0.2 * 0.66)
-      .fillRect(box.x + box.width * 0.435, box.y + box.height * (0.60 + 0.03) + box.height * 0.05, box.width * 0.2 * 0.66, box.width * 0.8 * 0.66);
-
-    switch (this.position) {
-      case 'center':
-        layer.beginPath()
-          .fillStyle('rgb(165,202,149)')
-          .strokeStyle('black')
-          .lineWidth(box.width * 0.005)
-          .arc(box.x + box.width * 0.5, box.y + box.height * (0.748 + 0.03) + box.height * 0.05, box.width * 0.09, 0, 2 * Math.PI, false)
-          .fill()
-          .stroke();
-        break;
-      case 'up':
-        layer.drawImage(app.images.stick_up, box.x + box.width * (232/520), box.y + box.height * ((504/924) + 0.03) + box.height * 0.05, box.width * (59/520), box.height * (194/924));
-        break;
-      case 'down':
-        layer.drawImage(app.images.stick_down, box.x + box.width * (232/520), box.y + box.height * ((671/924) + 0.03) + box.height * 0.05, box.width * (59/520), box.height * (194/924));
-        break;
-      case 'left':
-        layer.drawImage(app.images.stick_left, box.x + box.width * (82/520), box.y + box.height * ((661/924) + 0.03) + box.height * 0.05, box.height * (194/924), box.width * (59/520));
-        break;
-      case 'right':
-        layer.drawImage(app.images.stick_right, box.x + box.width * (244/520), box.y + box.height * ((661/924) + 0.03) + box.height * 0.05, box.height * (194/924), box.width * (59/520));
-        break;
+    layer.drawImage(app.images['stick_' + this.position], box.x + box.width * 0.15, box.y + box.height * 0.63, box.width * 0.7, box.width * 0.7);
+    if (!this.testing) {
+      layer.textAlign('right').fillStyle('black').font(Math.floor(box.height * 0.032) + 'px sans-serif')
+        .fillText('Continue >', box.x + box.width * 0.98, box.y + box.height * 0.97);
     }
 
-    var pilotImage = app.images['pilot_' + this.pilot];
-    var pilotWidth = dialogHeight / pilotImage.height * pilotImage.width;
-    layer.drawImage(pilotImage, box.x, box.y, pilotWidth, dialogHeight);
-
     if (this.dialogs.length > 0) {
-      layer.textAlign('left').fillStyle('white').font(Math.floor(box.height * 0.03) + 'px sans-serif');
-      wrapText(layer, this.dialogs[0], box.x + pilotWidth + box.width * 0.02, box.y + box.height * 0.05, box.width - pilotWidth - box.width * 0.02, box.height * 0.035);
-    
-      if (!this.testing) {
-        layer.textAlign('right').fillStyle('white').font(Math.floor(box.height * 0.026) + 'px sans-serif');
-        layer.fillText('Continue >', box.x + box.width * 0.98, box.y + dialogHeight * 0.98);
-      }
+      layer.textAlign('center').fillStyle('black').font(Math.floor(box.height * 0.025) + 'px sans-serif');
+      wrapText(
+        layer,
+        this.dialogs[0],
+        box.x + box.width * 0.5,
+        box.y + cockpitHeight + box.height * 0.04,
+        box.width * 0.94,
+        box.height * 0.033
+      );
     }
 
     if (this.testing) {

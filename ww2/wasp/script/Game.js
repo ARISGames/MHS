@@ -9,7 +9,6 @@ ENGINE.Game = {
     this.altitude = 1500;
 
     this.cloudX = 0;
-    this.cloudY = 0;
 
     this.pilot = 'good';
 
@@ -61,8 +60,6 @@ ENGINE.Game = {
 
     if (this.altitude < 0) this.altitude = 0;
     if (this.altitude > 9000) this.altitude = 9000;
-
-    this.cloudY += this.altitude - prevAltitude;
 
     if (this.position == 'right') {
       this.winglevel -= dt * 0.7;
@@ -197,12 +194,12 @@ ENGINE.Game = {
     var cockpitWidth = box.width;
     var cockpitHeight = cockpitWidth / app.images.cockpit.width * app.images.cockpit.height;
 
-    var cloudXnormal = modulo(this.cloudX / 1.2, 1);
-    var cloudYnormal = modulo(this.cloudY / 1500, 1);
     var cloudWidth = box.width * 7;
     var cloudHeight = cloudWidth / app.images.sky.width * app.images.sky.height;
-    layer.drawImage(app.images.sky, box.x + cloudWidth * cloudXnormal, box.y + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
-    layer.drawImage(app.images.sky, box.x + cloudWidth * (cloudXnormal - 1), box.y + cloudHeight * cloudYnormal, cloudWidth, cloudHeight);
+    var cloudOffsetX = modulo(this.cloudX * 500, cloudWidth);
+    var cloudOffsetY = -1 * (cloudHeight - cockpitHeight) * (1 - this.altitude / 9000)
+    layer.drawImage(app.images.sky, box.x + cloudOffsetX, box.y + cloudOffsetY, cloudWidth, cloudHeight);
+    layer.drawImage(app.images.sky, box.x + (cloudOffsetX - cloudWidth), box.y + cloudOffsetY, cloudWidth, cloudHeight);
 
     layer.drawImage(app.images.cockpit, box.x, box.y, cockpitWidth, cockpitHeight);
     layer.fillStyle('white')
@@ -257,10 +254,21 @@ ENGINE.Game = {
     }
 
     if (this.testing) {
-      layer.fillStyle(this.testPassing() ? 'rgb(30,200,30)' : 'rgb(191,191,191)')
-        .beginPath()
-        .arc(box.x + box.width * 0.13, box.y + box.height * 0.92, box.width * 0.05, 0, 2 * Math.PI, false)
-        .fill();
+      if (this.testing.match(/^\d+$/)) {
+        layer.drawImage(this.testPassing() ? app.images.light_green : app.images.light_red
+          , rightGaugeX + meterWidth * 0.4
+          , gaugeY + app.height * 0.015
+          , meterWidth * 0.2
+          , meterHeight * 0.2
+          );
+      } else {
+        layer.drawImage(this.testPassing() ? app.images.light_green : app.images.light_red
+          , leftGaugeX + meterWidth * 0.4
+          , gaugeY + app.height * 0.015
+          , meterWidth * 0.2
+          , meterHeight * 0.2
+          );
+      }
     }
 
   }

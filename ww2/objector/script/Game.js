@@ -16,7 +16,7 @@ function exitToDialog(id) {
   }
 }
 
-var food = ['apple', 'burger', 'donut', 'popcorn', 'sandwich'];
+var food = ['apple', 'burger', 'candy', 'chocolate', 'donut', 'popcorn', 'sandwich', 'shake'];
 var distractions = ['book', 'cinema', 'guitar', 'record'];
 
 ENGINE.Game = {
@@ -32,28 +32,6 @@ ENGINE.Game = {
     this.gametime = 0;
     this.hunger = 0;
     this.buttons = [];
-    this.shops = [
-      'art',
-      'bakery',
-      'barber',
-      'bookstore',
-      'boutique',
-      'coffee',
-      'fastfood',
-      'flowers',
-      'fruits',
-      'icecream',
-      'market',
-      'music',
-      'pets',
-      'pizza',
-      'vegetables',
-      'watch',
-    ];
-    shuffle(this.shops);
-    this.shops.push(this.shops[0]);
-    this.shops.push(this.shops[1]);
-    this.shops.push(this.shops[2]);
     this.icons = [];
     var foodChain = 0;
     var distractionChain = 0;
@@ -108,16 +86,6 @@ ENGINE.Game = {
     var backgroundWidth = app.images.background.width * (app.height / app.images.background.height);
     var backgroundOffset = -1 * this.gametime * (backgroundWidth - app.width);
     layer.drawImage(app.images.background, backgroundOffset, 0, backgroundWidth, app.height);
-
-    var shopX = backgroundOffset + 20 * scaling;
-    this.shops.forEach(function(shop){
-      if (shopX > app.width) return;
-      var img = app.images['shop_' + shop];
-      var shopWidth = img.width * scaling * 0.7;
-      var shopHeight = img.height * scaling * 0.7;
-      layer.drawImage(img, shopX, app.height * 0.85 - shopHeight, shopWidth, shopHeight);
-      shopX += shopWidth + 10 * scaling;
-    });
 
     var iconButtons = [];
     var iconX = backgroundOffset * 2.3 + 20 * scaling;

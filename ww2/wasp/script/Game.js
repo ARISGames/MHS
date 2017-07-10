@@ -21,14 +21,14 @@ ENGINE.Game = {
     switch (window.gameLevel) {
       case 1:
         this.dialogs = [
-          "First, practice your controls and learn how they work. Press Continue when you're ready to start.",
+          "First, practice the controls to learn how they work. Then press Continue.",
           "_TEST_Now you try. Go up to 7000 feet and hold it there.",
           "Well done!",
         ]
         break;
       case 2:
         this.dialogs = [
-          "_TEST_Next, turn left. Push the lever right. Hold it when the pointer is all the way to the left.",
+          "_TEST_Next, turn left. Push the lever left, and hold it there.",
           "Good job!",
         ]
         break;
@@ -61,9 +61,9 @@ ENGINE.Game = {
     if (this.altitude < 0) this.altitude = 0;
     if (this.altitude > 9000) this.altitude = 9000;
 
-    if (this.position == 'right') {
+    if (this.position == 'left') {
       this.winglevel -= dt * 0.7;
-    } else if (this.position == 'left') {
+    } else if (this.position == 'right') {
       this.winglevel += dt * 0.7;
     } else {
       if      (this.winglevel > 0) this.winglevel -= Math.min( this.winglevel, dt * 0.4);
@@ -242,14 +242,14 @@ ENGINE.Game = {
     }
 
     if (this.dialogs.length > 0) {
-      layer.textAlign('center').fillStyle('black').font(Math.floor(box.height * 0.025) + 'px sans-serif');
+      layer.textAlign('center').fillStyle('black').font(Math.floor(box.height * 0.031) + 'px sans-serif');
       wrapText(
         layer,
         this.dialogs[0],
         box.x + box.width * 0.5,
         box.y + cockpitHeight + box.height * 0.04,
         box.width * 0.94,
-        box.height * 0.033
+        box.height * 0.038
       );
     }
 

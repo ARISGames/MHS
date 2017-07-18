@@ -25,10 +25,10 @@ every second:
 
 function shouldReplaceControl(curControl, newControl) {
   if (curControl === null) return true;
-  if (Date.now() - curControl.start_time >= 60000) {
+  if (Date.now() - curControl.start_time >= 120000) {
     return true;
   }
-  if (Date.now() - newControl.start_time >= 60000) {
+  if (Date.now() - newControl.start_time >= 120000) {
     return false;
   }
   if (curControl.user_id === newControl.user_id) {
@@ -61,7 +61,7 @@ ENGINE.Game = {
       if (e.event === window.machine_id + '_AMMO_INCREMENT') {
         if ( window.activeControl
           && window.activeControl.user_id == window.user_id
-          && Date.now() - window.activeControl.start_time < 60000 ) {
+          && Date.now() - window.activeControl.start_time < 120000 ) {
           window.activeControl.count++;
         }
       } else if (e.event === window.machine_id + '_AMMO_RESET') {
@@ -75,8 +75,8 @@ ENGINE.Game = {
       }
     });
 
-    if (window.activeControl && Date.now() - window.activeControl.start_time >= 60000 && !this.exitedToDialog) {
-      if (window.activeControl.count >= 5) {
+    if (window.activeControl && Date.now() - window.activeControl.start_time >= 120000 && !this.exitedToDialog) {
+      if (window.activeControl.count >= 10) {
         ARIS.exitToDialog(90833);
       } else {
         ARIS.exitToDialog(95916);
@@ -89,12 +89,12 @@ ENGINE.Game = {
   pointerdown: function(event) {
     var app = this.app;
     var layer = this.app.layer;
-    var scaling = app.height / 900;
+    var display = this.displayBox();
 
-    var startX = 20 * scaling;
-    var startY = app.height * (2/3) + 20 * scaling;
-    var startW = app.width - 40 * scaling;
-    var startH = app.height * (1/3) - 40 * scaling;
+    var startX = display.x + display.width * (103/566);
+    var startY = display.y + display.height * (606/792);
+    var startW = display.width * (363/566);
+    var startH = display.height * (107/792);
 
     if ( window.activeControl === null
       && startX <= event.x && event.x < startX + startW
@@ -110,44 +110,63 @@ ENGINE.Game = {
   weHaveControl: function() {
     return window.activeControl === null ||
       window.activeControl.user_id === window.user_id ||
-      Date.now() - window.activeControl.start_time >= 60000;
+      Date.now() - window.activeControl.start_time >= 120000;
   },
 
   showTime: function(elapsedMilli) {
-    return (Math.max(60000 - elapsedMilli, 0) / 1000).toFixed(1);
+    var fullSeconds = Math.max(120000 - elapsedMilli, 0) / 1000;
+    var minutes = Math.floor(fullSeconds / 60);
+    var seconds = fullSeconds - minutes * 60;
+    var zeroPad = (seconds < 10 ? '0' : '')
+    return minutes + ':' + zeroPad + seconds.toFixed(1);
+  },
+
+  displayBox: function() {
+    var app = this.app;
+    var display = {};
+    if (app.width / app.height > app.images.display.width / app.images.display.height) {
+      // window is wider than display. boxes on left/right
+      display.height = app.height;
+      display.width = app.height / app.images.display.height * app.images.display.width;
+      display.x = (app.width - display.width) / 2;
+      display.y = 0;
+      display.backgroundColor = 'black';
+    } else {
+      // window is taller than display. extend green to bottom
+      display.width = app.width;
+      display.height = app.width / app.images.display.width * app.images.display.height;
+      display.x = 0;
+      display.y = 0;
+      display.backgroundColor = 'rgb(189,211,200)';
+    }
+    return display;
   },
 
   render: function() {
     var app = this.app;
     var layer = this.app.layer;
 
-    var scaling = app.height / 900;
+    var display = this.displayBox();
+    layer.clear(display.backgroundColor);
+    layer.drawImage(app.images.display, display.x, display.y, display.width, display.height);
 
-    layer.clear("#222");
+    var displayTime = this.showTime(window.activeControl === null ? 0 : Date.now() - window.activeControl.start_time);
+    var displayCount = (window.activeControl === null ? '0' : window.activeControl.count);
+    layer.font(Math.floor(display.height * 0.12) + 'px sans-serif')
+      .textAlign('center')
+      .fillStyle('black')
+      .fillText(displayTime, display.x + display.width * 0.5, display.y + display.height * 0.455)
+      .fillText(displayCount, display.x + display.width * 0.5, display.y + display.height * 0.69);
 
-    layer.fillStyle('white')
-      .fillRect(20 * scaling, 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling)
-      .fillRect(20 * scaling, app.height * (1/3) + 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling)
-      .fillStyle(window.activeControl === null ? '#a33' : '#666')
-      .fillRect(20 * scaling, app.height * (2/3) + 20 * scaling, app.width - 40 * scaling, app.height * (1/3) - 40 * scaling);
-
-    layer.font(Math.floor(app.height * (1/7)) + 'px sans-serif');
-    if (window.activeControl === null) {
-      layer.fillStyle('black')
-        .fillText(this.showTime(0), 40 * scaling, app.height * (1/3 - 1/11))
-        .fillText('0', 40 * scaling, app.height * (2/3 - 1/11))
-        .fillStyle('white')
-        .fillText('START', 40 * scaling, app.height * (3/3 - 1/11));
-    } else {
-      layer.fillStyle('black')
-        .fillText(this.showTime(Date.now() - window.activeControl.start_time), 40 * scaling, app.height * (1/3 - 1/11))
-        .fillText(window.activeControl.count, 40 * scaling, app.height * (2/3 - 1/11));
+    if (window.activeControl !== null) {
+      layer.fillStyle('rgb(255,210,0)')
+        .fillRect(
+          display.x + display.width * 0.25,
+          display.y + display.height * 0.79,
+          display.width * 0.5,
+          display.height * 0.1,
+        );
     }
-
-    layer.font(Math.floor(app.height * (1/16)) + 'px sans-serif');
-    layer.fillStyle('#aaa')
-      .fillText('TIME', 40 * scaling, app.height * (0/3 + 1/10))
-      .fillText('BULLETS', 40 * scaling, app.height * (1/3 + 1/10));
   },
 
 };

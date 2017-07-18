@@ -6,7 +6,7 @@ var app = new PLAYGROUND.Application({
 
     /* things to preload */
 
-    // this.loadImage("giana");
+    this.loadImage('display');
 
   },
 

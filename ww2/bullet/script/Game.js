@@ -77,9 +77,17 @@ ENGINE.Game = {
 
     if (window.activeControl && Date.now() - window.activeControl.start_time >= 120000 && !this.exitedToDialog) {
       if (window.activeControl.count >= 10) {
-        ARIS.exitToDialog(90833);
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(90833);
+        } else {
+          ARIS.exitToDialog(98459);
+        }
       } else {
-        ARIS.exitToDialog(95916);
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(95916);
+        } else {
+          ARIS.exitToDialog(98412);
+        }
       }
       this.exitedToDialog = true;
     }

@@ -200,9 +200,17 @@ ENGINE.Game = {
         fn: function(){
           if (this.question === 3) {
             if (this.wrong <= 1) {
-              exitToDialog(90815);
+              if (document.location.search.indexOf('6667') === -1) {
+                ARIS.exitToDialog(90815);
+              } else {
+                ARIS.exitToDialog(98419);
+              }
             } else {
-              exitToDialog(91061);
+              if (document.location.search.indexOf('6667') === -1) {
+                ARIS.exitToDialog(91061);
+              } else {
+                ARIS.exitToDialog(98528);
+              }
             }
           } else {
             this.question++;

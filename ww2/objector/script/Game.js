@@ -56,12 +56,20 @@ ENGINE.Game = {
 
       if (this.gametime >= 1) {
         this.app.setState(ENGINE.Won);
-        exitToDialog(90778);
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(90778);
+        } else {
+          ARIS.exitToDialog(98424);
+        }
       }
 
       if (this.hunger >= 1) {
         this.app.setState(ENGINE.Hunger);
-        exitToDialog(91046);
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(91046);
+        } else {
+          ARIS.exitToDialog(98426);
+        }
       }
     }
   },
@@ -110,7 +118,11 @@ ENGINE.Game = {
               this.hunger -= 0.16;
               if (this.warned) {
                 app.setState(ENGINE.AteFood);
-                exitToDialog(91046);
+                if (document.location.search.indexOf('6667') === -1) {
+                  ARIS.exitToDialog(91046);
+                } else {
+                  ARIS.exitToDialog(98426);
+                }
               } else {
                 this.warning = true;
                 this.warned = true;

@@ -17,6 +17,12 @@ var app = new PLAYGROUND.Application({
     this.loadImage('english1');
     this.loadImage('english2');
     this.loadImage('english3');
+    this.loadImage('right1');
+    this.loadImage('right2');
+    this.loadImage('right3');
+    this.loadImage('wrong1');
+    this.loadImage('wrong2');
+    this.loadImage('wrong3');
 
   },
 

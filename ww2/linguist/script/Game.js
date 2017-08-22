@@ -127,71 +127,21 @@ ENGINE.Game = {
   drawPopup: function() {
     var app = this.app;
     var layer = this.app.layer;
-    layer.fillStyle('rgba(255,255,255,0.6)');
-    layer.fillRect(0, 0, app.width, app.height);
-    var popupHeight = app.height * 0.6;
-    layer.fillStyle('black');
-    layer.fillRect(0, (app.height - popupHeight) / 2, app.width, popupHeight);
-    layer.fillStyle('#ccc');
-    layer.fillRect(0, (app.height - popupHeight) / 2 + popupHeight * 0.02, app.width, popupHeight - popupHeight * 0.04);
-    var correct = this.popup[0] === 'r';
-    layer.fillStyle(correct ? 'green' : 'red');
-    layer.textAlign('center');
-    layer.font(Math.floor(app.height * 0.08) + 'px sans-serif');
-    layer.fillText((correct ? 'Correct!' : 'Incorrect'), app.width / 2, app.height * 0.35);
-    layer.fillStyle('black');
-    layer.font(Math.floor(app.height * 0.038) + 'px sans-serif');
-    var line1, line2, line3, line4;
-    switch (this.popup) {
-      case 'right1':
-        line1 = 'The US Navy sunk the';
-        line2 = 'ship before it attacked.';
-        line3 = '100 lives saved!';
-        line4 = '';
-        break;
-      case 'right2':
-        line1 = 'The Allies captured the';
-        line2 = 'general and stopped his';
-        line3 = 'next attack!';
-        line4 = '200 lives saved!';
-        break;
-      case 'right3':
-        line1 = 'The US shot down';
-        line2 = 'all 150 planes.';
-        line3 = '500 lives saved!';
-        line4 = '';
-        break;
-      case 'wrong1':
-        line1 = 'The Japanese ship';
-        line2 = 'attacked the US ship. 100';
-        line3 = 'US Navy men injured. Look';
-        line4 = 'closely next time!';
-        break;
-      case 'wrong2':
-        line1 = 'The general attacked.';
-        line2 = '4 islands lost to the';
-        line3 = 'Japanese. Be more';
-        line4 = 'careful next time!';
-        break;
-      case 'wrong3':
-        line1 = '';
-        line2 = 'The 150 fighter planes';
-        line3 = 'attacked. 3 ships lost.';
-        line4 = '';
-        break;
-    }
-    layer.fillText(line1, app.width / 2, app.height * 0.46);
-    layer.fillText(line2, app.width / 2, app.height * 0.55);
-    layer.fillText(line3, app.width / 2, app.height * 0.64);
-    layer.fillText(line4, app.width / 2, app.height * 0.73);
-    layer.font(Math.floor(app.height * 0.05) + 'px sans-serif');
-    layer.fillStyle('white');
-    layer.fillText('TAP TO CONTINUE', app.width / 2 - 4, app.height * 0.9 - 4);
-    layer.fillText('TAP TO CONTINUE', app.width / 2 - 4, app.height * 0.9 + 4);
-    layer.fillText('TAP TO CONTINUE', app.width / 2 + 4, app.height * 0.9 - 4);
-    layer.fillText('TAP TO CONTINUE', app.width / 2 + 4, app.height * 0.9 + 4);
-    layer.fillStyle('black');
-    layer.fillText('TAP TO CONTINUE', app.width / 2, app.height * 0.9);
+
+    var popImage = app.images[this.popup];
+    var popWidth = Math.min(app.width, popImage.width * (app.height / popImage.height));
+    var popHeight = popImage.height * (popWidth / popImage.width);
+    var popMinX = (app.width - popWidth) / 2;
+    var popMinY = (app.height - popHeight) / 2;
+    var popMaxX = popMinX + popWidth;
+    var popMaxY = popMinY + popHeight;
+
+    layer.drawImage(popImage, popMinX, popMinY, popWidth, popHeight);
+    layer.fillStyle('rgba(0,0,0,0.88)')
+      .fillRect(0, 0, app.width, popMinY + 0.5)
+      .fillRect(0, popMaxY - 0.5, app.width, app.height - popMaxY + 0.5)
+      .fillRect(0, popMinY, popMinX + 0.5, popHeight)
+      .fillRect(popMaxX - 0.5, popMinY, popMinX + 0.5, popHeight);
     return [
       { minX: 0,
         minY: 0,

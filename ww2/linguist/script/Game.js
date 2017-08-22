@@ -31,73 +31,73 @@ ENGINE.Game = {
     });
   },
 
-  textBook1: function(bookMinX, bookWidth, bookHeight) {
+  textBook1: function(bookMinX, bookMinY, bookWidth, bookHeight) {
     var app = this.app;
     var layer = this.app.layer;
     return [
       { minX: bookMinX + bookWidth * 0.12,
-        minY: bookHeight * 0.20,
+        minY: bookMinY + bookHeight * 0.20,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.22,
+        height: bookHeight * 0.25,
         fn: function(){ this.popup = 'wrong1'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.52,
-        minY: bookHeight * 0.20,
+        minY: bookMinY + bookHeight * 0.20,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.22,
+        height: bookHeight * 0.25,
         fn: function(){ this.popup = 'wrong1'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.12,
-        minY: bookHeight * 0.55,
+        minY: bookMinY + bookHeight * 0.53,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.22,
+        height: bookHeight * 0.25,
         fn: function(){ this.popup = 'right1'; this.right++; }
       },
       { minX: bookMinX + bookWidth * 0.52,
-        minY: bookHeight * 0.55,
+        minY: bookMinY + bookHeight * 0.53,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.22,
+        height: bookHeight * 0.25,
         fn: function(){ this.popup = 'wrong1'; this.wrong++; }
       },
     ];
   },
 
-  textBook2: function(bookMinX, bookWidth, bookHeight) {
+  textBook2: function(bookMinX, bookMinY, bookWidth, bookHeight) {
     var app = this.app;
     var layer = this.app.layer;
     return [
       { minX: bookMinX + bookWidth * 0.12,
-        minY: bookHeight * 0.14,
+        minY: bookMinY + bookHeight * 0.15,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.18,
+        height: bookHeight * 0.19,
         fn: function(){ this.popup = 'wrong2'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.52,
-        minY: bookHeight * 0.18,
+        minY: bookMinY + bookHeight * 0.19,
         width: bookWidth * 0.36,
         height: bookHeight * 0.18,
         fn: function(){ this.popup = 'wrong2'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.12,
-        minY: bookHeight * 0.38,
+        minY: bookMinY + bookHeight * 0.38,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.18,
+        height: bookHeight * 0.19,
         fn: function(){ this.popup = 'wrong2'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.52,
-        minY: bookHeight * 0.42,
+        minY: bookMinY + bookHeight * 0.42,
         width: bookWidth * 0.36,
         height: bookHeight * 0.18,
         fn: function(){ this.popup = 'wrong2'; this.wrong++; }
       },
       { minX: bookMinX + bookWidth * 0.12,
-        minY: bookHeight * 0.63,
+        minY: bookMinY + bookHeight * 0.62,
         width: bookWidth * 0.36,
-        height: bookHeight * 0.18,
+        height: bookHeight * 0.19,
         fn: function(){ this.popup = 'right2'; this.right++; }
       },
       { minX: bookMinX + bookWidth * 0.52,
-        minY: bookHeight * 0.67,
+        minY: bookMinY + bookHeight * 0.66,
         width: bookWidth * 0.36,
         height: bookHeight * 0.18,
         fn: function(){ this.popup = 'right2'; this.right++; }
@@ -105,20 +105,20 @@ ENGINE.Game = {
     ]
   },
 
-  textBook3: function(bookMinX, bookWidth, bookHeight) {
+  textBook3: function(bookMinX, bookMinY, bookWidth, bookHeight) {
     var app = this.app;
     var layer = this.app.layer;
     return [
-      { minX: bookMinX + bookWidth * 0.10,
-        minY: bookHeight * 0.30,
-        width: bookWidth * 0.36,
+      { minX: bookMinX + bookWidth * 0.12,
+        minY: bookMinY + bookHeight * 0.30,
+        width: bookWidth * 0.35,
         height: bookHeight * 0.35,
         fn: function(){ this.popup = 'wrong3'; this.wrong++; }
       },
-      { minX: bookMinX + bookWidth * 0.54,
-        minY: bookHeight * 0.30,
-        width: bookWidth * 0.36,
-        height: bookHeight * 0.4,
+      { minX: bookMinX + bookWidth * 0.53,
+        minY: bookMinY + bookHeight * 0.30,
+        width: bookWidth * 0.35,
+        height: bookHeight * 0.41,
         fn: function(){ this.popup = 'right3'; this.right++; }
       },
     ];
@@ -228,38 +228,56 @@ ENGINE.Game = {
 
     layer.clear("white");
 
-    var book = app.images['book' + this.question];
-    var bookHeight = app.height * 0.45;
-    var bookWidth = Math.min(app.width, book.width * (bookHeight / book.height));
-    bookHeight = book.height * (bookWidth / book.width);
-    var bookMinX = (app.width - bookWidth) / 2;
-    var paperMinY = bookHeight / 2;
-    var paperMaxY = app.height * 0.8;
-    layer.drawImage(book, bookMinX, 0, bookWidth, bookHeight);
+    // first split the screen into parts
+    var jpnHeightFull = app.height * 0.43;
+    var jpnMinY = 0;
+    var jpnMaxY = jpnMinY + jpnHeightFull;
+
+    var bookHeightFull = app.height * 0.43;
+    var bookMinY = jpnMaxY;
+    var bookMaxY = bookMinY + bookHeightFull;
+
+    var engHeightFull = app.height - jpnHeightFull - bookHeightFull;
+    var engMinY = bookMaxY;
+    var engMaxY = engMinY + engHeightFull;
+
+    // now calculate widths and fix heights
+    var jpnImage = app.images['japanese' + this.question];
+    var jpnWidth = Math.min(app.width, jpnImage.width * (jpnHeightFull / jpnImage.height));
+    var jpnHeight = jpnImage.height * (jpnWidth / jpnImage.width);
+    jpnMinY += (jpnHeightFull - jpnHeight) / 2;
+    jpnMinX = (app.width - jpnWidth) / 2;
+
+    var bookImage = app.images['book' + this.question];
+    var bookWidth = Math.min(app.width, bookImage.width * (bookHeightFull / bookImage.height));
+    var bookHeight = bookImage.height * (bookWidth / bookImage.width);
+    bookMinY += (bookHeightFull - bookHeight) / 2;
+    bookMinX = (app.width - bookWidth) / 2;
+
+    var engImage = app.images['english' + this.question];
+    var engWidth = Math.min(app.width, engImage.width * (engHeightFull / engImage.height));
+    var engHeight = engImage.height * (engWidth / engImage.width);
+    engMinY += (engHeightFull - engHeight) / 2;
+    engMinX = (app.width - engWidth) / 2;
+
+    // finally draw the images
+    layer.fillStyle('rgb(193,203,191)');
+    layer.fillRect(0, 0, app.width, engMinY);
+    layer.drawImage(jpnImage, jpnMinX, jpnMinY, jpnWidth, jpnHeight);
+    layer.drawImage(bookImage, bookMinX, bookMinY, bookWidth, bookHeight);
+    layer.drawImage(engImage, engMinX, engMinY, engWidth, engHeight);
 
     var bookButtons;
     switch (this.question) {
-      case 1: bookButtons = this.textBook1(bookMinX, bookWidth, bookHeight); break;
-      case 2: bookButtons = this.textBook2(bookMinX, bookWidth, bookHeight); break;
-      case 3: bookButtons = this.textBook3(bookMinX, bookWidth, bookHeight); break;
+      case 1: bookButtons = this.textBook1(bookMinX, bookMinY, bookWidth, bookHeight); break;
+      case 2: bookButtons = this.textBook2(bookMinX, bookMinY, bookWidth, bookHeight); break;
+      case 3: bookButtons = this.textBook3(bookMinX, bookMinY, bookWidth, bookHeight); break;
     }
     /* for testing
     bookButtons.forEach(function(button){
       layer.fillStyle('rgba(255,0,0,0.5)').fillRect(button.minX, button.minY, button.width, button.height);
     });
     */
-
-    var jpnImage = app.images['japanese' + this.question];
-    var jpnHeight = paperMaxY - bookHeight;
-    var jpnWidth = Math.min(app.width, jpnImage.width * (jpnHeight / jpnImage.height));
-    jpnHeight = jpnImage.height * (jpnWidth / jpnImage.width);
-    layer.drawImage(jpnImage, (app.width - jpnWidth) / 2, bookHeight, jpnWidth, jpnHeight);
-
-    var engImage = app.images['english' + this.question];
-    var engHeight = app.height - paperMaxY;
-    var engWidth = Math.min(app.width, engImage.width * (engHeight / engImage.height));
-    engHeight = engImage.height * (engWidth / engImage.width);
-    layer.drawImage(engImage, (app.width - engWidth) / 2, paperMaxY, engWidth, engHeight);
 
     switch (this.popup) {
       case 'right1':

@@ -8,14 +8,6 @@ function shuffle(a) {
     }
 }
 
-function exitToDialog(id) {
-  try {
-    ARIS.exitToDialog(id);
-  } catch (e) {
-    console.log('In ARIS, this would go to dialog ' + id);
-  }
-}
-
 var food = ['apple', 'burger', 'candy', 'chocolate', 'donut', 'popcorn', 'sandwich', 'shake'];
 var distractions = ['book', 'cinema', 'guitar', 'record'];
 
@@ -56,11 +48,6 @@ ENGINE.Game = {
 
       if (this.gametime >= 1) {
         this.app.setState(ENGINE.Won);
-        if (document.location.search.indexOf('6667') === -1) {
-          ARIS.exitToDialog(90778);
-        } else {
-          ARIS.exitToDialog(98424);
-        }
       }
 
       if (this.hunger >= 1) {

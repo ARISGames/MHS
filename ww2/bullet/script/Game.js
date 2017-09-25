@@ -23,12 +23,14 @@ every second:
 
 */
 
+var GAME_DURATION = 60000; // 1 minute
+
 function shouldReplaceControl(curControl, newControl) {
   if (curControl === null) return true;
-  if (Date.now() - curControl.start_time >= 120000) {
+  if (Date.now() - curControl.start_time >= GAME_DURATION) {
     return true;
   }
-  if (Date.now() - newControl.start_time >= 120000) {
+  if (Date.now() - newControl.start_time >= GAME_DURATION) {
     return false;
   }
   if (curControl.user_id === newControl.user_id) {
@@ -61,7 +63,7 @@ ENGINE.Game = {
       if (e.event === window.machine_id + '_AMMO_INCREMENT') {
         if ( window.activeControl
           && window.activeControl.user_id == window.user_id
-          && Date.now() - window.activeControl.start_time < 120000 ) {
+          && Date.now() - window.activeControl.start_time < GAME_DURATION ) {
           window.activeControl.count++;
         }
       } else if (e.event === window.machine_id + '_AMMO_RESET') {
@@ -75,7 +77,7 @@ ENGINE.Game = {
       }
     });
 
-    if (window.activeControl && Date.now() - window.activeControl.start_time >= 120000 && !this.exitedToDialog) {
+    if (window.activeControl && Date.now() - window.activeControl.start_time >= GAME_DURATION && !this.exitedToDialog) {
       if (window.activeControl.count >= 10) {
         if (document.location.search.indexOf('6667') === -1) {
           ARIS.exitToDialog(90833);
@@ -118,11 +120,11 @@ ENGINE.Game = {
   weHaveControl: function() {
     return window.activeControl === null ||
       window.activeControl.user_id === window.user_id ||
-      Date.now() - window.activeControl.start_time >= 120000;
+      Date.now() - window.activeControl.start_time >= GAME_DURATION;
   },
 
   showTime: function(elapsedMilli) {
-    var fullSeconds = Math.max(120000 - elapsedMilli, 0) / 1000;
+    var fullSeconds = Math.max(GAME_DURATION - elapsedMilli, 0) / 1000;
     var minutes = Math.floor(fullSeconds / 60);
     var seconds = fullSeconds - minutes * 60;
     var zeroPad = (seconds < 10 ? '0' : '')

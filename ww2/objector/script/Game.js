@@ -15,11 +15,9 @@ ENGINE.Game = {
 
   create: function() {
     this.started = false;
-    this.finished = false;
+    this.result = null;
     this.warning = false;
     this.warned = false;
-    this.won = false;
-    this.lost = false;
     this.elapsed = 0;
     this.gametime = 0;
     this.hunger = 0;
@@ -41,22 +39,17 @@ ENGINE.Game = {
   },
 
   step: function(dt) {
-    if (this.started && !this.finished && !this.warning) {
+    if (this.started && !this.result && !this.warning) {
       this.elapsed += dt;
       this.gametime += dt / 45;
       this.hunger += dt / 14;
 
       if (this.gametime >= 1) {
-        this.app.setState(ENGINE.Won);
+        this.result = 'success';
       }
 
       if (this.hunger >= 1) {
-        this.app.setState(ENGINE.Hunger);
-        if (document.location.search.indexOf('6667') === -1) {
-          ARIS.exitToDialog(91046);
-        } else {
-          ARIS.exitToDialog(98426);
-        }
+        this.result = 'toohungry';
       }
     }
   },
@@ -69,6 +62,35 @@ ENGINE.Game = {
         button.fn.bind(self)();
       }
     });
+  },
+
+  drawModal: function(modal, size, fn) {
+    var app = this.app;
+    var layer = this.app.layer;
+
+    layer
+      .fillStyle('rgba(50,50,50,0.7)')
+      .fillRect(0, 0, app.width, app.height);
+
+    var heightFrac = size === 'large' ? 0.7 : 0.2;
+
+    var modalHeight = Math.min(app.height * heightFrac, (app.width * 0.95) / modal.width * modal.height);
+    var modalWidth = modalHeight / modal.height * modal.width;
+
+    layer.drawImage(modal,
+      (app.width - modalWidth) / 2, // x
+      (app.height - modalHeight) / 2, // y
+      modalWidth,
+      modalHeight,
+    );
+
+    return [{
+      minX: 0,
+      maxX: app.width,
+      minY: 0,
+      maxY: app.height,
+      fn: fn.bind(this),
+    }];
   },
 
   render: function() {
@@ -104,12 +126,7 @@ ENGINE.Game = {
             } else {
               this.hunger -= 0.16;
               if (this.warned) {
-                app.setState(ENGINE.AteFood);
-                if (document.location.search.indexOf('6667') === -1) {
-                  ARIS.exitToDialog(91046);
-                } else {
-                  ARIS.exitToDialog(98426);
-                }
+                this.result = 'youatefood';
               } else {
                 this.warning = true;
                 this.warned = true;
@@ -140,70 +157,37 @@ ENGINE.Game = {
       .fillRect(20, 45 * scaling, (app.width - 40) * this.hunger, 30 * scaling);
 
     if (!this.started) {
-      layer
-        .fillStyle('rgba(255,255,255,0.5)')
-        .fillRect(0, 0, app.width, app.height);
-
-      var minX = app.width / 2 - 100 * scaling;
-      var maxX = app.width / 2 + 100 * scaling;
-      var minY = app.height / 2 - 50 * scaling;
-      var maxY = app.height / 2 + 50 * scaling;
-      layer
-        .fillStyle('#222')
-        .fillRect(minX, minY, maxX - minX, maxY - minY);
-      layer
-        .fillStyle('#2c2')
-        .fillRect(minX + 5 * scaling, minY + 5 * scaling, maxX - minX - 10 * scaling, maxY - minY - 10 * scaling);
-      layer.font((40 * scaling) + 'px sans-serif');
-      layer.textAlign('center');
-      layer
-        .fillStyle('black')
-        .fillText('START', app.width / 2, maxY - 35 * scaling);
-      this.buttons = [{
-        minX: minX,
-        maxX: maxX,
-        minY: minY,
-        maxY: maxY,
-        fn: function(){ this.started = true; },
-      }];
+      this.buttons = this.drawModal(app.images.modal_start, 'small', function(){
+        this.started = true;
+      });
     } else if (this.warning) {
-      layer
-        .fillStyle('rgba(255,255,255,0.8)')
-        .fillRect(0, 0, app.width, app.height);
-
-      var textMinY = app.height * (1/5);
-
-      layer.font((22 * scaling) + 'px sans-serif');
-      layer.textAlign('center');
-      layer
-        .fillStyle('black')
-        .fillText("To stay in the study,", app.width / 2, textMinY)
-        .fillText("don't eat any extra food.", app.width / 2, textMinY + 50 * scaling)
-        .fillText("Stay busy by tapping", app.width / 2, textMinY + 100 * scaling)
-        .fillText("items that aren't food.", app.width / 2, textMinY + 150 * scaling);
-
-      var minX = app.width / 2 - 100 * scaling;
-      var maxX = app.width / 2 + 100 * scaling;
-      var minY = app.height * (4/5) - 50 * scaling;
-      var maxY = app.height * (4/5) + 50 * scaling;
-      layer
-        .fillStyle('#222')
-        .fillRect(minX, minY, maxX - minX, maxY - minY);
-      layer
-        .fillStyle('#2c2')
-        .fillRect(minX + 5 * scaling, minY + 5 * scaling, maxX - minX - 10 * scaling, maxY - minY - 10 * scaling);
-      layer.font((40 * scaling) + 'px sans-serif');
-      layer.textAlign('center');
-      layer
-        .fillStyle('black')
-        .fillText('Continue', app.width / 2, maxY - 35 * scaling);
-      this.buttons = [{
-        minX: minX,
-        maxX: maxX,
-        minY: minY,
-        maxY: maxY,
-        fn: function(){ this.warning = false; },
-      }];
+      this.buttons = this.drawModal(app.images.modal_tostaybusy, 'large', function(){
+        this.warning = false;
+      });
+    } else if (this.result === 'success') {
+      this.buttons = this.drawModal(app.images.modal_success, 'large', function(){
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(90778);
+        } else {
+          ARIS.exitToDialog(98424);
+        }
+      });
+    } else if (this.result === 'youatefood') {
+      this.buttons = this.drawModal(app.images.modal_youatefood, 'large', function(){
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(91046);
+        } else {
+          ARIS.exitToDialog(98426);
+        }
+      });
+    } else if (this.result === 'toohungry') {
+      this.buttons = this.drawModal(app.images.modal_toohungry, 'large', function(){
+        if (document.location.search.indexOf('6667') === -1) {
+          ARIS.exitToDialog(91046);
+        } else {
+          ARIS.exitToDialog(98426);
+        }
+      });
     } else {
       this.buttons = iconButtons;
     }

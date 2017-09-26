@@ -11,7 +11,9 @@ var app = new PLAYGROUND.Application({
     for (var i = 0; i < 24; i++) {
         this.loadImage('walking-v2-' + i);
     }
+
     this.loadImage('background.jpg');
+
     this.loadImage('icon_apple');
     this.loadImage('icon_book');
     this.loadImage('icon_burger');
@@ -24,6 +26,12 @@ var app = new PLAYGROUND.Application({
     this.loadImage('icon_record');
     this.loadImage('icon_sandwich');
     this.loadImage('icon_shake');
+
+    this.loadImage('modal_start');
+    this.loadImage('modal_tostaybusy');
+    this.loadImage('modal_success');
+    this.loadImage('modal_toohungry');
+    this.loadImage('modal_youatefood');
 
   },
 

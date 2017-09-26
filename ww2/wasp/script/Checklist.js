@@ -26,7 +26,7 @@ ENGINE.Checklist = {
     var app = this.app;
     var layer = this.app.layer;
 
-    layer.clear("white");
+    layer.clear("#333");
     var box = getBox(app);
 
     if (box.y == 0) {
@@ -38,27 +38,27 @@ ENGINE.Checklist = {
     }
 
     var clipboard = {};
-    clipboard.width = box.width * 0.9;
-    clipboard.height = clipboard.width / app.images.clipboard.width * app.images.clipboard.height;
+    clipboard.height = box.height * 0.97;
+    clipboard.width = clipboard.height / app.images.clipboard.height * app.images.clipboard.width;
     clipboard.x = box.x + (box.width - clipboard.width) / 2;
     clipboard.y = box.y + (box.height - clipboard.height) / 2;
     layer.drawImage(app.images.clipboard, clipboard.x, clipboard.y, clipboard.width, clipboard.height);
 
-    if (this.elapsed > 1.5) {
-      layer.font(Math.floor(box.width * 0.07) + 'px sans-serif').textAlign('center').fillText('Continue >', box.x + box.width * 0.5, box.y + box.height * 0.98);
-    }
-
     if (window.completed[0]) {
-      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.265, box.width * 0.14, box.height * 0.09);
+      layer.drawImage(app.images.check, box.x + box.width * 0.245, box.y + box.height * 0.445, box.width * 0.11, box.width * 0.11 * (165/162));
     }
     if (window.completed[1]) {
-      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.395, box.width * 0.14, box.height * 0.09);
+      layer.drawImage(app.images.check, box.x + box.width * 0.245, box.y + box.height * 0.54, box.width * 0.11, box.width * 0.11 * (165/162));
     }
     if (window.completed[2]) {
-      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.52, box.width * 0.14, box.height * 0.09);
+      layer.drawImage(app.images.check, box.x + box.width * 0.245, box.y + box.height * 0.635, box.width * 0.11, box.width * 0.11 * (165/162));
     }
     if (window.completed[3]) {
-      layer.drawImage(app.images.check, box.x + box.width * 0.17, box.y + box.height * 0.648, box.width * 0.14, box.height * 0.09);
+      layer.drawImage(app.images.check, box.x + box.width * 0.245, box.y + box.height * 0.73, box.width * 0.11, box.width * 0.11 * (165/162));
+    }
+
+    if (this.elapsed <= 1.5) {
+      layer.fillStyle('#333').fillRect(box.x, box.y + box.height * 0.9, box.width, box.height * 0.1);
     }
   }
 

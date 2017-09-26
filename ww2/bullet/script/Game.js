@@ -23,7 +23,7 @@ every second:
 
 */
 
-var GAME_DURATION = 60000; // 1 minute
+var GAME_DURATION = 20000; // 20 seconds
 
 function shouldReplaceControl(curControl, newControl) {
   if (curControl === null) return true;
@@ -78,7 +78,7 @@ ENGINE.Game = {
     });
 
     if (window.activeControl && Date.now() - window.activeControl.start_time >= GAME_DURATION && !this.exitedToDialog) {
-      if (window.activeControl.count >= 10) {
+      if (window.activeControl.count >= 5) {
         if (document.location.search.indexOf('6667') === -1) {
           ARIS.exitToDialog(90833);
         } else {

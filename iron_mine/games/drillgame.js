@@ -90,7 +90,7 @@ var DrillGame = function()
         if(imm.currentLevel == 1)
         {
             if(success && successCount == 1) 
-                imv.displayGuruWithMessage("Good work! <b>Collect some more ore</b>, just to make sure you've got the hang of things.");
+                imv.displayGuruWithMessage("Good work! <b>Drill some more holes</b>, just to make sure you've got the hang of things.");
             if(success && successCount == 3) 
             {
                 imv.currentGuruButton.onclick = function(){ARIS.exitToScanner("Scan something in the iron mine!");};

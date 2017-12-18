@@ -88,13 +88,13 @@
       if (this.done) {
         return;
       }
-      if (!(Math.abs(this.positions[0] - this.positions[1]) < 20)) {
+      if (!(Math.abs(this.positions[0] - this.positions[1]) < 30)) {
         return;
       }
-      if (!(Math.abs(this.positions[0] - this.positions[2]) < 20)) {
+      if (!(Math.abs(this.positions[0] - this.positions[2]) < 30)) {
         return;
       }
-      if (!(Math.abs(this.positions[1] - this.positions[2]) < 20)) {
+      if (!(Math.abs(this.positions[1] - this.positions[2]) < 30)) {
         return;
       }
       this.done = true;

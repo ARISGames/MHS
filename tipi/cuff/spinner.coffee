@@ -58,9 +58,9 @@ Spinner =
 
   checkPositions: ->
     return if @done
-    return unless Math.abs(@positions[0] - @positions[1]) < 10
-    return unless Math.abs(@positions[0] - @positions[2]) < 10
-    return unless Math.abs(@positions[1] - @positions[2]) < 10
+    return unless Math.abs(@positions[0] - @positions[1]) < 30
+    return unless Math.abs(@positions[0] - @positions[2]) < 30
+    return unless Math.abs(@positions[1] - @positions[2]) < 30
     @done = true
     setTimeout ->
       ARIS.exitToDialog dialogDallasEnd

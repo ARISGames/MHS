@@ -60,7 +60,7 @@ window.onerror = function(msg, url, linenumber)
 <div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
 
 <div id='vid' class='full_screen'>
-    <video id="vidfile" width="320" height="504" webkit-playsinline>
+    <video id="vidfile" width="320" height="504" playsinline>
         <source src="assets/vanessa.mp4" type="video/mp4">
     </video>
     <div class='bottombutton invisible' ontouchstart='continueButton();'>

@@ -34,7 +34,7 @@
 
     <div id='drillgame' class='game drill_bg full_screen'>
         <div id='drillvid' class='vid'>
-            <video id="drillvidfile" width="320" height="504" webkit-playsinline>
+            <video id="drillvidfile" width="320" height="504" playsinline>
                 <source src="assets/intro.mp4" type="video/mp4">
             </video>
             <div class='bottombutton' onclick='ARIS.exitToScanner("Scan something in the mine!");'>

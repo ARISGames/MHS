@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Play the Past</title>
+<meta charset="utf-8">
+<script type="text/javascript">
+
+var ARIS = {};
+
+function clicked(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  var map = document.getElementById('the-map');
+  var w = map.offsetWidth;
+  var h = map.offsetHeight;
+  var mapRatio = 1356 / 2218;
+  var drawnWidth, drawnHeight;
+  if (w / h < mapRatio) {
+    // screen is skinnier than map image
+    drawnWidth = w;
+    drawnHeight = w / mapRatio;
+  } else {
+    // screen is wider than map image
+    drawnHeight = h;
+    drawnWidth = h * mapRatio;
+  }
+  x = (x - (w - drawnWidth) / 2) / drawnWidth;
+  y = (y - (h - drawnHeight) / 2) / drawnHeight;
+
+  var targets = [
+      { hub: 'Iron Mine'
+      , top_left: [0.08904225186750617, 0.009950248756218905]
+      , bottom_right: [0.22331557551475661, 0.09079601990049752]
+      }
+    , { hub: 'Fur Trade'
+      , top_left: [0.2660389057661545, 0.09203980099502487]
+      , bottom_right: [0.40234667371109056, 0.1791044776119403]
+      }
+    , { hub: 'Tipi'
+      , top_left: [0.3311411232920941, 0.3171641791044776]
+      , bottom_right: [0.4674488912370302, 0.4017412935323383]
+      }
+    , { hub: 'Sod House'
+      , top_left: [0.3291066789944085, 0.5012437810945274]
+      , bottom_right: [0.4654144469393446, 0.588308457711442]
+      }
+    , { hub: 'Depression'
+      , top_left: [0.5040688885953712, 0.6592039800995025]
+      , bottom_right: [0.6424111008379929, 0.7450248756218906]
+      }
+    , { hub: 'War'
+      , top_left: [0.6342733236472504, 0.8743781094527363]
+      , bottom_right: [0.7746499801875577, 0.9626865671641791]
+      }
+    , { hub: 'Boom'
+      , top_left: [0.7949944231644139, 0.9067164179104478]
+      , bottom_right: [0.93130219110935, 0.992537313432835]
+      }
+  ];
+  for (var i = 0; i < targets.length; i++) {
+    var target = targets[i];
+    if (target.top_left[0] < x && target.bottom_right[0] > x && target.top_left[1] < y && target.bottom_right[1] > y) {
+      ARIS.exitToScanner("You're in the " + target.hub + '!');
+      break;
+    }
+  }
+}
+
+</script>
+<style type="text/css">
+#the-map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url(map.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+</style>
+</head>
+<body>
+
+<div id="the-map" onclick="clicked(event);"></div>
+
+</body>
+</html>

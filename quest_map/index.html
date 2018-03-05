@@ -7,6 +7,44 @@
 
 var ARIS = {};
 
+var targets = [
+    { hub: 'Iron Mine'
+    , top_left: [0.08904225186750617, 0.009950248756218905]
+    , bottom_right: [0.22331557551475661, 0.09079601990049752]
+    , trigger_id: 2666101
+    }
+  , { hub: 'Fur Trade'
+    , top_left: [0.2660389057661545, 0.09203980099502487]
+    , bottom_right: [0.40234667371109056, 0.1791044776119403]
+    , trigger_id: 2666104
+    }
+  , { hub: 'Tipi'
+    , top_left: [0.3311411232920941, 0.3171641791044776]
+    , bottom_right: [0.4674488912370302, 0.4017412935323383]
+    , trigger_id: 2666106
+    }
+  , { hub: 'Sod House'
+    , top_left: [0.3291066789944085, 0.5012437810945274]
+    , bottom_right: [0.4654144469393446, 0.588308457711442]
+    , trigger_id: 2666105
+    }
+  , { hub: 'Depression'
+    , top_left: [0.5040688885953712, 0.6592039800995025]
+    , bottom_right: [0.6424111008379929, 0.7450248756218906]
+    , trigger_id: 2666103
+    }
+  , { hub: 'War'
+    , top_left: [0.6342733236472504, 0.8743781094527363]
+    , bottom_right: [0.7746499801875577, 0.9626865671641791]
+    , trigger_id: 2666107
+    }
+  , { hub: 'Boom'
+    , top_left: [0.7949944231644139, 0.9067164179104478]
+    , bottom_right: [0.93130219110935, 0.992537313432835]
+    , trigger_id: 2666102
+    }
+];
+
 function clicked(event) {
   var x = event.clientX;
   var y = event.clientY;
@@ -26,37 +64,6 @@ function clicked(event) {
   }
   x = (x - (w - drawnWidth) / 2) / drawnWidth;
   y = (y - (h - drawnHeight) / 2) / drawnHeight;
-
-  var targets = [
-      { hub: 'Iron Mine'
-      , top_left: [0.08904225186750617, 0.009950248756218905]
-      , bottom_right: [0.22331557551475661, 0.09079601990049752]
-      }
-    , { hub: 'Fur Trade'
-      , top_left: [0.2660389057661545, 0.09203980099502487]
-      , bottom_right: [0.40234667371109056, 0.1791044776119403]
-      }
-    , { hub: 'Tipi'
-      , top_left: [0.3311411232920941, 0.3171641791044776]
-      , bottom_right: [0.4674488912370302, 0.4017412935323383]
-      }
-    , { hub: 'Sod House'
-      , top_left: [0.3291066789944085, 0.5012437810945274]
-      , bottom_right: [0.4654144469393446, 0.588308457711442]
-      }
-    , { hub: 'Depression'
-      , top_left: [0.5040688885953712, 0.6592039800995025]
-      , bottom_right: [0.6424111008379929, 0.7450248756218906]
-      }
-    , { hub: 'War'
-      , top_left: [0.6342733236472504, 0.8743781094527363]
-      , bottom_right: [0.7746499801875577, 0.9626865671641791]
-      }
-    , { hub: 'Boom'
-      , top_left: [0.7949944231644139, 0.9067164179104478]
-      , bottom_right: [0.93130219110935, 0.992537313432835]
-      }
-  ];
   for (var i = 0; i < targets.length; i++) {
     var target = targets[i];
     if (target.top_left[0] < x && target.bottom_right[0] > x && target.top_left[1] < y && target.bottom_right[1] > y) {
@@ -65,6 +72,33 @@ function clicked(event) {
     }
   }
 }
+
+var beaconRecord = {};
+
+ARIS.didReceiveTriggerLocation = function(trigger_info){
+  beaconRecord[trigger_info.trigger_id] = trigger_info.accuracy;
+
+  // recalculate closest beacon
+  var closestTarget   = null;
+  var closestAccuracy = null;
+  targets.forEach(function(target){
+    var accuracy = beaconRecord[target.trigger_id]
+    if (accuracy != null && (closestAccuracy === null || accuracy < closestAccuracy)) {
+      closestTarget   = target;
+      closestAccuracy = accuracy;
+    }
+  });
+
+  // put rectangle around closestTarget
+};
+
+function getBeacons() {
+  targets.forEach(function(target){
+    ARIS.getTriggerLocation(target.trigger_id);
+  });
+  setTimeout(getBeacons, 5000);
+}
+setTimeout(getBeacons, 1000);
 
 </script>
 <style type="text/css">

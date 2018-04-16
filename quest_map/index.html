@@ -7,51 +7,50 @@
 
 var ARIS = {};
 
+var halfWidth = 47;
 var targets = [
     { hub: 'Iron Mine'
-    , top_left: [0.08904225186750617, 0.009950248756218905]
-    , bottom_right: [0.22331557551475661, 0.09079601990049752]
+    , top_left: [(538 - halfWidth) / 640, (67 - halfWidth) / 992]
+    , bottom_right: [(538 + halfWidth) / 640, (67 + halfWidth) / 992]
     , trigger_id: 2666101
     }
   , { hub: 'Fur Trade'
-    , top_left: [0.2660389057661545, 0.09203980099502487]
-    , bottom_right: [0.40234667371109056, 0.1791044776119403]
+    , top_left: [(524 - halfWidth) / 640, (277 - halfWidth) / 992]
+    , bottom_right: [(524 + halfWidth) / 640, (277 + halfWidth) / 992]
     , trigger_id: 2666104
     }
   , { hub: 'Tipi'
-    , top_left: [0.3311411232920941, 0.3171641791044776]
-    , bottom_right: [0.4674488912370302, 0.4017412935323383]
+    , top_left: [(355 - halfWidth) / 640, (335 - halfWidth) / 992]
+    , bottom_right: [(355 + halfWidth) / 640, (335 + halfWidth) / 992]
     , trigger_id: 2666106
     }
   , { hub: 'Sod House'
-    , top_left: [0.3291066789944085, 0.5012437810945274]
-    , bottom_right: [0.4654144469393446, 0.588308457711442]
+    , top_left: [(307 - halfWidth) / 640, (455 - halfWidth) / 992]
+    , bottom_right: [(307 + halfWidth) / 640, (455 + halfWidth) / 992]
     , trigger_id: 2666105
     }
   , { hub: 'Depression'
-    , top_left: [0.5040688885953712, 0.6592039800995025]
-    , bottom_right: [0.6424111008379929, 0.7450248756218906]
+    , top_left: [(293 - halfWidth) / 640, (608 - halfWidth) / 992]
+    , bottom_right: [(293 + halfWidth) / 640, (608 + halfWidth) / 992]
     , trigger_id: 2666103
     }
   , { hub: 'War'
-    , top_left: [0.6342733236472504, 0.8743781094527363]
-    , bottom_right: [0.7746499801875577, 0.9626865671641791]
+    , top_left: [(298 - halfWidth) / 640, (703 - halfWidth) / 992]
+    , bottom_right: [(298 + halfWidth) / 640, (703 + halfWidth) / 992]
     , trigger_id: 2666107
     }
   , { hub: 'Boom'
-    , top_left: [0.7949944231644139, 0.9067164179104478]
-    , bottom_right: [0.93130219110935, 0.992537313432835]
+    , top_left: [(371 - halfWidth) / 640, (820 - halfWidth) / 992]
+    , bottom_right: [(371 + halfWidth) / 640, (820 + halfWidth) / 992]
     , trigger_id: 2666102
     }
 ];
 
-function clicked(event) {
-  var x = event.clientX;
-  var y = event.clientY;
+function getDims() {
   var map = document.getElementById('the-map');
   var w = map.offsetWidth;
   var h = map.offsetHeight;
-  var mapRatio = 1356 / 2218;
+  var mapRatio = 640 / 992;
   var drawnWidth, drawnHeight;
   if (w / h < mapRatio) {
     // screen is skinnier than map image
@@ -62,8 +61,17 @@ function clicked(event) {
     drawnHeight = h;
     drawnWidth = h * mapRatio;
   }
-  x = (x - (w - drawnWidth) / 2) / drawnWidth;
-  y = (y - (h - drawnHeight) / 2) / drawnHeight;
+  var gapLeft = (w - drawnWidth) / 2;
+  var gapTop = (h - drawnHeight) / 2
+  return {screen: {w: w, h: h}, map: {w: drawnWidth, h: drawnHeight}, gap: {w: gapLeft, h: gapTop}};
+}
+
+function clicked(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  var dims = getDims();
+  x = (x - dims.gap.w) / dims.map.w;
+  y = (y - dims.gap.h) / dims.map.h;
   for (var i = 0; i < targets.length; i++) {
     var target = targets[i];
     if (target.top_left[0] < x && target.bottom_right[0] > x && target.top_left[1] < y && target.bottom_right[1] > y) {
@@ -74,6 +82,21 @@ function clicked(event) {
 }
 
 var beaconRecord = {};
+
+function attachRadar(target) {
+  var dims = getDims();
+  var radar = document.getElementById('the-radar');
+  if (target == null) {
+    radar.style.display = 'none';
+  } else {
+    var radarWidth = dims.map.w * 0.20;
+    radar.style.display = 'block';
+    radar.style.left = (dims.gap.w + dims.map.w * ((target.top_left[0] + target.bottom_right[0]) / 2) - radarWidth / 2) + 'px';
+    radar.style.top = (dims.gap.h + dims.map.h * ((target.top_left[1] + target.bottom_right[1]) / 2) - radarWidth / 2) + 'px';
+    radar.style.width = radarWidth + 'px';
+    radar.style.height = radarWidth + 'px';
+  }
+};
 
 ARIS.didReceiveTriggerLocation = function(trigger_info){
   beaconRecord[trigger_info.trigger_id] = trigger_info.accuracy;
@@ -88,20 +111,44 @@ ARIS.didReceiveTriggerLocation = function(trigger_info){
       closestAccuracy = accuracy;
     }
   });
-
-  // put rectangle around closestTarget
+  attachRadar(closestTarget);
 };
 
 function getBeacons() {
   targets.forEach(function(target){
-    ARIS.getTriggerLocation(target.trigger_id);
+    if (ARIS.getTriggerLocation) {
+      ARIS.getTriggerLocation(target.trigger_id);
+    } else {
+      ARIS.didReceiveTriggerLocation({
+        trigger_id: target.trigger_id,
+        accuracy: Math.random(),
+      });
+    }
   });
   setTimeout(getBeacons, 5000);
 }
 setTimeout(getBeacons, 1000);
 
+document.addEventListener('DOMContentLoaded', function(){
+  var dims = getDims();
+  return;
+  targets.forEach(function(target){
+    var div = document.createElement('div');
+    div.style.position = 'fixed';
+    div.style.left = (dims.gap.w + target.top_left[0] * dims.map.w) + 'px';
+    div.style.top = (dims.gap.h + target.top_left[1] * dims.map.h) + 'px';
+    div.style.width = ((target.bottom_right[0] - target.top_left[0]) * dims.map.w) + 'px';
+    div.style.height = ((target.bottom_right[1] - target.top_left[1]) * dims.map.h) + 'px';
+    div.classList.add('target-square');
+    document.body.appendChild(div);
+  });
+});
+
 </script>
 <style type="text/css">
+body {
+  background-color: rgb(177,224,228);
+}
 #the-map {
   position: fixed;
   top: 0;
@@ -113,11 +160,36 @@ setTimeout(getBeacons, 1000);
   background-repeat: no-repeat;
   background-size: contain;
 }
+#the-banner {
+  width: 90vw;
+  height: 10vh;
+  bottom: 1.5vh;
+  position: fixed;
+  left: 5vw;
+  right: 5vw;
+  background-color: gray;
+  border-radius: 1vh;
+  border: 0.5vh solid white;
+  box-sizing: border-box;
+}
+.target-square {
+  pointer-events: none;
+  background-color: green;
+  opacity: 0.5;
+}
+#the-radar {
+  position: fixed;
+  display: none;
+}
 </style>
 </head>
 <body>
 
 <div id="the-map" onclick="clicked(event);"></div>
+
+<div id="the-banner"></div>
+
+<img id="the-radar" src="radar.png">
 
 </body>
 </html>

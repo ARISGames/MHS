@@ -13,36 +13,50 @@ var targets = [
     , top_left: [(538 - halfWidth) / 640, (67 - halfWidth) / 992]
     , bottom_right: [(538 + halfWidth) / 640, (67 + halfWidth) / 992]
     , trigger_id: 2666101
+    , color: 'rgb(238,177,51)'
+    , icon: 'ironmine.png'
     }
   , { hub: 'Fur Trade'
     , top_left: [(524 - halfWidth) / 640, (277 - halfWidth) / 992]
     , bottom_right: [(524 + halfWidth) / 640, (277 + halfWidth) / 992]
     , trigger_id: 2666104
+    , color: 'rgb(243,129,51)'
+    , icon: 'furtrade.png'
     }
   , { hub: 'Tipi'
     , top_left: [(355 - halfWidth) / 640, (335 - halfWidth) / 992]
     , bottom_right: [(355 + halfWidth) / 640, (335 + halfWidth) / 992]
     , trigger_id: 2666106
+    , color: 'rgb(194,35,57)'
+    , icon: 'tipi.png'
     }
   , { hub: 'Sod House'
     , top_left: [(307 - halfWidth) / 640, (455 - halfWidth) / 992]
     , bottom_right: [(307 + halfWidth) / 640, (455 + halfWidth) / 992]
     , trigger_id: 2666105
+    , color: 'rgb(31,172,203)'
+    , icon: 'sodhouse.png'
     }
   , { hub: 'Depression'
     , top_left: [(293 - halfWidth) / 640, (608 - halfWidth) / 992]
     , bottom_right: [(293 + halfWidth) / 640, (608 + halfWidth) / 992]
     , trigger_id: 2666103
+    , color: 'rgb(83,110,130)'
+    , icon: 'depression.png'
     }
   , { hub: 'War'
     , top_left: [(298 - halfWidth) / 640, (703 - halfWidth) / 992]
     , bottom_right: [(298 + halfWidth) / 640, (703 + halfWidth) / 992]
     , trigger_id: 2666107
+    , color: 'rgb(102,142,124)'
+    , icon: 'war.png'
     }
   , { hub: 'Boom'
     , top_left: [(371 - halfWidth) / 640, (820 - halfWidth) / 992]
     , bottom_right: [(371 + halfWidth) / 640, (820 + halfWidth) / 992]
     , trigger_id: 2666102
+    , color: 'rgb(134,34,48)'
+    , icon: 'boom.png'
     }
 ];
 
@@ -82,6 +96,7 @@ function clicked(event) {
 }
 
 var beaconRecord = {};
+window.currentTarget = null;
 
 function attachRadar(target) {
   var dims = getDims();
@@ -96,7 +111,25 @@ function attachRadar(target) {
     radar.style.width = radarWidth + 'px';
     radar.style.height = radarWidth + 'px';
   }
+
+  var banner = document.getElementById('the-banner');
+  if (target == null) {
+    banner.style.display = 'none';
+  } else {
+    banner.style.display = 'flex';
+    banner.style.backgroundColor = target.color;
+    document.getElementById('the-banner-icon').src = target.icon;
+    document.getElementById('the-banner-hub-name').innerHTML = target.hub;
+  }
+
+  window.currentTarget = target;
 };
+
+function clickedBanner() {
+  if (window.currentTarget) {
+    ARIS.exitToGame(window.currentTarget.hub);
+  }
+}
 
 ARIS.didReceiveTriggerLocation = function(trigger_info){
   beaconRecord[trigger_info.trigger_id] = trigger_info.accuracy;
@@ -168,9 +201,33 @@ body {
   left: 5vw;
   right: 5vw;
   background-color: gray;
+  display: none;
   border-radius: 1vh;
   border: 0.5vh solid white;
   box-sizing: border-box;
+  flex-direction: row;
+  align-items: stretch;
+  color: white;
+  text-decoration: none;
+}
+#the-banner-icon {
+  height: 100%;
+}
+#the-banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  font-family: sans-serif;
+  padding-left: 2vh;
+}
+#the-banner-text-1 {
+  font-size: 2.7vh;
+  font-weight: bold;
+}
+#the-banner-text-2 {
+  font-size: 2vh;
 }
 .target-square {
   pointer-events: none;
@@ -181,13 +238,32 @@ body {
   position: fixed;
   display: none;
 }
+#the-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 2vh;
+}
+#the-arrow img {
+  width: 2.2vh;
+  height: 3.7vh;
+}
 </style>
 </head>
 <body>
 
 <div id="the-map" onclick="clicked(event);"></div>
 
-<div id="the-banner"></div>
+<a id="the-banner" href="#" onclick="event.preventDefault(); clickedBanner();">
+  <img id="the-banner-icon">
+  <div id="the-banner-text">
+    <div id="the-banner-text-1">You are near the <span id="the-banner-hub-name"></span></div>
+    <div id="the-banner-text-2">Continue quest</div>
+  </div>
+  <div id="the-arrow">
+    <img src="arrow.png">
+  </div>
+</a>
 
 <img id="the-radar" src="radar.png">
 

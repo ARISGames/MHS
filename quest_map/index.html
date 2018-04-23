@@ -7,60 +7,66 @@
 
 var ARIS = {};
 
-var halfWidth = 46;
+var clickableWidth = 92;
+var clickableHalf = clickableWidth / 2;
+
+var mapIconWidth = 50;
+var mapIconHalf = mapIconWidth / 2;
+
 var mapWidth = 640;
 var mapHeight = 1008;
+
 var targets = [
     { hub: 'Iron Mine'
-    , top_left: [(453 - halfWidth) / mapWidth, (64 - halfWidth) / mapHeight]
-    , bottom_right: [(453 + halfWidth) / mapWidth, (64 + halfWidth) / mapHeight]
+    , center: {x: 453, y: 64}
     , trigger_id: 2666101
     , color: 'rgb(238,177,51)'
     , icon: 'ironmine.png'
     }
   , { hub: 'Fur Trade'
-    , top_left: [(437 - halfWidth) / mapWidth, (270 - halfWidth) / mapHeight]
-    , bottom_right: [(437 + halfWidth) / mapWidth, (270 + halfWidth) / mapHeight]
+    , center: {x: 437, y: 270}
     , trigger_id: 2666104
     , color: 'rgb(243,129,51)'
     , icon: 'furtrade.png'
     }
   , { hub: 'Tipi'
-    , top_left: [(267 - halfWidth) / mapWidth, (208 - halfWidth) / mapHeight]
-    , bottom_right: [(267 + halfWidth) / mapWidth, (208 + halfWidth) / mapHeight]
+    , center: {x: 267, y: 208}
     , trigger_id: 2666106
     , color: 'rgb(194,35,57)'
     , icon: 'tipi.png'
     }
   , { hub: 'Sod House'
-    , top_left: [(207 - halfWidth) / mapWidth, (370 - halfWidth) / mapHeight]
-    , bottom_right: [(207 + halfWidth) / mapWidth, (370 + halfWidth) / mapHeight]
+    , center: {x: 207, y: 370}
     , trigger_id: 2666105
     , color: 'rgb(31,172,203)'
     , icon: 'sodhouse.png'
     }
   , { hub: 'Depression'
-    , top_left: [(230 - halfWidth) / mapWidth, (589 - halfWidth) / mapHeight]
-    , bottom_right: [(230 + halfWidth) / mapWidth, (589 + halfWidth) / mapHeight]
+    , center: {x: 230, y: 589}
     , trigger_id: 2666103
     , color: 'rgb(83,110,130)'
     , icon: 'depression.png'
     }
   , { hub: 'War'
-    , top_left: [(197 - halfWidth) / mapWidth, (681 - halfWidth) / mapHeight]
-    , bottom_right: [(197 + halfWidth) / mapWidth, (681 + halfWidth) / mapHeight]
+    , center: {x: 197, y: 681}
     , trigger_id: 2666107
     , color: 'rgb(102,142,124)'
     , icon: 'war.png'
     }
   , { hub: 'Boom'
-    , top_left: [(268 - halfWidth) / mapWidth, (809 - halfWidth) / mapHeight]
-    , bottom_right: [(268 + halfWidth) / mapWidth, (809 + halfWidth) / mapHeight]
+    , center: {x: 268, y: 809}
     , trigger_id: 2666102
     , color: 'rgb(134,34,48)'
     , icon: 'boom.png'
     }
 ];
+
+targets.forEach(function(target){
+  target.top_left = [(target.center.x - clickableHalf) / mapWidth, (target.center.y - clickableHalf) / mapHeight];
+  target.bottom_right = [(target.center.x + clickableHalf) / mapWidth, (target.center.y + clickableHalf) / mapHeight];
+  target.stars_top_left = [(target.center.x - mapIconHalf) / mapWidth, (target.center.y - mapIconHalf) / mapHeight];
+  target.stars_bottom_right = [(target.center.x + mapIconHalf) / mapWidth, (target.center.y + mapIconHalf) / mapHeight];
+});
 
 function getDims() {
   var map = document.getElementById('the-map');
@@ -121,7 +127,17 @@ function attachRadar(target) {
     banner.style.display = 'flex';
     banner.style.backgroundColor = target.color;
     banner.style.border = '0.5vh solid ' + target.color;
-    document.getElementById('the-banner-icon').src = target.icon;
+    document.getElementById('the-banner-img').src = target.icon;
+    var stars = window.stars[target.hub] || 0;
+    if (stars === 0) {
+      document.getElementById('the-banner-stars').style.display = 'none';
+    } else if (stars === 1) {
+      document.getElementById('the-banner-stars').style.display = 'block';
+      document.getElementById('the-banner-stars').src = 'stars-1.png';
+    } else if (stars === 2) {
+      document.getElementById('the-banner-stars').style.display = 'block';
+      document.getElementById('the-banner-stars').src = 'stars-2.png';
+    }
     document.getElementById('the-banner-hub-name').innerHTML = target.hub;
   }
 
@@ -166,54 +182,54 @@ function getBeacons() {
 
 var starLookup = {
 
-  11102: ['ironmine', 0],
-  11123: ['ironmine', 0],
-  11105: ['ironmine', 1],
-  11126: ['ironmine', 2],
+  11102: ['Iron Mine', 0],
+  11123: ['Iron Mine', 0],
+  11105: ['Iron Mine', 1],
+  11126: ['Iron Mine', 2],
 
-  11129: ['furtrade', 0],
-  11132: ['furtrade', 0],
-  11138: ['furtrade', 0],
-  11135: ['furtrade', 1],
-  11141: ['furtrade', 1],
-  11144: ['furtrade', 2],
+  11129: ['Fur Trade', 0],
+  11132: ['Fur Trade', 0],
+  11138: ['Fur Trade', 0],
+  11135: ['Fur Trade', 1],
+  11141: ['Fur Trade', 1],
+  11144: ['Fur Trade', 2],
 
-  11099: ['sodhouse', 0],
-  11108: ['sodhouse', 0],
-  11111: ['sodhouse', 0],
-  11114: ['sodhouse', 1],
-  11117: ['sodhouse', 1],
-  11120: ['sodhouse', 1],
-  11150: ['sodhouse', 1],
-  11147: ['sodhouse', 2],
+  11099: ['Sod House', 0],
+  11108: ['Sod House', 0],
+  11111: ['Sod House', 0],
+  11114: ['Sod House', 1],
+  11117: ['Sod House', 1],
+  11120: ['Sod House', 1],
+  11150: ['Sod House', 1],
+  11147: ['Sod House', 2],
 
-  12984: ['tipi', 0],
-  12995: ['tipi', 0],
-  12996: ['tipi', 0],
-  12985: ['tipi', 1],
-  12999: ['tipi', 1],
-  13001: ['tipi', 1],
-  13008: ['tipi', 1],
-  13012: ['tipi', 1],
-  13177: ['tipi', 2],
-  13180: ['tipi', 2],
-  13183: ['tipi', 2],
-  13186: ['tipi', 2],
-  13187: ['tipi', 2],
-  13195: ['tipi', 2],
-  13011: ['tipi', 2],
+  12984: ['Tipi', 0],
+  12995: ['Tipi', 0],
+  12996: ['Tipi', 0],
+  12985: ['Tipi', 1],
+  12999: ['Tipi', 1],
+  13001: ['Tipi', 1],
+  13008: ['Tipi', 1],
+  13012: ['Tipi', 1],
+  13177: ['Tipi', 2],
+  13180: ['Tipi', 2],
+  13183: ['Tipi', 2],
+  13186: ['Tipi', 2],
+  13187: ['Tipi', 2],
+  13195: ['Tipi', 2],
+  13011: ['Tipi', 2],
 
-  31666: ['boom', 0],
-  31667: ['boom', 1],
-  31668: ['boom', 2],
+  31666: ['Boom', 0],
+  31667: ['Boom', 1],
+  31668: ['Boom', 2],
 
-  31660: ['depression', 0],
-  31661: ['depression', 1],
-  31662: ['depression', 2],
+  31660: ['Depression', 0],
+  31661: ['Depression', 1],
+  31662: ['Depression', 2],
 
-  31663: ['war', 0],
-  31664: ['war', 1],
-  31665: ['war', 2],
+  31663: ['War', 0],
+  31664: ['War', 1],
+  31665: ['War', 2],
 
 };
 
@@ -254,10 +270,10 @@ document.addEventListener('DOMContentLoaded', function(){
   targets.forEach(function(target){
     var div = document.createElement('div');
     div.style.position = 'fixed';
-    div.style.left = (dims.gap.w + target.top_left[0] * dims.map.w) + 'px';
-    div.style.top = (dims.gap.h + target.top_left[1] * dims.map.h) + 'px';
-    div.style.width = ((target.bottom_right[0] - target.top_left[0]) * dims.map.w) + 'px';
-    div.style.height = ((target.bottom_right[1] - target.top_left[1]) * dims.map.h) + 'px';
+    div.style.left = (dims.gap.w + target.stars_top_left[0] * dims.map.w) + 'px';
+    div.style.top = (dims.gap.h + target.stars_top_left[1] * dims.map.h) + 'px';
+    div.style.width = ((target.stars_bottom_right[0] - target.stars_top_left[0]) * dims.map.w) + 'px';
+    div.style.height = ((target.stars_bottom_right[1] - target.stars_top_left[1]) * dims.map.h) + 'px';
     div.classList.add('target-square');
     document.body.appendChild(div);
   });
@@ -300,6 +316,17 @@ body {
 }
 #the-banner-icon {
   height: 100%;
+  position: relative;
+}
+#the-banner-img {
+  height: 100%;
+}
+#the-banner-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 #the-banner-text {
   flex: 1;
@@ -345,7 +372,10 @@ body {
 <div id="the-map" onclick="clicked(event);"></div>
 
 <a id="the-banner" href="#" onclick="event.preventDefault(); clickedBanner();">
-  <img id="the-banner-icon">
+  <div id="the-banner-icon">
+    <img id="the-banner-img">
+    <img id="the-banner-stars">
+  </div>
   <div id="the-banner-text">
     <div id="the-banner-text-1">You are near the <span id="the-banner-hub-name"></span></div>
     <div id="the-banner-text-2">Continue quest</div>

@@ -7,53 +7,55 @@
 
 var ARIS = {};
 
-var halfWidth = 47;
+var halfWidth = 46;
+var mapWidth = 640;
+var mapHeight = 1008;
 var targets = [
     { hub: 'Iron Mine'
-    , top_left: [(538 - halfWidth) / 640, (67 - halfWidth) / 992]
-    , bottom_right: [(538 + halfWidth) / 640, (67 + halfWidth) / 992]
+    , top_left: [(453 - halfWidth) / mapWidth, (64 - halfWidth) / mapHeight]
+    , bottom_right: [(453 + halfWidth) / mapWidth, (64 + halfWidth) / mapHeight]
     , trigger_id: 2666101
     , color: 'rgb(238,177,51)'
     , icon: 'ironmine.png'
     }
   , { hub: 'Fur Trade'
-    , top_left: [(524 - halfWidth) / 640, (277 - halfWidth) / 992]
-    , bottom_right: [(524 + halfWidth) / 640, (277 + halfWidth) / 992]
+    , top_left: [(437 - halfWidth) / mapWidth, (270 - halfWidth) / mapHeight]
+    , bottom_right: [(437 + halfWidth) / mapWidth, (270 + halfWidth) / mapHeight]
     , trigger_id: 2666104
     , color: 'rgb(243,129,51)'
     , icon: 'furtrade.png'
     }
   , { hub: 'Tipi'
-    , top_left: [(355 - halfWidth) / 640, (335 - halfWidth) / 992]
-    , bottom_right: [(355 + halfWidth) / 640, (335 + halfWidth) / 992]
+    , top_left: [(267 - halfWidth) / mapWidth, (208 - halfWidth) / mapHeight]
+    , bottom_right: [(267 + halfWidth) / mapWidth, (208 + halfWidth) / mapHeight]
     , trigger_id: 2666106
     , color: 'rgb(194,35,57)'
     , icon: 'tipi.png'
     }
   , { hub: 'Sod House'
-    , top_left: [(307 - halfWidth) / 640, (455 - halfWidth) / 992]
-    , bottom_right: [(307 + halfWidth) / 640, (455 + halfWidth) / 992]
+    , top_left: [(207 - halfWidth) / mapWidth, (370 - halfWidth) / mapHeight]
+    , bottom_right: [(207 + halfWidth) / mapWidth, (370 + halfWidth) / mapHeight]
     , trigger_id: 2666105
     , color: 'rgb(31,172,203)'
     , icon: 'sodhouse.png'
     }
   , { hub: 'Depression'
-    , top_left: [(293 - halfWidth) / 640, (608 - halfWidth) / 992]
-    , bottom_right: [(293 + halfWidth) / 640, (608 + halfWidth) / 992]
+    , top_left: [(230 - halfWidth) / mapWidth, (589 - halfWidth) / mapHeight]
+    , bottom_right: [(230 + halfWidth) / mapWidth, (589 + halfWidth) / mapHeight]
     , trigger_id: 2666103
     , color: 'rgb(83,110,130)'
     , icon: 'depression.png'
     }
   , { hub: 'War'
-    , top_left: [(298 - halfWidth) / 640, (703 - halfWidth) / 992]
-    , bottom_right: [(298 + halfWidth) / 640, (703 + halfWidth) / 992]
+    , top_left: [(197 - halfWidth) / mapWidth, (681 - halfWidth) / mapHeight]
+    , bottom_right: [(197 + halfWidth) / mapWidth, (681 + halfWidth) / mapHeight]
     , trigger_id: 2666107
     , color: 'rgb(102,142,124)'
     , icon: 'war.png'
     }
   , { hub: 'Boom'
-    , top_left: [(371 - halfWidth) / 640, (820 - halfWidth) / 992]
-    , bottom_right: [(371 + halfWidth) / 640, (820 + halfWidth) / 992]
+    , top_left: [(268 - halfWidth) / mapWidth, (809 - halfWidth) / mapHeight]
+    , bottom_right: [(268 + halfWidth) / mapWidth, (809 + halfWidth) / mapHeight]
     , trigger_id: 2666102
     , color: 'rgb(134,34,48)'
     , icon: 'boom.png'
@@ -64,7 +66,7 @@ function getDims() {
   var map = document.getElementById('the-map');
   var w = map.offsetWidth;
   var h = map.offsetHeight;
-  var mapRatio = 640 / 992;
+  var mapRatio = mapWidth / mapHeight;
   var drawnWidth, drawnHeight;
   if (w / h < mapRatio) {
     // screen is skinnier than map image
@@ -118,6 +120,7 @@ function attachRadar(target) {
   } else {
     banner.style.display = 'flex';
     banner.style.backgroundColor = target.color;
+    banner.style.border = '0.5vh solid ' + target.color;
     document.getElementById('the-banner-icon').src = target.icon;
     document.getElementById('the-banner-hub-name').innerHTML = target.hub;
   }
@@ -233,10 +236,17 @@ function getStars() {
   ARIS.getPlayer();
 }
 
+window.realARIS = false;
 ARIS.ready = function(){
+  window.realARIS = true;
   getBeacons();
   getStars();
 };
+setTimeout(function(){
+  if (!window.realARIS) {
+    getBeacons();
+  }
+}, 3000);
 
 document.addEventListener('DOMContentLoaded', function(){
   var dims = getDims();
@@ -256,7 +266,8 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <style type="text/css">
 body {
-  background-color: rgb(177,224,228);
+  background: rgb(188,225,235);
+  background: linear-gradient(135deg, rgba(188,225,235,1) 0%, rgba(218,244,243,1) 100%);
 }
 #the-map {
   position: fixed;
@@ -278,13 +289,14 @@ body {
   right: 5vw;
   background-color: gray;
   display: none;
-  border-radius: 1vh;
+  border-radius: 0.5vh;
   border: 0.5vh solid white;
   box-sizing: border-box;
   flex-direction: row;
   align-items: stretch;
   color: white;
   text-decoration: none;
+  box-shadow: 0 0.3vh 0.5vh 0.2vh rgba(0,0,0,0.7);
 }
 #the-banner-icon {
   height: 100%;
@@ -297,6 +309,8 @@ body {
   justify-content: space-around;
   font-family: sans-serif;
   padding-left: 2vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
 #the-banner-text-1 {
   font-size: 2.7vh;

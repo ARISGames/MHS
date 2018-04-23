@@ -160,7 +160,83 @@ function getBeacons() {
   });
   setTimeout(getBeacons, 5000);
 }
-setTimeout(getBeacons, 1000);
+
+var starLookup = {
+
+  11102: ['ironmine', 0],
+  11123: ['ironmine', 0],
+  11105: ['ironmine', 1],
+  11126: ['ironmine', 2],
+
+  11129: ['furtrade', 0],
+  11132: ['furtrade', 0],
+  11138: ['furtrade', 0],
+  11135: ['furtrade', 1],
+  11141: ['furtrade', 1],
+  11144: ['furtrade', 2],
+
+  11099: ['sodhouse', 0],
+  11108: ['sodhouse', 0],
+  11111: ['sodhouse', 0],
+  11114: ['sodhouse', 1],
+  11117: ['sodhouse', 1],
+  11120: ['sodhouse', 1],
+  11150: ['sodhouse', 1],
+  11147: ['sodhouse', 2],
+
+  12984: ['tipi', 0],
+  12995: ['tipi', 0],
+  12996: ['tipi', 0],
+  12985: ['tipi', 1],
+  12999: ['tipi', 1],
+  13001: ['tipi', 1],
+  13008: ['tipi', 1],
+  13012: ['tipi', 1],
+  13177: ['tipi', 2],
+  13180: ['tipi', 2],
+  13183: ['tipi', 2],
+  13186: ['tipi', 2],
+  13187: ['tipi', 2],
+  13195: ['tipi', 2],
+  13011: ['tipi', 2],
+
+  31666: ['boom', 0],
+  31667: ['boom', 1],
+  31668: ['boom', 2],
+
+  31660: ['depression', 0],
+  31661: ['depression', 1],
+  31662: ['depression', 2],
+
+  31663: ['war', 0],
+  31664: ['war', 1],
+  31665: ['war', 2],
+
+};
+
+window.stars = {};
+function getStars() {
+  ARIS.didReceivePlayer = function(player){
+    var game_id = parseInt(window.location.search.match(/game_id=(\w+)/)[1]);
+    ARIS.callService("client.getQuestsForPlayer", {game_id: game_id}, player, function(res){
+      if (res) {
+        res.data.active.forEach(function(quest){
+          var quest_id = parseInt(quest.quest_id);
+          var lookup = starLookup[quest_id];
+          if (lookup) {
+            window.stars[lookup[0]] = lookup[1];
+          }
+        });
+      }
+    });
+  };
+  ARIS.getPlayer();
+}
+
+ARIS.ready = function(){
+  getBeacons();
+  getStars();
+};
 
 document.addEventListener('DOMContentLoaded', function(){
   var dims = getDims();

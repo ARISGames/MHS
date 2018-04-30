@@ -146,7 +146,7 @@ function attachRadar(target) {
 
 function clickedBanner() {
   if (window.currentTarget) {
-    ARIS.exitToGame(window.currentTarget.hub);
+    ARIS.exitToQuest(window.currentTarget.hub);
   }
 }
 
@@ -354,6 +354,7 @@ body {
 #the-radar {
   position: fixed;
   display: none;
+  pointer-events: none;
 }
 #the-arrow {
   display: flex;

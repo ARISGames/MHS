@@ -18,37 +18,37 @@ var mapHeight = 1008;
 
 var targets = [
     { hub: 'Iron Mine'
-    , center: {x: 453, y: 64}
+    , center: {x: 453, y: 65}
     , trigger_id: 2666101
     , color: 'rgb(238,177,51)'
     , icon: 'ironmine.png'
     }
   , { hub: 'Fur Trade'
-    , center: {x: 437, y: 270}
+    , center: {x: 436, y: 267.75}
     , trigger_id: 2666104
     , color: 'rgb(243,129,51)'
     , icon: 'furtrade.png'
     }
   , { hub: 'Tipi'
-    , center: {x: 267, y: 208}
+    , center: {x: 268, y: 208}
     , trigger_id: 2666106
     , color: 'rgb(194,35,57)'
     , icon: 'tipi.png'
     }
   , { hub: 'Sod House'
-    , center: {x: 207, y: 370}
+    , center: {x: 206, y: 371}
     , trigger_id: 2666105
     , color: 'rgb(31,172,203)'
     , icon: 'sodhouse.png'
     }
   , { hub: 'Depression'
-    , center: {x: 230, y: 589}
+    , center: {x: 231, y: 589}
     , trigger_id: 2666103
     , color: 'rgb(83,110,130)'
     , icon: 'depression.png'
     }
   , { hub: 'War'
-    , center: {x: 197, y: 681}
+    , center: {x: 198, y: 681}
     , trigger_id: 2666107
     , color: 'rgb(102,142,124)'
     , icon: 'war.png'
@@ -246,10 +246,31 @@ function getStars() {
             window.stars[lookup[0]] = lookup[1];
           }
         });
+        attachMapStars();
       }
     });
   };
   ARIS.getPlayer();
+}
+
+function attachMapStars() {
+  var dims = getDims();
+  targets.forEach(function(target, i){
+    var img = document.getElementById('map-star-' + i);
+    var thisStars = window.stars[target.hub];
+    if (thisStars !== 1 && thisStars !== 2) {
+      img.style.display = 'none';
+    } else {
+      img.style.left = (dims.gap.w + dims.map.w * target.stars_top_left[0]) + 'px';
+      img.style.top = (dims.gap.h + dims.map.h * target.stars_top_left[1]) + 'px';
+      var starsWidth = dims.map.w * (target.stars_bottom_right[0] - target.stars_top_left[0]);
+      var starsHeight = dims.map.h * (target.stars_bottom_right[1] - target.stars_top_left[1]);
+      img.style.width = starsWidth + 'px';
+      img.style.height = starsHeight + 'px';
+      img.src = 'stars-' + thisStars + '.png';
+      img.style.display = 'block';
+    }
+  });
 }
 
 window.realARIS = false;
@@ -351,7 +372,7 @@ body {
   background-color: green;
   opacity: 0.5;
 }
-#the-radar {
+#the-radar, .map-star {
   position: fixed;
   display: none;
   pointer-events: none;
@@ -385,6 +406,14 @@ body {
     <img src="arrow.png">
   </div>
 </a>
+
+<img class="map-star" id="map-star-0">
+<img class="map-star" id="map-star-1">
+<img class="map-star" id="map-star-2">
+<img class="map-star" id="map-star-3">
+<img class="map-star" id="map-star-4">
+<img class="map-star" id="map-star-5">
+<img class="map-star" id="map-star-6">
 
 <img id="the-radar" src="radar.png">
 

@@ -4,4 +4,4 @@ js_files     := $(coffee_files:%.coffee=%.js)
 default: $(js_files)
 
 %.js: %.coffee
-	coffee -sc < $< > $@
+	coffee -sc < $< | babel --presets=env > $@

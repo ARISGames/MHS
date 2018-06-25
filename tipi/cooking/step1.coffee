@@ -23,6 +23,7 @@ drawCenter = (canvas, ctx, image) ->
 loadImage = (src, cb) ->
   img = new Image
   img.onload = -> cb img
+  img.onerror = -> setTimeout((-> loadImage(src, cb)), 1000)
   img.src = src
 
 sounds = {}
@@ -84,6 +85,9 @@ oneReady = ->
   allReady() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
-sounds['chop'] = new Howl
-  src: ['sounds/chop.ogg', 'sounds/chop.mp3']
-  onload: oneReady
+loadSound = (sound) ->
+  sounds[sound] = new Howl
+    src: ["sounds/#{sound}.ogg", "sounds/#{sound}.mp3"]
+    onload: oneReady
+    onloaderror: -> setTimeout(loadSound, 1000)
+loadSound 'chop'

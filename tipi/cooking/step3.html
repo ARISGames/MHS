@@ -7,7 +7,20 @@
   <script src="lib/howler/howler.min.js"></script>
   <script src="lib/spin.js"></script>
   <link rel="stylesheet" type="text/css" href="lib/spin.css">
-  <script src="step3.js"></script>
+  <script src="interactive.js"></script>
+  <script type="text/javascript">
+    sashaInteractive(
+      [ { image: "choke-cherries1.jpg" }
+      , { image: "choke-cherries2.jpg", sound: 'snap' }
+      , { image: "choke-cherries3.jpg", sound: 'snap' }
+      , { image: "choke-cherries4.jpg", sound: 'snap' }
+      , { image: "choke-cherries5.jpg" }
+      , { image: "choke-cherries6.jpg", sound: "squish" }
+      , { image: "choke-cherries7.jpg", sound: "squish" }
+      , { image: "choke-cherries8.jpg", sound: "squish" }
+      , { image: "choke-cherries9.jpg", sound: "squish" }
+      ], 53383);
+  </script>
   <style type="text/css">
     #the-canvas, #the-spinner {
       position: fixed;

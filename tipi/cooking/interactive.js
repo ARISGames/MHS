@@ -87,7 +87,9 @@
     loaders = [];
     showReloadAfterWait = function showReloadAfterWait() {
       return setTimeout(function () {
-        return document.getElementById('the-reload').style.display = 'flex';
+        if (loaders.length > 0) {
+          return document.getElementById('the-reload').style.display = 'flex';
+        }
       }, 5000);
     };
     window.doReload = function () {

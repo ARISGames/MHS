@@ -77,7 +77,8 @@ window.sashaInteractive = (steps, dialogID) ->
 
   showReloadAfterWait = ->
     setTimeout ->
-      document.getElementById('the-reload').style.display = 'flex'
+      if loaders.length > 0
+        document.getElementById('the-reload').style.display = 'flex'
     , 5000
 
   window.doReload = ->

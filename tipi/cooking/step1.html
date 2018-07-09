@@ -23,20 +23,33 @@
       ], 33976);
   </script>
   <style type="text/css">
-    #the-canvas, #the-spinner {
+    #the-canvas, #the-spinner, #the-reload {
       position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
       left: 0;
     }
-    #the-spinner { background-color: gray; }
+    #the-spinner, #the-reload { background-color: gray; }
+    #the-reload {
+      display: none; /* overridden to flex later */
+      align-items: center;
+      justify-content: center;
+    }
+    #the-reload img {
+      width: 100px;
+    }
   </style>
 </head>
 <body>
 
 <canvas id="the-canvas"></canvas>
 <div id="the-spinner"></div>
+<div id="the-reload">
+  <a href="#" onclick="window.doReload(); return false;">
+    <img src="lib/reload.png">
+  </a>
+</div>
 
 </body>
 </html>

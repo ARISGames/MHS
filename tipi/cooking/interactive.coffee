@@ -20,9 +20,9 @@ window.sashaInteractive = (steps, dialogID) ->
 
   spinnerOpts =
     lines: 13 # The number of lines to draw
-    length: 38 # The length of each line
-    width: 17 # The line thickness
-    radius: 45 # The radius of the inner circle
+    length: 30 # The length of each line
+    width: 6 # The line thickness
+    radius: 19 # The radius of the inner circle
     scale: 1 # Scales overall size of the spinner
     corners: 1 # Corner roundness (0..1)
     color: '#ffffff' # CSS color or array of colors
@@ -47,6 +47,7 @@ window.sashaInteractive = (steps, dialogID) ->
 
     spinner.stop()
     spinnerElement.parentNode.removeChild(spinnerElement)
+    document.getElementById('the-reload').style.display = 'none'
     canvas = document.getElementById 'the-canvas'
     ctx = canvas.getContext '2d'
 
@@ -72,8 +73,20 @@ window.sashaInteractive = (steps, dialogID) ->
 
     nextStep()
 
+  loaders = []
+
+  showReloadAfterWait = ->
+    setTimeout ->
+      document.getElementById('the-reload').style.display = 'flex'
+    , 5000
+
+  window.doReload = ->
+    loaders.forEach (x) -> x()
+    document.getElementById('the-reload').style.display = 'none'
+    showReloadAfterWait()
+
   startLoading = ->
-    loaders = []
+    showReloadAfterWait()
     loadDone = (x) ->
       prevLength = loaders.length
       loaders = loaders.filter (y) -> x isnt y

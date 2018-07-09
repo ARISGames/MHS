@@ -20,12 +20,7 @@ drawCenter = (canvas, ctx, image) ->
   y = (canvas.height - h) / 2
   ctx.drawImage image, x, y, w, h
 
-loadImage = (src, cb) ->
-  img = new Image
-  img.onload = -> cb img
-  img.onerror = -> setTimeout((-> loadImage(src, cb)), 1000)
-  img.src = src
-
+images = {}
 sounds = {}
 steps =
   [ { image: "plating-1.jpg" }
@@ -42,22 +37,37 @@ steps =
   , { image: "plating-12.jpg", sound: 'snap' }
   ]
 
-imgs = {}
-loadImages = (cb) ->
-  count = steps.length
-  for {image} in steps
-    do (image) ->
-      loadImage "images/#{image}", (img) ->
-        imgs[image] = img
-        count--
-        cb() if count is 0
-  undefined
+spinnerOpts =
+  lines: 13 # The number of lines to draw
+  length: 38 # The length of each line
+  width: 17 # The line thickness
+  radius: 45 # The radius of the inner circle
+  scale: 1 # Scales overall size of the spinner
+  corners: 1 # Corner roundness (0..1)
+  color: '#ffffff' # CSS color or array of colors
+  fadeColor: 'transparent' # CSS color or array of colors
+  speed: 1 # Rounds per second
+  rotate: 0 # The rotation offset
+  animation: 'spinner-line-fade-quick' # The CSS animation name for the lines
+  direction: 1 # 1: clockwise, -1: counterclockwise
+  zIndex: 2e9 # The z-index (defaults to 2000000000)
+  className: 'spinner' # The CSS class to assign to the spinner
+  top: '50%' # Top position relative to parent
+  left: '50%' # Left position relative to parent
+  shadow: '0 0 1px transparent' # Box-shadow for the lines
+  position: 'absolute' # Element positioning
+spinner = null
+spinnerElement = null
+document.addEventListener 'DOMContentLoaded', ->
+  spinnerElement = document.getElementById('the-spinner')
+  spinner = new Spinner(spinnerOpts).spin(spinnerElement)
 
 allReady = ->
 
+  spinner.stop()
+  spinnerElement.parentNode.removeChild(spinnerElement)
   canvas = document.getElementById 'the-canvas'
   ctx = canvas.getContext '2d'
-  clickListener = null
 
   step = -1
   nextStep = ->
@@ -69,7 +79,7 @@ allReady = ->
       ctx.fillStyle = 'white'
       ctx.fillRect 0, 0, canvas.width, canvas.height
       if image?
-        drawCenter canvas, ctx, imgs[image]
+        drawCenter canvas, ctx, images[image]
       if sound?
         sounds[sound].play()
     else
@@ -79,18 +89,41 @@ allReady = ->
 
   Origami.fastclick document.body
 
-  loadImages nextStep
+  nextStep()
 
-readies = 5
+startLoading = ->
+  loaders = []
+  loadDone = (x) ->
+    prevLength = loaders.length
+    loaders = loaders.filter (y) -> x isnt y
+    if loaders.length is 0 and prevLength > 0
+      allReady()
+  startedImages = {}
+  startedSounds = {}
+  steps.forEach ({image, sound}) ->
+    if image? and not startedImages[image]?
+      startedImages[image] = true
+      thisImage = ->
+        img = new Image
+        img.onload = ->
+          images[image] = img
+          loadDone thisImage
+        img.src = "images/#{image}"
+      loaders.push thisImage
+      thisImage()
+    if sound? and not startedSounds[sound]?
+      startedSounds[sound] = true
+      thisSound = ->
+        sounds[sound] = new Howl
+          src: ["sounds/#{sound}.ogg", "sounds/#{sound}.mp3"]
+          onload: ->
+            loadDone thisSound
+      loaders.push thisSound
+      thisSound()
+
+readies = 2
 oneReady = ->
   readies--
-  allReady() if readies is 0
+  startLoading() if readies is 0
 window.ARIS = ready: oneReady
 document.addEventListener 'DOMContentLoaded', oneReady
-loadSound = (sound) ->
-  sounds[sound] = new Howl
-    src: ["sounds/#{sound}.ogg", "sounds/#{sound}.mp3"]
-    onload: oneReady
-    onloaderror: -> setTimeout(loadSound, 1000)
-for s in ['squish', 'slap', 'snap']
-  loadSound s

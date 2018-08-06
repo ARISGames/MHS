@@ -284,6 +284,10 @@
         <div id='strikedebug' class='debug'></div>
     </div>
 
+    <div id="connection-warning">
+        No internet connection
+    </div>
+
 </body>
 
 </html>

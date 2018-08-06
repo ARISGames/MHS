@@ -6,6 +6,12 @@ var PusherMan = function(key, auth_url, send_url, channel, eventArray, callbackA
     this.channel = this.pusher.subscribe(channel);
     for(var i = 0; i < eventArray.length; i++)
         this.channel.bind(eventArray[i], callbackArray[i]);
+    this.pusher.connection.bind('connected', function(){
+        document.body.classList.remove('no-connection');
+    });
+    this.pusher.connection.bind('unavailable', function(){
+        document.body.classList.add('no-connection');
+    });
     this.sendData = function(event, data)
     {
         var xmlhttp;

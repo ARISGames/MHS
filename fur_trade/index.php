@@ -247,6 +247,10 @@ window.onerror = function(msg, url, linenumber)
     </div>
 </div>
 
+<div id="connection-warning">
+    No internet connection
+</div>
+
 </body>
 </html>
 

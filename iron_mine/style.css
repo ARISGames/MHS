@@ -427,3 +427,21 @@ body
     display:none;
 }
 
+#connection-warning
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ea9d9d;
+    color: black;
+    text-align: center;
+    padding: 2px;
+    border-bottom: 1px solid black;
+}
+
+body.no-connection #connection-warning
+{
+    display: block;
+}

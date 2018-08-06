@@ -631,3 +631,21 @@ body
     text-shadow:5px 5px 10px #000000;
 }
 
+#connection-warning
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ea9d9d;
+    color: black;
+    text-align: center;
+    padding: 2px;
+    border-bottom: 1px solid black;
+}
+
+body.no-connection #connection-warning
+{
+    display: block;
+}

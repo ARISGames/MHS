@@ -107,7 +107,7 @@ window.onerror = function(msg, url, linenumber)
 
 <div id='vid' class='full_screen'>
     <video id="vidfile" width="320" height="504" playsinline>
-        <source src="assets/intro.mp4" type="video/mp4">
+        <source src="arismedia://700932.mp4" type="video/mp4">
     </video>
     <div class='bottombutton' ontouchstart='vidComplete();'>
         <img src='assets/forward_arrow.png' class='forwardarrow' />

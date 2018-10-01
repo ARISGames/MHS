@@ -157,7 +157,7 @@
     <div id='drillgame' class='game drill_bg full_screen'>
         <div id='drillvid' class='vid'>
             <video id="drillvidfile" width="320" height="504" playsinline>
-                <source src="assets/intro.mp4" type="video/mp4">
+                <source src="arismedia://700933.mp4" type="video/mp4">
             </video>
             <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -191,7 +191,7 @@
     <div id='dynamitegame' class='game full_screen'> <!-- class will be dynamite_left_bg OR dynamite_right_bg (depending on station). set in javascript -->
         <div id='dynamitevid' class='vid'>
             <video id="dynamitevidfile" width="320" height="504" playsinline>
-                <source src="assets/intro.mp4" type="video/mp4">
+                <source src="arismedia://700933.mp4" type="video/mp4">
             </video>
             <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />
@@ -234,7 +234,7 @@
     <div id='backergame' class='game backer_bg full_screen'>
         <div id='backervid' class='vid'>
             <video id="backervidfile" width="320" height="504" playsinline>
-                <source src="assets/intro.mp4" type="video/mp4">
+                <source src="arismedia://700933.mp4" type="video/mp4">
             </video>
             <div class='bottombutton' onclick='vidComplete();'>
                 <img src='assets/forward_arrow.png' class='forwardarrow' />

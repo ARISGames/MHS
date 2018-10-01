@@ -3630,10 +3630,6 @@ PLAYGROUND.SoundAudio.prototype = {
 
   },
 
-  setPosition: function() {
-
-  },
-
   setPanning: function(sound, pan) {
 
   }

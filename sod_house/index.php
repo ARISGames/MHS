@@ -6,14 +6,150 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0 maximum-scale=1.0 user-scalable=no;"/>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Trading Post</title>
-<link href="style.css" rel="stylesheet" type="text/css"></link>
+
+<style type="text/css">
+
+div,span,html,body
+{
+    padding:0px;
+    margin:0px;
+    overflow:visible;
+}
+
+body
+{
+    user-select:none;
+    -webkit-user-select:none;
+    font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+
+.full_screen
+{
+    width:320px;
+    height:504px;
+    position:absolute; 
+    top:0px;
+    left:0px;
+    overflow:hidden;
+    background-size:320px 504px;
+}
+
+#vid
+{
+    display:none;
+}
+
+.bottombutton
+{
+    width:320px;
+    height:44px;
+    position:absolute;
+    left:0px;
+    bottom:0px;
+    border-top:1px solid gray;
+    background-color:rgba(255,255,255,0.9);
+}
+
+.bottombuttontext
+{
+    position:absolute;
+    right:40px;
+    top:5px;
+    font-size:25px;
+}
+
+.forwardarrow
+{
+    display:block;
+    width:24px;
+    position:absolute;
+    right:10px;
+    bottom:10px;
+}
+
+</style>
 
 <script type="text/javascript">
     var ARIS = {};//Get ARIS variable existant ASAP just to keep things simple
 </script>
 
-<script type="text/javascript" src="model.js"></script>
-<script type="text/javascript" src="views.js"></script>
+<script type="text/javascript">
+
+// model.js
+
+var SodHouseModel = function()
+{
+    var self = this;
+
+    self.game_id = 0; 
+    self.player = {};
+    self.web_page_id = 0;
+
+    self.currentLevel = 1;
+
+    self.loadStateFromARIS = function(callback)
+    {
+        var bogusEndOfQueueId = 99999999; //Used to flag the end of the queue
+
+        //Override to handle ARIS responses
+        ARIS.didUpdateItemQty = function(updatedItemId, qty)
+        {
+            if(updatedItemId == bogusEndOfQueueId)
+                callback();
+        };
+
+        ARIS.didReceivePlayer = function(player)
+        {
+            self.player = player;
+        }
+
+        var params = ARIS.parseURLParams(document.URL);
+        self.game_id = parseInt(params.game_id);
+        self.player.user_id = parseInt(params.user_id);
+        self.web_page_id = parseInt(params.web_page_id);
+
+        ARIS.getPlayer();
+        ARIS.getItemCount(bogusEndOfQueueId); //Enqueued to signal the queue to 'get state' has sufficiently advanced
+    }
+
+    // FIXME dead?
+    self.sendRequest = function(fn, callback)
+    {
+        var xmlhttp;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("GET","http://arisgames.org/server/json.php/v1."+fn,true); 
+        xmlhttp.onreadystatechange = function()
+        {
+            if(xmlhttp.readyState == 4&& xmlhttp.status == 200)
+                callback(JSON.parse(xmlhttp.responseText).data);
+        }
+        xmlhttp.send();
+    }
+}
+
+// views.js
+
+var SodHouseViews = function()
+{
+    var self = this;
+
+    self.displayLoading = function()
+    {
+        document.getElementById('vidfile').pause();
+        document.getElementById('vid').style.display     = 'none';
+        document.getElementById('loading').style.display = 'block';
+    }
+
+    self.displayVid = function()
+    {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('vid').style.display     = 'block';
+        document.getElementById('vidfile').play();
+    }
+}
+
+</script>
+
 <script type="text/javascript">
 var game_id = webHookId = npcId = function(id){return id;};
 
@@ -71,14 +207,14 @@ window.onerror = function(msg, url, linenumber)
 
 <body class='full_screen'>
 
-<div id='loading' class='full_screen'>&nbsp;<img height='12px' src='assets/spinner.gif'></img> Loading...</div>
+<div id='loading' class='full_screen'>&nbsp;<img height='12px' src="arismedia://700842.gif"></img> Loading...</div>
 
 <div id='vid' class='full_screen'>
     <video id="vidfile" width="320" height="504" playsinline>
-        <source src="assets/intro.mp4" type="video/mp4">
+        <source src="arismedia://700934.mp4" type="video/mp4">
     </video>
     <div class='bottombutton' ontouchstart='vidComplete();'>
-        <img src='assets/forward_arrow.png' class='forwardarrow' />
+        <img src="arismedia://700840.png" class='forwardarrow' />
     </div>
 </div>
 
